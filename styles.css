@@ -1150,6 +1150,37 @@ footer:before {
     .about-image {
         max-width: 100%;
     }
+    
+    /* Better spacing for mobile */
+    .hero {
+        padding: 130px 0 70px;
+    }
+    
+    .section-title {
+        margin-bottom: 2rem;
+    }
+    
+    /* Improve form usability on mobile */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* Prevents iOS zoom on focus */
+        padding: 12px;
+    }
+    
+    /* Adjust stats on mobile */
+    .stat-item {
+        padding: 20px 15px;
+    }
+    
+    /* Better positioned theme toggle */
+    .theme-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        z-index: 1010; /* Above all else */
+    }
 }
 
 @media (max-width: 576px) {
@@ -1180,6 +1211,20 @@ footer:before {
     
     .floating-tech {
         display: none;
+    }
+    
+    /* Better padding for content on small screens */
+    .service-card,
+    .portfolio-content,
+    .testimonial-content,
+    .contact-form {
+        padding: 25px 20px;
+    }
+    
+    /* Make buttons easier to tap */
+    .btn {
+        padding: 14px 20px;
+        min-width: 120px;
     }
 }
 

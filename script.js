@@ -261,6 +261,33 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
         });
     });
+
+    // Add touch support for service card tilt effect
+    serviceCards.forEach(card => {
+        // Add touch support (limited tilt for better mobile experience)
+        card.addEventListener('touchmove', function(e) {
+            if (window.innerWidth <= 992) return; // Disable on small screens
+            
+            e.preventDefault();
+            const touch = e.touches[0];
+            const cardRect = this.getBoundingClientRect();
+            const x = touch.clientX - cardRect.left;
+            const y = touch.clientY - cardRect.top;
+            
+            const centerX = cardRect.width / 2;
+            const centerY = cardRect.height / 2;
+            
+            // Reduce tilt amount for touch devices
+            const rotateX = (y - centerY) / 30;
+            const rotateY = (centerX - x) / 30;
+            
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(5px)`;
+        });
+        
+        card.addEventListener('touchend', function() {
+            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+        });
+    });
     
     // 5. Dark/Light Mode Toggle
     const themeToggle = document.createElement('button');
@@ -303,5 +330,56 @@ document.addEventListener('DOMContentLoaded', function() {
             item.addEventListener('mouseenter', () => cursor.classList.add('active'));
             item.addEventListener('mouseleave', () => cursor.classList.remove('active'));
         });
+    }
+
+    // Check if testimonials JS is loaded correctly
+    if (typeof updateTestimonialSlider !== 'function') {
+        console.log('Loading testimonials fallback...');
+        // Testimonial Slider Functionality
+        const slider = document.querySelector('.testimonial-slider');
+        if (slider) {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            const prevBtn = document.querySelector('.testimonial-nav .prev');
+            const nextBtn = document.querySelector('.testimonial-nav .next');
+            
+            let currentIndex = 0;
+            const slideCount = slides.length;
+            
+            function updateSlider() {
+                slides.forEach((slide, index) => {
+                    if (index === currentIndex) {
+                        slide.style.opacity = '1';
+                        slide.style.transform = 'translateX(0)';
+                        slide.style.zIndex = '2';
+                    } else {
+                        slide.style.opacity = '0';
+                        slide.style.transform = index < currentIndex ? 'translateX(-50px)' : 'translateX(50px)';
+                        slide.style.zIndex = '1';
+                    }
+                });
+            }
+            
+            // Initialize slider
+            updateSlider();
+            
+            // Event listeners for navigation
+            if(prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+                    updateSlider();
+                });
+                
+                nextBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex + 1) % slideCount;
+                    updateSlider();
+                });
+                
+                // Auto-advance every 5 seconds
+                setInterval(function() {
+                    currentIndex = (currentIndex + 1) % slideCount;
+                    updateSlider();
+                }, 5000);
+            }
+        }
     }
 });
