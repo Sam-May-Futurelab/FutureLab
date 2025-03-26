@@ -142,4 +142,166 @@ document.addEventListener('DOMContentLoaded', function() {
         tech.style.animationDelay = `${randomDelay}s`;
         tech.style.animationDuration = `${randomDuration}s`;
     });
+
+    // NEW ANIMATIONS AND IMPROVEMENTS
+
+    // 1. Animated Typing Effect for Hero Heading
+    if (document.querySelector('.hero h1')) {
+        const heroHeading = document.querySelector('.hero h1');
+        const originalText = heroHeading.innerHTML;
+        
+        // Only run on desktop devices
+        if (window.innerWidth > 992) {
+            heroHeading.innerHTML = '';
+            let charIndex = 0;
+            
+            function typeWriter() {
+                if (charIndex < originalText.length) {
+                    heroHeading.innerHTML += originalText.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            
+            setTimeout(typeWriter, 500);
+        }
+    }
+    
+    // 2. Scroll Progress Indicator
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+    
+    window.addEventListener('scroll', function() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        progressBar.style.width = scrolled + '%';
+    });
+    
+    // 3. Number Counter Animation
+    const statsSection = document.createElement('section');
+    statsSection.className = 'stats';
+    statsSection.innerHTML = `
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item" data-count="200">
+                    <h3 class="counter">0</h3>
+                    <p>Projects Completed</p>
+                </div>
+                <div class="stat-item" data-count="98">
+                    <h3 class="counter">0</h3>
+                    <p>Happy Clients</p>
+                </div>
+                <div class="stat-item" data-count="5">
+                    <h3 class="counter">0</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-item" data-count="24">
+                    <h3 class="counter">0</h3>
+                    <p>Awards Received</p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Insert the stats section before the contact section
+    const contactSection = document.getElementById('contact');
+    document.querySelector('main').insertBefore(statsSection, contactSection);
+    
+    // Animate the counters when in view
+    const counters = document.querySelectorAll('.counter');
+    
+    function startCounters() {
+        counters.forEach(counter => {
+            const target = +counter.parentElement.dataset.count;
+            const count = +counter.innerText;
+            const increment = target / 100;
+            
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(startCounters, 20);
+            } else {
+                counter.innerText = target;
+            }
+        });
+    }
+    
+    // Start counters when they come into view
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                entry.target.classList.add('counted');
+                startCounters();
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    statsObserver.observe(statsSection);
+    
+    // 4. Interactive service cards with 3D tilt effect
+    const serviceCards = document.querySelectorAll('.service-card');
+    
+    serviceCards.forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+            const cardRect = this.getBoundingClientRect();
+            const x = e.clientX - cardRect.left;
+            const y = e.clientY - cardRect.top;
+            
+            const centerX = cardRect.width / 2;
+            const centerY = cardRect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+        });
+    });
+    
+    // 5. Dark/Light Mode Toggle
+    const themeToggle = document.createElement('button');
+    themeToggle.className = 'theme-toggle';
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    document.body.appendChild(themeToggle);
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+    
+    themeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-theme');
+        
+        if (document.body.classList.contains('dark-theme')) {
+            localStorage.setItem('theme', 'dark');
+            this.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            localStorage.setItem('theme', 'light');
+            this.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+    });
+    
+    // 6. Cursor follower effect (desktop only)
+    if (window.innerWidth > 992) {
+        const cursor = document.createElement('div');
+        cursor.className = 'cursor-follower';
+        document.body.appendChild(cursor);
+        
+        document.addEventListener('mousemove', function(e) {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        // Add active class when hovering over interactive elements
+        document.querySelectorAll('a, button, .service-card, .portfolio-item').forEach(item => {
+            item.addEventListener('mouseenter', () => cursor.classList.add('active'));
+            item.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+        });
+    }
 });

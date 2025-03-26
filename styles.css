@@ -449,11 +449,11 @@ nav {
     height: 100%;
     display: flex;
     flex-direction: column;
+    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.5s ease;
 }
 
 .service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--box-shadow-hover);
+    transform: none;
 }
 
 .service-icon {
@@ -670,6 +670,15 @@ nav {
     transform: scale(1.05);
 }
 
+.portfolio-item:hover .portfolio-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-1);
+    opacity: 0.1;
+    z-index: 1;
+}
+
 .portfolio-content {
     flex: 1;
     padding: 40px;
@@ -805,11 +814,28 @@ nav {
     font-size: 0.95rem;
     font-weight: 500;
     transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
 .skills span:hover {
     background-color: rgba(67, 97, 238, 0.12);
     transform: translateY(-3px);
+}
+
+.skills span::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: 0.5s ease;
+}
+
+.skills span:hover::after {
+    left: 100%;
 }
 
 .education {
@@ -1194,4 +1220,234 @@ footer:before {
 
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(to bottom, #4361ee, #3a0ca3);
+}
+
+/* NEW ANIMATIONS AND STYLES */
+
+/* Dark Theme Variables */
+.dark-theme {
+    --primary-color: #60a5fa;
+    --secondary-color: #818cf8;
+    --accent-color: #34d399;
+    --dark-color: #f8fafc;
+    --light-color: #0f172a;
+    --gray-color: #94a3b8;
+    --light-gray: #1e293b;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: var(--gradient-1);
+    width: 0%;
+    z-index: 2000;
+    transition: width 0.2s ease;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-1);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+}
+
+/* Stats Section */
+.stats {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%);
+}
+
+.dark-theme .stats {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    text-align: center;
+}
+
+.stat-item {
+    padding: 30px;
+    border-radius: var(--border-radius);
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.dark-theme .stat-item {
+    background-color: #1e293b;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.stat-item:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.stat-item h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.stat-item p {
+    color: var(--gray-color);
+    font-weight: 500;
+}
+
+/* Cursor Follower */
+.cursor-follower {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(67, 97, 238, 0.3);
+    pointer-events: none;
+    z-index: 2000;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+}
+
+.cursor-follower.active {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(67, 97, 238, 0.1);
+}
+
+/* Additional hover effects for service cards */
+.service-card {
+    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.5s ease;
+}
+
+/* Remove simple hover for service cards since we now have 3D effect */
+.service-card:hover {
+    transform: none;
+}
+
+/* Enhanced portfolio hover effect */
+.portfolio-item:hover .portfolio-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-1);
+    opacity: 0.1;
+    z-index: 1;
+}
+
+/* Enhanced skill tags */
+.skills span {
+    position: relative;
+    overflow: hidden;
+}
+
+.skills span::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: 0.5s ease;
+}
+
+.skills span:hover::after {
+    left: 100%;
+}
+
+/* Dark theme adjustments */
+.dark-theme {
+    color: var(--dark-color);
+    background-color: var(--light-color);
+}
+
+.dark-theme header,
+.dark-theme .service-card,
+.dark-theme .price-card,
+.dark-theme .portfolio-item,
+.dark-theme .contact-form {
+    background-color: #1e293b;
+}
+
+.dark-theme .nav-links a,
+.dark-theme .logo {
+    color: var(--dark-color);
+}
+
+.dark-theme .hamburger span {
+    background-color: var(--dark-color);
+}
+
+/* Additional responsive styles for new elements */
+@media (max-width: 768px) {
+    .theme-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .cursor-follower {
+        display: none;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stat-item h3 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Custom animations */
+@keyframes float-up-down {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes rotate-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
