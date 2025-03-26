@@ -382,4 +382,35 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    // Initialize Lottie Animation
+    const lottieContainer = document.getElementById('lottie-animation');
+    if (lottieContainer) {
+        // Choose one of these animations based on your preference
+        const animationPath = 'https://lottie.host/embed/d0640935-5e6b-45af-aef7-2c93dfad96f0/MzDhMt63pm.json'; // Web/App Development Animation
+        // Alternative animations:
+        // 'https://lottie.host/embed/79b154c2-6b9d-42bf-a3ce-d0f4385a640b/itQigGvwW1.json' // Code Animation
+        // 'https://lottie.host/embed/60335dd2-3d63-400f-a610-b66c2a7c6f63/F58VeZr0aY.json' // Design & Development
+        
+        const animation = lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: animationPath
+        });
+        
+        animation.addEventListener('DOMLoaded', function() {
+            // Add class to indicate animation is loaded
+            document.body.classList.add('lottie-loaded');
+            
+            // Optional: Add subtle interactivity to the animation
+            lottieContainer.addEventListener('mouseenter', function() {
+                animation.setSpeed(1.5); // Speed up on hover
+            });
+            lottieContainer.addEventListener('mouseleave', function() {
+                animation.setSpeed(1); // Return to normal speed
+            });
+        });
+    }
 });

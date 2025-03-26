@@ -300,6 +300,10 @@ nav {
     color: var(--dark-color);
     line-height: 1.2;
     font-weight: 700;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .hero h1 span {
@@ -408,6 +412,24 @@ nav {
 
 .client-logo:hover {
     opacity: 0.8;
+}
+
+/* Lottie Animation Container */
+.lottie-container {
+    width: 100%;
+    height: 400px;
+    max-width: 600px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Hide the fallback image when Lottie loads */
+.fallback-image {
+    display: none;
+}
+
+.lottie-loaded .fallback-image {
+    display: none;
 }
 
 /* Services Section */
