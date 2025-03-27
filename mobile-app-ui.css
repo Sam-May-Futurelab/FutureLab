@@ -1,0 +1,955 @@
+/* Simple, clean mobile app UI styling */
+
+/* Stats grid layout - reduced padding and more compact */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 12px;
+  margin-top: -15px;
+}
+
+/* More compact stat card design */
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.dark-theme .stat-card {
+  background: #1e293b;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Colored stat cards */
+.stat-card.primary {
+  border-top: 3px solid #4361ee;
+}
+
+.stat-card.secondary {
+  border-top: 3px solid #3a86ff;
+}
+
+.stat-card.tertiary {
+  border-top: 3px solid #f72585;
+}
+
+.stat-card.quaternary {
+  border-top: 3px solid #4cc9f0;
+}
+
+/* Smaller icon styling */
+.stat-icon {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.stat-card.primary .stat-icon {
+  color: #4361ee;
+}
+
+.stat-card.secondary .stat-icon {
+  color: #3a86ff;
+}
+
+.stat-card.tertiary .stat-icon {
+  color: #f72585;
+}
+
+.stat-card.quaternary .stat-icon {
+  color: #4cc9f0;
+}
+
+/* Smaller value styling */
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 1px;
+}
+
+/* Smaller label styling */
+.stat-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Activity list styling */
+.activity-list {
+  padding: 15px;
+}
+
+.activity-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.activity-item {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.dark-theme .activity-item {
+  background: #1e293b;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(67, 97, 238, 0.1);
+  border-radius: 12px;
+  color: #4361ee;
+}
+
+.activity-info {
+  flex: 1;
+}
+
+.activity-name {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.activity-details {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* User avatar styling */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-avatar i {
+  font-size: 36px;
+  color: #ffffff;
+}
+
+/* Chart styling fixes */
+.chart-container {
+  padding-bottom: 30px;
+  overflow: visible;
+}
+
+.chart-bars {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.chart-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 30px;
+}
+
+.chart-bar {
+  width: 8px;
+  border-radius: 4px;
+  background: #e2e8f0;
+  margin-bottom: 8px;
+}
+
+.chart-label {
+  font-size: 10px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.chart-bar-tooltip {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4361ee;
+  color: white;
+  font-size: 9px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.chart-bar:hover .chart-bar-tooltip {
+  opacity: 1;
+}
+
+/* Responsive Design Screen Styling - IMPROVED */
+.responsive-design-screen {
+  background: #f8fafc;
+  padding: 15px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Make sure the entire container doesn't scroll */
+  overflow: hidden;
+}
+
+.dark-theme .responsive-design-screen {
+  background: #0f172a;
+}
+
+/* Restructure content for better flow */
+.responsive-design-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+}
+
+/* Device mockup showcase - centered and clean */
+.device-showcase-mini {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* Device mockup styling - better proportions */
+.device-mockup {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  height: 140px;
+}
+
+.dark-theme .device-mockup {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.device-mockup:hover {
+  transform: translateY(-5px);
+}
+
+.device-mockup.desktop {
+  width: 180px;
+}
+
+.device-mockup.tablet {
+  width: 90px;
+}
+
+.device-mockup.mobile {
+  width: 45px;
+}
+
+/* Cleaner controls with better spacing */
+.responsive-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+  flex-shrink: 0;
+}
+
+.responsive-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dark-theme .responsive-btn {
+  background: #1e293b;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+.responsive-btn.active {
+  background: #4361ee;
+  color: white;
+  border-color: #4361ee;
+}
+
+.responsive-btn:hover:not(.active) {
+  background: #e2e8f0;
+  transform: translateY(-2px);
+}
+
+.dark-theme .responsive-btn:hover:not(.active) {
+  background: #334155;
+}
+
+/* Simplified feature grid with scrollable content - FIX SCROLLING */
+.responsive-features-container {
+  flex: 1;
+  /* Explicitly enable vertical scrolling */
+  overflow-y: auto;
+  padding: 5px 0;
+  /* Add smooth scrolling */
+  scroll-behavior: smooth;
+}
+
+.responsive-features-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.responsive-features-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.responsive-features-container::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.3);
+  border-radius: 3px;
+}
+
+.responsive-features-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+}
+
+.responsive-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px; /* Slightly increased gap between items */
+  padding: 5px 2px 20px; /* Add bottom padding to ensure scrollability */
+  min-height: 100%; /* Ensure content takes up at least full height */
+}
+
+/* Fix feature tiles spacing and alignment */
+.responsive-feature-item {
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: flex-start; /* Align to top instead of center */
+  gap: 8px; /* Reduce gap between icon and text */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  min-height: 70px; /* Ensure consistent minimum height */
+  transition: all 0.3s ease;
+}
+
+.dark-theme .responsive-feature-item {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon-mini {
+  width: 24px;
+  height: 24px;
+  background: rgba(67, 97, 238, 0.1);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4361ee;
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 3px; /* Add slight top margin to align with first line of text */
+}
+
+.feature-text-mini {
+  font-size: 11px;
+  font-weight: 500;
+  color: #334155;
+  line-height: 1.4; /* Increase line height slightly for better readability */
+  padding-bottom: 2px; /* Add a bit of bottom padding to prevent text cutoff */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines of text */
+  -webkit-box-orient: vertical;
+  overflow: hidden; /* Hide overflow text */
+  word-break: break-word; /* Allow word breaking for better wrapping */
+}
+
+.dark-theme .feature-text-mini {
+  color: #e2e8f0;
+}
+
+/* Section heading with more breathing room */
+.responsive-section-heading {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 15px 0 12px;
+  color: #334155;
+  padding: 0 2px;
+}
+
+.dark-theme .responsive-section-heading {
+  color: #e2e8f0;
+}
+
+/* Clean device mockup showcase */
+.device-showcase-mini {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0 20px;
+  height: 150px;
+}
+
+/* Device mockup styling */
+.device-mockup {
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.dark-theme .device-mockup {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.device-mockup:hover {
+  transform: translateY(-5px);
+}
+
+.device-mockup.desktop {
+  width: 120px;
+  height: 90px;
+}
+
+.device-mockup.tablet {
+  width: 70px;
+  height: 90px;
+}
+
+.device-mockup.mobile {
+  width: 40px;
+  height: 90px;
+}
+
+.device-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header bar in mockup */
+.mockup-header {
+  height: 8px;
+  background: #4361ee;
+  width: 100%;
+}
+
+/* Content blocks in mockup */
+.mockup-content {
+  flex: 1;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mockup-block {
+  background: #e2e8f0;
+  border-radius: 2px;
+  height: 4px;
+}
+
+.dark-theme .mockup-block {
+  background: #475569;
+}
+
+.mockup-block.w-75 {
+  width: 75%;
+}
+
+.mockup-block.w-50 {
+  width: 50%;
+}
+
+.mockup-block.w-33 {
+  width: 33%;
+}
+
+/* Cleaner controls for responsive demo */
+.responsive-controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.responsive-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 11px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.3s ease;
+}
+
+.dark-theme .responsive-btn {
+  background: #1e293b;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+.responsive-btn.active {
+  background: #4361ee;
+  color: white;
+  border-color: #4361ee;
+}
+
+.responsive-btn i {
+  font-size: 9px;
+}
+
+/* Features grid */
+.responsive-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.responsive-feature-item {
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.dark-theme .responsive-feature-item {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon-mini {
+  width: 24px;
+  height: 24px;
+  background: rgba(67, 97, 238, 0.1);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4361ee;
+  font-size: 12px;
+}
+
+.feature-text-mini {
+  font-size: 11px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.dark-theme .feature-text-mini {
+  color: #e2e8f0;
+}
+
+/* Section heading */
+.responsive-section-heading {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 15px 0 10px;
+  color: #334155;
+}
+
+.dark-theme .responsive-section-heading {
+  color: #e2e8f0;
+}
+
+/* Fix for Responsive Design text in app bar */
+.app-title.responsive-title {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+/* Enhanced responsive design content section */
+.responsive-explanation {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+}
+
+.dark-theme .responsive-explanation {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.responsive-explanation h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #334155;
+}
+
+.dark-theme .responsive-explanation h4 {
+  color: #e2e8f0;
+}
+
+.responsive-explanation p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #64748b;
+  margin-bottom: 0;
+}
+
+.dark-theme .responsive-explanation p {
+  color: #94a3b8;
+}
+
+/* Device breakpoint visualization */
+.breakpoints-visual {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
+  margin: 15px 0;
+  height: 100px;
+}
+
+.breakpoint-bar {
+  background: linear-gradient(to top, rgba(67, 97, 238, 0.8), rgba(76, 201, 240, 0.6));
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 5px;
+  transition: transform 0.3s ease;
+}
+
+.breakpoint-bar:hover {
+  transform: translateY(-5px);
+}
+
+.breakpoint-bar.mobile {
+  height: 60%;
+  width: 20px;
+}
+
+.breakpoint-bar.tablet {
+  height: 80%;
+  width: 30px;
+}
+
+.breakpoint-bar.desktop {
+  height: 100%;
+  width: 40px;
+}
+
+.breakpoint-bar .px-value {
+  font-size: 9px;
+  color: white;
+  font-weight: 600;
+}
+
+.breakpoint-label {
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 5px;
+}
+
+.dark-theme .breakpoint-label {
+  color: #94a3b8;
+}
+
+/* Responsive principles list */
+.principles-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.principles-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  font-size: 12px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.dark-theme .principles-list li {
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+.principles-list li:last-child {
+  border-bottom: none;
+}
+
+.principles-list li i {
+  color: #4361ee;
+  font-size: 10px;
+}
+
+/* Mobile Optimizations */
+@media screen and (max-width: 576px) {
+  /* Make stat cards stack on very small screens */
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 8px;
+  }
+  
+  /* Larger touch targets for activity items */
+  .activity-item {
+    padding: 16px 12px;
+  }
+  
+  /* Better spacing for device mockup on small screens */
+  .device-showcase-mini {
+    height: 120px;
+    margin: 10px 0 15px;
+  }
+  
+  /* Adjust responsive controls for better touch targets */
+  .responsive-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .responsive-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    min-width: 80px;
+  }
+  
+  /* Make feature blocks full width on small screens */
+  .responsive-features {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Increase tap target size for list items */
+  .principles-list li {
+    padding: 10px 0;
+  }
+  
+  /* Increase icon size for better visibility */
+  .feature-icon-mini {
+    width: 30px;
+    height: 30px;
+  }
+  
+  /* Fix scrolling issues on mobile */
+  .responsive-features-container {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Fix for iOS scroll bounce */
+  .app-content {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Prevent text scaling issues */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Improved focus states for accessibility */
+.responsive-btn:focus,
+.feature-icon-mini:focus,
+.activity-item:focus {
+  outline: 2px solid rgba(67, 97, 238, 0.5);
+  outline-offset: 2px;
+}
+
+/* Prevent pull-to-refresh behavior interfering with scrollable areas */
+body {
+  overscroll-behavior-y: contain;
+}
+
+/* Optimize touch interactions */
+@media (hover: none) {
+  /* Remove hover effects on touch devices */
+  .stat-card:hover {
+    transform: none;
+  }
+  
+  .device-mockup:hover {
+    transform: none;
+  }
+  
+  .responsive-feature-item:hover {
+    transform: none;
+  }
+  
+  /* Add active state effects instead */
+  .stat-card:active {
+    transform: translateY(-3px);
+  }
+  
+  .device-mockup:active {
+    transform: translateY(-3px);
+  }
+  
+  .responsive-feature-item:active {
+    transform: translateY(-3px);
+    background-color: rgba(67, 97, 238, 0.05);
+  }
+}
+
+/* Better Light/Dark Mode Handling for Phone Elements */
+.phone-frame {
+  background: #111;
+  border: 1px solid #000;
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.phone-screen {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark-theme .phone-screen {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.phone-notch {
+  background: #111;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.phone-home-indicator {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.dark-theme .phone-home-indicator {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Fix Navigation Text Size and Alignment */
+.app-tab {
+  font-size: 9px;
+  line-height: 1.1;
+  padding: 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.app-tab i {
+  margin-bottom: 4px;
+}
+
+/* Improved Profile Layout in App Bar */
+.app-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 5px;
+}
+
+.app-profile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-profile-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-profile-title {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dark-theme .app-profile-title {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.app-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+  order: 2;
+}
+
+/* Status Bar Improvements */
+.status-icons {
+  color: #000;
+}
+
+.dark-theme .status-icons {
+  color: #fff;
+}
+
+.status-time {
+  color: #000;
+}
+
+.dark-theme .status-time {
+  color: #fff;
+}

@@ -47,35 +47,37 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Form Submission
     const contactForm = document.querySelector('.contact-form');
-    
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form values
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const company = document.getElementById('company').value;
-        const service = document.getElementById('service').value;
-        const message = document.getElementById('message').value;
-        
-        // Form validation
-        if (!name || !email || !message) {
-            alert('Please fill in all required fields');
-            return;
-        }
-        
-        // Simple email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address');
-            return;
-        }
-        
-        // Normally you would send the form data to a server here
-        // For now, we'll just show a success message
-        alert('Thanks for your message! I\'ll get back to you soon.');
-        contactForm.reset();
-    });
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
+            const service = document.getElementById('service').value;
+            const message = document.getElementById('message').value;
+            
+            // Form validation
+            if (!name || !email || !message) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Simple email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Normally you would send the form data to a server here
+            // For now, we'll just show a success message
+            alert('Thanks for your message! I\'ll get back to you soon.');
+            contactForm.reset();
+        });
+    }
     
     // Lazy load images
     const images = document.querySelectorAll('img[data-src]');
@@ -289,30 +291,128 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // 5. Dark/Light Mode Toggle
-    const themeToggle = document.createElement('button');
-    themeToggle.className = 'theme-toggle';
-    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-    document.body.appendChild(themeToggle);
-    
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    // 5. Theme toggle implementation (simplified elegant version)
+    const themeToggle = document.getElementById('theme-toggle');
+
+    if (themeToggle) {
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        
+        // Default to dark mode if no preference exists
+        if (savedTheme === 'light') {
+            document.body.classList.remove('dark-theme');
+        } else {
+            document.body.classList.add('dark-theme');
+            localStorage.setItem('theme', 'dark');
+        }
+        
+        // Update icon based on current theme
+        function updateThemeIcon() {
+            if (document.body.classList.contains('dark-theme')) {
+                themeToggle.innerHTML = '<i class="fas fa-lightbulb"></i><div class="toggle-glow"></div>';
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
+            } else {
+                themeToggle.innerHTML = '<i class="far fa-lightbulb"></i><div class="toggle-glow"></div>';
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#4361ee');
+            }
+        }
+        
+        // Set initial icon
+        updateThemeIcon();
+        
+        // Toggle theme on click with enhanced animation
+        themeToggle.addEventListener('click', function() {
+            // Add a quick pulse animation on click
+            this.style.transform = 'scale(1.2) rotate(15deg)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 300);
+            
+            document.body.classList.toggle('dark-theme');
+            
+            if (document.body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+            
+            updateThemeIcon();
+            updateOrbColors();
+        });
+        
+        // Add subtle hover glow effect
+        themeToggle.addEventListener('mouseenter', function() {
+            const glow = this.querySelector('.toggle-glow');
+            if (glow) glow.style.opacity = '1';
+        });
+        
+        themeToggle.addEventListener('mouseleave', function() {
+            const glow = this.querySelector('.toggle-glow');
+            if (glow) glow.style.opacity = '0';
+        });
     }
     
-    themeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('dark-theme');
+    // Update orb colors based on theme with improved colors
+    function updateOrbColors() {
+        const orbCore = document.querySelector('.orb-core');
+        const glow = document.querySelector('.glow');
+        const rays = document.querySelectorAll('.ray');
+        const techSymbols = document.querySelectorAll('.tech-symbol');
+        const particles = document.querySelectorAll('.particle');
         
-        if (document.body.classList.contains('dark-theme')) {
-            localStorage.setItem('theme', 'dark');
-            this.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            localStorage.setItem('theme', 'light');
-            this.innerHTML = '<i class="fas fa-moon"></i>';
+        if (orbCore) {
+            const isDarkMode = document.body.classList.contains('dark-theme');
+            orbCore.style.transition = 'background 1s ease, box-shadow 1s ease';
+            
+            if (isDarkMode) {
+                // Dark mode colors - cooler blue/purple with better visibility
+                orbCore.style.background = 'radial-gradient(circle at 30% 30%, rgba(124, 58, 237, 0.95), rgba(79, 70, 229, 0.85) 60%, rgba(99, 102, 241, 0.75) 100%)';
+                orbCore.style.boxShadow = '0 0 60px rgba(124, 58, 237, 0.6), inset 0 0 30px rgba(255, 255, 255, 0.3)';
+                
+                if (glow) {
+                    glow.style.background = 'radial-gradient(circle at center, rgba(124, 58, 237, 0.4) 0%, rgba(79, 70, 229, 0.2) 30%, transparent 70%)';
+                }
+                
+                rays.forEach(ray => {
+                    ray.style.background = 'linear-gradient(to top, rgba(124, 58, 237, 0.8), rgba(124, 58, 237, 0))';
+                });
+                
+                // Also update tech symbols and particles for better visibility
+                techSymbols.forEach(symbol => {
+                    symbol.style.color = '#818cf8';
+                    symbol.style.textShadow = '0 0 10px rgba(124, 58, 237, 0.8)';
+                });
+                
+                particles.forEach(particle => {
+                    particle.style.background = '#818cf8';
+                    particle.style.boxShadow = '0 0 20px rgba(124, 58, 237, 0.8), 0 0 40px rgba(124, 58, 237, 0.4)';
+                });
+            } else {
+                // Light mode colors - original blue
+                orbCore.style.background = 'radial-gradient(circle at 30% 30%, rgba(76, 201, 240, 0.95), rgba(67, 97, 238, 0.85) 60%, rgba(58, 134, 255, 0.75) 100%)';
+                orbCore.style.boxShadow = '0 0 60px rgba(76, 201, 240, 0.6), inset 0 0 30px rgba(255, 255, 255, 0.3)';
+                
+                if (glow) {
+                    glow.style.background = 'radial-gradient(circle at center, rgba(76, 201, 240, 0.4) 0%, rgba(67, 97, 238, 0.2) 30%, transparent 70%)';
+                }
+                
+                rays.forEach(ray => {
+                    ray.style.background = 'linear-gradient(to top, rgba(76, 201, 240, 0.8), rgba(76, 201, 240, 0))';
+                });
+                
+                // Reset tech symbols and particles
+                techSymbols.forEach(symbol => {
+                    symbol.style.color = '';
+                    symbol.style.textShadow = '';
+                });
+                
+                particles.forEach(particle => {
+                    particle.style.background = '';
+                    particle.style.boxShadow = '';
+                });
+            }
         }
-    });
+    }
     
     // 6. Cursor follower effect (desktop only)
     if (window.innerWidth > 992) {
@@ -412,5 +512,238 @@ document.addEventListener('DOMContentLoaded', function() {
                 animation.setSpeed(1); // Return to normal speed
             });
         });
+    }
+
+    // Enhanced Interactive 3D Orb Animation
+    const orbContainer = document.querySelector('.orb-container');
+    const orb = document.querySelector('.orb');
+
+    if (orbContainer && orb) {
+        // Make the orb rotate on mouse movement with enhanced effects
+        orbContainer.addEventListener('mousemove', function(e) {
+            const containerRect = orbContainer.getBoundingClientRect();
+            const centerX = containerRect.width / 2;
+            const centerY = containerRect.height / 2;
+            const mouseX = e.clientX - containerRect.left;
+            const mouseY = e.clientY - containerRect.top;
+            
+            // Calculate rotation based on mouse position with smoother motion
+            const rotateY = (mouseX - centerX) / 10;
+            const rotateX = (centerY - mouseY) / 10;
+            
+            // Apply smooth transition for mouse interaction
+            orb.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            orb.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            
+            // Change intensity of glow based on mouse position
+            const distanceFromCenter = Math.sqrt(
+                Math.pow(mouseX - centerX, 2) + 
+                Math.pow(mouseY - centerY, 2)
+            );
+            
+            const glowElement = document.querySelector('.glow');
+            if (glowElement) {
+                const maxDistance = Math.sqrt(Math.pow(centerX, 2) + Math.pow(centerY, 2));
+                const normalizedDistance = 1 - (distanceFromCenter / maxDistance);
+                glowElement.style.opacity = 0.3 + (normalizedDistance * 0.4);
+            }
+        });
+        
+        // Reset rotation when mouse leaves with smooth transition back to animation
+        orbContainer.addEventListener('mouseleave', function() {
+            orb.style.transform = 'rotateX(10deg) rotateY(0deg)';
+            orb.style.transition = 'transform 1s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            
+            const glowElement = document.querySelector('.glow');
+            if (glowElement) {
+                glowElement.style.opacity = '';
+            }
+        });
+        
+        // Add touch interaction for mobile
+        orbContainer.addEventListener('touchmove', function(e) {
+            if (e.touches.length > 0) {
+                e.preventDefault(); // Prevent scrolling while interacting
+                const touch = e.touches[0];
+                const containerRect = orbContainer.getBoundingClientRect();
+                const centerX = containerRect.width / 2;
+                const centerY = containerRect.height / 2;
+                const touchX = touch.clientX - containerRect.left;
+                const touchY = touch.clientY - containerRect.top;
+                
+                // Calculate rotation with reduced intensity for mobile
+                const rotateY = (touchX - centerX) / 15;
+                const rotateX = (centerY - touchY) / 15;
+                
+                orb.style.transition = 'transform 0.1s ease-out';
+                orb.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                
+                // Create occasional particle effect on touch as well
+                if (Math.random() > 0.8) {
+                    createParticleTrail(touchX, touchY, containerRect);
+                }
+            }
+        });
+        
+        // Reset on touch end
+        orbContainer.addEventListener('touchend', function() {
+            orb.style.transform = 'rotateX(10deg) rotateY(0deg)';
+            orb.style.transition = 'transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        });
+        
+        // Device orientation for mobile devices - subtle tilt based on device orientation
+        if (window.DeviceOrientationEvent && window.innerWidth <= 992) {
+            // Only apply if not currently being touched
+            window.addEventListener('deviceorientation', function(e) {
+                if (!orbContainer.classList.contains('touching')) {
+                    // Use beta (x-axis) and gamma (y-axis) values for tilt
+                    const tiltY = Math.min(Math.max(e.beta, -15), 15) / 2;
+                    const tiltX = Math.min(Math.max(e.gamma, -15), 15) / 2;
+                    
+                    orb.style.transition = 'transform 0.4s ease-out';
+                    orb.style.transform = `rotateX(${tiltY}deg) rotateY(${tiltX}deg)`;
+                }
+            });
+            
+            // Add touching class to prevent orientation conflicts
+            orbContainer.addEventListener('touchstart', () => {
+                orbContainer.classList.add('touching');
+            });
+            orbContainer.addEventListener('touchend', () => {
+                orbContainer.classList.remove('touching');
+            });
+        }
+        
+        // Add keyframe animation for particle fade-out
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fade-out-particle {
+                0% { transform: scale(1); opacity: 0.8; }
+                100% { transform: scale(0); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Function to create particle trail on interaction
+        function createParticleTrail(x, y, containerRect) {
+            const particle = document.createElement('div');
+            particle.className = 'interaction-particle';
+            particle.style.cssText = `
+                position: absolute;
+                width: 5px;
+                height: 5px;
+                background: var(--primary-color);
+                border-radius: 50%;
+                opacity: 0.8;
+                filter: blur(1px);
+                pointer-events: none;
+                z-index: 10;
+                left: ${x}px;
+                top: ${y}px;
+                box-shadow: 0 0 10px var(--primary-color);
+                animation: fade-out-particle 1s forwards ease-out;
+            `;
+            
+            orbContainer.appendChild(particle);
+            
+            // Remove particle after animation completes
+            setTimeout(() => {
+                if (orbContainer.contains(particle)) {
+                    orbContainer.removeChild(particle);
+                }
+            }, 1000);
+        }
+        
+        // Create tech symbols and distribute them in 3D space
+        const techSymbols = document.querySelector('.tech-symbols');
+        if (techSymbols) {
+            const symbols = techSymbols.querySelectorAll('.tech-symbol');
+            symbols.forEach((symbol, index) => {
+                // Create 3D positioning for the tech symbols
+                const angleY = (index / symbols.length) * 360;
+                const radius = 150 + (Math.random() * 30);
+                const x = radius * Math.sin(angleY * Math.PI / 180);
+                const z = radius * Math.cos(angleY * Math.PI / 180);
+                const y = -50 + Math.random() * 100;
+                
+                symbol.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
+            });
+        }
+    }
+});
+
+// Add enhanced smooth scroll handling with performance optimizations
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Navigation Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    });
+    
+    // Smooth Scrolling for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Close mobile menu if open
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return; // Skip empty links
+            
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                
+                // Use native smooth scroll with fallback
+                if ('scrollBehavior' in document.documentElement.style) {
+                    // Modern browsers with native smooth scrolling
+                    window.scrollTo({
+                        top: targetPosition - headerHeight,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    // Fallback for browsers without native smooth scrolling
+                    smoothScrollTo(targetPosition - headerHeight, 800);
+                }
+            }
+        });
+    });
+    
+    // Smooth scrolling fallback function for older browsers
+    function smoothScrollTo(targetPosition, duration) {
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition;
+        let startTime = null;
+        
+        function animation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            // Easing function for smoother acceleration/deceleration
+            const ease = easeInOutQuad(progress);
+            
+            window.scrollTo(0, startPosition + distance * ease);
+            
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            }
+        }
+        
+        // Easing function
+        function easeInOutQuad(t) {
+            return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        }
+        
+        requestAnimationFrame(animation);
     }
 });

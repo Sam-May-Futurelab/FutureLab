@@ -20,8 +20,14 @@
                 <li><a href="#services">Services</a></li>
                 <li><a href="#portfolio">Work</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="showcase.html">Showcase</a></li>
                 <li><a href="#contact" class="btn btn-outline">Contact</a></li>
             </ul>
+            <!-- We'll replace this with our new container via JS -->
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+                <i class="fas fa-lightbulb"></i>
+                <div class="toggle-glow"></div>
+            </button>
             <div class="hamburger">
                 <span></span>
                 <span></span>
@@ -52,8 +58,54 @@
                     </div>
                 </div>
                 <div class="hero-image animate-in stagger-2">
-                    <div id="lottie-animation" class="lottie-container"></div>
-                    <img src="assets/hero-image.png" alt="Website and app development illustration" class="fallback-image">
+                    <div class="orb-container">
+                        <!-- Enhanced orb structure -->
+                        <div class="orb">
+                            <div class="orb-core"></div>
+                            <div class="orb-layer layer-1"></div>
+                            <div class="orb-layer layer-2"></div>
+                            <div class="orb-layer layer-3"></div>
+                            
+                            <!-- New elements for enhanced effects -->
+                            <div class="orb-ring ring-1"></div>
+                            <div class="orb-ring ring-2"></div>
+                            
+                            <!-- Tech symbols floating around the orb -->
+                            <div class="tech-symbols">
+                                <div class="tech-symbol" data-symbol="</>"></div>
+                                <div class="tech-symbol" data-symbol="{}"></div>
+                                <div class="tech-symbol" data-symbol="[]"></div>
+                                <div class="tech-symbol" data-symbol="#"></div>
+                                <div class="tech-symbol" data-symbol="()"></div>
+                            </div>
+                            
+                            <div class="orb-particles">
+                                <!-- Existing particles -->
+                                <div class="particle p1"></div>
+                                <div class="particle p2"></div>
+                                <div class="particle p3"></div>
+                                <div class="particle p4"></div>
+                                <div class="particle p5"></div>
+                                <div class="particle p6"></div>
+                                <div class="particle p7"></div>
+                                <div class="particle p8"></div>
+                            </div>
+                            
+                            <!-- Light rays emanating from orb -->
+                            <div class="light-rays">
+                                <div class="ray ray-1"></div>
+                                <div class="ray ray-2"></div>
+                                <div class="ray ray-3"></div>
+                                <div class="ray ray-4"></div>
+                            </div>
+                            
+                            <div class="glow"></div>
+                        </div>
+                        <div class="orb-light"></div>
+                        
+                        <!-- Dynamic background effect -->
+                        <div class="orb-background"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -325,5 +377,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script src="script.js"></script>
     <script src="testimonials.js"></script>
+    <script src="placeholder.js"></script>
 </body>
 </html>
