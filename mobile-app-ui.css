@@ -872,10 +872,10 @@ body {
   background: rgba(255, 255, 255, 0.9);
 }
 
-/* Fix Navigation Text Size and Alignment */
+/* Fix Navigation Text Size and Alignment - REDUCE FURTHER */
 .app-tab {
-  font-size: 9px;
-  line-height: 1.1;
+  font-size: 8px; /* Reduce from 9px to 8px */
+  line-height: 1;
   padding: 0 2px;
   white-space: nowrap;
   overflow: hidden;
@@ -883,15 +883,18 @@ body {
   max-width: 100%;
 }
 
+/* Make nav icon circles smaller */
 .app-tab i {
-  margin-bottom: 4px;
+  margin-bottom: 3px;
+  font-size: 14px; /* Reduce from default size */
 }
 
-/* Improved Profile Layout in App Bar */
+/* Completely fixed Profile Layout in App Bar */
 .app-profile {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between; /* Space between name and avatar */
+  width: 100%; /* Ensure the container takes full width */
   padding: 0 5px;
 }
 
@@ -922,6 +925,7 @@ body {
   color: rgba(255, 255, 255, 0.5);
 }
 
+/* Improved app avatar with better contrast for light mode */
 .app-avatar {
   width: 32px;
   height: 32px;
@@ -934,7 +938,15 @@ body {
   font-size: 14px;
   font-weight: 600;
   flex-shrink: 0;
-  order: 2;
+  margin-left: auto; /* Push to the right */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Add subtle border */
+}
+
+/* Light mode specific adjustments for profile */
+.app-header .app-avatar {
+  background: var(--primary-color); /* Ensure good contrast in light mode */
+  color: white;
 }
 
 /* Status Bar Improvements */
