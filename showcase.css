@@ -512,6 +512,32 @@ section:has(.section-header:contains("Mobile")) {
     justify-content: flex-end;
 }
 
+/* Fix oversized mockup images on mobile */
+img[src*="cardwizz-mockup.png"],
+img[src*="pokespud-mockup.png"] {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Ensure proper sizing in demo cards and project showcases */
+.demo-preview img[src*="cardwizz-mockup.png"],
+.demo-preview img[src*="pokespud-mockup.png"],
+.project-showcase img[src*="cardwizz-mockup.png"],
+.project-showcase img[src*="pokespud-mockup.png"] {
+    max-height: 300px;
+    object-fit: contain;
+}
+
+/* Additional responsive handling for mobile devices */
+@media screen and (max-width: 768px) {
+    img[src*="cardwizz-mockup.png"],
+    img[src*="pokespud-mockup.png"] {
+        max-height: 250px; /* Further limit height on mobile */
+    }
+}
+
 /* 3D Product Viewer */
 .product-viewer {
     width: 100%;
