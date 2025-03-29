@@ -202,6 +202,30 @@ section.intro-section,
   }
 }
 
+/* PokéSpud Mockup Image Styling - CENTERED WITH SOFTER CORNERS */
+.pokespud-section img[src*="pokespud-mockup"],
+img[src*="pokespud-mockup"],
+.pokespud-mockup {
+  border-radius: 16px; /* Increased from 12px for softer corners */
+  display: block; /* Ensure it can be properly centered */
+  margin-left: auto; /* Center horizontally instead of pushing left */
+  margin-right: auto; /* Center horizontally */
+  max-width: 90%; /* Prevent hitting edge of container */
+  width: auto; /* Allow natural sizing */
+  height: auto; /* Maintain aspect ratio */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+/* Container styling to ensure proper fit */
+.pokespud-image-container,
+.section-feature-image,
+div:has(> img[src*="pokespud-mockup"]) {
+  overflow: hidden; /* Prevent any overflow */
+  padding: 0 15px; /* Add padding for breathing room */
+  text-align: center; /* For IE compatibility */
+}
+
 /* Section Title */
 .section-title {
     font-size: 2.5rem;

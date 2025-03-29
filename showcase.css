@@ -297,6 +297,46 @@
     overflow: hidden;
 }
 
+/* AGGRESSIVE FIX: Reduce vertical spacing between showcase sections */
+.showcase-section {
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+}
+
+/* Target specific sections by their titles/content */
+.showcase-section:has(h2:contains("Product")),
+.showcase-section:has(h2:contains("Business")),
+.showcase-section:has(h2:contains("Mobile")),
+section:has(.section-header:contains("Product")),
+section:has(.section-header:contains("Business")),
+section:has(.section-header:contains("Mobile")) {
+    margin-top: 20px !important;
+    padding-top: 20px !important;
+}
+
+/* Remove header bottom margins to tighten spacing */
+.showcase-section .section-header {
+    margin-bottom: 20px !important;
+}
+
+/* First showcase section should keep some space from intro */
+.showcase-section:first-of-type {
+    margin-top: 40px !important;
+    padding-top: 30px !important;
+}
+
+/* Apply legacy selectors as backup */
+#product-experiences, #business-tools, #mobile-experiences,
+.product-section, .business-section, .mobile-section,
+.showcase-section[data-category="product"],
+.showcase-section[data-category="business"],
+.showcase-section[data-category="mobile"] {
+    margin-top: 20px !important;
+    padding-top: 20px !important;
+}
+
 .section-header {
     text-align: center;
     margin-bottom: 45px;

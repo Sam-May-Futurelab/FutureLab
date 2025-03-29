@@ -84,40 +84,54 @@
 
 /* Activity list styling */
 .activity-list {
-  padding: 15px;
+  padding: 5px 0 15px;
 }
 
 .activity-title {
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 15px;
+  margin: 10px 0 15px;
+  color: #0f172a;
+}
+
+.dark-theme .activity-title {
+  color: #f8fafc;
 }
 
 .activity-item {
   background: white;
-  border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 12px;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   gap: 15px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(226, 232, 240, 0.7);
 }
 
 .dark-theme .activity-item {
   background: #1e293b;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  border-color: rgba(51, 65, 85, 0.5);
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15);
+}
+
+.activity-item:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.02);
 }
 
 .activity-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(67, 97, 238, 0.1);
   border-radius: 12px;
   color: #4361ee;
+  font-size: 18px;
 }
 
 .activity-info {
@@ -127,11 +141,22 @@
 .activity-name {
   font-weight: 600;
   margin-bottom: 5px;
+  color: #0f172a;
+  font-size: 15px;
+}
+
+.dark-theme .activity-name {
+  color: #f8fafc;
 }
 
 .activity-details {
   font-size: 13px;
   color: #64748b;
+  line-height: 1.4;
+}
+
+.dark-theme .activity-details {
+  color: #cbd5e1;
 }
 
 /* User avatar styling */
@@ -148,6 +173,25 @@
 .user-avatar i {
   font-size: 36px;
   color: #ffffff;
+}
+
+/* REMOVE ALL PROFILE PICTURES AND AVATARS COMPLETELY */
+.app-header .app-avatar,
+.app-avatar,
+.profile-pic,
+.profile-image,
+.user-profile-pic,
+.avatar-container,
+.profile-container img,
+.user-pic,
+[class*="avatar"],
+[class*="profile"] img {
+  display: none !important;
+}
+
+/* Ensure proper spacing where avatar was removed */
+.app-title-container {
+  margin-right: 0 !important;
 }
 
 /* Chart styling fixes */
@@ -874,94 +918,154 @@ body {
 
 /* Fix Navigation Text Size and Alignment - REDUCE FURTHER */
 .app-tab {
-  font-size: 8px; /* Reduce from 9px to 8px */
-  line-height: 1;
-  padding: 0 2px;
-  white-space: nowrap;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 4px !important; /* Extremely tiny text */
+  padding: 8px 0;
+}
+
+.app-tab span {
+  display: block !important;
+  width: 100% !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Make icons more prominent compared to text */
+.app-tab i {
+  font-size: 16px;
+  margin-bottom: 1px; /* Less space between icon and text */
+}
+
+/* EXTREME Fix Navigation Text Size - Make ULTRA Small */
+.app-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px; /* Minimal gap */
+  font-size: 4px !important; /* Ultra small font size */
+  color: #94a3b8;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 8px 0 6px; /* Slightly reduced bottom padding */
   overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 100%;
 }
 
-/* Make nav icon circles smaller */
+/* Optimize icon-to-text ratio */
 .app-tab i {
-  margin-bottom: 3px;
-  font-size: 14px; /* Reduce from default size */
+  font-size: 14px; /* Slightly smaller icon */
+  margin-bottom: 1px;
+  line-height: 1;
+}
+
+/* Ensure text is properly contained */
+.app-tab span {
+  display: block !important;
+  width: 100% !important;
+  text-align: center;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  letter-spacing: -0.3px; /* Tighter letter spacing */
+  line-height: 1;
 }
 
 /* Completely fixed Profile Layout in App Bar */
 .app-profile {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* Space between name and avatar */
-  width: 100%; /* Ensure the container takes full width */
-  padding: 0 5px;
-}
-
-.app-profile-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.app-profile-name {
-  font-size: 14px;
-  font-weight: 600;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.app-profile-title {
-  font-size: 11px;
-  color: rgba(0, 0, 0, 0.5);
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.dark-theme .app-profile-title {
-  color: rgba(255, 255, 255, 0.5);
+  display: none !important;
 }
 
 /* Improved app avatar with better contrast for light mode */
-.app-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--primary-color);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  flex-shrink: 0;
-  margin-left: auto; /* Push to the right */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Add subtle border */
-}
-
-/* Light mode specific adjustments for profile */
 .app-header .app-avatar {
-  background: var(--primary-color); /* Ensure good contrast in light mode */
-  color: white;
+  display: none !important;
 }
 
-/* Status Bar Improvements */
-.status-icons {
-  color: #000;
+/* ULTRA-SIMPLE HEADER FIX - FORCE HORIZONTAL */
+.app-title-container {
+  display: flex !important;
+  flex-direction: row !important;
+  max-width: 100% !important; /* Use full width since avatar is gone */
 }
 
-.dark-theme .status-icons {
-  color: #fff;
+.app-greeting, .app-title {
+  display: inline !important;
+  font-size: 15px !important;
 }
 
-.status-time {
-  color: #000;
+.app-greeting {
+  margin-right: 4px !important;
 }
 
-.dark-theme .status-time {
-  color: #fff;
+/* REDESIGNED App Content Area */
+.app-content {
+  height: calc(100% - 90px); /* Adjusted to account for taller header area */
+  padding: 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: #f8fafc;
+}
+
+.dark-theme .app-content {
+  background-color: #0f172a;
+}
+
+/* Ensure consistent width across all tab panels */
+.tab-content {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Standardize content width for all app screens */
+.app-screen {
+  width: 100%;
+}
+
+/* Ensure PWA content has the same width as other content sections */
+.pwa-content {
+  margin-top: 30px;
+  padding: 16px 16px 80px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Standardize horizontal spacing for all tab content types */
+.app-content, 
+.responsive-design-content, 
+.pwa-content {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Fix mobile text section width consistency */
+.mobile-text-section {
+  flex: 1;
+  min-width: 0; /* Fix for flexbox and text overflow */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Make sure the app-content containers are consistent */
+.app-content,
+.responsive-design-screen .app-content,
+.pwa-app-screen .app-content {
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure mobile-content-layout is consistent */
+.mobile-content-layout {
+  display: flex;
+  align-items: stretch;
+  gap: 30px;
+  margin: 40px 0;
+  width: 100%;
 }

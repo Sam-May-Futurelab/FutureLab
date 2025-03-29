@@ -986,51 +986,53 @@ document.addEventListener('DOMContentLoaded', function() {
         const filterBtns = document.querySelectorAll('.filter-btn');
         const showcaseSections = document.querySelectorAll('.showcase-section[data-category]');
         
-        if (!filterBtns.length || !showcaseSections.length) return;
+        if (!filterBtns.length || !showcaseSections.length)
+            return;
         
         filterBtns.forEach(btn => {
             btn.addEventListener('click', function() {
-                const category = this.getAttribute('data-filter');
+                // Get filter value
+                const filterValue = this.getAttribute('data-filter');
                 
-                // Update active button
+                // Fix "mobile" vs "mobile-solutions" mismatch
+                const targetCategory = filterValue === 'mobile-solutions' ? 'mobile' : filterValue;
+                
+                // Remove active class from all buttons and add to clicked
                 filterBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 
-                // Show/hide sections based on category
-                if (category === 'all') {
-                    // Show all sections
+                // Show all or filter
+                if (filterValue === 'all') {
                     showcaseSections.forEach(section => {
                         section.style.display = 'block';
-                        
-                        // Add animation
                         addFadeInAnimation(section);
                     });
                 } else {
-                    // Show only matching sections
+                    // Show only matching categories
                     showcaseSections.forEach(section => {
                         const sectionCategory = section.getAttribute('data-category');
                         
-                        if (sectionCategory === category) {
+                        // Show if category matches OR if it's "mobile-solutions" and section is "mobile"
+                        if (sectionCategory === targetCategory) {
                             section.style.display = 'block';
-                            
-                            // Add animation
                             addFadeInAnimation(section);
                         } else {
                             section.style.display = 'none';
                         }
                     });
-                }
-                
-                // Scroll to beginning of first visible section
-                const firstVisible = document.querySelector('.showcase-section[style="display: block;"]');
-                if (firstVisible) {
-                    const headerHeight = document.querySelector('header').offsetHeight;
-                    const targetPosition = firstVisible.getBoundingClientRect().top + window.pageYOffset;
                     
-                    window.scrollTo({
-                        top: targetPosition - headerHeight - 50,
-                        behavior: 'smooth'
-                    });
+                    // Find and scroll to the first matching section
+                    const targetSection = document.querySelector(`.showcase-section[data-category="${targetCategory}"]`);
+                    if (targetSection) {
+                        const headerOffset = 100;
+                        const sectionPosition = targetSection.getBoundingClientRect().top;
+                        const offsetPosition = sectionPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
                 }
             });
         });
