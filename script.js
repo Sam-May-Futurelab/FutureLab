@@ -732,74 +732,77 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// COMPLETELY DESTROY ALL ANIMATIONS ON MOBILE - GUARANTEED REMOVAL
+// URGENT: COMPLETELY REMOVE BLUE ORB ANIMATION ON MOBILE DEVICES
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if mobile
-    if (window.innerWidth <= 768 || 
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      
-      console.log("Mobile device detected - removing animations");
-      
-      // 1. Find and remove dotlottie/lottie players
-      const animationElements = document.querySelectorAll(
-        'dotlottie-player, lottie-player, .lottie-container, .animation-container, ' +
-        '.hero-animation, .hero-3d-element, .floating-elements, .animated-3d-element, ' +
-        '.particle-animation, [id*="lottie"], [class*="lottie"], [id*="animation"], ' +
-        '[class*="animation"]'
-      );
-      
-      // 2. Remove animation elements from the DOM entirely
-      animationElements.forEach(element => {
-        if (element && element.parentNode) {
-          console.log("Removing animation element:", element);
-          element.parentNode.removeChild(element);
-        }
-      });
-      
-      // 3. Find any script tags loading animation libraries and disable them
-      const animationScripts = document.querySelectorAll(
-        'script[src*="lottie"], script[src*="dotlottie"], script[src*="animation"], ' +
-        'script[src*="3d"], script[src*="three"], script[src*="gsap"]'
-      );
-      
-      animationScripts.forEach(script => {
-        // Prevent script from loading/executing further
-        script.setAttribute('type', 'text/plain');
-        console.log("Disabled animation script:", script.src);
-      });
-      
-      // 4. Nullify any global animation objects
-      const animationObjects = [
-        'lottie', 'dotLottie', 'GSAP', 'gsap', 'TweenMax', 'TimelineMax', 
-        'Animation', 'Animator', 'THREE', 'three'
+  // Check if we're on mobile
+  const isMobile = window.innerWidth <= 768 || 
+                   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  
+  if (isMobile) {
+    console.log("Mobile detected: Removing blue orb animations");
+    
+    // Find and directly remove all 3D orb elements
+    const orbElements = document.querySelectorAll(
+      '.hero-3d-element, .hero-animation, .animated-orb, .orb-animation, ' +
+      '.animated-gradient, .floating-elements, .blue-orb, .animated-sphere, ' +
+      '.hero-animation-container, .hero-3d-container, .hero-3d-object'
+    );
+    
+    orbElements.forEach(element => {
+      // If the element exists, remove it completely from the DOM
+      if (element && element.parentNode) {
+        console.log("Removing orb element:", element);
+        element.parentNode.removeChild(element);
+      }
+    });
+    
+    // Stop any animation loops that might be running
+    if (window.requestAnimationFrame) {
+      // Find any animation loop functions in the global scope
+      const possibleAnimationFunctions = [
+        'animateOrb', 'renderOrb', 'updateOrb', 'drawOrb', 
+        'animateScene', 'renderScene', 'animate3D', 'render3D',
+        'updateAnimation', 'orbAnimation', 'animationLoop'
       ];
       
-      animationObjects.forEach(obj => {
-        if (window[obj]) {
-          console.log("Nullifying animation object:", obj);
-          window[obj] = null;
+      // Try to find and stop these functions
+      possibleAnimationFunctions.forEach(funcName => {
+        if (typeof window[funcName] === 'function') {
+          console.log("Disabling animation function:", funcName);
+          window[funcName] = function() { return false; };
         }
       });
       
-      // 5. Set a flag that can be checked elsewhere
-      window.animationsDisabled = true;
-      
-      // 6. Add a small snippet of CSS for good measure
-      const forceDisableStyle = document.createElement('style');
-      forceDisableStyle.textContent = `
-        .lottie-player, dotlottie-player, .lottie-container, .hero-animation,
-        .hero-animation-container, .animated-gradient, .animation-container,
-        .blue-orb, .animated-orb, .hero-orb, .hero-3d-element, .floating-elements,
-        .animated-3d-element, .particle-animation, [id*="lottie"], [class*="lottie"],
-        [id*="animation"], [class*="animation"], [id*="animated"], [class*="animated"],
-        [id*="orb"], [class*="orb"], [id*="particle"], [class*="particle"] {
-          display: none !important;
-          visibility: hidden !important;
-          opacity: 0 !important;
-        }
-      `;
-      document.head.appendChild(forceDisableStyle);
+      // Clear any animation frame callbacks
+      let id = window.requestAnimationFrame(function(){});
+      while(id--) {
+        window.cancelAnimationFrame(id);
+      }
     }
+    
+    // Add CSS to ensure no orbs are visible
+    const style = document.createElement('style');
+    style.textContent = `
+      .hero-3d-element, .hero-animation, .animated-orb, .orb-animation,
+      .animated-gradient, .floating-elements, .blue-orb, .animated-sphere,
+      .hero-animation-container, .hero-3d-container, .hero-3d-object,
+      [class*="orb"], [class*="3d-"], [class*="animation"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        max-height: 0 !important;
+        max-width: 0 !important;
+        position: absolute !important;
+        pointer-events: none !important;
+        z-index: -9999 !important;
+        overflow: hidden !important;
+        animation: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
 });
 
 // FIXED MOBILE MENU TOGGLE
