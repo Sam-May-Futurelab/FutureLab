@@ -523,6 +523,39 @@ img[src*="pokespud-mockup.png"],
     object-fit: contain !important;
     display: block;
     margin: 0 auto;
+    width: auto !important;
+}
+
+/* FIX LARGE MOCKUP IMAGES - PREVENT CUTTING OFF ON MOBILE */
+img[src*="cardwizz-mockup.png"],
+img[src*="pokespud-mockup.png"],
+.project-showcase img,
+.demo-preview img {
+  max-width: 100%; /* Ensure image is never wider than container */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure entire image is visible */
+  margin: 0 auto; /* Center the image */
+  display: block; /* Remove any inline spacing issues */
+  width: auto !important; /* Override any fixed width */
+}
+
+/* Special handling for mobile screens */
+@media screen and (max-width: 768px) {
+  /* Container modifications to accommodate tall images */
+  .demo-preview, 
+  .project-showcase {
+    overflow: visible; /* Allow image to expand as needed */
+    padding: 0 0 20px; /* Add padding at bottom */
+    height: auto !important; /* Override any fixed height */
+    min-height: 250px; /* Minimum height for content */
+  }
+  
+  /* Full-width image containers */
+  .demo-content,
+  .project-content {
+    width: 100%;
+    overflow: visible;
+  }
 }
 
 /* Additional constraints for smaller screens */
