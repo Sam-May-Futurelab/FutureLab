@@ -540,6 +540,93 @@ nav {
   }
 }
 
+/* EMERGENCY FIX FOR MOBILE MENU SCROLLABILITY */
+.nav-links.active,
+.mobile-nav.active, 
+.main-nav.active {
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  display: block !important;
+  -webkit-overflow-scrolling: touch !important;
+  position: fixed !important;
+  top: 70px !important; /* Adjust based on your header height */
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+}
+
+/* IMPROVED MOBILE MENU STYLES - MAKE LARGER & MORE ACCESSIBLE */
+@media (max-width: 768px) {
+  /* Enhanced mobile menu - larger and more accessible */
+  .mobile-nav.active,
+  .nav-links.active,
+  .main-nav.active {
+    max-height: 85vh !important; /* Increased height to show more items */
+    overflow-y: auto !important;
+    padding: 25px 20px 100px !important; /* Much more bottom padding */
+    display: flex !important;
+    flex-direction: column !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  .dark-theme .mobile-nav.active,
+  .dark-theme .nav-links.active,
+  .dark-theme .main-nav.active {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+  }
+  
+  /* Improve tap target size and spacing for menu items */
+  .nav-links a,
+  .mobile-nav a,
+  .main-nav a,
+  .nav-links li,
+  .mobile-nav li,
+  .main-nav li {
+    display: block !important;
+    padding: 15px 0 !important;
+    margin: 0 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    font-size: 16px !important; /* Ensure readable text size */
+  }
+  
+  .dark-theme .nav-links a,
+  .dark-theme .mobile-nav a,
+  .dark-theme .main-nav a,
+  .dark-theme .nav-links li,
+  .dark-theme .mobile-nav li,
+  .dark-theme .main-nav li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  /* Ensure the last item has no border */
+  .nav-links a:last-child,
+  .mobile-nav a:last-child,
+  .main-nav a:last-child,
+  .nav-links li:last-child,
+  .mobile-nav li:last-child,
+  .main-nav li:last-child {
+    border-bottom: none !important;
+  }
+  
+  /* Add visual indicator for tap targets */
+  .nav-links a:active,
+  .mobile-nav a:active,
+  .main-nav a:active {
+    background-color: rgba(67, 97, 238, 0.05) !important;
+  }
+  
+  /* Fix for Contact button in mobile menu */
+  .nav-links a.btn,
+  .mobile-nav a.btn,
+  .main-nav a.btn {
+    display: inline-block !important;
+    margin: 15px 0 5px !important;
+    padding: 12px 25px !important;
+    text-align: center !important;
+  }
+}
+
 /* Fix for Contact button in header */
 .nav-links a.btn {
     display: inline-flex;
@@ -605,6 +692,28 @@ nav {
   .mobile-nav.active, 
   .main-nav.active {
     display: block !important;
+  }
+}
+
+/* Hide Showcase Links on Mobile */
+@media (max-width: 768px) {
+  /* Hide showcase navigation links on mobile */
+  .nav-links a[href*="showcase"],
+  .mobile-nav a[href*="showcase"],
+  .main-nav a[href*="showcase"],
+  a[href*="showcase.html"],
+  .showcase-link,
+  a.showcase-link,
+  li:has(> a[href*="showcase"]),
+  li:has(> a.showcase-link),
+  .btn-showcase {
+    display: none !important;
+  }
+  
+  /* Hide showcase nav item container */
+  li:has(a[href*="showcase"]),
+  li:has(a.showcase-link) {
+    display: none !important;
   }
 }
 

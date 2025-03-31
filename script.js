@@ -1033,3 +1033,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+// Hide showcase links on mobile
+document.addEventListener('DOMContentLoaded', function() {
+  function hideShowcaseOnMobile() {
+    if (window.innerWidth <= 768) {
+      const showcaseLinks = document.querySelectorAll('a[href*="showcase"], .showcase-link');
+      showcaseLinks.forEach(link => {
+        // Hide link
+        link.style.display = 'none';
+        // If link is in a list item, hide the list item too
+        const parentLi = link.closest('li');
+        if (parentLi) {
+          parentLi.style.display = 'none';
+        }
+      });
+    }
+  }
+  
+  // Run on page load
+  hideShowcaseOnMobile();
+  
+  // Also run on resize
+  window.addEventListener('resize', hideShowcaseOnMobile);
+});

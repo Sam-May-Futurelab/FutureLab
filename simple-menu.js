@@ -44,10 +44,14 @@ document.addEventListener('DOMContentLoaded', function() {
           mobileMenu.style.display = 'block';
           mobileMenu.style.opacity = '1';
           mobileMenu.style.visibility = 'visible';
+          mobileMenu.style.maxHeight = '85vh'; // Set a larger max-height
+          document.body.style.overflow = 'hidden'; // Prevent scrolling of body when menu is open
         } else {
           mobileMenu.style.display = '';
           mobileMenu.style.opacity = '';
           mobileMenu.style.visibility = '';
+          mobileMenu.style.maxHeight = '';
+          document.body.style.overflow = ''; // Restore body scrolling
         }
       }
       
