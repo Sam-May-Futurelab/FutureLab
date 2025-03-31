@@ -233,6 +233,80 @@ section.intro-section,
   }
 }
 
+/* MOBILE VERTICAL SPACING ADJUSTMENTS */
+@media (max-width: 768px) {
+  /* Reduce space between hero section and services section */
+  .hero {
+    margin-bottom: 10px !important;
+    padding-bottom: 20px !important;
+  }
+  
+  /* Reduce space above services section */
+  section.services-section,
+  section#services,
+  .services {
+    padding-top: 20px !important;
+    margin-top: 10px !important;
+  }
+  
+  /* Specifically reduce the gap between brands and services */
+  .trusted-brands-section,
+  .clients {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  /* Reduce space above portfolio/work section */
+  section.portfolio-section,
+  section#portfolio,
+  .portfolio {
+    padding-top: 20px !important;
+    margin-top: 20px !important;
+  }
+  
+  /* Reduce space below services section */
+  section.services-section,
+  section#services,
+  .services {
+    padding-bottom: 30px !important;
+    margin-bottom: 10px !important;
+  }
+  
+  /* General section padding reduction for mobile */
+  section {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+  }
+  
+  /* Reduce space between section titles and content */
+  .section-title {
+    margin-bottom: 20px !important;
+  }
+  
+  /* Reduce margin around client logos */
+  .client-logos {
+    margin-top: 10px !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Even tighter spacing for very small devices */
+@media (max-width: 480px) {
+  section {
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
+  }
+  
+  .hero {
+    padding-bottom: 10px !important;
+  }
+  
+  /* Ensure section titles remain properly visible */
+  .section-title {
+    margin-bottom: 15px !important;
+  }
+}
+
 /* PokéSpud Mockup Image Styling - CENTERED WITH SOFTER CORNERS */
 .pokespud-section img[src*="pokespud-mockup"],
 img[src*="pokespud-mockup"],
