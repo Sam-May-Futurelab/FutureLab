@@ -387,20 +387,123 @@ nav {
     color: var(--primary-color);
 }
 
-.hamburger {
-    display: none;
-    cursor: pointer;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 24px;
+/* Fix hamburger menu toggle styling */
+.hamburger, 
+.menu-toggle, 
+.mobile-menu-button {
+  display: block;
+  width: 30px;
+  height: 22px;
+  position: relative;
+  cursor: pointer;
+  z-index: 1000;
+  background: transparent; /* Remove any background */
+  border: none;
+  padding: 0;
 }
 
-.hamburger span {
-    display: block;
-    width: 30px;
-    height: 3px;
-    background-color: var(--dark-color);
-    transition: var(--transition);
+/* Create hamburger icon with spans */
+.hamburger span,
+.menu-toggle span,
+.mobile-menu-button span {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: #0f172a; /* Dark color for light theme */
+  border-radius: 3px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: .25s ease-in-out;
+}
+
+.dark-theme .hamburger span,
+.dark-theme .menu-toggle span,
+.dark-theme .mobile-menu-button span {
+  background: #f8fafc; /* Light color for dark theme */
+}
+
+/* Position the lines */
+.hamburger span:nth-child(1),
+.menu-toggle span:nth-child(1),
+.mobile-menu-button span:nth-child(1) {
+  top: 0px;
+}
+
+.hamburger span:nth-child(2),
+.menu-toggle span:nth-child(2),
+.mobile-menu-button span:nth-child(2) {
+  top: 9px;
+}
+
+.hamburger span:nth-child(3),
+.menu-toggle span:nth-child(3),
+.mobile-menu-button span:nth-child(3) {
+  top: 18px;
+}
+
+/* Transform spans when active */
+.hamburger.active span:nth-child(1),
+.menu-toggle.active span:nth-child(1),
+.mobile-menu-button.active span:nth-child(1) {
+  top: 9px;
+  transform: rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2),
+.menu-toggle.active span:nth-child(2),
+.mobile-menu-button.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3),
+.menu-toggle.active span:nth-child(3),
+.mobile-menu-button.active span:nth-child(3) {
+  top: 9px;
+  transform: rotate(-45deg);
+}
+
+/* Fix mobile menu dropdown styling */
+.nav-links, 
+.mobile-nav, 
+.main-nav {
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .nav-links, 
+  .mobile-nav, 
+  .main-nav {
+    position: absolute;
+    top: 70px; /* Adjust based on header height */
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 999;
+  }
+  
+  .dark-theme .nav-links,
+  .dark-theme .mobile-nav,
+  .dark-theme .main-nav {
+    background: #1e293b;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .nav-links.active,
+  .mobile-nav.active,
+  .main-nav.active {
+    max-height: 80vh;
+    opacity: 1;
+    visibility: visible;
+    overflow-y: auto;
+  }
 }
 
 /* Fix for Contact button in header */

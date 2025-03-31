@@ -732,6 +732,56 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// FIXED MOBILE MENU TOGGLE
+document.addEventListener('DOMContentLoaded', function() {
+    // Create hamburger spans if they don't exist
+    const hamburger = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
+    if (hamburger) {
+        // Check if hamburger already has span children
+        if (hamburger.querySelectorAll('span').length === 0) {
+            // Create three spans for the hamburger icon
+            for (let i = 0; i < 3; i++) {
+                const span = document.createElement('span');
+                hamburger.appendChild(span);
+            }
+        }
+        
+        // Fix mobile menu toggle functionality
+        hamburger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Define which menu element to toggle based on what exists in the document
+            const navElement = 
+                document.querySelector('.nav-links') || 
+                document.querySelector('.mobile-nav') || 
+                document.querySelector('.main-nav');
+            
+            if (navElement) {
+                // Toggle active classes
+                this.classList.toggle('active');
+                navElement.classList.toggle('active');
+                
+                // Log state for debugging
+                console.log('Mobile menu toggled:', navElement.classList.contains('active'));
+            } else {
+                console.error('No navigation menu found to toggle');
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navElement = document.querySelector('.nav-links.active, .mobile-nav.active, .main-nav.active');
+            if (navElement && !navElement.contains(e.target) && !hamburger.contains(e.target)) {
+                navElement.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+    } else {
+        console.warn('No hamburger menu toggle found');
+    }
+});
+
 // EMERGENCY FIX: Reliable mobile menu toggle and scrolling
 document.addEventListener('DOMContentLoaded', function() {
     const hamburgerBtn = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
