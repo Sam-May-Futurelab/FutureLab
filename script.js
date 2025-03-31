@@ -928,3 +928,44 @@ document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(animation);
     }
 });
+
+// Disable dotlottie animations on mobile
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if we're on mobile
+    const isMobile = window.innerWidth <= 768 || 
+                     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // Find all possible dotlottie animations
+        const dotlottieScript = document.querySelector('script[src*="dotlottie.min.js"]');
+        
+        // If the script is loaded, try to stop all animations
+        if (dotlottieScript) {
+            // Give time for animations to initialize before stopping them
+            setTimeout(() => {
+                try {
+                    // Try different methods to stop animations
+                    if (window.DotLottie) {
+                        const animations = document.querySelectorAll(
+                            '.lottie-animation, [data-animation-type="lottie"], .lottie-container, ' +
+                            '.dotlottie-container, [id*="lottie-"], [class*="lottie-"], ' +
+                            '[id*="dotlottie-"], [class*="dotlottie-"]'
+                        );
+                        
+                        animations.forEach(anim => {
+                            // Try to find the animation instance
+                            if (anim.dotLottie) {
+                                anim.dotLottie.stop();
+                                anim.style.visibility = 'hidden';
+                            }
+                        });
+                        
+                        console.log('Stopped dotlottie animations on mobile for better performance');
+                    }
+                } catch (err) {
+                    console.log('Error stopping animations:', err);
+                }
+            }, 500);
+        }
+    }
+});
