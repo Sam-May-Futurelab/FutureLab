@@ -23,6 +23,15 @@ html {
     scroll-behavior: smooth;
 }
 
+/* PREVENT HORIZONTAL SCROLLING ACROSS WEBSITE */
+html, 
+body {
+  overflow-x: hidden !important;
+  max-width: 100vw;
+  width: 100%;
+  position: relative;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -36,6 +45,18 @@ body {
     background-color: var(--light-color);
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+}
+
+.container,
+.content-container,
+.section-container,
+main,
+section,
+header,
+footer,
+.row {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .container {
