@@ -672,6 +672,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Fix 3D animation performance on mobile devices
+document.addEventListener('DOMContentLoaded', function() {
+    // Detect mobile devices for animation optimization
+    const isMobile = window.innerWidth < 768 || 
+                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // Find 3D animation elements
+        const animationElements = document.querySelectorAll('.hero-3d-container, .animated-3d-element, .hero-animation-container');
+        
+        animationElements.forEach(element => {
+            // Simplify animations for mobile
+            const animations = element.getAnimations ? element.getAnimations() : [];
+            animations.forEach(animation => {
+                // Reduce animation complexity
+                animation.playbackRate = 0.75; // Slow down for better performance
+            });
+            
+            // Add mobile-optimized class
+            element.classList.add('mobile-optimized');
+        });
+        
+        // Reduce frame rate of complex animations on low-end devices
+        if (navigator.deviceMemory && navigator.deviceMemory < 4) {
+            // For devices with less memory, further optimize
+            document.body.classList.add('reduce-motion');
+        }
+    }
+});
+
 // Add enhanced smooth scroll handling with performance optimizations
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile Navigation Toggle

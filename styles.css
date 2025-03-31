@@ -657,6 +657,74 @@ nav {
     display: none;
 }
 
+/* Fix for 3D animation glitches on mobile devices */
+@media (max-width: 768px) {
+  /* Optimize 3D animation performance on mobile */
+  .hero-3d-container, 
+  .hero-animation-container,
+  .animated-3d-element {
+    transform: scale(0.8) !important; /* Reduce size on mobile */
+    transform-style: preserve-3d;
+    will-change: transform; /* Hardware acceleration hint */
+    backface-visibility: hidden; /* Reduce visual artifacts */
+    perspective: 1000px;
+  }
+  
+  /* Prevent overflow issues */
+  .hero-section {
+    overflow: hidden;
+    height: auto !important;
+  }
+  
+  /* Simplify animation for better performance */
+  .hero-3d-element, .float-animation {
+    animation-duration: 8s !important; /* Slower animation for better performance */
+  }
+  
+  /* Force hardware acceleration for smoother rendering */
+  .animated-3d-element,
+  .hero-3d-object,
+  .hero-3d-container {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Fix case where animation container is too large */
+  .hero-content-container {
+    max-width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+  
+  /* Fix for specific hero mockup images that might be causing problems */
+  img[src*="-mockup.png"],
+  .hero-mockup-image,
+  .device-preview {
+    max-width: 280px;
+    height: auto;
+    margin: 0 auto;
+  }
+}
+
+/* Even more aggressive optimization for very small screens */
+@media (max-width: 480px) {
+  .hero-3d-container, 
+  .hero-animation-container,
+  .animated-3d-element {
+    transform: scale(0.6) !important; /* Further reduce size */
+    opacity: 0.9; /* Slightly reduce opacity for better text readability */
+  }
+  
+  /* Simplify or disable complex animations on very small screens */
+  .floating-element,
+  .animated-particle {
+    animation-play-state: paused; /* Pause secondary animations */
+  }
+}
+
 /* Services Section */
 .services {
     padding: 120px 0;
