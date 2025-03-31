@@ -725,6 +725,33 @@ nav {
   }
 }
 
+/* Hide 3D orb animation on mobile devices */
+@media (max-width: 768px) {
+  /* Target the 3D animation in hero section */
+  .hero-section .hero-3d-element,
+  .hero-section .hero-animation-container,
+  .hero-section .animated-3d-element,
+  .hero-section .hero-3d-object,
+  .hero-section .hero-3d-container,
+  .hero-section .floating-elements,
+  .hero-section .animated-gradient {
+    display: none !important; /* Force hide on mobile */
+  }
+  
+  /* Ensure text is properly visible without the animation */
+  .hero-section .hero-content {
+    width: 100%;
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+  /* Add more space where the animation would have been */
+  .hero-section {
+    padding: 60px 0;
+    min-height: auto;
+  }
+}
+
 /* Services Section */
 .services {
     padding: 120px 0;
