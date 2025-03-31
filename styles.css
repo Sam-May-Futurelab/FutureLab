@@ -1338,6 +1338,25 @@ nav {
     }
 }
 
+/* Reduce padding around CardWizz mockup image on mobile */
+@media (max-width: 768px) {
+  /* Target specifically the CardWizz mockup */
+  .portfolio-item .portfolio-image img[src*="cardwizz-mockup.png"] {
+    margin: 0 !important;
+    padding: 5px !important; /* Reduced padding */
+  }
+  
+  /* Also reduce padding on the container */
+  .portfolio-item .portfolio-image {
+    padding: 5px !important; /* Reduced padding */
+  }
+  
+  /* And ensure image size is manageable */
+  .portfolio-image img {
+    max-height: 320px !important;
+  }
+}
+
 /* Services Section */
 .services {
     padding: 120px 0;
