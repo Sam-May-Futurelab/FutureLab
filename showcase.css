@@ -804,6 +804,141 @@ img[src*="pokespud-mockup.png"],
   }
 }
 
+/* RESTORE BEAUTIFUL FUTURISTIC LOOK ON MOBILE */
+@media (max-width: 768px) {
+  /* Enhanced section styling */
+  .showcase-section,
+  .intro-section {
+    position: relative;
+    border-radius: 20px;
+    padding: 30px 20px;
+    margin: 30px 15px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+  }
+  
+  .dark-theme .showcase-section,
+  .dark-theme .intro-section {
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.6), rgba(30, 41, 59, 0.8));
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Add subtle animated gradient background to sections */
+  .showcase-section::before,
+  .intro-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+      rgba(67, 97, 238, 0.05), 
+      rgba(76, 201, 240, 0.05), 
+      rgba(67, 97, 238, 0.05));
+    background-size: 400% 400%;
+    animation: gradientFlow 15s ease infinite;
+    z-index: -1;
+    border-radius: 20px;
+  }
+  
+  /* Futuristic heading styles */
+  .section-header h2,
+  .intro-section h2,
+  .hero-title {
+    background: linear-gradient(to right, #fff, #9dc1ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 5px 15px rgba(76, 201, 240, 0.5);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  
+  .dark-theme .section-header h2,
+  .dark-theme .intro-section h2,
+  .dark-theme .hero-title {
+    background: linear-gradient(to right, #fff, #4cc9f0);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  
+  /* Add subtle glow to icons */
+  .feature-icon-mini,
+  .section-icon {
+    box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
+  }
+  
+  /* Enhance card styling */
+  .demo-card,
+  .feature-card,
+  .responsive-feature-item {
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .dark-theme .demo-card,
+  .dark-theme .feature-card,
+  .dark-theme .responsive-feature-item {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* Add subtle animation to the background */
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Make buttons more futuristic */
+  .btn,
+  .demo-details-btn,
+  .filter-btn {
+    background: linear-gradient(135deg, #4361ee, #3a86ff);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-weight: 600;
+    padding: 12px 24px;
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .btn:hover,
+  .demo-details-btn:hover,
+  .filter-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+  }
+  
+  /* Add subtle light lines to create tech feel */
+  .showcase-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent),
+      linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
+    background-size: 50px 50px;
+    z-index: -1;
+  }
+}
+
 /* 3D Product Viewer */
 .product-viewer {
     width: 100%;
