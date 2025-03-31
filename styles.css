@@ -1357,6 +1357,55 @@ nav {
   }
 }
 
+/* Fix CardWizz mockup spacing on mobile - targeted approach */
+@media (max-width: 768px) {
+  /* More targeted selector for the CardWizz mockup specifically */
+  .portfolio-item:first-child .portfolio-image {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  /* Target the image itself */
+  .portfolio-item:first-child img[src*="cardwizz-mockup.png"] {
+    margin-bottom: 0 !important;
+  }
+  
+  /* Reduce top space in the content section */
+  .portfolio-item:first-child .portfolio-content {
+    padding-top: 10px !important;
+    margin-top: 0 !important;
+  }
+  
+  /* Further reduce any margins on headings */
+  .portfolio-item:first-child .portfolio-content h3 {
+    margin-top: 0 !important;
+  }
+  
+  /* Also target the second portfolio item (PokeSpud) for consistency */
+  .portfolio-item.reverse .portfolio-image {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .portfolio-item.reverse .portfolio-content {
+    padding-top: 10px !important;
+    margin-top: 0 !important;
+  }
+}
+
+/* Even more aggressive fix for very small screens */
+@media (max-width: 480px) {
+  .portfolio-item .portfolio-image {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .portfolio-item .portfolio-content {
+    padding-top: 5px !important;
+    margin-top: 0 !important;
+  }
+}
+
 /* Services Section */
 .services {
     padding: 120px 0;
