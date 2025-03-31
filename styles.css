@@ -330,7 +330,7 @@ section.services,
 /* Section Title */
 .section-title {
     font-size: 2.5rem;
-    margin-bottom: 30px; /* Increase overall bottom margin */
+    margin-bottom: 15px; /* Overall space below the entire element */
     text-align: center;
     position: relative;
     font-weight: 700;
@@ -346,19 +346,48 @@ section.services,
     height: 4px;
     background: var(--gradient-1);
     border-radius: 2px;
-    margin-bottom: 15px; /* Add space below the blue bar specifically */
+    margin-bottom: 25px; /* Add more space after the blue underline */
     display: block; /* Ensure it's a block element */
-    margin-top: 10px; /* Consistent space between text and line */
+    margin-top: 30px; /* Increased space between text and blue line */
 }
 
 /* Maintain proper spacing on mobile */
 @media (max-width: 768px) {
   .section-title {
-    margin-bottom: 25px; /* Slightly reduced for mobile but still adequate */
+    margin-bottom: 40px; /* Slightly reduced for mobile but still adequate */
   }
   
   .section-title:after {
-    margin-bottom: 10px; /* Smaller gap on mobile */
+    margin-top: 20px; /* Slightly reduced space on mobile, but still increased from original */
+  }
+}
+
+/* SECTION TITLE SPACING FIX */
+/* Adding proper spacing between section titles and their blue underlines */
+.section-title::after,
+h2.section-title::after,
+.section-title:after,
+h2:after,
+section h2:after {
+  content: '';
+  display: block;
+  margin-top: 25px !important; /* SIGNIFICANTLY increase space between title text and blue line */
+  width: 80px;
+  height: 4px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  position: relative !important;
+  bottom: auto !important;
+}
+
+/* Mobile adjustments for section title spacing */
+@media (max-width: 768px) {
+  .section-title::after,
+  h2.section-title::after,
+  .section-title:after,
+  h2:after,
+  section h2:after {
+    margin-top: 30px !important; /* Still good spacing, but slightly reduced for mobile */
   }
 }
 
@@ -1287,6 +1316,26 @@ nav {
     padding-top: 30px; /* Reduced from default value */
     margin-top: 10px;
   }
+}
+
+/* Improved portfolio image positioning for mobile */
+@media (max-width: 768px) {
+    /* Better vertical centering for portfolio images */
+    .portfolio-item .portfolio-image {
+        padding: 20px 0; /* Add vertical padding for better positioning */
+        margin-bottom: 20px; /* Increase space below image */
+    }
+    
+    /* Specifically target CardWizz mockup for better positioning */
+    img[src*="cardwizz-mockup.png"] {
+        margin-top: 15px; /* Move image down a bit */
+        margin-bottom: 25px; /* Add more space below the image */
+    }
+    
+    /* Also adjust the portfolio section padding for better spacing */
+    .portfolio-item {
+        padding: 20px 0;
+    }
 }
 
 /* Services Section */
