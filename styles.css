@@ -330,7 +330,7 @@ section.services,
 /* Section Title */
 .section-title {
     font-size: 2.5rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 30px; /* Increase overall bottom margin */
     text-align: center;
     position: relative;
     font-weight: 700;
@@ -346,6 +346,20 @@ section.services,
     height: 4px;
     background: var(--gradient-1);
     border-radius: 2px;
+    margin-bottom: 15px; /* Add space below the blue bar specifically */
+    display: block; /* Ensure it's a block element */
+    margin-top: 10px; /* Consistent space between text and line */
+}
+
+/* Maintain proper spacing on mobile */
+@media (max-width: 768px) {
+  .section-title {
+    margin-bottom: 25px; /* Slightly reduced for mobile but still adequate */
+  }
+  
+  .section-title:after {
+    margin-bottom: 10px; /* Smaller gap on mobile */
+  }
 }
 
 /* Buttons */
