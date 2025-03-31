@@ -732,6 +732,76 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// COMPLETELY DESTROY ALL ANIMATIONS ON MOBILE - GUARANTEED REMOVAL
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if mobile
+    if (window.innerWidth <= 768 || 
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      
+      console.log("Mobile device detected - removing animations");
+      
+      // 1. Find and remove dotlottie/lottie players
+      const animationElements = document.querySelectorAll(
+        'dotlottie-player, lottie-player, .lottie-container, .animation-container, ' +
+        '.hero-animation, .hero-3d-element, .floating-elements, .animated-3d-element, ' +
+        '.particle-animation, [id*="lottie"], [class*="lottie"], [id*="animation"], ' +
+        '[class*="animation"]'
+      );
+      
+      // 2. Remove animation elements from the DOM entirely
+      animationElements.forEach(element => {
+        if (element && element.parentNode) {
+          console.log("Removing animation element:", element);
+          element.parentNode.removeChild(element);
+        }
+      });
+      
+      // 3. Find any script tags loading animation libraries and disable them
+      const animationScripts = document.querySelectorAll(
+        'script[src*="lottie"], script[src*="dotlottie"], script[src*="animation"], ' +
+        'script[src*="3d"], script[src*="three"], script[src*="gsap"]'
+      );
+      
+      animationScripts.forEach(script => {
+        // Prevent script from loading/executing further
+        script.setAttribute('type', 'text/plain');
+        console.log("Disabled animation script:", script.src);
+      });
+      
+      // 4. Nullify any global animation objects
+      const animationObjects = [
+        'lottie', 'dotLottie', 'GSAP', 'gsap', 'TweenMax', 'TimelineMax', 
+        'Animation', 'Animator', 'THREE', 'three'
+      ];
+      
+      animationObjects.forEach(obj => {
+        if (window[obj]) {
+          console.log("Nullifying animation object:", obj);
+          window[obj] = null;
+        }
+      });
+      
+      // 5. Set a flag that can be checked elsewhere
+      window.animationsDisabled = true;
+      
+      // 6. Add a small snippet of CSS for good measure
+      const forceDisableStyle = document.createElement('style');
+      forceDisableStyle.textContent = `
+        .lottie-player, dotlottie-player, .lottie-container, .hero-animation,
+        .hero-animation-container, .animated-gradient, .animation-container,
+        .blue-orb, .animated-orb, .hero-orb, .hero-3d-element, .floating-elements,
+        .animated-3d-element, .particle-animation, [id*="lottie"], [class*="lottie"],
+        [id*="animation"], [class*="animation"], [id*="animated"], [class*="animated"],
+        [id*="orb"], [class*="orb"], [id*="particle"], [class*="particle"] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+        }
+      `;
+      document.head.appendChild(forceDisableStyle);
+    }
+});
+
 // FIXED MOBILE MENU TOGGLE
 document.addEventListener('DOMContentLoaded', function() {
     // Create hamburger spans if they don't exist
@@ -928,28 +998,3 @@ document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(animation);
     }
 });
-
-// Add this function to completely disable dotlottie on mobile
-function disableDotLottieOnMobile() {
-    // Check if on mobile
-    if (window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        // Find the script tag loading dotlottie
-        const dotLottieScript = document.querySelector('script[src*="dotlottie.min.js"]');
-        
-        if (dotLottieScript) {
-            // Disable the script by setting a custom attribute
-            dotLottieScript.setAttribute('disabled', 'true');
-            console.log('DotLottie script disabled on mobile');
-            
-            // Also null out any global dotlottie objects that might exist
-            if (window.DotLottie) window.DotLottie = null;
-            if (window.dotLottie) window.dotLottie = null;
-            
-            return true; // Successfully disabled
-        }
-    }
-    return false; // Not disabled
-}
-
-// Run this immediately when script loads
-disableDotLottieOnMobile();

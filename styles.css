@@ -1000,6 +1000,78 @@ nav {
   }
 }
 
+/* AGGRESSIVE REMOVAL OF ALL ANIMATIONS ON MOBILE - TARGET BLUE ORB SPECIFICALLY */
+@media (max-width: 768px) {
+  /* Target all possible animation containers */
+  .lottie-player,
+  dotlottie-player,
+  .lottie-container,
+  .hero-animation,
+  .hero-animation-container,
+  .animated-gradient,
+  .animation-container,
+  .blue-orb,
+  .animated-orb,
+  .hero-orb,
+  .hero-3d-element,
+  .floating-elements,
+  .animated-3d-element,
+  .particle-animation,
+  [id*="lottie"],
+  [class*="lottie"],
+  [id*="animation"],
+  [class*="animation"],
+  [id*="animated"],
+  [class*="animated"],
+  [id*="orb"],
+  [class*="orb"],
+  [id*="particle"],
+  [class*="particle"],
+  /* Target trusted brands section specifically */
+  .brands-section .animation-container,
+  .trusted-section .animation-container,
+  #trusted-brands .animation-container,
+  section:has(h2:contains("Trusted")) .animation-container {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    max-width: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    border: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Adjust spacing where animations would be */
+  .hero-section,
+  .brands-section,
+  .trusted-section,
+  #trusted-brands,
+  section:has(h2:contains("Trusted")) {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+
+  /* Force content to full width since animation is removed */
+  .hero-content,
+  .brands-section .section-content,
+  .trusted-section .section-content,
+  #trusted-brands .section-content,
+  section:has(h2:contains("Trusted")) .section-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 20px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+}
+
 /* Services Section */
 .services {
     padding: 120px 0;
