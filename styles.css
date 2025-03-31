@@ -1000,50 +1000,6 @@ nav {
   }
 }
 
-/* Hide dotlottie animations on mobile devices */
-@media (max-width: 768px) {
-  /* Hide any container with dotlottie animations */
-  .lottie-animation,
-  [data-animation-type="lottie"],
-  .lottie-container,
-  .lottie-animation-container,
-  .dotlottie-container,
-  .hero-animation,
-  .orb-animation,
-  [id*="lottie-"],
-  [class*="lottie-"],
-  [id*="dotlottie-"],
-  [class*="dotlottie-"],
-  .animated-3d-orb {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    position: absolute !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-  }
-  
-  /* Adjust spacing for areas that had animations */
-  .hero-section,
-  .brands-section,
-  .section-with-animation {
-    padding-top: 30px !important;
-    padding-bottom: 30px !important;
-    min-height: auto !important;
-  }
-  
-  /* Ensure content is properly visible without animations */
-  .hero-content,
-  .section-content {
-    max-width: 100% !important;
-    text-align: center !important;
-    margin: 0 auto !important;
-    padding: 0 20px !important;
-  }
-}
-
 /* Services Section */
 .services {
     padding: 120px 0;
