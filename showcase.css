@@ -512,6 +512,53 @@ section:has(.section-header:contains("Mobile")) {
     justify-content: flex-end;
 }
 
+/* Fix oversized project mockup images on mobile */
+img[src*="cardwizz-mockup.png"],
+img[src*="pokespud-mockup.png"],
+.project-showcase img,
+.demo-preview img,
+.showcase-section img {
+    max-width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Additional constraints for smaller screens */
+@media screen and (max-width: 768px) {
+    img[src*="cardwizz-mockup.png"],
+    img[src*="pokespud-mockup.png"],
+    .project-showcase img,
+    .demo-preview img,
+    .showcase-section img {
+        max-height: 350px !important;
+    }
+    
+    /* Add proper spacing around images */
+    .project-showcase,
+    .demo-preview {
+        padding: 10px 0;
+    }
+    
+    /* Ensure cards containing images don't overflow */
+    .demo-card,
+    .project-card {
+        overflow: hidden;
+    }
+}
+
+/* Ultra small screens */
+@media screen and (max-width: 480px) {
+    img[src*="cardwizz-mockup.png"],
+    img[src*="pokespud-mockup.png"],
+    .project-showcase img,
+    .demo-preview img,
+    .showcase-section img {
+        max-height: 250px !important;
+    }
+}
+
 /* 3D Product Viewer */
 .product-viewer {
     width: 100%;
@@ -555,8 +602,8 @@ section:has(.section-header:contains("Mobile")) {
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     box-shadow: 
-        0 0 30px rgba(67, 97, 238, 0.5),
-        inset 0 0 30px rgba(255, 255, 255, 0.3);
+         0 0 30px rgba(67, 97, 238, 0.5),
+         inset 0 0 30px rgba(255, 255, 255, 0.3);
     transform-style: preserve-3d;
     transition: all 0.5s ease;
 }

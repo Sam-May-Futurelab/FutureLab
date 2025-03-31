@@ -8,6 +8,41 @@ document.addEventListener('DOMContentLoaded', function() {
         hamburger.classList.toggle('active');
     });
     
+    // Fix mobile menu toggle functionality
+    const hamburgerBtn = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
+    const mobileNav = document.querySelector('.nav-links, .mobile-nav, .main-nav');
+    
+    if (hamburgerBtn && mobileNav) {
+        // Make sure click event is properly added and working
+        hamburgerBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Toggle active classes
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            
+            // Toggle aria-expanded for accessibility
+            const expanded = this.getAttribute('aria-expanded') === 'true' || false;
+            this.setAttribute('aria-expanded', !expanded);
+            
+            console.log('Mobile menu toggled');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (mobileNav.classList.contains('active') && 
+                !mobileNav.contains(e.target) && 
+                !hamburgerBtn.contains(e.target)) {
+                mobileNav.classList.remove('active');
+                hamburgerBtn.classList.remove('active');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    } else {
+        console.warn('Mobile menu elements not found');
+    }
+    
     // Smooth Scrolling for Anchor Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
