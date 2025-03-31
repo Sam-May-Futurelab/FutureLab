@@ -14,6 +14,124 @@
 .dark-theme.showcase-page {
     --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+/* Fix card backgrounds in dark mode */
+.dark-theme .demo-card,
+.dark-theme .feature-card,
+.dark-theme .product-card,
+.dark-theme .customizer-card,
+.dark-theme .feedback-widget {
+    background-color: #1e293b;
+    border-color: rgba(51, 65, 85, 0.5);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Fix text colors in dark mode */
+.dark-theme .section-header h2,
+.dark-theme .demo-card h3,
+.dark-theme .feature-card h4,
+.dark-theme .product-card h4,
+.dark-theme .customizer-card h3,
+.dark-theme .demo-details-btn,
+.dark-theme .hero-title,
+.dark-theme .intro-section h2 {
+    color: #f8fafc;
+}
+
+/* Fix subtitle and paragraph text */
+.dark-theme .section-header p,
+.dark-theme .demo-info p,
+.dark-theme .feature-card p,
+.dark-theme .product-card p,
+.dark-theme .hero-subtitle,
+.dark-theme .intro-text {
+    color: #cbd5e1;
+}
+
+/* Fix border colors in dark mode */
+.dark-theme .demo-card,
+.dark-theme .feature-list li,
+.dark-theme .product-card,
+.dark-theme .calculator-total,
+.dark-theme .section-header {
+    border-color: rgba(51, 65, 85, 0.5);
+}
+
+/* Fix buttons in dark mode */
+.dark-theme .filter-btn {
+    background-color: #1e293b;
+    color: #cbd5e1;
+}
+
+.dark-theme .filter-btn:hover {
+    background-color: #2d3748;
+}
+
+.dark-theme .filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Fix inputs and form elements in dark mode */
+.dark-theme input, 
+.dark-theme select, 
+.dark-theme textarea {
+    background-color: #1e293b;
+    border-color: #334155;
+    color: #f8fafc;
+}
+
+/* Fix 3D product viewer colors in dark mode */
+.dark-theme .product-viewer {
+    background-color: rgba(15, 23, 42, 0.7);
+}
+
+.dark-theme .product-shape {
+    color: #3a86ff; /* Slightly brighter blue in dark mode */
+}
+
+.dark-theme .product-sphere {
+    background: linear-gradient(135deg, #4361ee 0%, #3a86ff 100%);
+    box-shadow: 0 0 30px rgba(67, 97, 238, 0.7);
+}
+
+/* Fix device mockups in dark mode */
+.dark-theme .device-mockup {
+    border-color: rgba(51, 65, 85, 0.5);
+    background-color: #1e293b;
+}
+
+.dark-theme .mockup-block {
+    background-color: #334155;
+}
+
+/* Fix mobile UI specific elements in dark mode */
+.dark-theme .app-header {
+    background-color: #1e293b;
+    border-color: rgba(51, 65, 85, 0.5);
+}
+
+.dark-theme .app-content {
+    background-color: #0f172a;
+}
+
+.dark-theme .app-tab-bar {
+    background-color: rgba(15, 23, 42, 0.95);
+    border-color: rgba(51, 65, 85, 0.5);
+}
+
+/* Fix interactive elements in dark mode */
+.dark-theme .demo-details-btn {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.dark-theme .demo-details-btn:hover {
+    background: #2d3748;
+    border-color: #4a5568;
 }
 
 /* Hero Section */
