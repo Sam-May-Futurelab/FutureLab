@@ -1001,3 +1001,35 @@ document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(animation);
     }
 });
+
+// Make logo clickable - redirect to index.html
+document.addEventListener('DOMContentLoaded', function() {
+  // Find all possible logo elements
+  const logoElements = document.querySelectorAll('.logo, .site-logo, .navbar-logo, header .logo, .brand, .brand-logo');
+  
+  logoElements.forEach(logoElement => {
+    // Check if logo is already wrapped in a link
+    if (logoElement && !logoElement.closest('a')) {
+      // Create a wrapper link
+      const logoLink = document.createElement('a');
+      logoLink.href = 'index.html';
+      logoLink.setAttribute('aria-label', 'Go to homepage');
+      
+      // Clone the logo element to preserve any event listeners
+      const logoClone = logoElement.cloneNode(true);
+      
+      // Replace the original logo with the linked version
+      logoElement.parentNode.replaceChild(logoLink, logoElement);
+      logoLink.appendChild(logoClone);
+      
+      console.log('Logo made clickable with link to homepage');
+    } else if (logoElement && logoElement.closest('a')) {
+      // If logo is already in a link, make sure it points to index.html
+      const existingLink = logoElement.closest('a');
+      if (!existingLink.href.includes('index.html')) {
+        existingLink.href = 'index.html';
+        console.log('Updated existing logo link to point to homepage');
+      }
+    }
+  });
+});
