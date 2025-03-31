@@ -981,6 +981,96 @@ body.menu-open {
   }
 }
 
+/* MOBILE MENU FIXES */
+@media (max-width: 768px) {
+  /* Position hamburger correctly on the right */
+  header nav.container {
+    position: relative;
+  }
+  
+  .hamburger {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+  }
+  
+  /* Fix menu not being positioned correctly */
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--light-color, white);
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    display: none;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    z-index: 999;
+  }
+  
+  .nav-links.active {
+    display: block;
+  }
+  
+  /* Ensure contact button is fully visible */
+  .nav-links li:last-child {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+  
+  /* Fix hamburger animation to X */
+  .hamburger {
+    width: 30px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  
+  .hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: var(--dark-color, #0f172a);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+  
+  /* X animation fixes */
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(9.5px) rotate(45deg);
+  }
+  
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+    transform: scale(0);
+  }
+  
+  .hamburger.active span:nth-child(3) {
+    transform: translateY(-9.5px) rotate(-45deg);
+  }
+  
+  /* Dark theme support */
+  .dark-theme .hamburger span {
+    background: var(--light-color, white);
+  }
+}
+
+/* Remove unnecessary full-screen overlay styles */
+.mobile-menu-overlay {
+  display: none !important;
+}
+
+/* Prevent body scrolling issues */
+body.menu-open {
+  overflow: auto !important;
+}
+
 /* Hero Section */
 .hero {
     padding: 180px 0 120px;
