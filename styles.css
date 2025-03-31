@@ -472,13 +472,15 @@ nav {
 }
 
 @media (max-width: 768px) {
-  .nav-links, 
-  .mobile-nav, 
+  /* Keep only what's necessary for the menu to work with simple-menu.js */
+  .mobile-nav,
+  .nav-links,
   .main-nav {
-    position: absolute;
-    top: 70px; /* Adjust based on header height */
+    position: fixed;
+    top: 70px; /* Adjust based on your header height */
     left: 0;
     right: 0;
+    width: 100%;
     background: white;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -487,17 +489,18 @@ nav {
     opacity: 0;
     visibility: hidden;
     z-index: 999;
+    transition: all 0.3s ease;
   }
   
-  .dark-theme .nav-links,
   .dark-theme .mobile-nav,
+  .dark-theme .nav-links,
   .dark-theme .main-nav {
     background: #1e293b;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   }
   
-  .nav-links.active,
   .mobile-nav.active,
+  .nav-links.active,
   .main-nav.active {
     max-height: 80vh;
     opacity: 1;
@@ -833,12 +836,12 @@ nav {
   /* Target the 3D animation in hero section */
   .hero-section .hero-3d-element,
   .hero-section .hero-animation-container,
-  .hero-section .animated-3d-element,
-  .hero-section .hero-3d-object,
-  .hero-section .hero-3d-container,
   .hero-section .floating-elements,
-  .hero-section .animated-gradient {
-    display: none !important; /* Force hide on mobile */
+  .hero-section .animated-gradient,
+  #trusted-brands .animated-3d-element,
+  .brands-section .animated-3d-element,
+  .trusted-section .animated-3d-element {
+    display: none !important; /* Hide on mobile */
   }
   
   /* Ensure text is properly visible without the animation */
