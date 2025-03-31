@@ -1,37 +1,59 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // FIXED MOBILE MENU TOGGLE - Replace existing version
+    // Mobile Navigation Toggle
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
     
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function(e) {
+    hamburger.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    });
+    
+    // ENHANCED MOBILE MENU - Replace earlier version with this improved implementation
+    const menuToggle = document.querySelector('.hamburger');
+    const mobileNav = document.querySelector('.nav-links');
+    
+    if (menuToggle && mobileNav) {
+        // Toggle mobile menu with improved body handling
+        menuToggle.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-            
-            // Toggle active classes
             this.classList.toggle('active');
-            navLinks.classList.toggle('active');
+            mobileNav.classList.toggle('active');
             
-            // Don't prevent body scrolling
-            document.body.classList.remove('menu-open');
+            // Add/remove menu-open class to body to prevent scrolling
+            if (mobileNav.classList.contains('active')) {
+                document.body.classList.add('menu-open');
+            } else {
+                document.body.classList.remove('menu-open');
+            }
         });
         
         // Close menu when clicking a link
-        const menuLinks = navLinks.querySelectorAll('a');
+        const menuLinks = mobileNav.querySelectorAll('a');
         menuLinks.forEach(link => {
             link.addEventListener('click', function() {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
             });
+        });
+        
+        // Close menu when clicking escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
         });
         
         // Close menu when clicking outside
         document.addEventListener('click', function(e) {
-            if (navLinks.classList.contains('active') && 
-                !navLinks.contains(e.target) && 
-                !hamburger.contains(e.target)) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
+            if (mobileNav.classList.contains('active') && 
+                !mobileNav.contains(e.target) && 
+                !menuToggle.contains(e.target)) {
+                menuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
             }
         });
     }
