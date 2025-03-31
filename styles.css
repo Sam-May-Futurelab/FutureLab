@@ -1557,6 +1557,91 @@ body.menu-open {
   }
 }
 
+/* MOBILE MENU REFINEMENTS - More compact, not full-screen */
+@media (max-width: 768px) {
+  /* Position hamburger correctly on the right */
+  .hamburger {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+  }
+  
+  /* Refined mobile navigation styling */
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--light-color, white);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    z-index: 999;
+    display: none;
+    max-height: calc(90vh - 80px); /* Not full screen */
+    overflow-y: auto;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Dark theme adjustments */
+  .dark-theme .nav-links {
+    background: var(--dark-bg-color, #1e293b);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Show menu when active */
+  .nav-links.active {
+    display: block;
+  }
+  
+  /* Style menu items nicely */
+  .nav-links li {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-links li a {
+    padding: 12px 25px;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 16px;
+  }
+  
+  .dark-theme .nav-links li a {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Style the Contact button in menu */
+  .nav-links li:last-child {
+    padding: 10px 20px;
+  }
+  
+  .nav-links .btn {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  /* Fix for any overlay elements */
+  .mobile-menu-overlay {
+    display: none !important;
+  }
+  
+  /* Prevent body scrolling issues */
+  body.menu-open {
+    overflow: auto !important;
+  }
+  
+  /* Ensure proper positioning for nav container */
+  header nav.container {
+    position: relative;
+  }
+}
+
 /* Services Section */
 .services {
     padding: 120px 0;
