@@ -1,9 +1,27 @@
-// Simple, reliable mobile menu toggle for both desktop and mobile
+// Simple, reliable mobile menu toggle for both pages
 
 document.addEventListener('DOMContentLoaded', function() {
   // Get the hamburger button and mobile menu with multiple possible selectors
   const hamburgerBtn = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
   const mobileMenu = document.querySelector('.mobile-nav, .nav-links, .main-nav');
+  
+  // First fix: Hide hamburger on desktop, only show on mobile
+  function updateMenuVisibility() {
+    // Only show hamburger on mobile screens
+    if (window.innerWidth > 768) {
+      // We're on desktop - hide hamburger unless we're in a special case
+      if (!document.body.classList.contains('desktop-hamburger')) {
+        if (hamburgerBtn) hamburgerBtn.style.display = 'none';
+      }
+    } else {
+      // We're on mobile - always show hamburger
+      if (hamburgerBtn) hamburgerBtn.style.display = 'block';
+    }
+  }
+  
+  // Run initially and on window resize
+  updateMenuVisibility();
+  window.addEventListener('resize', updateMenuVisibility);
   
   // Check if elements exist
   if (hamburgerBtn && mobileMenu) {
@@ -19,6 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
       // Toggle active classes
       mobileMenu.classList.toggle('active');
       this.classList.toggle('active');
+      
+      // Fix: Make menu always visible on mobile when active
+      if (window.innerWidth <= 768) {
+        if (mobileMenu.classList.contains('active')) {
+          mobileMenu.style.display = 'block';
+          mobileMenu.style.opacity = '1';
+          mobileMenu.style.visibility = 'visible';
+        } else {
+          mobileMenu.style.display = '';
+          mobileMenu.style.opacity = '';
+          mobileMenu.style.visibility = '';
+        }
+      }
       
       // Accessibility
       const expanded = this.getAttribute('aria-expanded') === 'true' || false;

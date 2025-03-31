@@ -564,6 +564,50 @@ nav {
     color: var(--light-color);
 }
 
+/* Fix hamburger menu behavior and visibility */
+@media (min-width: 769px) {
+  /* Hide hamburger on desktop by default */
+  .hamburger, 
+  .menu-toggle, 
+  .mobile-menu-button {
+    display: none !important;
+  }
+  
+  /* On desktop, nav links should always be visible regardless of active state */
+  .nav-links, 
+  .mobile-nav, 
+  .main-nav {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: static !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    max-height: none !important;
+    height: auto !important;
+    padding: 0 !important;
+    width: auto !important;
+    transform: none !important;
+  }
+}
+
+/* Ensure proper mobile menu display when active */
+@media (max-width: 768px) {
+  /* Hide nav links by default on mobile */
+  .nav-links, 
+  .mobile-nav, 
+  .main-nav {
+    display: none;
+  }
+  
+  /* Only show when active class is applied */
+  .nav-links.active, 
+  .mobile-nav.active, 
+  .main-nav.active {
+    display: block !important;
+  }
+}
+
 /* Hero Section */
 .hero {
     padding: 180px 0 120px;

@@ -592,6 +592,48 @@ img[src*="pokespud-mockup.png"],
     }
 }
 
+/* Fix showcase page hamburger menu */
+@media (max-width: 768px) {
+  .showcase-page .hamburger, 
+  .showcase-page .menu-toggle, 
+  .showcase-page .mobile-menu-button {
+    display: block !important; /* Force display on mobile */
+    position: relative;
+    z-index: 1000;
+  }
+  
+  .showcase-page .nav-links,
+  .showcase-page .mobile-nav,
+  .showcase-page .main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    background: white;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    padding: 80px 30px 30px !important;
+    max-height: none;
+    overflow-y: auto;
+    z-index: 99;
+    display: none;
+  }
+  
+  .dark-theme.showcase-page .nav-links,
+  .dark-theme.showcase-page .mobile-nav,
+  .dark-theme.showcase-page .main-nav {
+    background: #1e293b;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  }
+  
+  .showcase-page .nav-links.active,
+  .showcase-page .mobile-nav.active,
+  .showcase-page .main-nav.active {
+    display: block !important;
+  }
+}
+
 /* 3D Product Viewer */
 .product-viewer {
     width: 100%;
