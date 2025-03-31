@@ -257,6 +257,42 @@ div:has(> img[src*="pokespud-mockup"]) {
   text-align: center; /* For IE compatibility */
 }
 
+/* VERTICAL SPACING ADJUSTMENTS */
+/* Reduce space between hero and services section */
+.trusted-brands-section,
+.clients {
+  margin-bottom: 20px; /* Reduced from default */
+}
+
+/* Reduce spacing above services section */
+section.services,
+#services,
+.services {
+  padding-top: 50px; /* Reduced spacing for desktop */
+}
+
+/* Mobile-specific spacing adjustments */
+@media (max-width: 768px) {
+  /* Further reduce spacing for mobile */
+  .trusted-brands-section,
+  .clients {
+    margin-bottom: 10px;
+  }
+  
+  section.services,
+  #services,
+  .services {
+    padding-top: 30px; /* Even less padding on mobile */
+  }
+  
+  /* Reduce space above portfolio/work section on mobile only */
+  section.portfolio,
+  #portfolio {
+    padding-top: 30px;
+    margin-top: 10px;
+  }
+}
+
 /* Section Title */
 .section-title {
     font-size: 2.5rem;
