@@ -732,6 +732,115 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// EMERGENCY FIX: Reliable mobile menu toggle and scrolling
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerBtn = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
+    const mobileNav = document.querySelector('.nav-links, .mobile-nav, .main-nav');
+    
+    // Only execute if these elements exist
+    if (hamburgerBtn && mobileNav) {
+        // Force menu styles on window resize
+        function setupMobileMenuStyles() {
+            if (window.innerWidth <= 768) {
+                // Make sure base styles are correct
+                Object.assign(mobileNav.style, {
+                    position: 'fixed',
+                    top: '70px', // Adjust based on your header height
+                    left: '0',
+                    right: '0',
+                    maxHeight: '80vh',
+                    overflowY: 'auto',
+                    WebkitOverflowScrolling: 'touch',
+                    zIndex: '1000'
+                });
+            } else {
+                // Reset styles on desktop
+                Object.assign(mobileNav.style, {
+                    position: '',
+                    top: '',
+                    left: '',
+                    right: '',
+                    maxHeight: '',
+                    overflowY: '',
+                    WebkitOverflowScrolling: '',
+                    zIndex: ''
+                });
+            }
+        }
+        
+        // Call on load
+        setupMobileMenuStyles();
+        
+        // Call on resize
+        window.addEventListener('resize', setupMobileMenuStyles);
+        
+        hamburgerBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Toggle menu
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            
+            // When activated, ensure menu is visible and scrollable
+            if (mobileNav.classList.contains('active') && window.innerWidth <= 768) {
+                // Force styles directly
+                Object.assign(mobileNav.style, {
+                    display: 'block',
+                    maxHeight: '80vh',
+                    overflowY: 'auto',
+                    WebkitOverflowScrolling: 'touch'
+                });
+                
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+    }
+});
+
+// CRITICAL FIX: Force proper image sizes on mobile
+document.addEventListener('DOMContentLoaded', function() {
+    function fixMockupImages() {
+        const mockupImages = document.querySelectorAll('img[src*="cardwizz-mockup.png"], img[src*="pokespud-mockup.png"]');
+        
+        mockupImages.forEach(img => {
+            // Force proper size and fit
+            Object.assign(img.style, {
+                maxWidth: '100%',
+                height: 'auto',
+                maxHeight: window.innerWidth <= 768 ? '300px' : 'none',
+                objectFit: 'contain',
+                display: 'block',
+                margin: '0 auto'
+            });
+            
+            // Also fix parent containers
+            let parent = img.parentElement;
+            for (let i = 0; i < 3; i++) { // Go up 3 levels of parents to fix containers
+                if (parent) {
+                    Object.assign(parent.style, {
+                        overflow: 'visible',
+                        height: 'auto',
+                        maxHeight: 'none'
+                    });
+                    parent = parent.parentElement;
+                }
+            }
+        });
+    }
+    
+    // Run on load
+    fixMockupImages();
+    
+    // Run on resize
+    window.addEventListener('resize', fixMockupImages);
+    
+    // Run after a delay to ensure it works after any dynamic content loads
+    setTimeout(fixMockupImages, 1000);
+});
+
 // Fix 3D animation performance on mobile devices
 document.addEventListener('DOMContentLoaded', function() {
     // Detect mobile devices for animation optimization

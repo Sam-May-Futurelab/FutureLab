@@ -830,6 +830,70 @@ nav {
   }
 }
 
+/* URGENT FIX: COMPLETELY HIDE 3D ORB on MOBILE */
+@media (max-width: 768px) {
+  /* Target specific brand section containing the 3D orb */
+  #trusted-brands .animated-3d-element,
+  #trusted-brands .hero-3d-element,
+  #trusted-brands .hero-animation-container,
+  #trusted-brands .hero-3d-object,
+  #trusted-brands .floating-elements,
+  #trusted-brands .animated-gradient,
+  .section-brands .animated-3d-element,
+  .section-brands .floating-elements,
+  .brands-section .animated-3d-element,
+  .brands-section .floating-elements,
+  .trusted-section .animated-3d-element,
+  section:has(h2:contains("Trust")) .animated-3d-element {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+  }
+  
+  /* EMERGENCY FIX FOR MOBILE MENU SCROLLABILITY */
+  .nav-links.active,
+  .mobile-nav.active, 
+  .main-nav.active {
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    display: block !important;
+    -webkit-overflow-scrolling: touch !important;
+    position: fixed !important;
+    top: 70px !important; /* Adjust based on your header height */
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+  }
+}
+
+/* CRITICAL FIX: FORCE MOCKUP IMAGES TO PROPER SIZE ON MOBILE */
+@media (max-width: 768px) {
+  img[src*="cardwizz-mockup.png"],
+  img[src*="pokespud-mockup.png"],
+  .demo-preview img,
+  .project-showcase img {
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 300px !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+  
+  /* Also fix containers of these images */
+  .demo-preview,
+  .project-showcase {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 20px !important;
+  }
+}
+
 /* Services Section */
 .services {
     padding: 120px 0;
