@@ -668,6 +668,157 @@ nav {
   z-index: 1000 !important;
 }
 
+/* IMPROVED MOBILE NAVIGATION MENU */
+@media (max-width: 768px) {
+  /* Enhanced Mobile Menu Layout */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--light-color, white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 30px !important;
+    z-index: 100;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    overflow-y: auto;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Improved menu alignment and spacing */
+  .nav-links li {
+    margin: 15px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition-delay: 0.1s;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Handle sequential fade-in of menu items */
+  .nav-links li:nth-child(2) { transition-delay: 0.15s; }
+  .nav-links li:nth-child(3) { transition-delay: 0.2s; }
+  .nav-links li:nth-child(4) { transition-delay: 0.25s; }
+  .nav-links li:nth-child(5) { transition-delay: 0.3s; }
+  
+  /* Large touch-friendly menu items */
+  .nav-links a {
+    font-size: 1.4rem;
+    padding: 15px;
+    display: block;
+    font-weight: 600;
+  }
+  
+  /* Button styling in mobile menu */
+  .nav-links .btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 16px;
+    text-align: center;
+  }
+  
+  /* Active menu state */
+  .nav-links.active {
+    transform: translateX(0);
+    display: flex;
+  }
+  
+  /* Show menu items with animation when active */
+  .nav-links.active li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Dark mode support */
+  .dark-theme .nav-links {
+    background: var(--dark-bg-color, #1e293b);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+  }
+  
+  .dark-theme .nav-links a {
+    color: var(--light-color, white);
+  }
+  
+  /* Better hamburger menu positioning */
+  .hamburger {
+    z-index: 200;
+    position: relative;
+  }
+}
+
+/* Improved hamburger-to-X animation (preserving what the client likes) */
+.hamburger {
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+  position: relative;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: var(--dark-color, #0f172a);
+    border-radius: 3px;
+    transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  }
+  
+  /* Special animation for each span */
+  .hamburger span:nth-of-type(1) {
+    transform-origin: top left;
+  }
+  
+  .hamburger span:nth-of-type(2) {
+    transform-origin: center;
+  }
+  
+  .hamburger span:nth-of-type(3) {
+    transform-origin: bottom left;
+  }
+  
+  /* X formation when active */
+  .hamburger.active span:nth-of-type(1) {
+    transform: rotate(45deg) translate(0px, -2px);
+    width: 120%;
+  }
+  
+  .hamburger.active span:nth-of-type(2) {
+    opacity: 0;
+    transform: scale(0);
+  }
+  
+  .hamburger.active span:nth-of-type(3) {
+    transform: rotate(-45deg) translate(0px, 2px);
+    width: 120%;
+  }
+  
+  /* Dark mode support */
+  .dark-theme .hamburger span {
+    background: var(--light-color, white);
+  }
+}
+
+/* Prevent scrolling when menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
 /* IMPROVED MOBILE MENU STYLES - MAKE LARGER & MORE ACCESSIBLE */
 @media (max-width: 768px) {
   /* Enhanced mobile menu - larger and more accessible */

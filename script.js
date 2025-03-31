@@ -8,51 +8,52 @@ document.addEventListener('DOMContentLoaded', function() {
         hamburger.classList.toggle('active');
     });
     
-    // Improved mobile menu functionality
-    const menuToggle = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
-    const mobileNav = document.querySelector('.nav-links, .main-nav, .mobile-nav');
+    // ENHANCED MOBILE MENU - Replace earlier version with this improved implementation
+    const menuToggle = document.querySelector('.hamburger');
+    const mobileNav = document.querySelector('.nav-links');
     
     if (menuToggle && mobileNav) {
-        // Toggle mobile menu
+        // Toggle mobile menu with improved body handling
         menuToggle.addEventListener('click', function(e) {
             e.preventDefault();
             this.classList.toggle('active');
             mobileNav.classList.toggle('active');
             
-            // Fix menu height after toggle to ensure scrolling works
+            // Add/remove menu-open class to body to prevent scrolling
             if (mobileNav.classList.contains('active')) {
-                // Set a slight timeout to ensure animation completes
-                setTimeout(() => {
-                    const viewportHeight = window.innerHeight;
-                    mobileNav.style.maxHeight = (viewportHeight * 0.8) + 'px';
-                    
-                    // Ensure body doesn't scroll when menu is open
-                    document.body.style.overflow = 'hidden';
-                }, 100);
+                document.body.classList.add('menu-open');
             } else {
-                document.body.style.overflow = '';
+                document.body.classList.remove('menu-open');
             }
         });
         
-        // Handle submenus in mobile navigation
-        const dropdownToggle = mobileNav.querySelectorAll('.has-dropdown > a');
-        dropdownToggle.forEach(toggle => {
-            toggle.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    this.nextElementSibling.classList.toggle('show');
-                }
+        // Close menu when clicking a link
+        const menuLinks = mobileNav.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                menuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
             });
         });
         
-        // Close menu when clicking anywhere outside
+        // Close menu when clicking escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        });
+        
+        // Close menu when clicking outside
         document.addEventListener('click', function(e) {
             if (mobileNav.classList.contains('active') && 
                 !mobileNav.contains(e.target) && 
                 !menuToggle.contains(e.target)) {
                 menuToggle.classList.remove('active');
                 mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
+                document.body.classList.remove('menu-open');
             }
         });
     }
