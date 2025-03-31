@@ -293,6 +293,40 @@ section.services,
   }
 }
 
+/* MOBILE SECTION SPACING ADJUSTMENTS */
+@media (max-width: 768px) {
+  /* Reduce gap between Services and Portfolio sections */
+  .services, 
+  section#services {
+    padding-bottom: 20px !important; /* Reduce bottom padding */
+    margin-bottom: 0 !important;     /* Remove bottom margin */
+  }
+  
+  /* Target the pricing section specifically (it's at bottom of services) */
+  .pricing {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  /* Reduce space above Portfolio "My Work" section */
+  .portfolio,
+  section#portfolio {
+    padding-top: 20px !important;
+    margin-top: 0 !important;
+  }
+  
+  /* Reduce space above Testimonials "What Clients Say" section */
+  section.testimonials {
+    padding-top: 20px !important;
+    margin-top: 20px !important;
+  }
+  
+  /* Adjust section titles to have less margin on mobile */
+  .section-title {
+    margin-bottom: 15px !important;
+  }
+}
+
 /* Section Title */
 .section-title {
     font-size: 2.5rem;
