@@ -8,40 +8,65 @@ document.addEventListener('DOMContentLoaded', function() {
         hamburger.classList.toggle('active');
     });
     
-    // Fix mobile menu toggle functionality
-    const hamburgerBtn = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
-    const mobileNav = document.querySelector('.nav-links, .mobile-nav, .main-nav');
+    // Improved mobile menu functionality
+    const menuToggle = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
+    const mobileNav = document.querySelector('.nav-links, .main-nav, .mobile-nav');
     
-    if (hamburgerBtn && mobileNav) {
-        // Make sure click event is properly added and working
-        hamburgerBtn.addEventListener('click', function(e) {
+    if (menuToggle && mobileNav) {
+        // Toggle mobile menu
+        menuToggle.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-            
-            // Toggle active classes
             this.classList.toggle('active');
             mobileNav.classList.toggle('active');
             
-            // Toggle aria-expanded for accessibility
-            const expanded = this.getAttribute('aria-expanded') === 'true' || false;
-            this.setAttribute('aria-expanded', !expanded);
-            
-            console.log('Mobile menu toggled');
+            // Fix menu height after toggle to ensure scrolling works
+            if (mobileNav.classList.contains('active')) {
+                // Set a slight timeout to ensure animation completes
+                setTimeout(() => {
+                    const viewportHeight = window.innerHeight;
+                    mobileNav.style.maxHeight = (viewportHeight * 0.8) + 'px';
+                    
+                    // Ensure body doesn't scroll when menu is open
+                    document.body.style.overflow = 'hidden';
+                }, 100);
+            } else {
+                document.body.style.overflow = '';
+            }
         });
         
-        // Close menu when clicking outside
+        // Handle submenus in mobile navigation
+        const dropdownToggle = mobileNav.querySelectorAll('.has-dropdown > a');
+        dropdownToggle.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    this.nextElementSibling.classList.toggle('show');
+                }
+            });
+        });
+        
+        // Close menu when clicking anywhere outside
         document.addEventListener('click', function(e) {
             if (mobileNav.classList.contains('active') && 
                 !mobileNav.contains(e.target) && 
-                !hamburgerBtn.contains(e.target)) {
+                !menuToggle.contains(e.target)) {
+                menuToggle.classList.remove('active');
                 mobileNav.classList.remove('active');
-                hamburgerBtn.classList.remove('active');
-                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
             }
         });
-    } else {
-        console.warn('Mobile menu elements not found');
     }
+    
+    // Fix viewport height on mobile
+    const fixViewportHeight = () => {
+        // Mobile viewport height fix (especially for iOS Safari)
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    
+    // Run initially and on resize
+    fixViewportHeight();
+    window.addEventListener('resize', fixViewportHeight);
     
     // Smooth Scrolling for Anchor Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -752,6 +752,84 @@ nav {
   }
 }
 
+/* FIX FOR MOBILE MENU - Make it scrollable */
+@media (max-width: 768px) {
+  .nav-links, .main-nav, .mobile-nav {
+    max-height: 80vh !important; /* Limit height to 80% of viewport */
+    overflow-y: auto !important; /* Make it scrollable */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    padding-bottom: 30px !important; /* Add padding at the bottom */
+  }
+  
+  /* Additional styling for better mobile menu appearance */
+  .nav-links li, .main-nav li, .mobile-nav li {
+    margin: 12px 0 !important;
+  }
+  
+  /* Ensure hamburger toggle is visible and clickable */
+  .hamburger, .menu-toggle, .mobile-menu-button {
+    z-index: 1000 !important;
+    display: block !important;
+  }
+  
+  /* Fix dropdown height and positioning */
+  .dropdown-content, .submenu {
+    position: relative !important;
+    max-height: none !important;
+    top: 0 !important;
+    box-shadow: none !important;
+  }
+  
+  /* HIDE 3D ORB UNDER "TRUSTED BY BRANDS" SECTION ON MOBILE */
+  .brands-section .animated-3d-element,
+  .brands-section .hero-3d-element,
+  .brands-section .hero-animation-container,
+  .brands-section .hero-3d-object,
+  .brands-section .hero-3d-container,
+  .brands-section .floating-elements,
+  .brands-section .animated-gradient {
+    display: none !important; /* Force hide on mobile */
+  }
+  
+  /* Better readability for brand section on mobile without 3D elements */
+  .brands-section .section-title,
+  .brands-section .section-subtitle {
+    text-align: center;
+    width: 100%;
+  }
+  
+  /* Stronger constraints for mockup images on mobile */
+  img[src*="-mockup.png"],
+  .mockup-image,
+  .phone-mockup,
+  .project-mockup,
+  .device-preview img {
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 300px !important; /* Strict height limit */
+    object-fit: contain !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+  
+  /* Fix showcase card layouts on mobile */
+  .showcase-card,
+  .project-card,
+  .demo-card {
+    overflow: hidden !important;
+    height: auto !important;
+  }
+  
+  /* Ensure showcase preview areas don't overflow */
+  .showcase-preview,
+  .project-showcase,
+  .demo-preview {
+    height: auto !important;
+    max-height: 350px !important;
+    overflow: hidden !important;
+  }
+}
+
 /* Services Section */
 .services {
     padding: 120px 0;
