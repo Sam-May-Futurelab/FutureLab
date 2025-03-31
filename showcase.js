@@ -29,6 +29,57 @@ document.addEventListener('DOMContentLoaded', function() {
     initModalFunctionality();
     initProductCardButtons(); // Add functionality to product card buttons
     
+    // FIX HAMBURGER MENU SPECIFICALLY FOR SHOWCASE PAGE MOBILE
+    const showcaseHamburger = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
+    const showcaseMenu = document.querySelector('.mobile-nav, .nav-links, .main-nav');
+    
+    if (showcaseHamburger && showcaseMenu) {
+        console.log("Showcase mobile menu elements found");
+        
+        // Direct, simple toggle for showcase page
+        showcaseHamburger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log("Showcase hamburger clicked");
+            
+            // Toggle menu visibility
+            showcaseMenu.classList.toggle('active');
+            this.classList.toggle('active');
+            
+            // Force CSS properties
+            if (showcaseMenu.classList.contains('active')) {
+                showcaseMenu.style.display = 'block';
+                showcaseMenu.style.position = 'fixed';
+                showcaseMenu.style.top = '70px';
+                showcaseMenu.style.left = '0';
+                showcaseMenu.style.width = '100%';
+                showcaseMenu.style.background = '#fff';
+                showcaseMenu.style.padding = '20px';
+                showcaseMenu.style.zIndex = '999';
+                showcaseMenu.style.maxHeight = '80vh';
+                showcaseMenu.style.overflow = 'auto';
+            } else {
+                showcaseMenu.style = '';
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (showcaseMenu.classList.contains('active') && 
+                !showcaseMenu.contains(e.target) && 
+                !showcaseHamburger.contains(e.target)) {
+                showcaseMenu.classList.remove('active');
+                showcaseHamburger.classList.remove('active');
+            }
+        });
+    } else {
+        console.error("Showcase mobile menu elements not found:", { 
+            hamburger: showcaseHamburger ? "Found" : "Not found", 
+            menu: showcaseMenu ? "Found" : "Not found" 
+        });
+    }
+    
     // 3D Product Viewer - Simplify and fix
     function initProductViewer() {
         const productViewer = document.getElementById('product-viewer');
