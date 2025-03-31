@@ -23,13 +23,45 @@ html {
     scroll-behavior: smooth;
 }
 
-/* PREVENT HORIZONTAL SCROLLING ACROSS WEBSITE */
-html, 
-body {
+/* PREVENT HORIZONTAL SCROLLING - CRITICAL FIX */
+html, body {
   overflow-x: hidden !important;
-  max-width: 100vw;
   width: 100%;
   position: relative;
+  max-width: 100vw;
+}
+
+/* Make sure all containers respect width constraints */
+.container, 
+.section, 
+section, 
+div[class*="container"],
+.row,
+.col,
+main,
+header,
+footer {
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Fix for specific content that might be causing overflow */
+img, 
+video, 
+iframe,
+.media-container,
+.image-container {
+  max-width: 100% !important;
+  height: auto;
+}
+
+/* Ensure flexbox items don't cause overflow */
+.d-flex,
+.flex,
+[class*="d-flex"],
+[class*="display-flex"],
+.row {
+  flex-wrap: wrap;
 }
 
 * {
@@ -45,18 +77,6 @@ body {
     background-color: var(--light-color);
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-}
-
-.container,
-.content-container,
-.section-container,
-main,
-section,
-header,
-footer,
-.row {
-  max-width: 100%;
-  overflow-x: hidden;
 }
 
 .container {
