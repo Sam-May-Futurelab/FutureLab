@@ -752,6 +752,58 @@ img[src*="pokespud-mockup.png"],
   }
 }
 
+/* FIX LIGHT MODE TEXT VISIBILITY ISSUES ON MOBILE */
+@media (max-width: 768px) {
+  /* Hero section and header text */
+  .showcase-hero .hero-title,
+  .showcase-hero .hero-subtitle,
+  h1.main-heading,
+  .interactive-heading,
+  .section-title.creative-title,
+  .particle-text,
+  .particle-subtext,
+  .night-sky-content h2,
+  .night-sky-content p,
+  .showcase-hero .btn,
+  .scroll-indicator,
+  .night-sky-animation .interaction-hint {
+    color: #0f172a !important;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.3) !important;
+  }
+  
+  /* Light background for text container to improve readability */
+  .hero-content,
+  .night-sky-content,
+  .showcase-hero .container,
+  .particle-animation {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    padding: 15px !important;
+    border-radius: 10px !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+  }
+  
+  /* Ensure buttons remain visible */
+  .showcase-hero .btn {
+    border: 1px solid #0f172a !important;
+  }
+  
+  /* Improve "Creative Technology" text visibility specifically */
+  .particle-text {
+    background: linear-gradient(to right, #0f172a, #334155) !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    text-shadow: none !important;
+  }
+  
+  /* Make sure light mode text has sufficient contrast */
+  .showcase-hero .btn {
+    background-color: #0f172a !important;
+    color: white !important;
+    text-shadow: none !important;
+  }
+}
+
 /* 3D Product Viewer */
 .product-viewer {
     width: 100%;
