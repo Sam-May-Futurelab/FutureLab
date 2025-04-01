@@ -372,7 +372,10 @@
                             <p class="calendly-description">Choose a convenient time to discuss your project directly on my calendar</p>
                         </div>
                     </div>
-                    <form class="contact-form">
+                    <form class="contact-form" action="https://formspree.io/f/xldjpewg" method="POST">
+                        <input type="hidden" name="_subject" value="New Contact Form Submission from Futurelab">
+                        <input type="hidden" name="_next" value="https://futurelabs.solutions/thank-you">
+                        
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" required>
@@ -399,7 +402,9 @@
                             <label for="message">Project Details</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary full-width">Send Message</button>
+                        <button type="submit" class="btn btn-primary full-width">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
                     </form>
                 </div>
             </div>

@@ -106,40 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Form Submission
-    const contactForm = document.querySelector('.contact-form');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const company = document.getElementById('company').value;
-            const service = document.getElementById('service').value;
-            const message = document.getElementById('message').value;
-            
-            // Form validation
-            if (!name || !email || !message) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // Simple email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address');
-                return;
-            }
-            
-            // Normally you would send the form data to a server here
-            // For now, we'll just show a success message
-            alert('Thanks for your message! I\'ll get back to you soon.');
-            contactForm.reset();
-        });
-    }
-    
     // Lazy load images
     const images = document.querySelectorAll('img[data-src]');
     

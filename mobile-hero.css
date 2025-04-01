@@ -146,6 +146,8 @@
   .hero .clients {
     opacity: 0;
     animation: mobile-fade-in 1s ease forwards 2s;
+    margin-bottom: 100px; /* Add space below client logos for floating icons */
+    position: relative; /* Create positioning context for icons */
   }
   
   .hero .client-logos {
@@ -184,7 +186,7 @@
     }
   }
   
-  /* IMPROVED: Fun floating icons that don't overlap text */
+  /* IMPROVED: Fun floating icons positioned below client logos */
   .mobile-floating-icon {
     position: absolute;
     display: flex;
@@ -202,30 +204,30 @@
     transition: all 0.3s ease;
   }
   
-  /* Adjust positions to avoid text overlap */
+  /* Reposition icons to the space below client logos */
   .mobile-icon-code {
-    top: 70%; /* Move way down to avoid text */
+    bottom: -80px; /* Position below the client logos */
     right: 25%;
     animation-delay: 0s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(220,240,255,0.95));
   }
   
   .mobile-icon-mobile {
-    bottom: 25%;
+    bottom: -60px;
     left: 20%;
     animation-delay: 1s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(220,255,240,0.95));
   }
   
   .mobile-icon-design {
-    top: 75%;
-    left: 25%;
+    bottom: -90px;
+    left: 55%;
     animation-delay: 2s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,220,255,0.95));
   }
   
   .mobile-icon-web {
-    bottom: 30%;
+    bottom: -70px;
     right: 15%;
     animation-delay: 3s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,240,220,0.95));
