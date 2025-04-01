@@ -58,7 +58,7 @@ If you're looking to build a site, app, or digital tool that looks good *and* wo
 
 - 🌍 Website: [https://futurelab.solutions](https://futurelab.solutions)
 - 📧 Email: hello@futurelab.solutions
-- 📱 Instagram: [@futurelab.studio](https://instagram.com/futurelab.studio)
+- 📱 Instagram: [@futurelabsolutions](https://instagram.com/futurelabsolutions)
 
 We’re currently booking new freelance projects for Q2.
 
