@@ -87,6 +87,8 @@
     opacity: 0;
     transform: translateY(20px);
     animation: mobile-fade-in 1s ease forwards 0.5s;
+    position: relative;
+    z-index: 5; /* Ensure text stays above icons */
   }
   
   /* Glowing underline effect */
@@ -114,6 +116,8 @@
     opacity: 0;
     transform: translateY(20px);
     animation: mobile-fade-in 1s ease forwards 1s;
+    position: relative;
+    z-index: 5; /* Ensure text stays above icons */
   }
   
   /* Button animation */
@@ -121,6 +125,8 @@
     opacity: 0;
     transform: translateY(20px);
     animation: mobile-fade-in 1s ease forwards 1.5s;
+    position: relative;
+    z-index: 5; /* Ensure buttons stay above icons */
   }
   
   .hero .btn-primary {
@@ -136,56 +142,126 @@
     color: white;
   }
   
-  /* Additional graphic elements */
+  /* Center client logos */
+  .hero .clients {
+    opacity: 0;
+    animation: mobile-fade-in 1s ease forwards 2s;
+  }
+  
+  .hero .client-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+  
+  .hero .client-logos img {
+    height: auto;
+    max-width: 80px;
+    animation: pulse-glow 3s ease-in-out infinite alternate;
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+  }
+  
+  .hero .client-logos img:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  
+  .hero .client-logos img:nth-child(3) {
+    animation-delay: 1s;
+  }
+  
+  @keyframes pulse-glow {
+    0% {
+      transform: scale(1);
+      filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
+    }
+    100% {
+      transform: scale(1.05);
+      filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    }
+  }
+  
+  /* IMPROVED: Fun floating icons that don't overlap text */
   .mobile-floating-icon {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
     color: #4361ee;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     z-index: 2;
-    animation: float-icon 6s ease-in-out infinite;
+    animation: float-fun 8s ease-in-out infinite;
+    transition: all 0.3s ease;
   }
   
+  /* Adjust positions to avoid text overlap */
   .mobile-icon-code {
-    top: 20%;
-    right: 15%;
+    top: 70%; /* Move way down to avoid text */
+    right: 25%;
     animation-delay: 0s;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(220,240,255,0.95));
   }
   
   .mobile-icon-mobile {
-    bottom: 30%;
-    left: 15%;
+    bottom: 25%;
+    left: 20%;
     animation-delay: 1s;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(220,255,240,0.95));
   }
   
   .mobile-icon-design {
-    top: 15%;
-    left: 20%;
+    top: 75%;
+    left: 25%;
     animation-delay: 2s;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,220,255,0.95));
   }
   
   .mobile-icon-web {
-    bottom: 25%;
-    right: 20%;
+    bottom: 30%;
+    right: 15%;
     animation-delay: 3s;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,240,220,0.95));
   }
   
-  @keyframes float-icon {
-    0%, 100% {
-      transform: translateY(0);
+  /* More fun animations for icons */
+  @keyframes float-fun {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    25% {
+      transform: translateY(-12px) rotate(8deg);
+      box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
     }
     50% {
-      transform: translateY(-15px);
+      transform: translateY(5px) rotate(-5deg);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    75% {
+      transform: translateY(-8px) rotate(3deg);
+      box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+    }
+    100% {
+      transform: translateY(0) rotate(0deg);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
   }
   
+  /* Add glow effect on tap */
+  .mobile-floating-icon:active {
+    transform: scale(1.3);
+    box-shadow: 0 0 30px rgba(67, 97, 238, 0.6);
+  }
+  
+  /* Standard animations */
   @keyframes mobile-fade-in {
     from {
       opacity: 0;
@@ -197,34 +273,6 @@
     }
   }
   
-  /* Additional pulse animation for brand logos */
-  .hero .clients {
-    opacity: 0;
-    animation: mobile-fade-in 1s ease forwards 2s;
-  }
-  
-  .hero .client-logos img {
-    animation: pulse 2s ease-in-out infinite alternate;
-    animation-delay: 3s;
-  }
-  
-  .hero .client-logos img:nth-child(2) {
-    animation-delay: 3.5s;
-  }
-  
-  .hero .client-logos img:nth-child(3) {
-    animation-delay: 4s;
-  }
-  
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(1.05);
-    }
-  }
-  
   /* Darkened overlay to improve text contrast */
   .mobile-overlay {
     position: absolute;
@@ -233,10 +281,10 @@
     width: 100%;
     height: 100%;
     background: linear-gradient(to bottom, 
-                rgba(0,0,0,0.2) 0%,
-                rgba(0,0,0,0) 40%,
-                rgba(0,0,0,0) 60%,
-                rgba(0,0,0,0.3) 100%);
+                rgba(0,0,0,0.4) 0%,
+                rgba(0,0,0,0.1) 40%,
+                rgba(0,0,0,0.1) 60%,
+                rgba(0,0,0,0.4) 100%);
     z-index: 1;
   }
 }
