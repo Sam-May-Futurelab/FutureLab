@@ -1108,6 +1108,7 @@ body.menu-open {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    position: relative;
 }
 
 .hero h1 span {
@@ -1188,6 +1189,22 @@ body.menu-open {
     50% {
         transform: translateY(-15px);
     }
+}
+
+/* Add styling for typewriter cursor */
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background-color: currentColor;
+  margin-left: 2px;
+  animation: cursor-blink 1s step-end infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .clients {

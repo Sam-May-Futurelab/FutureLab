@@ -142,7 +142,7 @@
     color: white;
   }
   
-  /* Center client logos */
+  /* Center client logos - override for mobile */
   .hero .clients {
     opacity: 0;
     animation: mobile-fade-in 1s ease forwards 2s;
@@ -159,10 +159,10 @@
   
   .hero .client-logos img {
     height: auto;
-    max-width: 80px;
+    max-width: 80px; /* Smaller size on mobile */
     animation: pulse-glow 3s ease-in-out infinite alternate;
-    filter: brightness(0) invert(1);
-    opacity: 0.8;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
+    opacity: 0.9;
   }
   
   .hero .client-logos img:nth-child(2) {
@@ -176,11 +176,11 @@
   @keyframes pulse-glow {
     0% {
       transform: scale(1);
-      filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
+      filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
     }
     100% {
       transform: scale(1.05);
-      filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
     }
   }
   
@@ -287,4 +287,24 @@
                 rgba(0,0,0,0.4) 100%);
     z-index: 1;
   }
+}
+
+/* Desktop client logo sizing - bigger logos */
+.hero .client-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 20px auto;
+}
+
+.hero .client-logos img {
+  height: auto;
+  max-width: 120px; /* Larger size on desktop */
+  transition: transform 0.3s ease;
+}
+
+.hero .client-logos img:hover {
+  transform: scale(1.05);
 }
