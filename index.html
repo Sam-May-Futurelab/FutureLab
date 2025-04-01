@@ -3,7 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Futurelab | Custom Web & App Solutions</title>
+    
+    <!-- Updated title and meta tags for SEO -->
+    <title>FutureLab — Custom Websites & MVP Apps for Startups and Small Businesses</title>
+    <meta name="description" content="FutureLab is a UK-based creative web and app development studio. We build fast, custom websites, e-commerce stores, and MVP apps for startups, small businesses, and creators.">
+    <meta name="keywords" content="freelance web developer, small business websites, startup MVP, react developer, ecommerce website, UK developer, custom website design, app development, digital studio, futurelab solutions">
+    <meta name="author" content="FutureLab Solutions">
+    
+    <!-- Open Graph for link previews -->
+    <meta property="og:title" content="FutureLab — Custom Websites & MVP Apps">
+    <meta property="og:description" content="FutureLab helps small businesses, startups, and creators launch beautiful, functional digital products.">
+    <meta property="og:image" content="https://futurelab.solutions/assets/your-preview-image.png">
+    <meta property="og:url" content="https://futurelab.solutions">
+    <meta property="og:type" content="website">
     
     <!-- Favicon links -->
     <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
@@ -74,7 +86,8 @@
             <div class="animated-gradient-bg"></div>
             <div class="container">
                 <div class="hero-content">
-                    <h1 class="animate-in">Custom Digital Solutions for Forward-Thinking Businesses.</h1>
+                    <!-- Add stylish gradient effect to heading with animation -->
+                    <h1 class="animate-in gradient-text" style="display: block !important; visibility: visible !important; opacity: 1 !important; min-height: auto !important;" data-no-animation="true">Custom Digital Solutions for Forward-Thinking Businesses.</h1>
                     <p class="animate-in stagger-1">Fast turnaround. Custom builds. No bloat. I combine development expertise with business insight to create solutions that actually work for your business.</p>
                     <div class="hero-buttons animate-in stagger-2">
                         <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
@@ -423,17 +436,198 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Futurelab. All rights reserved. | <a href="https://futurelabs.solutions" class="animated-underline">futurelabs.solutions</a></p>
+                <p>
+                    &copy; 2025 Futurelab. All rights reserved. | 
+                    <a href="https://futurelabs.solutions" class="animated-underline">futurelabs.solutions</a> | 
+                    <a href="privacy-policy.html" class="animated-underline">Privacy Policy</a>
+                </p>
             </div>
         </div>
     </footer>
 
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cookie-content">
+            <p>This website uses cookies to ensure you get the best experience. <a href="privacy-policy.html">Learn more</a></p>
+            <div class="cookie-buttons">
+                <button id="cookie-accept" class="btn btn-sm btn-primary">Accept</button>
+                <button id="cookie-decline" class="btn btn-sm btn-outline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fix script loading order - KEEP ALL ORIGINAL SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="typewriter.js"></script>
+    <script src="mobile-redirect.js"></script>
     <script src="script.js"></script>
     <script src="testimonials.js"></script>
     <script src="placeholder.js"></script>
     <script src="simple-menu.js"></script>
-    <script src="mobile-redirect.js"></script>
+    
+    <!-- REMOVE THE TYPEWRITER SCRIPT AND REPLACE WITH A SIMPLE CHECK TO RESTORE TEXT IF MISSING -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Wait a moment and then ensure our h1 text is visible
+        setTimeout(function() {
+          const heroHeading = document.querySelector('.hero-content h1');
+          if (heroHeading && (!heroHeading.textContent || heroHeading.textContent.trim() === '')) {
+            console.log("Restoring missing hero heading text");
+            heroHeading.textContent = 'Custom Digital Solutions for Forward-Thinking Businesses.';
+          }
+        }, 100);
+      });
+    </script>
+
+    <!-- Cookie banner styles and functionality -->
+    <style>
+        .cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            max-width: 400px;
+            background-color: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000;
+            display: none; /* Hidden by default, shown via JS */
+            border: 1px solid rgba(230, 230, 250, 0.7);
+            animation: slide-up 0.5s ease forwards;
+        }
+
+        .dark-theme .cookie-banner {
+            background-color: #1e293b;
+            border-color: rgba(55, 65, 81, 0.5);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slide-up {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .cookie-content p {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 480px) {
+            .cookie-banner {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                max-width: none;
+            }
+        }
+    </style>
+
+    <script>
+        // Cookie banner functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptBtn = document.getElementById('cookie-accept');
+            const declineBtn = document.getElementById('cookie-decline');
+            
+            // Check if user has already made a choice
+            const cookieConsent = localStorage.getItem('cookieConsent');
+            
+            // If no choice has been made yet, show the banner
+            if (cookieConsent === null) {
+                setTimeout(() => {
+                    cookieBanner.style.display = 'block';
+                }, 1000);
+            }
+            
+            // Handle accept button click
+            acceptBtn.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieBanner.style.display = 'none';
+            });
+            
+            // Handle decline button click
+            declineBtn.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'declined');
+                cookieBanner.style.display = 'none';
+            });
+        });
+    </script>
+
+    <!-- Add inline style at the bottom for the gradient text effect -->
+    <style>
+        .gradient-text {
+            /* Enhanced gradient with more vibrant colors and wider range */
+            background-image: linear-gradient(90deg, 
+                #4361ee, 
+                #3a86ff, 
+                #4cc9f0, 
+                #3a86ff, 
+                #4361ee);
+            background-size: 200% auto;
+            background-clip: text;
+            text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            /* Faster animation for more obvious effect */
+            animation: gradient-flow 3s ease infinite alternate;
+            
+            /* Add text outline for better visibility */
+            text-shadow: 
+                0 0 1px rgba(67, 97, 238, 0.2),
+                0 0 15px rgba(76, 201, 240, 0.3);
+                
+            /* Make text bolder for better color display */
+            font-weight: 700;
+            
+            /* Add slight scale effect during animation */
+            transform-origin: center;
+            animation: gradient-flow 3s ease infinite alternate,
+                       pulse-text 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradient-flow {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes pulse-text {
+            0% {
+                transform: scale(1);
+                text-shadow: 0 0 1px rgba(67, 97, 238, 0.2),
+                             0 0 15px rgba(76, 201, 240, 0.3);
+            }
+            100% {
+                transform: scale(1.02);
+                text-shadow: 0 0 2px rgba(67, 97, 238, 0.4),
+                             0 0 20px rgba(76, 201, 240, 0.5);
+            }
+        }
+
+        /* Add smooth reveal animation */
+        .hero-content h1 {
+            animation: smooth-reveal 1.2s ease forwards;
+        }
+
+        @keyframes smooth-reveal {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </body>
 </html>

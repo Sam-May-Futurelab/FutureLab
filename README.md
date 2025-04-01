@@ -1,70 +1,79 @@
-# FutureLab.Solutions 🚀
+# 🚀 FutureLab.Solutions — Freelance Web & App Development Studio
 
-**FutureLab is a creative development studio focused on building the future of the web — one pixel-perfect site and scalable app at a time.**
+**FutureLab is a UK-based creative development studio specialising in custom websites, app MVPs, and clean digital experiences for startups, small businesses, and creators.**
 
-We work with small businesses, creators, and startups to deliver powerful digital solutions that look amazing and just work. Whether it's a sleek website, an MVP for your app idea, or a full e-commerce experience, we bring design and development together with clarity, speed, and quality.
-
----
-
-## 🌐 What We Offer
-
-- **Custom Website Development**  
-  Fast, responsive, and beautifully designed websites tailored to your brand and goals.
-
-- **Mobile App Development**  
-  Cross-platform app builds using modern tech stacks to bring your ideas to life.
-
-- **UX/UI Design**  
-  Clean, intuitive interfaces that convert — with user experience at the heart.
-
-- **Support & Optimisation**  
-  Hosting, performance tuning, SEO basics, and ongoing improvements post-launch.
+We blend design and code to build high-performance, modern digital products — with a focus on speed, usability, and trust.
 
 ---
 
-## 🛠️ Tech Stack We Use
+## 🌟 Who We Work With
 
-- React / Next.js / Tailwind CSS  
-- React Native / Expo  
-- Firebase / Firestore / Supabase  
-- Node.js / Express  
-- Framer / Figma  
-- Shopify / WordPress / Headless CMS setups  
-- Vercel / Netlify / Cloudflare Pages
+We help:
+- Small businesses looking for a professional online presence
+- Creators building their brand or launching a product
+- Startup founders needing a fast and functional MVP
+- Agencies needing clean frontend development support
 
 ---
 
-## 💼 Recent Projects
+## 💻 What We Build
 
-| Project        | Description                                      | Tech Used             |
-|----------------|--------------------------------------------------|------------------------|
-| **CardWizz**   | Pokémon card scanning + collection tracking app | React Native, Firebase, Pokémon TCG API |
-| [Your Next One] | [Description Here]                              | [Tech Stack Here]     |
-
----
-
-## 📩 Work With Us
-
-We're currently taking on new projects. If you're a small business, startup, or creator looking to level up your digital presence — get in touch!
-
-- 🌍 Website: [futurelab.solutions](https://futurelab.solutions)
-- 📧 Email: `hello@futurelab.solutions`
-- 📱 Instagram: [@futurelab.studio](https://instagram.com/futurelab.studio) *(if applicable)*
+- **Custom Websites** (Marketing pages, landing pages, portfolios)  
+- **E-Commerce Stores** (Shopify, headless, or custom checkout builds)  
+- **MVP Web & Mobile Apps** (React Native, Firebase, authentication, dashboards)  
+- **UX/UI Design** (Clean, conversion-focused, user-friendly)
 
 ---
 
-## 💡 Philosophy
+## 🧠 Why FutureLab?
 
-> "Build with clarity. Design with purpose. Deliver with impact."
-
-We don't just build things — we solve problems with creativity, logic, and beautiful code.
-
----
-
-## ⚙️ This Repo
-
-This repository is a showcase of FutureLab's internal projects, prototypes, and templates we've created to accelerate client builds and explore new technologies.
+- No templates — everything we build is custom, fast, and responsive  
+- Built to scale — we use modern stacks like React, Tailwind, Firebase, and Vercel  
+- UK-based support and communication  
+- Project management you can actually rely on
 
 ---
 
-Thank you for checking out FutureLab ✨
+## ⚙️ Recent Work
+
+### [CardWizz](https://futurelab.solutions)  
+A mobile app for scanning and tracking Pokémon cards — built using React Native, Firebase, and the TCG API.
+
+### [PokeSpud](https://pokespud.com)  
+A niche e-commerce store for Japanese Pokémon cards. Custom theme and performance-focused design.
+
+---
+
+## 🔧 Tech Stack
+
+We build with tools that scale and stay fast:
+- Frontend: React, Next.js, Tailwind CSS
+- Mobile: React Native, Expo
+- Backend: Firebase, Supabase, Node.js
+- CMS: Headless CMS, WordPress, Shopify
+- Hosting: Vercel, Netlify, GitHub Pages
+
+---
+
+## 📩 Want to Work Together?
+
+If you're looking to build a site, app, or digital tool that looks good *and* works perfectly — reach out:
+
+- 🌍 Website: [https://futurelab.solutions](https://futurelab.solutions)
+- 📧 Email: hello@futurelab.solutions
+- 📱 Instagram: [@futurelab.studio](https://instagram.com/futurelab.studio) *(if live)*
+
+We’re currently booking new freelance projects for Q2.
+
+---
+
+## 💡 Tags & Keywords
+
+`#webdevelopment` `#freelancedeveloper` `#smallbusinesswebsites` `#reactdeveloper`  
+`#startupmvp` `#customwebdesign` `#ukwebdeveloper` `#portfoliowebsite`  
+`#digitalagency` `#ecommercestore` `#futurelab`
+
+---
+
+Thanks for checking out FutureLab 👋  
+Let’s build something people remember.

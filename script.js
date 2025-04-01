@@ -174,28 +174,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // NEW ANIMATIONS AND IMPROVEMENTS
 
-    // 1. Animated Typing Effect for Hero Heading
-    if (document.querySelector('.hero h1')) {
-        const heroHeading = document.querySelector('.hero h1');
-        const originalText = heroHeading.innerHTML;
-        
-        // Only run on desktop devices
-        if (window.innerWidth > 992) {
-            heroHeading.innerHTML = '';
-            let charIndex = 0;
-            
-            function typeWriter() {
-                if (charIndex < originalText.length) {
-                    heroHeading.innerHTML += originalText.charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeWriter, 50);
-                }
-            }
-            
-            setTimeout(typeWriter, 500);
-        }
-    }
-    
     // 2. Scroll Progress Indicator
     const progressBar = document.createElement('div');
     progressBar.className = 'scroll-progress';
@@ -214,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
     statsSection.innerHTML = `
         <div class="container">
             <div class="stats-grid">
-                <div class="stat-item" data-count="200">
+                <div class="stat-item" data-count="50">
                     <h3 class="counter">0</h3>
                     <p>Projects Completed</p>
                 </div>
@@ -226,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h3 class="counter">0</h3>
                     <p>Years Experience</p>
                 </div>
-                <div class="stat-item" data-count="24">
+                <div class="stat-item" data-count="2">
                     <h3 class="counter">0</h3>
                     <p>Awards Received</p>
                 </div>

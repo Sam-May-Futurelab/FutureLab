@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | FutureLab</title>
+    
+    <!-- Favicon links -->
+    <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="assets/favicon/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="assets/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/favicon/favicon-96x96.png" sizes="96x96" type="image/png">
+    
+    <!-- Android icons -->
+    <link rel="icon" href="assets/favicon/android-icon-36x36.png" sizes="36x36" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-48x48.png" sizes="48x48" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-72x72.png" sizes="72x72" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-96x96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-144x144.png" sizes="144x144" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-192x192.png" sizes="192x192" type="image/png">
+    
+    <!-- Apple touch icons -->
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-57x57.png" sizes="57x57">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-60x60.png" sizes="60x60">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-76x76.png" sizes="76x76">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-114x114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-144x144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-180x180.png" sizes="180x180">
+    
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .policy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .policy-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .policy-content h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .policy-content h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .policy-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .policy-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .policy-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .policy-content .last-updated {
+            font-style: italic;
+            color: var(--gray-color);
+            margin-top: 3rem;
+        }
+        
+        .policy-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .policy-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .policy-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 60px 20px;
+            color: white;
+            text-align: center;
+            margin-top: 10px; /* Increase margin to push content further below fixed navbar */
+            padding-top: 125px; /* Add extra padding at the top */
+            position: relative; /* Ensure proper stacking context */
+            z-index: 1; /* Ensure it's above background elements but below the header */
+        }
+        
+        .policy-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .policy-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        
+        .back-to-home:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .policy-header {
+                padding: 40px 20px;
+            }
+            
+            .policy-header h1 {
+                font-size: 2rem;
+            }
+            
+            .policy-header p {
+                font-size: 1rem;
+            }
+            
+            .policy-content h1 {
+                font-size: 2rem;
+            }
+            
+            .policy-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            max-width: 400px;
+            background-color: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000;
+            display: none; /* Hidden by default, shown via JS */
+            border: 1px solid rgba(230, 230, 250, 0.7);
+            animation: slide-up 0.5s ease forwards;
+        }
+
+        .dark-theme .cookie-banner {
+            background-color: #1e293b;
+            border-color: rgba(55, 65, 81, 0.5);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slide-up {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .cookie-content p {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 480px) {
+            .cookie-banner {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Futurelab</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#portfolio">Work</a></li>
+                <li><a href="showcase.html" class="showcase-link">Showcase</a></li>
+                <li><a href="index.html#contact" class="btn btn-outline">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+                <i class="fas fa-lightbulb"></i>
+                <div class="toggle-glow"></div>
+            </button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cookie-content">
+            <p>This website uses cookies to ensure you get the best experience. <a href="privacy-policy.html">Learn more</a></p>
+            <div class="cookie-buttons">
+                <button id="cookie-accept" class="btn btn-sm btn-primary">Accept</button>
+                <button id="cookie-decline" class="btn btn-sm btn-outline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section class="policy-header">
+            <div class="container">
+                <h1>Privacy Policy</h1>
+                <p>How we collect, use, and protect your information</p>
+                <a href="index.html" class="back-to-home"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            </div>
+        </section>
+        
+        <section class="policy-content">
+            <h1>Privacy Policy</h1>
+            
+            <p>Effective date: June 1, 2024</p>
+            
+            <p>At FutureLab ("we," "our," or "us"), we respect your privacy and are committed to protecting your personal data. This privacy policy explains how we collect, use, disclose, and safeguard your information when you visit our website or engage with our services.</p>
+            
+            <h2>Information We Collect</h2>
+            
+            <p>We may collect the following types of information:</p>
+            
+            <ul>
+                <li><strong>Personal Information</strong>: Name, email address, phone number, and other contact details you provide when filling out forms or contacting us.</li>
+                <li><strong>Business Information</strong>: Company name, job title, and business contact information.</li>
+                <li><strong>Technical Data</strong>: IP address, browser type and version, time zone setting, browser plug-in types and versions, operating system, and platform.</li>
+                <li><strong>Usage Data</strong>: Information about how you use our website, products, and services.</li>
+            </ul>
+            
+            <h2>How We Collect Information</h2>
+            
+            <p>We collect information through:</p>
+            
+            <ul>
+                <li>Direct interactions when you contact us, request a quote, or use our services</li>
+                <li>Forms on our website</li>
+                <li>Automated technologies or interactions (cookies, analytics)</li>
+                <li>Third parties or publicly available sources</li>
+            </ul>
+            
+            <h2>How We Use Your Information</h2>
+            
+            <p>We use the information we collect for the following purposes:</p>
+            
+            <ul>
+                <li>To provide, maintain, and improve our services</li>
+                <li>To respond to your inquiries and fulfill your requests</li>
+                <li>To send you administrative information and updates</li>
+                <li>To personalize your experience on our website</li>
+                <li>To send you marketing and promotional communications (with option to opt out)</li>
+                <li>To protect our website, services, and users from unauthorized activity</li>
+                <li>To comply with legal obligations</li>
+            </ul>
+            
+            <h2>Cookies and Tracking Technologies</h2>
+            
+            <p>We use cookies and similar tracking technologies to track activity on our website and hold certain information. Cookies are small files placed on your device that allow us to enhance and personalize your experience. You can set your browser to refuse all cookies or to indicate when a cookie is being sent.</p>
+            
+            <h2>Data Security</h2>
+            
+            <p>We have implemented appropriate technical and organizational security measures designed to protect the security of any personal information we process. However, please note that no method of transmission over the Internet or method of electronic storage is 100% secure.</p>
+            
+            <h2>Third-Party Services</h2>
+            
+            <p>Our website may contain links to third-party websites or use third-party services. These third parties have separate and independent privacy policies. We have no responsibility or liability for the content and activities of these linked sites and services.</p>
+            
+            <p>Third-party services we may use include:</p>
+            
+            <ul>
+                <li>Google Analytics for website analytics</li>
+                <li>Formspree for contact form processing</li>
+                <li>Calendly for scheduling appointments</li>
+                <li>Web hosting services</li>
+            </ul>
+            
+            <h2>Your Data Protection Rights</h2>
+            
+            <p>Depending on your location, you may have the following rights:</p>
+            
+            <ul>
+                <li>The right to access your personal data</li>
+                <li>The right to rectification of incorrect data</li>
+                <li>The right to erasure of your data</li>
+                <li>The right to restrict processing of your data</li>
+                <li>The right to data portability</li>
+                <li>The right to object to processing of your data</li>
+            </ul>
+            
+            <p>To exercise any of these rights, please contact us at <a href="mailto:sam@futurelab.solutions">sam@futurelab.solutions</a>.</p>
+            
+            <h2>Children's Privacy</h2>
+            
+            <p>Our services are not intended for individuals under the age of 16, and we do not knowingly collect personal information from children under 16. If we learn we have collected or received personal information from a child under 16, we will delete that information.</p>
+            
+            <h2>Changes to This Privacy Policy</h2>
+            
+            <p>We may update our privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page and updating the "effective date" at the top of this policy.</p>
+            
+            <h2>Contact Us</h2>
+            
+            <p>If you have questions about this privacy policy or our privacy practices, please contact us at:</p>
+            
+            <p>
+                FutureLab<br>
+                Email: <a href="mailto:sam@futurelab.solutions">sam@futurelab.solutions</a><br>
+                Phone: <a href="tel:+447806946463">+44 7806 946463</a>
+            </p>
+            
+            <p class="last-updated">Last updated: June 1, 2024</p>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Futurelab</div>
+                <div class="footer-tagline">Custom Digital Solutions for Forward-Thinking Businesses</div>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/sam-may-/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/ChiefSpuddy/CardWizz" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>
+                    &copy; 2025 Futurelab. All rights reserved. | 
+                    <a href="https://futurelabs.solutions" class="animated-underline">futurelabs.solutions</a> | 
+                    <a href="privacy-policy.html" class="animated-underline">Privacy Policy</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle for privacy policy page
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            if (themeToggle) {
+                // Check for saved theme preference
+                const savedTheme = localStorage.getItem('theme');
+                
+                // Apply saved theme
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-theme');
+                    themeToggle.innerHTML = '<i class="fas fa-lightbulb"></i><div class="toggle-glow"></div>';
+                } else {
+                    document.body.classList.remove('dark-theme');
+                    themeToggle.innerHTML = '<i class="far fa-lightbulb"></i><div class="toggle-glow"></div>';
+                }
+                
+                // Toggle theme on click
+                themeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('dark-theme');
+                    
+                    if (document.body.classList.contains('dark-theme')) {
+                        localStorage.setItem('theme', 'dark');
+                        themeToggle.innerHTML = '<i class="fas fa-lightbulb"></i><div class="toggle-glow"></div>';
+                    } else {
+                        localStorage.setItem('theme', 'light');
+                        themeToggle.innerHTML = '<i class="far fa-lightbulb"></i><div class="toggle-glow"></div>';
+                    }
+                });
+            }
+            
+            // Mobile menu toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                });
+            }
+
+            // Cookie banner functionality
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptBtn = document.getElementById('cookie-accept');
+            const declineBtn = document.getElementById('cookie-decline');
+            
+            // Check if user has already made a choice
+            const cookieConsent = localStorage.getItem('cookieConsent');
+            
+            // If no choice has been made yet, show the banner
+            if (cookieConsent === null) {
+                setTimeout(() => {
+                    cookieBanner.style.display = 'block';
+                }, 1000);
+            }
+            
+            // Handle accept button click
+            acceptBtn.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieBanner.style.display = 'none';
+            });
+            
+            // Handle decline button click
+            declineBtn.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'declined');
+                cookieBanner.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
