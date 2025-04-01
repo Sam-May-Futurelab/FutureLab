@@ -1058,3 +1058,59 @@ document.addEventListener('DOMContentLoaded', function() {
   // Also run on resize
   window.addEventListener('resize', hideShowcaseOnMobile);
 });
+
+// Add mobile hero enhancements
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if we're on mobile
+  const isMobile = window.innerWidth <= 768 || 
+                  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  
+  if (isMobile) {
+    // Add mobile hero elements
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      // Create wave background
+      const waveBg = document.createElement('div');
+      waveBg.className = 'mobile-wave-bg';
+      hero.prepend(waveBg);
+      
+      // Create floating service icons
+      const iconNames = [
+        'fa-laptop-code',   // Web dev
+        'fa-mobile-alt',    // Mobile
+        'fa-code-branch',   // API
+        'fa-paint-brush'    // Design
+      ];
+      
+      iconNames.forEach(iconName => {
+        const icon = document.createElement('div');
+        icon.className = 'mobile-hero-icon';
+        icon.innerHTML = `<i class="fas ${iconName}"></i>`;
+        hero.appendChild(icon);
+      });
+      
+      // Apply typing animation to hero heading
+      const heading = hero.querySelector('h1');
+      if (heading && heading.textContent) {
+        const originalText = heading.textContent;
+        heading.textContent = '';
+        heading.style.minHeight = '4em'; // Preserve layout space
+        
+        // Simple typing animation
+        let charIndex = 0;
+        const typeSpeed = 50; // ms per character
+        
+        function typeWriter() {
+          if (charIndex < originalText.length) {
+            heading.textContent += originalText.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWriter, typeSpeed);
+          }
+        }
+        
+        // Start typing after a short delay
+        setTimeout(typeWriter, 500);
+      }
+    }
+  }
+});
