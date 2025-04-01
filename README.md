@@ -39,9 +39,6 @@ We help:
 ### [CardWizz](https://futurelab.solutions)  
 A mobile app for scanning and tracking Pokémon cards — built using React Native, Firebase, and the TCG API.
 
-### [PokeSpud](https://pokespud.com)  
-A niche e-commerce store for Japanese Pokémon cards. Custom theme and performance-focused design.
-
 ---
 
 ## 🔧 Tech Stack
