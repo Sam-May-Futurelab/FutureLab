@@ -348,6 +348,35 @@
     text-align: center;
 }
 
+/* Fix for intro section layout issue with badge and heading */
+.intro-section .section-badge {
+    display: block;  /* Change from inline-block to block */
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.intro-section h2 {
+    display: block;  /* Ensure heading is displayed as block */
+    width: 100%;
+    clear: both;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Ensure proper spacing between elements */
+.intro-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Make sure text is properly centered */
+.intro-text {
+    text-align: center;
+}
+
 .section-badge {
     display: inline-block;
     background: linear-gradient(135deg, rgba(76, 201, 240, 0.1), rgba(67, 97, 238, 0.1));
@@ -368,6 +397,20 @@
     font-size: 3rem;
     margin-bottom: 25px;
     font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+
+.intro-section h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color) 50%, transparent 100%);
+    border-radius: 2px;
 }
 
 .intro-text {
@@ -517,6 +560,24 @@ h2.section-title::after {
     max-width: 700px;
     margin: 0 auto;
     font-size: 1.1rem;
+}
+
+/* Night Sky Content */
+.night-sky-content h2 {
+    position: relative;
+    display: inline-block;
+}
+
+.night-sky-content h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color) 50%, transparent 100%);
+    border-radius: 2px;
 }
 
 /* Demo Cards */

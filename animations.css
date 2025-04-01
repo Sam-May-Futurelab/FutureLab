@@ -1,0 +1,265 @@
+/* Animations and visual polish effects for Futurelab site */
+
+/* Gradient button hover effects */
+.btn {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.4s ease;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.1) 50%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: -1;
+  transition: left 0.7s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-secondary:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Dark theme button adjustments */
+.dark-theme .btn::before {
+  background: linear-gradient(
+    90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.15) 50%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Animated gradient backgrounds */
+.animated-gradient-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(
+    45deg,
+    rgba(67, 97, 238, 0.05),
+    rgba(76, 201, 240, 0.05),
+    rgba(67, 97, 238, 0.05)
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Section transition animations */
+.section-transition {
+  position: relative;
+}
+
+.section-transition::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dark-theme .section-transition::after {
+  background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.5));
+}
+
+/* Enhanced service card hover effects */
+.service-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(67, 97, 238, 0.15);
+}
+
+.service-card .service-icon {
+  transition: all 0.5s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.service-card .service-icon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(76, 201, 240, 0.3) 0%, rgba(67, 97, 238, 0) 70%);
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 0.5s ease;
+  z-index: -1;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.service-card:hover .service-icon::before {
+  transform: scale(1.5);
+}
+
+/* Animated underlines for links */
+.animated-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.animated-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Subtle text highlight animation for section titles */
+.section-title {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+  transform: translateX(-50%);
+  transition: width 0.6s ease;
+}
+
+.section-title:hover::before {
+  width: 80px;
+}
+
+/* Profile image hover effect enhancement */
+.about-image {
+  position: static; /* Reset from relative */
+  overflow: visible; /* Ensure nothing gets cut off */
+  border-radius: 12px;
+  margin-bottom: 30px;
+  transition: none; /* Remove all transitions */
+}
+
+/* Remove all pseudo-elements causing issues */
+.about-image::before,
+.about-image::after {
+  display: none !important;
+  content: none !important;
+}
+
+.about-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  transform: none !important; /* Prevent any transforms */
+  transition: none; /* Remove transitions */
+  margin-top: 0; /* Ensure no top margin pushing it up */
+  position: static; /* Reset any positioning */
+}
+
+.about-image:hover img {
+  transform: none !important; /* Ensure no transform on hover */
+}
+
+/* Testimonial card subtle hover effect */
+.testimonial-content {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.testimonial-content:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 15px 35px rgba(67, 97, 238, 0.15);
+}
+
+/* Contact form input focus effects */
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.contact-form select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+/* Dark theme adjustments */
+.dark-theme .service-card:hover {
+  box-shadow: 0 15px 30px rgba(76, 201, 240, 0.15);
+}
+
+.dark-theme .testimonial-content:hover {
+  box-shadow: 0 15px 35px rgba(76, 201, 240, 0.15);
+}
+
+/* MOBILE OPTIMIZATIONS */
+@media (max-width: 768px) {
+  /* Reduce intensity of animations on mobile for better performance */
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: translateY(-1px);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Disable some animations entirely on mobile */
+  .animated-gradient-bg {
+    animation: none;
+    background-position: 0% 0%;
+  }
+}
