@@ -38,11 +38,17 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+body, main {
+    overflow-x: hidden;
+}
+
 .container {
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
     padding: 0 20px;
+    overflow: visible;
+    position: relative;
 }
 
 a {
@@ -160,6 +166,46 @@ div:has(.testimonial) {
   overflow: visible !important; /* Prevent cutting off controls */
 }
 
+/* Remove horizontal dividers between sections */
+section {
+    border: none !important;
+    position: relative;
+}
+
+/* Remove any potential horizontal rules */
+hr, section:before, section:after {
+    display: none !important;
+    border: none !important;
+}
+
+/* Reset section margins */
+section, .services, .portfolio, .testimonials, .about, .contact {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+/* Adjust specific section padding for better spacing */
+.portfolio, .services, .about, .testimonials {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Specifically target the about section spacing */
+#about, .about {
+    padding-top: 50px; 
+    border-top: none !important;
+}
+
+/* Reduce gap above About Futurelab a tiny bit more */
+.testimonials + #about,
+.testimonials + .about {
+    padding-top: 40px;
+    margin-top: 0;
+    border-top: none;
+}
+
 /* Reduce vertical spacing between sections */
 section {
   margin-bottom: 60px; /* Reduced from likely 80px or 100px */
@@ -187,6 +233,29 @@ section.intro-section,
   padding-bottom: 40px; /* Reduced from likely 60px+ */
 }
 
+/* Reduce gap between testimonials and about section */
+#about, .about {
+    padding-top: 50px; /* Increase padding to create more space */
+}
+
+/* Reduce spacing between testimonials and portfolio/work section */
+.portfolio, #portfolio {
+    padding-top: 20px; /* Reduce top padding */
+    margin-top: 10px; /* Reduce top margin */
+}
+
+/* Adjust spacing for section titles in the portfolio area */
+.portfolio .section-title, 
+#portfolio .section-title {
+    margin-bottom: 30px; /* Slightly reduced from default */
+}
+
+/* Adjust bottom spacing of testimonials */
+.testimonials {
+    margin-bottom: 0;
+    padding-bottom: 10px;
+}
+
 /* Adjust spacing for mobile */
 @media (max-width: 768px) {
   section {
@@ -199,6 +268,10 @@ section.intro-section,
   .services-container {
     margin-top: 20px;
     padding-top: 30px;
+  }
+
+  #about, .about {
+    padding-top: 40px;
   }
 }
 

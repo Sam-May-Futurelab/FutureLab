@@ -1,53 +1,66 @@
-// Export function for script.js to check
-window.updateTestimonialSlider = function() {
-    return true;
-};
-
+/**
+ * Ultra-simple testimonials slider with no animations or auto-advance
+ */
 document.addEventListener('DOMContentLoaded', function() {
-    // Testimonial Slider Functionality
+    // Get slider elements
     const slider = document.querySelector('.testimonial-slider');
     if (!slider) return;
     
-    const slides = document.querySelectorAll('.testimonial-slide');
-    const prevBtn = document.querySelector('.testimonial-nav .prev');
-    const nextBtn = document.querySelector('.testimonial-nav .next');
+    const slides = slider.querySelectorAll('.testimonial-slide');
+    const prevBtn = slider.querySelector('.prev');
+    const nextBtn = slider.querySelector('.next');
     
+    if (!slides.length) return;
+    
+    // Initialize slider
     let currentIndex = 0;
     const slideCount = slides.length;
     
-    function updateSlider() {
-        slides.forEach((slide, index) => {
-            if (index === currentIndex) {
-                slide.style.opacity = '1';
-                slide.style.transform = 'translateX(0)';
-                slide.style.zIndex = '2';
-            } else {
-                slide.style.opacity = '0';
-                slide.style.transform = index < currentIndex ? 'translateX(-50px)' : 'translateX(50px)';
-                slide.style.zIndex = '1';
-            }
-        });
+    // Show first slide initially
+    slides[0].classList.add('active');
+    
+    // Mark this slider as initialized to prevent other scripts from controlling it
+    slider.dataset.initialized = 'true';
+    
+    // Stop any existing intervals that might be running
+    // This will clear ANY setInterval in the page - but that's better than disappearing testimonials
+    const highestTimeoutId = setTimeout(() => {}, 0);
+    for (let i = 0; i < highestTimeoutId; i++) {
+        clearTimeout(i);
+        clearInterval(i);
     }
     
-    // Initialize slider
-    updateSlider();
-    
-    // Event listeners for navigation
-    if (prevBtn && nextBtn) {
-        prevBtn.addEventListener('click', function() {
-            currentIndex = (currentIndex - 1 + slideCount) % slideCount;
-            updateSlider();
-        });
-        
-        nextBtn.addEventListener('click', function() {
-            currentIndex = (currentIndex + 1) % slideCount;
-            updateSlider();
-        });
-        
-        // Auto-advance every 5 seconds
-        setInterval(function() {
-            currentIndex = (currentIndex + 1) % slideCount;
-            updateSlider();
-        }, 5000);
+    // Extremely simple slide change function - just show/hide
+    function goToSlide(index) {
+        // No animations - just hide/show
+        slides[currentIndex].classList.remove('active');
+        currentIndex = index;
+        slides[currentIndex].classList.add('active');
     }
+    
+    // Navigate to next/prev slide
+    function nextSlide() {
+        goToSlide((currentIndex + 1) % slideCount);
+    }
+    
+    function prevSlide() {
+        goToSlide((currentIndex - 1 + slideCount) % slideCount);
+    }
+    
+    // Add button event listeners
+    if (prevBtn) prevBtn.addEventListener('click', e => {
+        e.preventDefault();
+        prevSlide();
+    });
+    
+    if (nextBtn) nextBtn.addEventListener('click', e => {
+        e.preventDefault();
+        nextSlide();
+    });
+    
+    // Basic keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+    });
 });
