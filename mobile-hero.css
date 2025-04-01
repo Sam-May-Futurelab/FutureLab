@@ -1,143 +1,242 @@
-/* Mobile-optimized hero animations and effects */
+/* Enhanced Mobile Hero Animation */
+
 @media (max-width: 768px) {
-  /* Mobile hero container */
+  /* Special Hero Container for Mobile */
   .hero {
     position: relative;
     overflow: hidden;
+    min-height: 100vh; /* Full viewport height for impact */
   }
   
-  /* Animated wave background - lightweight alternative to 3D orb */
-  .mobile-wave-bg {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(67, 97, 238, 0.15) 0%, rgba(76, 201, 240, 0.15) 50%, rgba(67, 97, 238, 0.15) 100%);
-    z-index: -1;
-    transform-origin: bottom center;
-    animation: wave 15s linear infinite;
+  /* Hide the original orb on mobile */
+  .hero .orb-container {
+    display: none !important;
   }
   
-  .mobile-wave-bg::before {
-    content: '';
-    position: absolute;
-    top: 20%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(76, 201, 240, 0.1) 0%, rgba(67, 97, 238, 0.1) 50%, rgba(76, 201, 240, 0.1) 100%);
-    border-radius: 50%;
-    animation: wave-shift 12s linear infinite;
-  }
-  
-  .mobile-wave-bg::after {
-    content: '';
+  /* Mobile-optimized hero background */
+  .mobile-hero-bg {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(ellipse at center, transparent 0%, rgba(67, 97, 238, 0.05) 100%);
+    z-index: -1;
+    background: linear-gradient(135deg, #4361ee 0%, #3a86ff 60%, #4cc9f0 100%);
+    overflow: hidden;
   }
   
-  /* Floating service icons - lightweight visuals */
-  .mobile-hero-icon {
+  /* Animated particles background */
+  .mobile-particles {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Individual particles */
+  .mobile-particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  
+  /* Shooting stars effect */
+  .shooting-star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    animation: shooting 3s ease-in-out infinite;
+  }
+  
+  @keyframes shooting {
+    0% {
+      transform: translate(0, 0) rotate(-45deg) scale(0);
+      opacity: 0;
+    }
+    10% {
+      transform: translate(-20px, 20px) rotate(-45deg) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-300px, 300px) rotate(-45deg) scale(0.2);
+      opacity: 0;
+    }
+  }
+  
+  /* Enhanced Hero Content */
+  .hero .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  
+  /* Mobile heading animation */
+  .hero .hero-content h1 {
+    margin: 0;
+    color: white;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: mobile-fade-in 1s ease forwards 0.5s;
+  }
+  
+  /* Glowing underline effect */
+  .hero .hero-content h1:after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 3px;
+    background: white;
+    margin: 15px auto 0;
+    box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.8);
+    animation: expand-line 2s ease forwards 1.5s;
+  }
+  
+  @keyframes expand-line {
+    0% { width: 0; }
+    100% { width: 80%; }
+  }
+  
+  /* Enhance subtitle styles */
+  .hero .hero-content p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    margin: 25px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: mobile-fade-in 1s ease forwards 1s;
+  }
+  
+  /* Button animation */
+  .hero .hero-buttons {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: mobile-fade-in 1s ease forwards 1.5s;
+  }
+  
+  .hero .btn-primary {
+    background: white;
+    color: #4361ee;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .hero .btn-secondary {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    color: white;
+  }
+  
+  /* Additional graphic elements */
+  .mobile-floating-icon {
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--primary-color);
-    font-size: 1.2rem;
-    z-index: 1;
-    opacity: 0;
-    animation: fade-float 3s ease-in-out infinite;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    color: #4361ee;
+    font-size: 1.3rem;
+    z-index: 2;
+    animation: float-icon 6s ease-in-out infinite;
   }
   
-  .mobile-hero-icon:nth-child(1) {
+  .mobile-icon-code {
     top: 20%;
-    left: 15%;
+    right: 15%;
     animation-delay: 0s;
   }
   
-  .mobile-hero-icon:nth-child(2) {
-    top: 15%;
-    right: 20%;
-    animation-delay: 0.7s;
-  }
-  
-  .mobile-hero-icon:nth-child(3) {
-    bottom: 35%;
-    left: 20%;
-    animation-delay: 1.4s;
-  }
-  
-  .mobile-hero-icon:nth-child(4) {
+  .mobile-icon-mobile {
     bottom: 30%;
-    right: 15%;
-    animation-delay: 2.1s;
+    left: 15%;
+    animation-delay: 1s;
   }
   
-  /* Enhance hero text */
-  .hero .hero-content h1 {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 1.5rem;
+  .mobile-icon-design {
+    top: 15%;
+    left: 20%;
+    animation-delay: 2s;
   }
   
-  .hero .hero-content p {
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+  .mobile-icon-web {
+    bottom: 25%;
+    right: 20%;
+    animation-delay: 3s;
   }
   
-  /* Animations */
-  @keyframes wave {
-    0% {
-      transform: translateX(0) skewX(15deg);
-    }
-    50% {
-      transform: translateX(-25%) skewX(-15deg);
-    }
-    100% {
-      transform: translateX(-50%) skewX(15deg);
-    }
-  }
-  
-  @keyframes wave-shift {
-    0% {
-      transform: translateY(10%) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-5%) rotate(3deg);
-    }
-    100% {
-      transform: translateY(10%) rotate(0deg);
-    }
-  }
-  
-  @keyframes fade-float {
+  @keyframes float-icon {
     0%, 100% {
-      transform: translateY(0) scale(1);
-      opacity: 0.9;
+      transform: translateY(0);
     }
     50% {
-      transform: translateY(-15px) scale(1.05);
-      opacity: 1;
+      transform: translateY(-15px);
     }
   }
   
-  /* Dark theme adjustments */
-  .dark-theme .mobile-hero-icon {
-    background: rgba(30, 41, 59, 0.9);
-    color: #4cc9f0;
-    box-shadow: 0 5px 15px rgba(76, 201, 240, 0.2);
+  @keyframes mobile-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Additional pulse animation for brand logos */
+  .hero .clients {
+    opacity: 0;
+    animation: mobile-fade-in 1s ease forwards 2s;
+  }
+  
+  .hero .client-logos img {
+    animation: pulse 2s ease-in-out infinite alternate;
+    animation-delay: 3s;
+  }
+  
+  .hero .client-logos img:nth-child(2) {
+    animation-delay: 3.5s;
+  }
+  
+  .hero .client-logos img:nth-child(3) {
+    animation-delay: 4s;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+  
+  /* Darkened overlay to improve text contrast */
+  .mobile-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+                rgba(0,0,0,0.2) 0%,
+                rgba(0,0,0,0) 40%,
+                rgba(0,0,0,0) 60%,
+                rgba(0,0,0,0.3) 100%);
+    z-index: 1;
   }
 }

@@ -1059,57 +1059,155 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('resize', hideShowcaseOnMobile);
 });
 
-// Add mobile hero enhancements
+// Fix and enhance typewriter effect on hero heading for desktop
 document.addEventListener('DOMContentLoaded', function() {
-  // Check if we're on mobile
-  const isMobile = window.innerWidth <= 768 || 
-                  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  // Check if we're on the homepage with hero section
+  const heroHeading = document.querySelector('.hero h1');
   
-  if (isMobile) {
-    // Add mobile hero elements
-    const hero = document.querySelector('.hero');
-    if (hero) {
-      // Create wave background
-      const waveBg = document.createElement('div');
-      waveBg.className = 'mobile-wave-bg';
-      hero.prepend(waveBg);
+  if (heroHeading) {
+    const isMobile = window.innerWidth <= 768 || 
+                     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Desktop typewriter animation
+    if (!isMobile) {
+      const originalText = heroHeading.innerText;
+      const originalHTML = heroHeading.innerHTML; // Store for fallback
+      heroHeading.innerHTML = ''; // Clear for animation
       
-      // Create floating service icons
-      const iconNames = [
-        'fa-laptop-code',   // Web dev
-        'fa-mobile-alt',    // Mobile
-        'fa-code-branch',   // API
-        'fa-paint-brush'    // Design
-      ];
+      // Store min-height to prevent layout shift
+      const computedStyle = window.getComputedStyle(heroHeading);
+      heroHeading.style.minHeight = computedStyle.height;
       
-      iconNames.forEach(iconName => {
-        const icon = document.createElement('div');
-        icon.className = 'mobile-hero-icon';
-        icon.innerHTML = `<i class="fas ${iconName}"></i>`;
-        hero.appendChild(icon);
-      });
+      let charIndex = 0;
+      const typeSpeed = 40; // ms per character
       
-      // Apply typing animation to hero heading
-      const heading = hero.querySelector('h1');
-      if (heading && heading.textContent) {
-        const originalText = heading.textContent;
-        heading.textContent = '';
-        heading.style.minHeight = '4em'; // Preserve layout space
+      function typeWriter() {
+        if (charIndex < originalText.length) {
+          heroHeading.innerHTML += originalText.charAt(charIndex);
+          charIndex++;
+          setTimeout(typeWriter, typeSpeed);
+        } else {
+          // Add blinking cursor at the end
+          const cursor = document.createElement('span');
+          cursor.className = 'typing-cursor';
+          cursor.innerHTML = '|';
+          heroHeading.appendChild(cursor);
+          
+          // Remove cursor after delay
+          setTimeout(() => {
+            if (cursor.parentNode === heroHeading) {
+              heroHeading.removeChild(cursor);
+            }
+          }, 3000);
+        }
+      }
+      
+      // Add fallback if typewriter doesn't start within 2 seconds
+      const fallbackTimer = setTimeout(() => {
+        heroHeading.innerHTML = originalHTML;
+      }, 2000);
+      
+      // Start typing after short delay
+      setTimeout(() => {
+        clearTimeout(fallbackTimer); // Clear fallback timer
+        typeWriter(); // Start typewriter
+      }, 500);
+    }
+    
+    // Enhanced mobile hero implementation
+    if (isMobile) {
+      // Create mobile hero background elements
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        // Create mobile-specific background
+        const mobileBg = document.createElement('div');
+        mobileBg.className = 'mobile-hero-bg';
         
-        // Simple typing animation
-        let charIndex = 0;
-        const typeSpeed = 50; // ms per character
+        // Create particles container
+        const particlesContainer = document.createElement('div');
+        particlesContainer.className = 'mobile-particles';
         
-        function typeWriter() {
-          if (charIndex < originalText.length) {
-            heading.textContent += originalText.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeWriter, typeSpeed);
-          }
+        // Add particles
+        for (let i = 0; i < 50; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'mobile-particle';
+          
+          // Random size between 2-8px
+          const size = 2 + Math.random() * 6;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          
+          // Random position
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100}%`;
+          
+          // Random animation
+          const duration = 15 + Math.random() * 20;
+          const delay = Math.random() * 5;
+          particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
+          
+          particlesContainer.appendChild(particle);
         }
         
-        // Start typing after a short delay
-        setTimeout(typeWriter, 500);
+        // Add shooting stars
+        for (let i = 0; i < 5; i++) {
+          const star = document.createElement('div');
+          star.className = 'shooting-star';
+          
+          // Random position at top-right
+          star.style.top = `${10 + Math.random() * 30}%`;
+          star.style.right = `${10 + Math.random() * 20}%`;
+          
+          // Random animation delay
+          star.style.animationDelay = `${i * 3 + Math.random() * 5}s`;
+          
+          particlesContainer.appendChild(star);
+        }
+        
+        // Create darkened overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'mobile-overlay';
+        
+        // Create floating icons
+        const icons = [
+          { class: 'mobile-icon-code', icon: 'fa-code' },
+          { class: 'mobile-icon-mobile', icon: 'fa-mobile-alt' },
+          { class: 'mobile-icon-design', icon: 'fa-palette' },
+          { class: 'mobile-icon-web', icon: 'fa-globe' }
+        ];
+        
+        icons.forEach(iconData => {
+          const iconEl = document.createElement('div');
+          iconEl.className = `mobile-floating-icon ${iconData.class}`;
+          iconEl.innerHTML = `<i class="fas ${iconData.icon}"></i>`;
+          hero.appendChild(iconEl);
+        });
+        
+        // Add elements to the hero
+        mobileBg.appendChild(particlesContainer);
+        hero.prepend(overlay);
+        hero.prepend(mobileBg);
+        
+        // Add keyframe animations via JavaScript for smoother performance
+        const styleEl = document.createElement('style');
+        styleEl.textContent = `
+          @keyframes float {
+            0%, 100% {
+              transform: translate(0, 0);
+            }
+            25% {
+              transform: translate(10px, -10px);
+            }
+            50% {
+              transform: translate(5px, 5px);
+            }
+            75% {
+              transform: translate(-5px, 10px);
+            }
+          }
+        `;
+        
+        document.head.appendChild(styleEl);
       }
     }
   }
