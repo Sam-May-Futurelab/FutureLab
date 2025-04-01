@@ -57,7 +57,7 @@ We build with tools that scale and stay fast:
 If you're looking to build a site, app, or digital tool that looks good *and* works perfectly — reach out:
 
 - 🌍 Website: [https://futurelab.solutions](https://futurelab.solutions)
-- 📧 Email: hello@futurelab.solutions
+- 📧 Email: sam@futurelab.solutions
 - 📱 Instagram: [@futurelabsolutions](https://instagram.com/futurelabsolutions)
 
 We’re currently booking new freelance projects for Q2.
