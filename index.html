@@ -666,6 +666,73 @@
         }
     </style>
 
+    <!-- Even more aggressive fix for the black bar and services padding -->
+    <style>
+        /* Fix black bar by completely removing elements causing issues */
+        @media (max-width: 768px) {
+            /* Kill black bar by removing animated gradient */
+            .animated-gradient-bg {
+                display: none !important;
+                height: 0 !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+            }
+            
+            /* Services section padding improvements */
+            .services {
+                padding-top: 40px !important; /* Increase padding for more space */
+                margin-top: -50px !important; /* Still use negative margin to pull up */
+            }
+            
+            /* Fix section title spacing */
+            #services .section-title {
+                margin-top: 25px !important;
+                margin-bottom: 25px !important;
+                padding-top: 20px !important;
+                font-size: 2rem !important; /* Make sure it's visible */
+            }
+            
+            /* Force background color directly on section to avoid black bar */
+            #services.services {
+                background-color: var(--bg-color) !important;
+                position: relative;
+                z-index: 2; /* Higher z-index to cover any black elements */
+            }
+            
+            /* In dark theme */
+            .dark-theme #services.services {
+                background-color: var(--dark-bg) !important;
+            }
+            
+            /* Make sure transitions between sections have the right background */
+            .section-transition::before {
+                content: '';
+                position: absolute;
+                top: -20px;
+                left: 0;
+                width: 100%;
+                height: 30px;
+                background-color: var(--bg-color);
+                z-index: 1;
+            }
+            
+            .dark-theme .section-transition::before {
+                background-color: var(--dark-bg);
+            }
+            
+            /* Fix any gap in the hero section */
+            .hero {
+                padding-bottom: 0 !important;
+                margin-bottom: 0 !important;
+            }
+            
+            /* Completely remove section-transition styling */
+            .section-transition::after {
+                display: none !important;
+            }
+        }
+    </style>
+
     <!-- Add inline style at the bottom for the gradient text effect -->
     <style>
         .gradient-text {
