@@ -274,6 +274,59 @@
             </div>
         </section>
 
+        <!-- Add mobile-specific styles for portfolio items -->
+        <style>
+            /* Mobile layout for portfolio items */
+            @media (max-width: 768px) {
+                /* Rearrange portfolio items on mobile */
+                .portfolio-item {
+                    display: flex;
+                    flex-direction: column;
+                }
+                
+                /* Make content appear first in DOM order */
+                .portfolio-item .portfolio-content {
+                    order: 1;
+                    padding-bottom: 20px;
+                }
+                
+                /* Make portfolio image appear second */
+                .portfolio-item .portfolio-image {
+                    order: 2;
+                }
+                
+                /* Reverse item doesn't need special handling */
+                .portfolio-item.reverse {
+                    flex-direction: column;
+                }
+                
+                .portfolio-item.reverse .portfolio-content {
+                    order: 1;
+                }
+                
+                .portfolio-item.reverse .portfolio-image {
+                    order: 2;
+                }
+                
+                /* Add extra spacing and adjust border radius */
+                .portfolio-image img {
+                    border-radius: 12px;
+                    margin-bottom: 20px;
+                }
+                
+                /* Make title more prominent */
+                .portfolio-content h3 {
+                    font-size: 2rem;
+                    margin-bottom: 5px;
+                }
+                
+                /* Add extra spacing between items */
+                .portfolio-grid {
+                    gap: 60px;
+                }
+            }
+        </style>
+
         <!-- Testimonial Section -->
         <section class="testimonials section-transition">
             <div class="container">
