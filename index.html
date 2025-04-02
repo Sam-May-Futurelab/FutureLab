@@ -602,6 +602,70 @@
         }
     </style>
 
+    <!-- Add even more aggressive mobile spacing fix style -->
+    <style>
+        /* Fix spacing between client logos and services section on mobile */
+        @media (max-width: 768px) {
+            /* Client section fixes */
+            .clients {
+                margin-bottom: 0 !important; /* Remove bottom margin completely */
+            }
+            
+            .trusted-brands-section {
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+            }
+            
+            .client-logos {
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+            }
+            
+            /* Services section fixes */
+            .services {
+                padding-top: 5px !important; /* Minimal top padding */
+                margin-top: -30px !important; /* Strong negative margin to pull up */
+                position: relative;
+            }
+            
+            /* Fix black bar by ensuring gradient background doesn't add extra space */
+            .animated-gradient-bg {
+                height: 100% !important;
+                bottom: 0 !important;
+                opacity: 0.5; /* Reduce opacity to make it less prominent */
+            }
+            
+            /* Reduce space between sections */
+            .section-transition {
+                padding-top: 15px !important; 
+                margin-top: -30px !important;
+            }
+            
+            /* Fix hero spacing */
+            .hero {
+                padding-bottom: 0 !important;
+                margin-bottom: 0 !important;
+            }
+            
+            .hero-image {
+                margin-bottom: -40px !important; /* More aggressive negative margin */
+                padding-bottom: 0 !important;
+            }
+            
+            /* Ensure section title has proper spacing */
+            #services .section-title {
+                margin-top: 20px !important;
+                margin-bottom: 15px !important;
+            }
+            
+            /* Fix any transition effects between sections */
+            .section-transition::after {
+                height: 20px !important;
+                opacity: 0.3 !important;
+            }
+        }
+    </style>
+
     <!-- Add inline style at the bottom for the gradient text effect -->
     <style>
         .gradient-text {
