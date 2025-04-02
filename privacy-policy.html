@@ -104,8 +104,8 @@
             padding: 60px 20px;
             color: white;
             text-align: center;
-            margin-top: 10px; /* Increase margin to push content further below fixed navbar */
-            padding-top: 125px; /* Add extra padding at the top */
+            margin-top: 0; /* Remove margin */
+            padding-top: 140px; /* Increase top padding even more */
             position: relative; /* Ensure proper stacking context */
             z-index: 1; /* Ensure it's above background elements but below the header */
         }
@@ -140,6 +140,8 @@
         @media (max-width: 768px) {
             .policy-header {
                 padding: 40px 20px;
+                padding-top: 120px; /* Extra padding for mobile */
+                margin-top: 0; /* Ensure no top margin on mobile */
             }
             
             .policy-header h1 {
