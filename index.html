@@ -560,28 +560,44 @@
         });
     </script>
 
-    <!-- Add mobile spacing fix style -->
+    <!-- Add mobile spacing fix style with more aggressive spacing reduction -->
     <style>
         /* Fix spacing between client logos and services section on mobile */
         @media (max-width: 768px) {
             .clients {
-                margin-bottom: 10px !important; /* Reduce bottom margin of client section */
+                margin-bottom: 0 !important; /* Remove bottom margin completely */
             }
             
             .services {
-                padding-top: 20px !important; /* Reduce top padding of services section */
-                margin-top: 0 !important; /* Remove any top margin */
+                padding-top: 10px !important; /* Further reduce top padding */
+                margin-top: -15px !important; /* Add negative margin to pull content up */
             }
             
-            /* Reduce space between hero and services, if needed */
+            /* Reduce space between hero and services */
             .section-transition {
-                padding-top: 30px !important;
-                margin-top: 0 !important;
+                padding-top: 20px !important; 
+                margin-top: -20px !important; /* Use negative margin to pull section up */
+            }
+            
+            /* Reduce height of client logos area */
+            .trusted-brands-section {
+                margin-bottom: -10px !important;
+            }
+            
+            .client-logos {
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
             }
             
             /* Make sure hero image doesn't add excessive height */
             .hero-image {
-                margin-bottom: -20px;
+                margin-bottom: -30px !important; /* Increase negative margin */
+                padding-bottom: 0 !important;
+            }
+            
+            /* Reduce space after the section title */
+            #services .section-title {
+                margin-bottom: 15px !important;
             }
         }
     </style>
