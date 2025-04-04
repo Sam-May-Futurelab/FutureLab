@@ -3858,3 +3858,77 @@ footer:before {
     padding-bottom: 20px;
   }
 }
+
+/* Fix for header navigation alignment */
+@media (min-width: 769px) {
+  /* Desktop-only fixes */
+  header nav .nav-links {
+    display: flex;
+    align-items: center; /* Ensure vertical alignment */
+  }
+  
+  header nav .nav-links li {
+    display: flex;
+    align-items: center; /* Align list items */
+    height: 100%; /* Match parent height */
+  }
+  
+  header nav .nav-links .btn.btn-outline {
+    padding: 6px 15px; /* Slightly smaller padding for better vertical alignment */
+    margin: 0; /* Remove any margin that could affect alignment */
+    border-width: 1px; /* Ensure border isn't affecting size */
+    height: auto; /* Let content determine height */
+    line-height: normal; /* Reset line height */
+    display: inline-flex; /* Use inline-flex for better size control */
+    align-items: center; /* Center content vertically */
+  }
+}
+
+/* Mobile-specific button style remains unchanged */
+@media (max-width: 768px) {
+  /* ...existing mobile code... */
+}
+
+/* Fix for header navigation alignment - proper vertical centering */
+@media (min-width: 769px) {
+  /* Make nav links container use flexbox with centered items */
+  header nav .nav-links {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  
+  /* Ensure all nav items align at the same baseline */
+  header nav .nav-links li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  
+  /* Fix contact button alignment specifically */
+  header nav .nav-links .btn.btn-outline {
+    /* Adjust padding to match text height of other nav items */
+    padding: 7px 16px;
+    line-height: 1.5;
+    /* Reset margins that might affect alignment */
+    margin: 0;
+    /* Use flex for better alignment */
+    display: inline-flex;
+    align-items: center;
+    /* Match font properties with other nav links for consistent baseline */
+    font-size: inherit;
+    font-weight: inherit;
+    /* Ensure box model is consistent */
+    box-sizing: border-box;
+    /* Adjust vertical positioning */
+    position: relative;
+    top: 0;
+  }
+  
+  /* Ensure all nav links have consistent vertical alignment */
+  header nav .nav-links a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}
