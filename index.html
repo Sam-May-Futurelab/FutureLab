@@ -210,19 +210,19 @@
                     <div class="pricing-grid">
                         <div class="price-card">
                             <h4>Basic Website</h4>
-                            <p class="price">£500 - £1,000</p>
+                            <p class="price">From £500 - £1,000</p>
                             <p>Perfect for small businesses getting started online</p>
                             <p>Fast, mobile-friendly, and professionally built for your brand.</p>
                         </div>
                         <div class="price-card">
                             <h4>E-commerce Site</h4>
-                            <p class="price">£1,500+</p>
+                            <p class="price">From £1,500+</p>
                             <p>Full-featured online store with payment processing</p>
                             <p>Ready to sell online with Stripe, Shopify, or custom checkout.</p>
                         </div>
                         <div class="price-card">
                             <h4>App MVP</h4>
-                            <p class="price">£2,000 - £5,000+</p>
+                            <p class="price">From £2,000 - £5,000+</p>
                             <p>Custom mobile applications for iOS and Android</p>
                             <p>Perfect for startups looking to validate or demo their product.</p>
                         </div>
@@ -273,59 +273,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Add mobile-specific styles for portfolio items -->
-        <style>
-            /* Mobile layout for portfolio items */
-            @media (max-width: 768px) {
-                /* Rearrange portfolio items on mobile */
-                .portfolio-item {
-                    display: flex;
-                    flex-direction: column;
-                }
-                
-                /* Make content appear first in DOM order */
-                .portfolio-item .portfolio-content {
-                    order: 1;
-                    padding-bottom: 20px;
-                }
-                
-                /* Make portfolio image appear second */
-                .portfolio-item .portfolio-image {
-                    order: 2;
-                }
-                
-                /* Reverse item doesn't need special handling */
-                .portfolio-item.reverse {
-                    flex-direction: column;
-                }
-                
-                .portfolio-item.reverse .portfolio-content {
-                    order: 1;
-                }
-                
-                .portfolio-item.reverse .portfolio-image {
-                    order: 2;
-                }
-                
-                /* Add extra spacing and adjust border radius */
-                .portfolio-image img {
-                    border-radius: 12px;
-                    margin-bottom: 20px;
-                }
-                
-                /* Make title more prominent */
-                .portfolio-content h3 {
-                    font-size: 2rem;
-                    margin-bottom: 5px;
-                }
-                
-                /* Add extra spacing between items */
-                .portfolio-grid {
-                    gap: 60px;
-                }
-            }
-        </style>
 
         <!-- Testimonial Section -->
         <section class="testimonials section-transition">
@@ -398,6 +345,100 @@
                             <h4>Education</h4>
                             <p><strong>BSc Computer Science</strong> - University of London, Goldsmiths</p>
                             <p>Specializing in Machine Learning and Artificial Intelligence</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section - New addition -->
+        <section id="faq" class="faq section-transition">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                
+                <div class="faq-container">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How long does a typical project take?</h3>
+                            <button class="faq-toggle" aria-label="Toggle answer">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="faq-answer">
+                            <ul>
+                                <li><strong>Basic websites:</strong> 1–2 weeks</li>
+                                <li><strong>E-commerce sites:</strong> 2–4 weeks</li>
+                                <li><strong>App MVPs:</strong> 3–6 weeks (depending on features)</li>
+                            </ul>
+                            <p>Timelines depend on scope, content readiness, and feedback loops — but I always deliver fast and keep you updated along the way.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I pay in instalments?</h3>
+                            <button class="faq-toggle" aria-label="Toggle answer">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes — most projects follow a 50% upfront / 50% on delivery structure.</p>
+                            <p>For larger builds, I'm happy to break payments into 3 or 4 milestones.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Will I be able to update the site myself later?</h3>
+                            <button class="faq-toggle" aria-label="Toggle answer">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely. I offer CMS integrations (like WordPress or Headless CMS), and I can also provide a short handover video to show you how to manage content or products.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What's included in the quote?</h3>
+                            <button class="faq-toggle" aria-label="Toggle answer">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Every quote includes custom design, responsive build, basic SEO setup, testing across devices, and setup of any essential tools (analytics, email forms, etc).</p>
+                            <p>We'll agree everything clearly before we start.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can you redesign my existing website or app?</h3>
+                            <button class="faq-toggle" aria-label="Toggle answer">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes — I'm happy to audit your current site and offer options to improve or rebuild it where needed.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 6 -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do you offer hosting or domain services?</h3>
+                            <button class="faq-toggle" aria-label="Toggle answer">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>While I don't host sites directly, I'll help you get set up with trusted providers (like GoDaddy, Cloudflare, or Vercel) and make sure everything's connected and secure.</p>
                         </div>
                     </div>
                 </div>
@@ -857,5 +898,172 @@
             }
         }
     </style>
+
+    <!-- Add CSS styles for FAQ section -->
+    <style>
+        /* FAQ Section Styling */
+        .faq {
+            padding: 80px 0;
+            background: var(--bg-color);
+        }
+
+        .dark-theme .faq {
+            background: var(--dark-bg);
+        }
+
+        .faq .section-subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--gray-color);
+            font-size: 1.1rem;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid rgba(230, 230, 250, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .dark-theme .faq-item {
+            border-color: rgba(55, 65, 81, 0.5);
+            background: #1e293b;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.15);
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .dark-theme .faq-question h3 {
+            color: #e2e8f0;
+        }
+
+        .faq-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-size: 1rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: rgba(67, 97, 238, 0.1);
+            flex-shrink: 0;
+            margin-left: 15px;
+        }
+
+        .faq-toggle:hover {
+            background: rgba(67, 97, 238, 0.2);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 1000px; /* Arbitrary large value */
+        }
+
+        .faq-item.active .faq-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer p {
+            margin-top: 0;
+            color: var(--gray-color);
+        }
+
+        .faq-answer ul, .faq-answer ol {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            color: var(--gray-color);
+        }
+
+        .faq-answer li {
+            margin-bottom: 8px;
+        }
+
+        .dark-theme .faq-answer p, 
+        .dark-theme .faq-answer ul, 
+        .dark-theme .faq-answer ol, 
+        .dark-theme .faq-answer li {
+            color: #cbd5e1;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .faq {
+                padding: 50px 0;
+            }
+            
+            .faq-question {
+                padding: 15px;
+            }
+            
+            .faq-question h3 {
+                font-size: 1rem;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 0 15px 15px;
+            }
+        }
+    </style>
+
+    <!-- Add JavaScript for FAQ toggle functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Toggle current item
+                    item.classList.toggle('active');
+                    
+                    // Optional: Close other items when opening one
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
