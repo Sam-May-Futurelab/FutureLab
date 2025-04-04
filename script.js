@@ -979,6 +979,38 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+// Make logo clickable - redirect to index.html without the .html extension
+document.addEventListener('DOMContentLoaded', function() {
+  // Find all possible logo elements
+  const logoElements = document.querySelectorAll('.logo, .site-logo, .navbar-logo, header .logo, .brand, .brand-logo');
+  
+  logoElements.forEach(logoElement => {
+    // Check if logo is already wrapped in a link
+    if (logoElement && !logoElement.closest('a')) {
+      // Create a wrapper link
+      const logoLink = document.createElement('a');
+      logoLink.href = 'index';
+      logoLink.setAttribute('aria-label', 'Go to homepage');
+      
+      // Clone the logo element to preserve any event listeners
+      const logoClone = logoElement.cloneNode(true);
+      
+      // Replace the original logo with the linked version
+      logoElement.parentNode.replaceChild(logoLink, logoElement);
+      logoLink.appendChild(logoClone);
+      
+      console.log('Logo made clickable with link to homepage');
+    } else if (logoElement && logoElement.closest('a')) {
+      // If logo is already in a link, make sure it points to index without .html
+      const existingLink = logoElement.closest('a');
+      if (!existingLink.href.includes('/index') && !existingLink.href.endsWith('/')) {
+        existingLink.href = 'index';
+        console.log('Updated existing logo link to point to homepage');
+      }
+    }
+  });
+});
+
 // Hide showcase links on mobile
 document.addEventListener('DOMContentLoaded', function() {
   function hideShowcaseOnMobile() {
