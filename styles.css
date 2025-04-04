@@ -2578,6 +2578,32 @@ footer:before {
     }
 }
 
+/* Simple fixes for mobile menu and contact button */
+@media (max-width: 768px) {
+  /* Fix for mobile menu activation button */
+  .hamburger {
+    z-index: 101;
+  }
+  
+  /* Fix for nav links container on mobile */
+  .nav-links {
+    padding-bottom: 20px; /* Add extra padding at bottom to prevent button cutoff */
+  }
+  
+  /* Fix for contact button specifically */
+  .nav-links .btn.btn-outline {
+    margin-bottom: 15px; /* Add margin at bottom to ensure visibility */
+    display: inline-block;
+  }
+  
+  /* Ensure nav menu sits above content when open */
+  .nav-links.active {
+    z-index: 100;
+    max-height: 90vh; /* Prevent ultra-tall menus */
+    overflow-y: auto; /* Allow scrolling if needed */
+  }
+}
+
 /* Animations */
 @keyframes fadeIn {
     from {
@@ -3834,76 +3860,4 @@ footer:before {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
-}
-
-/* Fix for mobile menu and contact button */
-@media (max-width: 768px) {
-  /* Improved mobile menu styling */
-  .nav-links {
-    padding-bottom: 20px; /* Add extra padding at bottom to prevent cutoff */
-  }
-  
-  /* Fix for the contact button in mobile menu */
-  .nav-links .btn.btn-outline {
-    margin-bottom: 15px; /* Add bottom margin to ensure button is fully visible */
-    margin-top: 5px; /* Add some separation from other items */
-    display: inline-block;
-    width: auto; /* Ensure button doesn't stretch full width */
-  }
-  
-  /* Make mobile menu overlay work properly */
-  .mobile-menu-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 90; /* Below the nav menu but above content */
-  }
-  
-  .mobile-menu-overlay.active {
-    display: block;
-  }
-  
-  /* Ensure the mobile menu is fully visible */
-  .nav-links.active {
-    overflow-y: auto; /* Allow scrolling if menu is tall */
-    max-height: 80vh; /* Prevent menu from getting too tall */
-    padding-bottom: 20px; /* Ensure padding at the bottom */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  }
-  
-  /* Fix for body when menu is open to prevent scrolling behind menu */
-  body.menu-open {
-    overflow: hidden;
-  }
-  
-  /* Make sure contact button is not cut off */
-  .nav-links li:last-child {
-    margin-bottom: 10px; /* Additional bottom margin on last item */
-  }
-  
-  /* Improve mobile hamburger icon */
-  .hamburger {
-    margin-right: 5px; /* Give it a little breathing room */
-  }
-  
-  .hamburger span {
-    transition: all 0.3s ease;
-  }
-  
-  /* Enhanced active state for hamburger */
-  .hamburger.active span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-  }
-  
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .hamburger.active span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-  }
 }
