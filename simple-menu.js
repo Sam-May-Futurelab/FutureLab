@@ -1,79 +1,96 @@
-// Simple, reliable mobile menu toggle for both pages
+/**
+ * Simple Mobile Menu
+ * Handles mobile navigation toggle and ensures proper display of the contact button
+ */
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Get the hamburger button and mobile menu with multiple possible selectors
-  const hamburgerBtn = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
-  const mobileMenu = document.querySelector('.mobile-nav, .nav-links, .main-nav');
+  // Get DOM elements
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
   
-  // First fix: Hide hamburger on desktop, only show on mobile
-  function updateMenuVisibility() {
-    // Only show hamburger on mobile screens
-    if (window.innerWidth > 768) {
-      // We're on desktop - hide hamburger unless we're in a special case
-      if (!document.body.classList.contains('desktop-hamburger')) {
-        if (hamburgerBtn) hamburgerBtn.style.display = 'none';
-      }
+  if (!hamburger || !navLinks) {
+    console.warn('Mobile menu elements not found - menu initialization skipped.');
+    return;
+  }
+  
+  // Fix contact button styling to prevent cut-off
+  const contactBtn = navLinks.querySelector('.btn.btn-outline');
+  if (contactBtn) {
+    contactBtn.style.marginBottom = '15px';
+    contactBtn.style.display = 'inline-block';
+    contactBtn.style.padding = '8px 15px';
+  }
+  
+  // Toggle mobile menu with proper event handling
+  hamburger.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Toggle active classes
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+    
+    // Add body class to prevent background scrolling when menu is open
+    if (navLinks.classList.contains('active')) {
+      document.body.classList.add('menu-open');
     } else {
-      // We're on mobile - always show hamburger
-      if (hamburgerBtn) hamburgerBtn.style.display = 'block';
+      document.body.classList.remove('menu-open');
     }
-  }
+  });
   
-  // Run initially and on window resize
-  updateMenuVisibility();
-  window.addEventListener('resize', updateMenuVisibility);
+  // Close menu when clicking a link
+  const links = navLinks.querySelectorAll('a');
+  links.forEach(link => {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+      document.body.classList.remove('menu-open');
+    });
+  });
   
-  // Check if elements exist
-  if (hamburgerBtn && mobileMenu) {
-    console.log('Menu elements found - initializing toggle');
-    
-    // Simple click handler to toggle active class
-    hamburgerBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      console.log('Menu button clicked');
-      
-      // Toggle active classes
-      mobileMenu.classList.toggle('active');
-      this.classList.toggle('active');
-      
-      // Fix: Make menu always visible on mobile when active
-      if (window.innerWidth <= 768) {
-        if (mobileMenu.classList.contains('active')) {
-          mobileMenu.style.display = 'block';
-          mobileMenu.style.opacity = '1';
-          mobileMenu.style.visibility = 'visible';
-          mobileMenu.style.maxHeight = '85vh'; // Set a larger max-height
-          document.body.style.overflow = 'hidden'; // Prevent scrolling of body when menu is open
-        } else {
-          mobileMenu.style.display = '';
-          mobileMenu.style.opacity = '';
-          mobileMenu.style.visibility = '';
-          mobileMenu.style.maxHeight = '';
-          document.body.style.overflow = ''; // Restore body scrolling
-        }
+  // Close menu when clicking outside
+  document.addEventListener('click', function(e) {
+    if (navLinks.classList.contains('active') && 
+        !navLinks.contains(e.target) && 
+        !hamburger.contains(e.target)) {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+      document.body.classList.remove('menu-open');
+    }
+  });
+  
+  // Close menu with escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+      document.body.classList.remove('menu-open');
+    }
+  });
+  
+  // Add CSS to fix contact button on mobile
+  const style = document.createElement('style');
+  style.textContent = `
+    @media (max-width: 768px) {
+      .nav-links {
+        padding-bottom: 20px !important;
       }
       
-      // Accessibility
-      const expanded = this.getAttribute('aria-expanded') === 'true' || false;
-      this.setAttribute('aria-expanded', !expanded);
-    });
-    
-    // Add listener to close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (mobileMenu.classList.contains('active') && 
-          !mobileMenu.contains(e.target) && 
-          !hamburgerBtn.contains(e.target)) {
-        mobileMenu.classList.remove('active');
-        hamburgerBtn.classList.remove('active');
-        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      .nav-links .btn.btn-outline {
+        margin-bottom: 15px !important;
+        padding: 8px 15px !important;
+        display: inline-block !important;
+        width: auto !important;
       }
-    });
-  } else {
-    console.warn('Menu elements not found:', { 
-      hamburgerBtn: hamburgerBtn ? 'Found' : 'Not found', 
-      mobileMenu: mobileMenu ? 'Found' : 'Not found' 
-    });
-  }
+      
+      .hamburger {
+        z-index: 9999;
+      }
+      
+      body.menu-open {
+        overflow: hidden;
+      }
+    }
+  `;
+  document.head.appendChild(style);
 });

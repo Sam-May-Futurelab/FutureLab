@@ -2578,32 +2578,6 @@ footer:before {
     }
 }
 
-/* Simple fixes for mobile menu and contact button */
-@media (max-width: 768px) {
-  /* Fix for mobile menu activation button */
-  .hamburger {
-    z-index: 101;
-  }
-  
-  /* Fix for nav links container on mobile */
-  .nav-links {
-    padding-bottom: 20px; /* Add extra padding at bottom to prevent button cutoff */
-  }
-  
-  /* Fix for contact button specifically */
-  .nav-links .btn.btn-outline {
-    margin-bottom: 15px; /* Add margin at bottom to ensure visibility */
-    display: inline-block;
-  }
-  
-  /* Ensure nav menu sits above content when open */
-  .nav-links.active {
-    z-index: 100;
-    max-height: 90vh; /* Prevent ultra-tall menus */
-    overflow-y: auto; /* Allow scrolling if needed */
-  }
-}
-
 /* Animations */
 @keyframes fadeIn {
     from {
