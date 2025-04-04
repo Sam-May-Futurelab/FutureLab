@@ -1188,3 +1188,78 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 });
+
+// ENHANCED MOBILE MENU FIX - Replace earlier implementations with this improved version
+document.addEventListener('DOMContentLoaded', function() {
+  // Find all relevant elements
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+  
+  // Only proceed if we found the hamburger and nav links
+  if (hamburger && navLinks) {
+    // Improved toggle function with better handling of state
+    function toggleMobileMenu(forceClose = false) {
+      // If forceClose is true, we're explicitly closing the menu
+      const shouldOpen = forceClose ? false : !navLinks.classList.contains('active');
+      
+      if (shouldOpen) {
+        // Opening the menu
+        hamburger.classList.add('active');
+        navLinks.classList.add('active');
+        document.body.classList.add('menu-open');
+        if (mobileOverlay) mobileOverlay.classList.add('active');
+        
+        // Add padding to prevent button cutoff
+        const contactButton = navLinks.querySelector('.btn.btn-outline');
+        if (contactButton) {
+          contactButton.style.marginBottom = '10px';
+        }
+      } else {
+        // Closing the menu
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        if (mobileOverlay) mobileOverlay.classList.remove('active');
+      }
+    }
+    
+    // Toggle on hamburger click
+    hamburger.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMobileMenu();
+    });
+    
+    // Close menu when clicking a link
+    const menuLinks = navLinks.querySelectorAll('a');
+    menuLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        toggleMobileMenu(true);
+      });
+    });
+    
+    // Close menu when clicking escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+        toggleMobileMenu(true);
+      }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (navLinks.classList.contains('active') && 
+          !navLinks.contains(e.target) && 
+          !hamburger.contains(e.target)) {
+        toggleMobileMenu(true);
+      }
+    });
+    
+    // Close when clicking on overlay
+    if (mobileOverlay) {
+      mobileOverlay.addEventListener('click', function() {
+        toggleMobileMenu(true);
+      });
+    }
+  }
+});
