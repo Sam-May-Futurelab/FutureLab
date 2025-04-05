@@ -1,7 +1,8 @@
 /* Comparison Section Styles */
 
+/* General styles that apply to both desktop and mobile */
 .comparison {
-    padding: 100px 0;
+    padding: 80px 0;
     background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%);
     position: relative;
 }
@@ -32,101 +33,25 @@
     color: var(--gray-color);
 }
 
-.comparison-table {
-    max-width: 1000px;
-    margin: 0 auto 50px;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-    border: 1px solid rgba(230, 230, 250, 0.7);
-}
-
-.dark-theme .comparison-table {
-    border-color: rgba(55, 65, 81, 0.5);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.comparison-header {
-    display: flex;
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-    font-weight: 600;
-}
-
-.dark-theme .comparison-header {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-}
-
-.comparison-feature {
-    flex: 1;
-    padding: 20px;
-    font-weight: 600;
-    color: var(--dark-color);
-}
-
-.dark-theme .comparison-feature {
-    color: #e2e8f0;
-}
-
-.comparison-column {
-    flex: 1.5;
-    padding: 20px;
-    text-align: center;
-}
-
-.comparison-column.highlight {
-    background-color: rgba(67, 97, 238, 0.05);
-    color: var(--dark-color);
-    font-weight: 500;
-}
-
-.dark-theme .comparison-column.highlight {
-    background-color: rgba(76, 201, 240, 0.1);
-    color: #e2e8f0;
-}
-
-.comparison-row {
-    display: flex;
-    border-top: 1px solid rgba(230, 230, 250, 0.7);
-}
-
-.dark-theme .comparison-row {
-    border-color: rgba(55, 65, 81, 0.5);
-}
-
-.comparison-row:nth-child(even) {
-    background-color: rgba(248, 250, 252, 0.5);
-}
-
-.dark-theme .comparison-row:nth-child(even) {
-    background-color: rgba(30, 41, 59, 0.5);
-}
-
 /* Emoji Indicators */
 .emoji-x {
     color: #ef4444;
     font-size: 1.3rem;
     display: inline-block;
-    margin-right: 5px;
-    vertical-align: middle;
+    margin-right: 8px;
 }
 
 .emoji-check {
     color: #10b981;
     font-size: 1.3rem;
     display: inline-block;
-    margin-right: 5px;
-    vertical-align: middle;
+    margin-right: 8px;
 }
 
-.comparison-column span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
+/* Conclusion section styling */
 .comparison-conclusion {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 40px auto 0;
     padding: 40px;
     background-color: white;
     border-radius: var(--border-radius);
@@ -233,16 +158,107 @@
     font-size: 1.1rem;
 }
 
-/* Mobile styles for comparison section - IMPROVED */
-@media (max-width: 768px) {
-    .comparison {
-        padding: 50px 0;
+/* DESKTOP STYLES */
+@media (min-width: 769px) {
+    /* Show desktop table, hide mobile cards */
+    .comparison-mobile {
+        display: none;
     }
     
-    /* Make the container full width on mobile with proper padding */
-    .comparison .container {
+    .desktop-only {
+        display: block;
+    }
+    
+    .comparison-table {
+        max-width: 1000px;
+        margin: 0 auto 50px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        border: 1px solid rgba(230, 230, 250, 0.7);
+    }
+    
+    .dark-theme .comparison-table {
+        border-color: rgba(55, 65, 81, 0.5);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .comparison-header {
+        display: flex;
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        font-weight: 600;
+    }
+    
+    .dark-theme .comparison-header {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+    
+    .comparison-feature {
+        flex: 1;
+        padding: 20px;
+        font-weight: 600;
+        color: var(--dark-color);
+    }
+    
+    .dark-theme .comparison-feature {
+        color: #e2e8f0;
+    }
+    
+    .comparison-column {
+        flex: 1.5;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .comparison-column.highlight {
+        background-color: rgba(67, 97, 238, 0.05);
+        color: var(--dark-color);
+        font-weight: 500;
+    }
+    
+    .dark-theme .comparison-column.highlight {
+        background-color: rgba(76, 201, 240, 0.1);
+        color: #e2e8f0;
+    }
+    
+    .comparison-row {
+        display: flex;
+        border-top: 1px solid rgba(230, 230, 250, 0.7);
+    }
+    
+    .dark-theme .comparison-row {
+        border-color: rgba(55, 65, 81, 0.5);
+    }
+    
+    .comparison-row:nth-child(even) {
+        background-color: rgba(248, 250, 252, 0.5);
+    }
+    
+    .dark-theme .comparison-row:nth-child(even) {
+        background-color: rgba(30, 41, 59, 0.5);
+    }
+    
+    .comparison-column span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* MOBILE STYLES */
+@media (max-width: 768px) {
+    /* Hide desktop table, show mobile cards */
+    .desktop-only {
+        display: none;
+    }
+    
+    .comparison-mobile {
+        display: block;
         padding: 0 15px;
-        width: 100%;
+    }
+    
+    .comparison {
+        padding: 50px 0;
     }
     
     .comparison-subtitle {
@@ -254,91 +270,102 @@
         padding: 0 15px;
     }
     
-    /* Make the table look good on small screens */
-    .comparison-table {
-        margin: 0 0 30px;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    }
-    
-    /* Display each row as a card on mobile */
-    .comparison-row {
-        display: block;
-        margin-bottom: 15px;
-        border: 1px solid rgba(230, 230, 250, 0.7);
-        border-radius: 10px;
+    /* Mobile comparison items */
+    .comparison-mobile-item {
+        margin-bottom: 20px;
+        border-radius: 12px;
         overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(230, 230, 250, 0.7);
     }
     
-    .dark-theme .comparison-row {
+    .dark-theme .comparison-mobile-item {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
         border-color: rgba(55, 65, 81, 0.5);
     }
     
-    /* Hide table header on mobile */
-    .comparison-header {
-        display: none;
-    }
-    
-    /* Style the feature name */
-    .comparison-feature {
-        display: block;
-        background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(76, 201, 240, 0.1) 100%);
+    .comparison-mobile-header {
         padding: 15px;
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(76, 201, 240, 0.1) 100%);
+        font-weight: 600;
         text-align: center;
-        font-weight: 700;
         border-bottom: 1px solid rgba(230, 230, 250, 0.7);
     }
     
-    .dark-theme .comparison-feature {
-        background: linear-gradient(135deg, rgba(67, 97, 238, 0.2) 0%, rgba(76, 201, 240, 0.2) 100%);
+    .dark-theme .comparison-mobile-header {
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.15) 0%, rgba(76, 201, 240, 0.15) 100%);
         border-color: rgba(55, 65, 81, 0.5);
     }
     
-    /* Style the comparison columns */
-    .comparison-column {
-        display: flex;
+    .comparison-mobile-content {
+        background: white;
+    }
+    
+    .dark-theme .comparison-mobile-content {
+        background: #1e293b;
+    }
+    
+    .diy-option, .futurelab-option {
         padding: 12px 15px;
-        text-align: left;
+        display: flex;
+        align-items: center;
+    }
+    
+    .diy-option {
         border-bottom: 1px solid rgba(230, 230, 250, 0.3);
         position: relative;
     }
     
-    .comparison-column:last-child {
-        border-bottom: none;
+    .dark-theme .diy-option {
+        border-color: rgba(55, 65, 81, 0.3);
     }
     
-    /* Add column labels */
-    .comparison-column::before {
+    .diy-option::before {
         content: "DIY Website Builder:";
-        font-weight: 600;
-        display: block;
-        min-width: 140px;
-        margin-right: 10px;
+        position: absolute;
+        top: -18px;
+        left: 15px;
+        font-size: 0.75rem;
         color: var(--gray-color);
+        background: white;
+        padding: 0 5px;
     }
     
-    .comparison-column.highlight::before {
+    .dark-theme .diy-option::before {
+        color: #94a3b8;
+        background: #1e293b;
+    }
+    
+    .futurelab-option {
+        position: relative;
+    }
+    
+    .futurelab-option::before {
         content: "FutureLab:";
+        position: absolute;
+        top: -18px;
+        left: 15px;
+        font-size: 0.75rem;
         color: var(--primary-color);
+        font-weight: 500;
+        background: white;
+        padding: 0 5px;
     }
     
-    /* Style the emojis for mobile */
-    .emoji-x, .emoji-check {
-        font-size: 1.2rem;
-        margin-right: 8px;
+    .dark-theme .futurelab-option::before {
+        background: #1e293b;
     }
     
-    .comparison-column span {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        flex-direction: row;
+    /* Ensure emojis and text align properly */
+    .diy-option span, .futurelab-option span {
+        display: inline-block;
+        vertical-align: middle;
     }
     
-    /* Conclusion section on mobile */
+    /* Make conclusion card look better on mobile */
     .comparison-conclusion {
-        padding: 25px 20px;
-        margin: 0 10px;
+        padding: 25px;
+        margin: 15px;
         border-radius: 12px;
     }
     
@@ -369,44 +396,40 @@
         width: 100%;
         max-width: 280px;
     }
-}
-
-/* Small mobile devices */
-@media (max-width: 480px) {
-    .comparison {
-        padding: 40px 0;
-    }
     
-    .comparison-subtitle {
-        font-size: 1.3rem;
-    }
-    
-    .comparison-column::before {
-        min-width: 120px;
-        font-size: 0.9rem;
-    }
-    
-    .comparison-feature {
-        padding: 12px 10px;
-        font-size: 0.95rem;
-    }
-    
-    .comparison-column {
-        padding: 10px 12px;
-        font-size: 0.9rem;
-    }
-    
-    .emoji-x, .emoji-check {
-        font-size: 1.1rem;
-    }
-    
-    .matters-list li {
-        font-size: 0.95rem;
-    }
-    
-    .matters-list li i {
-        width: 22px;
-        height: 22px;
-        font-size: 0.8rem;
+    /* Ultra small mobile tweaks */
+    @media (max-width: 480px) {
+        .comparison {
+            padding: 40px 0;
+        }
+        
+        .comparison-subtitle {
+            font-size: 1.3rem;
+        }
+        
+        .comparison-mobile-header {
+            padding: 12px 10px;
+            font-size: 0.95rem;
+        }
+        
+        .diy-option, .futurelab-option {
+            padding: 12px;
+            font-size: 0.9rem;
+        }
+        
+        .emoji-x, .emoji-check {
+            font-size: 1.1rem;
+            margin-right: 5px;
+        }
+        
+        .matters-list li {
+            font-size: 0.95rem;
+        }
+        
+        .matters-list li i {
+            width: 22px;
+            height: 22px;
+            font-size: 0.8rem;
+        }
     }
 }
