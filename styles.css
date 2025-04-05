@@ -2904,6 +2904,13 @@ footer:before {
     }
 }
 
+/* Hide comparison section on mobile devices */
+@media (max-width: 768px) {
+  .comparison {
+    display: none;
+  }
+}
+
 /* NEW ANIMATIONS AND STYLES */
 
 /* Dark Theme Variables */

@@ -42,3 +42,26 @@ document.addEventListener('DOMContentLoaded', function() {
     hideShowcaseLinks();
   });
 });
+
+// Check if user is on a mobile device
+function isMobileDevice() {
+  return (window.innerWidth <= 768) || 
+         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Hide comparison table for mobile devices
+function handleMobileView() {
+  if (isMobileDevice()) {
+    // Hide comparison section
+    const comparisonSection = document.querySelector('.comparison');
+    if (comparisonSection) {
+      comparisonSection.style.display = 'none';
+    }
+  }
+}
+
+// Run when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', handleMobileView);
+
+// Also run on resize in case of orientation changes
+window.addEventListener('resize', handleMobileView);

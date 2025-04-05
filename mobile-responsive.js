@@ -5,6 +5,24 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize mobile optimizations
   initMobileOptimizations();
+  
+  // Hide comparison section on mobile devices
+  function handleComparisonVisibility() {
+    const comparisonSection = document.querySelector('.comparison');
+    if (comparisonSection) {
+      if (window.innerWidth <= 768) {
+        comparisonSection.style.display = 'none';
+      } else {
+        comparisonSection.style.display = '';
+      }
+    }
+  }
+  
+  // Call on page load
+  handleComparisonVisibility();
+  
+  // Call on window resize
+  window.addEventListener('resize', handleComparisonVisibility);
 });
 
 /**
