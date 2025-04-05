@@ -2617,6 +2617,293 @@ footer:before {
     background: linear-gradient(to bottom, #4361ee, #3a0ca3);
 }
 
+/* NEW COMPARISON SECTION STYLES */
+.comparison {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%);
+    position: relative;
+}
+
+.dark-theme .comparison {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.comparison-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+}
+
+.comparison-subtitle {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+.comparison-intro p {
+    font-size: 1.2rem;
+    color: var(--gray-color);
+}
+
+.comparison-table {
+    max-width: 1000px;
+    margin: 0 auto 50px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(230, 230, 250, 0.7);
+}
+
+.dark-theme .comparison-table {
+    border-color: rgba(55, 65, 81, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.comparison-header {
+    display: flex;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    font-weight: 600;
+}
+
+.dark-theme .comparison-header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+.comparison-feature {
+    flex: 1;
+    padding: 20px;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.dark-theme .comparison-feature {
+    color: #e2e8f0;
+}
+
+.comparison-column {
+    flex: 1.5;
+    padding: 20px;
+    text-align: center;
+}
+
+.comparison-column.highlight {
+    background-color: rgba(67, 97, 238, 0.05);
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.dark-theme .comparison-column.highlight {
+    background-color: rgba(76, 201, 240, 0.1);
+    color: #e2e8f0;
+}
+
+.comparison-row {
+    display: flex;
+    border-top: 1px solid rgba(230, 230, 250, 0.7);
+}
+
+.dark-theme .comparison-row {
+    border-color: rgba(55, 65, 81, 0.5);
+}
+
+.comparison-row:nth-child(even) {
+    background-color: rgba(248, 250, 252, 0.5);
+}
+
+.dark-theme .comparison-row:nth-child(even) {
+    background-color: rgba(30, 41, 59, 0.5);
+}
+
+.comparison-conclusion {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(230, 230, 250, 0.7);
+}
+
+.dark-theme .comparison-conclusion {
+    background-color: #1e293b;
+    border-color: rgba(55, 65, 81, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.comparison-conclusion h4 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--dark-color);
+}
+
+.dark-theme .comparison-conclusion h4 {
+    color: #f8fafc;
+}
+
+.comparison-conclusion p {
+    margin-bottom: 20px;
+    color: var(--gray-color);
+    font-size: 1.1rem;
+}
+
+.matters-heading {
+    font-weight: 600;
+    color: var(--dark-color) !important;
+    margin-top: 30px !important;
+}
+
+.dark-theme .matters-heading {
+    color: #f8fafc !important;
+}
+
+.matters-list {
+    margin: 20px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.matters-list li {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    color: var(--dark-color);
+}
+
+.dark-theme .matters-list li {
+    color: #e2e8f0;
+}
+
+.matters-list li i {
+    color: var(--primary-color);
+    margin-right: 15px;
+    background-color: rgba(67, 97, 238, 0.1);
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dark-theme .matters-list li i {
+    background-color: rgba(76, 201, 240, 0.2);
+}
+
+.business-focus {
+    margin: 30px 0;
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(67, 97, 238, 0.05) 0%, rgba(76, 201, 240, 0.05) 100%);
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.dark-theme .business-focus {
+    background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(76, 201, 240, 0.1) 100%);
+}
+
+.upgrade-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-color) !important;
+    text-align: center;
+    margin: 30px 0 !important;
+}
+
+.dark-theme .upgrade-text {
+    color: #f8fafc !important;
+}
+
+.cta-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.cta-container .btn {
+    padding: 15px 35px;
+    font-size: 1.1rem;
+}
+
+/* Mobile styles for comparison section */
+@media (max-width: 768px) {
+    .comparison {
+        padding: 60px 0;
+    }
+    
+    .comparison-table {
+        border-radius: 0;
+        box-shadow: none;
+        border-left: none;
+        border-right: none;
+    }
+    
+    .comparison-header,
+    .comparison-row {
+        flex-direction: column;
+    }
+    
+    .comparison-feature {
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(76, 201, 240, 0.1) 100%);
+        padding: 15px;
+        text-align: center;
+    }
+    
+    .dark-theme .comparison-feature {
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.2) 0%, rgba(76, 201, 240, 0.2) 100%);
+    }
+    
+    .comparison-column {
+        padding: 15px;
+    }
+    
+    .comparison-column.highlight {
+        border-top: 1px solid rgba(67, 97, 238, 0.2);
+        border-bottom: 1px solid rgba(67, 97, 238, 0.2);
+    }
+    
+    .comparison-conclusion {
+        padding: 25px 20px;
+        margin: 0 15px;
+    }
+    
+    .comparison-subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .comparison-intro p {
+        font-size: 1.05rem;
+    }
+    
+    .comparison-conclusion h4 {
+        font-size: 1.3rem;
+    }
+    
+    .comparison-conclusion p {
+        font-size: 1rem;
+    }
+    
+    .matters-list li {
+        padding: 8px 0;
+    }
+    
+    .business-focus {
+        padding: 20px;
+    }
+    
+    .upgrade-text {
+        font-size: 1.1rem;
+    }
+    
+    .cta-container .btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+}
+
 /* NEW ANIMATIONS AND STYLES */
 
 /* Dark Theme Variables */
