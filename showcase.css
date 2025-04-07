@@ -2863,3 +2863,93 @@ img[src*="pokespud-mockup.png"],
         box-shadow: 0 0 70px 25px rgba(255, 255, 255, 0.9);
     }
 }
+
+/* Showcase page styles */
+
+/* Ensure navigation spacing is consistent with main page */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Consistent spacing between nav items */
+}
+
+.nav-links li {
+    margin: 0; /* Remove any default margins */
+}
+
+/* Hero section styling */
+.hero-section {
+    background: linear-gradient(135deg, #4361ee, #3a86ff, #4cc9f0);
+    padding: 80px 0;
+    text-align: center;
+    color: white;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Dark theme adjustments */
+.dark-theme .hero-section {
+    background: linear-gradient(135deg, #2c3e50, #4c669f);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 0;
+    }
+    
+    .hero-section h1 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-section p {
+        font-size: 1rem;
+    }
+}
+
+/* Footer */
+footer {
+    padding: 80px 0 40px;
+    background-color: var(--dark-color);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-social {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-social a {
+    width: 45px;
+    height: 45px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    font-size: 1.2rem;
+}
+
+/* Instagram-specific hover effect with gradient background */
+.footer-social a:hover {
+    background: var(--gradient-1);
+    transform: translateY(-5px);
+}
+
+.footer-social a[href*="instagram"]:hover {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    transform: translateY(-5px);
+}
