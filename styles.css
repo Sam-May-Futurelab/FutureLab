@@ -1840,6 +1840,18 @@ body.menu-open {
     color: var(--gray-color);
 }
 
+.price-tag {
+    position: absolute;
+    top: -10px; /* Changed from -15px to -10px to move it down a bit */
+    right: 20px;
+    background: var(--gradient-1);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
 /* Portfolio Section */
 .portfolio {
     padding: 120px 0;
@@ -2938,7 +2950,9 @@ footer:before {
 
 /* Theme Toggle Button - Restored elegant version */
 .theme-toggle {
-    position: relative;
+    position: fixed; /* Changed from relative/absolute to fixed for consistency */
+    right: 20px;
+    top: 24px; /* Consistent height position */
     width: 40px;
     height: 40px;
     background: transparent;
@@ -2950,12 +2964,11 @@ footer:before {
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    z-index: 100;
-    margin: 0 10px 0 0; 
+    z-index: 1000; /* Increased z-index to stay above all content */
+    margin: 0;
     padding: 0;
     transition: var(--transition);
     overflow: visible;
-    align-self: center;
 }
 
 .theme-toggle .toggle-glow {
@@ -3867,7 +3880,7 @@ footer:before {
 }
 
 .dark-theme .service-card p {
-    color: var(--gray-color);
+    color: var (--gray-color);
 }
 
 .dark-theme .service-details li {
@@ -3894,7 +3907,7 @@ footer:before {
 }
 
 .dark-theme .price-card p {
-    color: var(--gray-color);
+    color: var (--gray-color);
 }
 
 .dark-theme .price {
@@ -3915,7 +3928,7 @@ footer:before {
 }
 
 .dark-theme .portfolio-content p {
-    color: var(--gray-color);
+    color: var (--gray-color);
 }
 
 .dark-theme .portfolio-features li {
@@ -3932,7 +3945,7 @@ footer:before {
 }
 
 .dark-theme .about-text p {
-    color: var(--gray-color);
+    color: var (--gray-color);
 }
 
 .dark-theme .skills span {
@@ -3950,7 +3963,7 @@ footer:before {
 }
 
 .dark-theme .contact-info p {
-    color: var(--gray-color);
+    color: var (--gray-color);
 }
 
 .dark-theme .contact-form {
@@ -3988,7 +4001,7 @@ footer:before {
 }
 
 .dark-theme .stat-item p {
-    color: var(--gray-color);
+    color: var (--gray-color);
 }
 
 /* Mobile menu */
@@ -4224,5 +4237,238 @@ footer:before {
     display: flex;
     align-items: center;
     height: 100%;
+  }
+}
+
+/* Hero content centered styles */
+.centered-hero {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 0;
+}
+
+/* Animated hero text styles */
+.animated-hero-text {
+    display: inline-block;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    animation: fadeInUp 1.2s ease-out forwards;
+}
+
+/* Text animation keyframes */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Staggered animation delays for hero elements */
+.stagger-1 {
+    animation-delay: 0.3s;
+}
+
+.stagger-2 {
+    animation-delay: 0.6s;
+}
+
+/* Gradient text effect for heading */
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    animation: fadeInDown 1s ease-out forwards;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .centered-hero {
+        padding: 60px 0;
+    }
+    
+    .animated-hero-text {
+        font-size: 1.1rem;
+    }
+}
+
+/* Add to the end of styles.css */
+
+/* Consistent Navigation Layout */
+.nav-links {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+/* Optional placeholder for hidden menu items */
+.nav-placeholder {
+    visibility: hidden;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
+header nav .container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.logo {
+    flex-shrink: 0;
+    width: 120px; /* Ensure logo width is consistent */
+    margin-right: auto;
+}
+
+/* Right-side controls layout */
+.theme-toggle {
+    margin-left: 15px;
+}
+
+/* Ensure navigation spacing is consistent with equal width columns */
+.nav-links li {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-links li a {
+    padding: 8px 16px;
+    white-space: nowrap;
+}
+
+/* Equal spacing for Contact button */
+.nav-links li a.btn-outline {
+    margin-left: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        padding-top: 80px;
+        align-items: flex-start;
+    }
+    
+    .nav-links li {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .nav-links li a {
+        width: 100%;
+        text-align: left;
+        padding: 15px 0;
+    }
+}
+
+/* Theme Toggle - CONSISTENT POSITIONING ACROSS ALL PAGES */
+.theme-toggle {
+  position: fixed !important;
+  right: 20px !important;
+  top: 24px !important;
+  z-index: 1000 !important;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Override any inline styles from index.html */
+#theme-toggle {
+  position: fixed !important;
+  right: 20px !important;
+  top: 24px !important;
+}
+
+/* Make sure the toggle is visible over any background */
+.theme-toggle i {
+  position: relative;
+  z-index: 2;
+}
+
+/* Toggle glow effect */
+.toggle-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(67, 97, 238, 0.2), transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.theme-toggle:hover .toggle-glow,
+.dark-theme .theme-toggle:hover .toggle-glow {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Dark theme adjustments */
+.dark-theme .theme-toggle {
+  color: #f8fafc;
+}
+
+/* Fix for Contact button width in nav bar */
+@media (min-width: 769px) {
+  .nav-links a.btn.btn-outline {
+    padding: 7px 20px; /* Increased horizontal padding */
+    min-width: 120px; /* Ensure minimum width to fit "Contact" fully */
+  }
+}
+
+/* URGENT FIX: Contact Button Spacing */
+.nav-links li:last-child a.btn.btn-outline {
+  margin-right: 80px !important; /* Using !important to override any existing styles */
+}
+
+@media (max-width: 992px) and (min-width: 769px) {
+  .nav-links li:last-child a.btn.btn-outline {
+    margin-right: 70px !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .nav-links li:last-child a.btn.btn-outline {
+    margin-left: 190px !important;
   }
 }

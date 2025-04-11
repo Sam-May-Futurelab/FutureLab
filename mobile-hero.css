@@ -8,6 +8,14 @@
     min-height: 100vh; /* Full viewport height for impact */
   }
   
+  /* Ensure theme toggle has consistent positioning on mobile */
+  .theme-toggle {
+    position: fixed !important;
+    right: 20px !important;
+    top: 24px !important;
+    z-index: 1000 !important;
+  }
+  
   /* Hide the original orb on mobile */
   .hero .orb-container {
     display: none !important;

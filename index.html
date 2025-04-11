@@ -63,6 +63,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="theme-color" content="#4361ee">
+    <script src="simple-menu.js" defer></script>
+    <script src="mobile-responsive.js" defer></script>
 </head>
 <body>
     <header>
@@ -70,6 +72,7 @@
             <div class="logo">Futurelab</div>
             <ul class="nav-links">
                 <li><a href="#">Home</a></li>
+                <li><a href="web-design.html">Web Design</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#portfolio">Work</a></li>
                 <li><a href="showcase" class="showcase-link">Showcase</a></li>
@@ -299,7 +302,6 @@
                                 <img src="assets/client-avatar1.png" alt="Client">
                                 <div>
                                     <h4>Emma Thompson</h4>
-                                    <p>CEO, StyleHub</p>
                                 </div>
                             </div>
                         </div>
@@ -314,7 +316,6 @@
                                 <img src="assets/client-avatar2.png" alt="Client">
                                 <div>
                                     <h4>James Wilson</h4>
-                                    <p>Founder, TechStart</p>
                                 </div>
                             </div>
                         </div>
@@ -972,10 +973,9 @@
                 margin-bottom: 15px !important;
             }
             
-            /* Fix any transition effects between sections */
+            /* Completely remove section-transition styling */
             .section-transition::after {
-                height: 20px !important;
-                opacity: 0.3 !important;
+                display: none !important;
             }
         }
     </style>
@@ -1121,6 +1121,47 @@
 
     <!-- Add CSS styles for FAQ section -->
     <style>
+        /* Fix theme toggle position - move it further right */
+        .theme-toggle {
+            position: absolute;
+            right: 20px; /* Move further to the right */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50; /* Ensure it stays above other elements */
+            margin-left: 20px; /* Add space between contact button and toggle */
+        }
+        
+        /* Ensure contact button has proper spacing */
+        .nav-links li:last-child {
+            margin-right: 60px; /* Add space to the right of the contact button */
+        }
+        
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 992px) {
+            .theme-toggle {
+                right: 80px; /* Position to the left of the hamburger menu */
+            }
+            
+            .nav-links li:last-child {
+                margin-right: 30px; /* Less space needed on smaller screens */
+            }
+        }
+        
+        /* Mobile layout adjustments */
+        @media (max-width: 768px) {
+            .theme-toggle {
+                right: 70px; /* Position to the left of the hamburger menu */
+                top: 50%;
+            }
+            
+            /* When menu is active, adjust theme toggle position */
+            .nav-links.active ~ .theme-toggle {
+                position: fixed;
+                right: 20px;
+                top: 24px;
+            }
+        }
+        
         /* FAQ Section Styling */
         .faq {
             padding: 80px 0;
