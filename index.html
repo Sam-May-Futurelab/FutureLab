@@ -65,6 +65,197 @@
     <meta name="theme-color" content="#4361ee">
     <script src="simple-menu.js" defer></script>
     <script src="mobile-responsive.js" defer></script>
+    
+    <!-- Inline hamburger menu fix for mobile - placed before other scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+            const body = document.body;
+            
+            if (!hamburger || !navLinks) {
+                console.warn('Mobile menu elements not found');
+                return;
+            }
+            
+            // Function to toggle the menu
+            function toggleMenu(e) {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                
+                console.log('Menu toggle activated'); // Debug log
+                
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                
+                if (mobileOverlay) {
+                    mobileOverlay.classList.toggle('active');
+                }
+                
+                if (navLinks.classList.contains('active')) {
+                    body.classList.add('menu-open');
+                } else {
+                    body.classList.remove('menu-open');
+                }
+            }
+            
+            // Add multiple event listeners for better mobile support
+            hamburger.addEventListener('click', toggleMenu);
+            
+            // Special handling for touch events
+            hamburger.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // Prevent any default behavior
+                toggleMenu(e);
+            }, { passive: false });
+            
+            // Also handle menu closing
+            const links = navLinks.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    if (mobileOverlay) mobileOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                });
+            });
+            
+            // Close menu when clicking overlay
+            if (mobileOverlay) {
+                mobileOverlay.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    mobileOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                });
+            }
+        });
+    </script>
+    
+    <!-- Hamburger menu CSS fixes -->
+    <style>
+        /* Make hamburger more clickable on mobile */
+        .hamburger {
+            cursor: pointer;
+            z-index: 9999;
+            position: relative;
+            display: none;
+            width: 30px;
+            height: 24px;
+        }
+        
+        /* Make hamburger spans more visible */
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--dark-color);
+            border-radius: 3px;
+            opacity: 1;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+            pointer-events: none; /* Ensure spans don't interfere with clicks */
+        }
+        
+        .dark-theme .hamburger span {
+            background: #fff;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2) {
+            top: 10px;
+        }
+        
+        .hamburger span:nth-child(3) {
+            top: 20px;
+        }
+        
+        /* Mobile overlay styling */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+        
+        /* Display hamburger on mobile only */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+            }
+            
+            .dark-theme .nav-links {
+                background: #1e293b;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            /* Active hamburger animation */
+            .hamburger.active span:nth-child(1) {
+                top: 10px;
+                transform: rotate(135deg);
+            }
+            
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            
+            .hamburger.active span:nth-child(3) {
+                top: 10px;
+                transform: rotate(-135deg);
+            }
+            
+            /* Prevent scrolling when menu is open */
+            body.menu-open {
+                overflow: hidden;
+            }
+            
+            /* Ensure the theme toggle is properly positioned */
+            .nav-links.active ~ .theme-toggle {
+                position: fixed;
+                top: 24px;
+                z-index: 999;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
