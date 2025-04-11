@@ -4472,3 +4472,24 @@ header nav .container {
     margin-left: 190px !important;
   }
 }
+
+/* Mobile-specific theme toggle positioning */
+@media (max-width: 768px) {
+  .theme-toggle {
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    top: 24px !important;
+    transform: translateX(-50%) !important;
+    margin-left: 0 !important;
+    z-index: 1000 !important;
+  }
+
+  /* Override previous mobile-specific positioning */
+  #theme-toggle {
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+}
