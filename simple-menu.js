@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Get DOM elements
   const hamburger = document.querySelector('.hamburger');
   const navLinks = document.querySelector('.nav-links');
+  const mobileOverlay = document.querySelector('.mobile-menu-overlay');
   
   if (!hamburger || !navLinks) {
     console.warn('Mobile menu elements not found - menu initialization skipped.');
@@ -21,14 +22,21 @@ document.addEventListener('DOMContentLoaded', function() {
     contactBtn.style.padding = '8px 15px';
   }
   
-  // Toggle mobile menu with proper event handling
-  hamburger.addEventListener('click', function(e) {
+  // Toggle mobile menu with enhanced touch event handling
+  function toggleMenu(e) {
     e.preventDefault();
     e.stopPropagation();
+    
+    console.log('Menu toggle clicked'); // Debug log
     
     // Toggle active classes
     hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
+    
+    // Toggle the overlay if it exists
+    if (mobileOverlay) {
+      mobileOverlay.classList.toggle('active');
+    }
     
     // Add body class to prevent background scrolling when menu is open
     if (navLinks.classList.contains('active')) {
@@ -36,6 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       document.body.classList.remove('menu-open');
     }
+  }
+  
+  // Add multiple event types for better mobile responsiveness
+  hamburger.addEventListener('click', toggleMenu);
+  hamburger.addEventListener('touchend', function(e) {
+    e.preventDefault(); // Prevent ghost clicks
+    toggleMenu(e);
   });
   
   // Close menu when clicking a link
@@ -44,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     link.addEventListener('click', function() {
       hamburger.classList.remove('active');
       navLinks.classList.remove('active');
+      if (mobileOverlay) mobileOverlay.classList.remove('active');
       document.body.classList.remove('menu-open');
     });
   });
@@ -55,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         !hamburger.contains(e.target)) {
       hamburger.classList.remove('active');
       navLinks.classList.remove('active');
+      if (mobileOverlay) mobileOverlay.classList.remove('active');
       document.body.classList.remove('menu-open');
     }
   });
@@ -64,11 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Escape' && navLinks.classList.contains('active')) {
       hamburger.classList.remove('active');
       navLinks.classList.remove('active');
+      if (mobileOverlay) mobileOverlay.classList.remove('active');
       document.body.classList.remove('menu-open');
     }
   });
   
-  // Add CSS to fix contact button on mobile
+  // Add CSS to fix contact button on mobile and ensure hamburger is visible and clickable
   const style = document.createElement('style');
   style.textContent = `
     @media (max-width: 768px) {
@@ -85,10 +103,33 @@ document.addEventListener('DOMContentLoaded', function() {
       
       .hamburger {
         z-index: 9999;
+        cursor: pointer;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 24px;
+        position: relative;
+        pointer-events: auto;
+      }
+      
+      .hamburger span {
+        pointer-events: none;
       }
       
       body.menu-open {
         overflow: hidden;
+      }
+      
+      .mobile-menu-overlay.active {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 998;
       }
     }
   `;
