@@ -4155,6 +4155,13 @@ footer:before {
     margin-bottom: 15px;
     padding-bottom: 8px;
     padding-top: 8px;
+    /* Center the contact button properly */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+    width: 160px !important; /* Fixed width for consistency */
+    max-width: 80% !important; /* Responsive on very small screens */
+    text-align: center !important;
   }
   
   /* When active/focused */
