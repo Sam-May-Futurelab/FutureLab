@@ -206,12 +206,15 @@
                 right: 0;
                 background: white;
                 flex-direction: column;
-                align-items: center;
-                padding: 20px;
+                align-items: center !important; /* Force center alignment */
+                justify-content: center;
+                padding: 25px 20px;
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
                 transform: translateY(-150%);
                 transition: transform 0.3s ease;
                 z-index: 999;
+                text-align: center; /* Center text */
+                width: 100%; /* Ensure full width */
             }
             
             .dark-theme .nav-links {
@@ -223,7 +226,24 @@
             }
             
             .nav-links li {
-                margin: 10px 0;
+                margin: 12px 0;
+                width: 100%; /* Full width for menu items */
+            }
+            
+            .nav-links li a {
+                display: inline-block;
+                padding: 10px 15px;
+                width: auto;
+                min-width: 160px; /* Consistent minimum width */
+                text-align: center;
+            }
+            
+            /* Style contact button specifically in mobile menu */
+            .nav-links li a.btn {
+                margin: 10px auto !important;
+                padding: 10px 25px !important;
+                min-width: 180px;
+                display: inline-block !important;
             }
             
             /* Active hamburger animation */
@@ -252,6 +272,15 @@
                 position: fixed;
                 top: 24px;
                 z-index: 999;
+            }
+            
+            /* Fix theme toggle position - move it further right */
+            .theme-toggle {
+                position: absolute;
+                right: 70px; /* Position to the left of the hamburger menu */
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 50; /* Ensure it stays above other elements */
             }
         }
     </style>

@@ -215,3 +215,84 @@ function debounce(func, wait) {
     timeout = setTimeout(() => func.apply(context, args), wait);
   };
 }
+
+/**
+ * Mobile Responsive Enhancements
+ * Improves the mobile experience across the site
+ */
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Detect mobile devices
+  const isMobile = window.innerWidth < 768;
+  
+  // Enhanced mobile menu appearance
+  function enhanceMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    const hamburger = document.querySelector('.hamburger');
+    
+    if (!navLinks || !hamburger) return;
+    
+    // Ensure proper centering of all menu items on mobile
+    if (window.innerWidth < 768) {
+      // Center align all menu items
+      const navItems = navLinks.querySelectorAll('li');
+      navItems.forEach(item => {
+        item.style.textAlign = 'center';
+        item.style.width = '100%';
+        
+        // Center the contact button specifically
+        const button = item.querySelector('.btn');
+        if (button) {
+          button.style.margin = '20px auto';
+          button.style.display = 'block';
+          button.style.width = '70%';
+          button.style.textAlign = 'center';
+        }
+      });
+      
+      // Ensure nav-links takes full width and height in mobile
+      navLinks.style.width = '100%';
+      navLinks.style.height = '100vh';
+      navLinks.style.alignItems = 'center';
+      navLinks.style.justifyContent = 'center';
+    }
+  }
+  
+  // Run initially
+  enhanceMobileMenu();
+  
+  // Update on resize
+  window.addEventListener('resize', function() {
+    enhanceMobileMenu();
+  });
+  
+  // Additional mobile optimizations
+  if (isMobile) {
+    // Improve tap targets for better mobile usability
+    const allLinks = document.querySelectorAll('a, button');
+    allLinks.forEach(link => {
+      // Only apply to navigation links and small buttons
+      if (!link.classList.contains('btn-lg')) {
+        // Ensure minimum tap target size (44x44px)
+        const computedStyle = window.getComputedStyle(link);
+        const height = parseInt(computedStyle.height);
+        const width = parseInt(computedStyle.width);
+        
+        if (height < 44 || width < 44) {
+          link.style.minHeight = '44px';
+          link.style.minWidth = '44px';
+          link.style.display = 'inline-flex';
+          link.style.alignItems = 'center';
+          link.style.justifyContent = 'center';
+        }
+      }
+    });
+    
+    // Optimize form fields for mobile
+    const formFields = document.querySelectorAll('input, textarea, select');
+    formFields.forEach(field => {
+      field.style.fontSize = '16px'; // Prevent iOS zoom on focus
+      field.style.padding = '12px'; // Larger touch target
+    });
+  }
+});

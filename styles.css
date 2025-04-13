@@ -788,17 +788,21 @@ nav {
     padding: 15px;
     display: block;
     font-weight: 600;
-  }
-  
-  /* Button styling in mobile menu */
-  .nav-links .btn {
-    margin-top: 20px;
-    width: 100%;
-    padding: 16px;
     text-align: center;
   }
   
-  /* Active menu state */
+  /* Button styling in mobile menu - fix centering */
+  .nav-links .btn {
+    margin-top: 20px;
+    width: 70%;
+    padding: 16px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  
+  /* Active menu state - enter from the right instead of clipping */
   .nav-links.active {
     transform: translateX(0);
     display: flex;

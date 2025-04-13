@@ -207,12 +207,15 @@
                 right: 0;
                 background: white;
                 flex-direction: column;
-                align-items: center;
-                padding: 20px;
+                align-items: center !important; /* Force center alignment */
+                justify-content: center;
+                padding: 25px 20px;
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
                 transform: translateY(-150%);
                 transition: transform 0.3s ease;
                 z-index: 999;
+                text-align: center; /* Center text */
+                width: 100%; /* Ensure full width */
             }
             
             .dark-theme .nav-links {
@@ -224,7 +227,24 @@
             }
             
             .nav-links li {
-                margin: 10px 0;
+                margin: 12px 0;
+                width: 100%; /* Full width for menu items */
+            }
+            
+            .nav-links li a {
+                display: inline-block;
+                padding: 10px 15px;
+                width: auto;
+                min-width: 160px; /* Consistent minimum width */
+                text-align: center;
+            }
+            
+            /* Style contact button specifically in mobile menu */
+            .nav-links li a.btn {
+                margin: 10px auto !important;
+                padding: 10px 25px !important;
+                min-width: 180px;
+                display: inline-block !important;
             }
             
             /* Active hamburger animation */
@@ -623,7 +643,7 @@
                     <p>Your website isn't just a digital placeholder — it's your brand, your first impression, and your best salesperson.</p>
                     
                     <p class="matters-heading">If you're serious about growth, you need a site that:</p>
-                    <ul class="matters-list">
+                    <ul class="matters-list"></ul>
                         <li><i class="fas fa-check"></i> Looks professional</li>
                         <li><i class="fas fa-check"></i> Loads instantly</li>
                         <li><i class="fas fa-check"></i> Works beautifully on mobile</li>
@@ -942,7 +962,7 @@
                     <a href="https://instagram.com/futurelab.solutions" target="_blank"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom">
+            <div class="footer-bottom"></div>
                 <p>
                     &copy; 2025 Futurelab. All rights reserved. | 
                     <a href="https://futurelabs.solutions" class="animated-underline">futurelabs.solutions</a> | 

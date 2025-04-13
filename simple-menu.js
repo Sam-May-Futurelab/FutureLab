@@ -13,12 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
   
-  // Fix contact button styling to prevent cut-off
+  // Fix contact button styling to ensure it's centered and properly displayed
   const contactBtn = navLinks.querySelector('.btn.btn-outline');
   if (contactBtn) {
-    contactBtn.style.marginBottom = '15px';
-    contactBtn.style.display = 'inline-block';
-    contactBtn.style.padding = '8px 15px';
+    contactBtn.style.marginBottom = '20px';
+    contactBtn.style.display = 'block';
+    contactBtn.style.padding = '12px 20px';
+    contactBtn.style.textAlign = 'center';
+    contactBtn.style.width = '70%';
+    contactBtn.style.marginLeft = 'auto';
+    contactBtn.style.marginRight = 'auto';
   }
   
   // Toggle mobile menu with proper event handling
@@ -68,27 +72,58 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Add CSS to fix contact button on mobile
+  // Add CSS to fix mobile menu and contact button
   const style = document.createElement('style');
   style.textContent = `
     @media (max-width: 768px) {
       .nav-links {
-        padding-bottom: 20px !important;
+        padding: 60px 30px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 100vh !important;
+        width: 100% !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+      }
+      
+      .nav-links.active {
+        transform: translateX(0) !important;
+      }
+      
+      .nav-links li {
+        width: 100% !important;
+        text-align: center !important;
+        margin: 15px 0 !important;
+      }
+      
+      .nav-links a {
+        font-size: 1.4rem !important;
+        padding: 15px !important;
+        display: block !important;
+        text-align: center !important;
+        width: 100% !important;
       }
       
       .nav-links .btn.btn-outline {
-        margin-bottom: 15px !important;
-        padding: 8px 15px !important;
-        display: inline-block !important;
-        width: auto !important;
+        margin: 20px auto !important;
+        width: 70% !important;
+        padding: 16px !important;
+        text-align: center !important;
+        display: block !important;
       }
       
       .hamburger {
-        z-index: 9999;
+        z-index: 200 !important;
       }
       
       body.menu-open {
-        overflow: hidden;
+        overflow: hidden !important;
       }
     }
   `;
