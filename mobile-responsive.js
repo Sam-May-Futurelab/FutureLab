@@ -296,3 +296,126 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+/**
+ * Mobile Responsive Navigation System
+ * Handles mobile menu interactions and responsive behavior
+ */
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all required elements
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const mobileOverlay = document.querySelector('.mobile-menu-overlay') || createMobileOverlay();
+    const body = document.body;
+    
+    // If hamburger menu doesn't exist, create one
+    function ensureHamburger() {
+        if (!hamburger) {
+            const newHamburger = document.createElement('div');
+            newHamburger.className = 'hamburger';
+            
+            for (let i = 0; i < 3; i++) {
+                const span = document.createElement('span');
+                newHamburger.appendChild(span);
+            }
+            
+            const nav = document.querySelector('nav');
+            if (nav) {
+                nav.appendChild(newHamburger);
+                return newHamburger;
+            }
+        }
+        return hamburger;
+    }
+    
+    // Create mobile overlay if it doesn't exist
+    function createMobileOverlay() {
+        const overlay = document.createElement('div');
+        overlay.className = 'mobile-menu-overlay';
+        document.body.appendChild(overlay);
+        return overlay;
+    }
+    
+    // Function to toggle the menu state
+    function toggleMenu(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        const menuBtn = hamburger || ensureHamburger();
+        menuBtn.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        
+        if (mobileOverlay) {
+            mobileOverlay.classList.toggle('active');
+        }
+        
+        if (navLinks.classList.contains('active')) {
+            body.classList.add('menu-open');
+        } else {
+            body.classList.remove('menu-open');
+        }
+    }
+    
+    // Handle menu click event
+    if (hamburger) {
+        // Add multiple event listeners for better mobile support
+        hamburger.addEventListener('click', toggleMenu);
+        
+        // Special handling for touch events
+        hamburger.addEventListener('touchstart', function(e) {
+            e.preventDefault(); // Prevent any default behavior
+            toggleMenu(e);
+        }, { passive: false });
+    }
+    
+    // Close menu when clicking menu links
+    if (navLinks) {
+        const links = navLinks.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', function() {
+                if (hamburger) hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                if (mobileOverlay) mobileOverlay.classList.remove('active');
+                body.classList.remove('menu-open');
+            });
+        });
+    }
+    
+    // Close menu when clicking overlay
+    if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', function() {
+            if (hamburger) hamburger.classList.remove('active');
+            if (navLinks) navLinks.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+        });
+    }
+    
+    // Handle window resize events
+    window.addEventListener('resize', function() {
+        // Close mobile menu if window is resized to desktop width
+        if (window.innerWidth > 768 && navLinks && navLinks.classList.contains('active')) {
+            if (hamburger) hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            if (mobileOverlay) mobileOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+        }
+    });
+    
+    // Ensure the DOM has the required elements for mobile menu
+    function ensureMobileMenuElements() {
+        // Create overlay if it doesn't exist
+        if (!document.querySelector('.mobile-menu-overlay')) {
+            createMobileOverlay();
+        }
+        
+        // Ensure hamburger exists
+        ensureHamburger();
+    }
+    
+    // Run initialization
+    ensureMobileMenuElements();
+});

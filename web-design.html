@@ -204,17 +204,18 @@
                 top: 70px;
                 left: 0;
                 right: 0;
+                width: 100%; /* Full width */
+                margin: 0 auto; /* Center the menu */
                 background: white;
                 flex-direction: column;
-                align-items: center !important; /* Force center alignment */
-                justify-content: center;
-                padding: 25px 20px;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 20px 0; /* Remove horizontal padding */
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
                 transform: translateY(-150%);
                 transition: transform 0.3s ease;
                 z-index: 999;
-                text-align: center; /* Center text */
-                width: 100%; /* Ensure full width */
+                text-align: center;
             }
             
             .dark-theme .nav-links {
@@ -226,24 +227,25 @@
             }
             
             .nav-links li {
-                margin: 12px 0;
+                margin: 10px 0;
                 width: 100%; /* Full width for menu items */
             }
             
             .nav-links li a {
-                display: inline-block;
-                padding: 10px 15px;
-                width: auto;
-                min-width: 160px; /* Consistent minimum width */
+                display: block; /* Block instead of inline-block */
+                padding: 10px 0; /* Remove horizontal padding */
+                font-size: 0.95rem; /* Reduce font size */
+                width: 100%; /* Full width */
                 text-align: center;
             }
             
             /* Style contact button specifically in mobile menu */
             .nav-links li a.btn {
                 margin: 10px auto !important;
-                padding: 10px 25px !important;
-                min-width: 180px;
-                display: inline-block !important;
+                padding: 10px 20px !important;
+                width: 160px; /* Fixed width */
+                max-width: 80%; /* Ensure it's not too wide on small devices */
+                display: block !important;
             }
             
             /* Active hamburger animation */
@@ -268,19 +270,12 @@
             }
             
             /* Ensure the theme toggle is properly positioned */
-            .nav-links.active ~ .theme-toggle {
-                position: fixed;
-                top: 24px;
-                z-index: 999;
-            }
-            
-            /* Fix theme toggle position - move it further right */
             .theme-toggle {
                 position: absolute;
-                right: 70px; /* Position to the left of the hamburger menu */
+                right: 70px; /* Position to the left of hamburger */
                 top: 50%;
                 transform: translateY(-50%);
-                z-index: 50; /* Ensure it stays above other elements */
+                z-index: 50;
             }
         }
     </style>

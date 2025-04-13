@@ -134,7 +134,7 @@
         });
     </script>
     
-    <!-- Hamburger menu CSS fixes -->
+    <!-- Mobile menu styling overhaul -->
     <style>
         /* Make hamburger more clickable on mobile */
         .hamburger {
@@ -205,17 +205,18 @@
                 top: 70px;
                 left: 0;
                 right: 0;
+                width: 100%; /* Full width */
+                margin: 0 auto; /* Center the menu */
                 background: white;
                 flex-direction: column;
-                align-items: center !important; /* Force center alignment */
-                justify-content: center;
-                padding: 25px 20px;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 20px 0; /* Remove horizontal padding */
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
                 transform: translateY(-150%);
                 transition: transform 0.3s ease;
                 z-index: 999;
-                text-align: center; /* Center text */
-                width: 100%; /* Ensure full width */
+                text-align: center;
             }
             
             .dark-theme .nav-links {
@@ -227,24 +228,25 @@
             }
             
             .nav-links li {
-                margin: 12px 0;
+                margin: 10px 0;
                 width: 100%; /* Full width for menu items */
             }
             
             .nav-links li a {
-                display: inline-block;
-                padding: 10px 15px;
-                width: auto;
-                min-width: 160px; /* Consistent minimum width */
+                display: block; /* Block instead of inline-block */
+                padding: 10px 0; /* Remove horizontal padding */
+                font-size: 0.95rem; /* Reduce font size */
+                width: 100%; /* Full width */
                 text-align: center;
             }
             
             /* Style contact button specifically in mobile menu */
             .nav-links li a.btn {
                 margin: 10px auto !important;
-                padding: 10px 25px !important;
-                min-width: 180px;
-                display: inline-block !important;
+                padding: 10px 20px !important;
+                width: 160px; /* Fixed width */
+                max-width: 80%; /* Ensure it's not too wide on small devices */
+                display: block !important;
             }
             
             /* Active hamburger animation */
@@ -269,10 +271,12 @@
             }
             
             /* Ensure the theme toggle is properly positioned */
-            .nav-links.active ~ .theme-toggle {
-                position: fixed;
-                top: 24px;
-                z-index: 999;
+            .theme-toggle {
+                position: absolute;
+                right: 70px; /* Position to the left of hamburger */
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 50;
             }
         }
     </style>
@@ -963,29 +967,10 @@
                 </div>
             </div>
             <div class="footer-bottom"></div>
-                <p>
-                    &copy; 2025 Futurelab. All rights reserved. | 
-                    <a href="https://futurelabs.solutions" class="animated-underline">futurelabs.solutions</a> | 
-                    <a href="privacy-policy" class="animated-underline">Privacy Policy</a>
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Cookie Consent Banner -->
-    <div id="cookie-banner" class="cookie-banner">
-        <div class="cookie-content">
-            <p>This website uses cookies to ensure you get the best experience. <a href="privacy-policy">Learn more</a></p>
-            <div class="cookie-buttons">
-                <button id="cookie-accept" class="btn btn-sm btn-primary">Accept</button>
-                <button id="cookie-decline" class="btn btn-sm btn-outline">Decline</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Fix script loading order - KEEP ALL ORIGINAL SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script src="mobile-redirect.js"></script>
+    <script src="mobile-responsive.js"></script>
     <script src="script.js"></script>
     <script src="testimonials.js"></script>
     <script src="placeholder.js"></script>
