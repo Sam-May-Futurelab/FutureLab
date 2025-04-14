@@ -4327,19 +4327,35 @@ header nav .container {
 
 /* URGENT FIX: Contact Button Spacing */
 .nav-links li:last-child a.btn.btn-outline {
-  margin-right: 80px !important; /* Using !important to override any existing styles */
+  margin-right: 20px !important; /* Reduced from 80px */
 }
 
 @media (max-width: 992px) and (min-width: 769px) {
   .nav-links li:last-child a.btn.btn-outline {
-    margin-right: 70px !important;
+    margin-right: 15px !important; /* Reduced from 70px */
   }
 }
 
 @media (min-width: 992px) {
   .nav-links li:last-child a.btn.btn-outline {
-    margin-left: 190px !important;
+    margin-left: 0 !important; /* Removed excessive 190px left margin */
+    margin-right: 20px !important;
   }
+}
+
+/* Additional fix for balanced navigation layout */
+.nav-links {
+  justify-content: space-between; /* More balanced spacing */
+  margin-left: auto;
+  margin-right: 60px; /* Space for theme toggle */
+}
+
+/* Ensure theme toggle has proper position without pushing nav items */
+.theme-toggle {
+  position: absolute !important; /* Don't affect layout flow */
+  right: 20px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
 }
 
 /* Mobile-specific theme toggle positioning */
@@ -4362,3 +4378,213 @@ header nav .container {
     transform: translateX(-50%) !important;
   }
 }
+
+/* CRITICAL FIX: Ensure theme toggle is consistently positioned on all pages */
+.theme-toggle,
+#theme-toggle {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  right: 20px !important;
+  z-index: 1000;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* For showcase.html and other pages that had the fixed position issue */
+header nav .theme-toggle,
+header nav #theme-toggle {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  right: 20px !important;
+  margin: 0 !important;
+}
+
+/* Ensure positioning works on mobile too */
+@media (max-width: 768px) {
+  .theme-toggle,
+  #theme-toggle {
+    right: 60px !important; /* Leave space for hamburger menu */
+  }
+  
+  /* When menu is open, keep toggle visible but positioned differently */
+  .nav-links.active ~ .theme-toggle {
+    right: 60px !important;
+  }
+}
+
+/* CRITICAL FIX: Theme Toggle Positioning - Move right of Contact */
+.theme-toggle,
+#theme-toggle {
+  /* Change from absolute to fixed positioning */
+  position: fixed !important;
+  top: 24px !important; /* Align with header */
+  right: 20px !important;
+  /* Remove transform that was causing positioning issues */
+  transform: none !important;
+  z-index: 1000 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Fix nav container to make room for theme toggle */
+header nav .container {
+  padding-right: 70px !important; /* Add space on right for toggle */
+}
+
+/* Adjust navigation link layout - reduce right margin */
+.nav-links {
+  margin-right: 20px !important; /* Reduced from 60px */
+}
+
+/* Fix for Contact button to ensure it doesn't overlap with toggle */
+.nav-links li:last-child {
+  margin-right: 20px !important;
+}
+
+/* Fix for nav layout on all pages to be consistent */
+header nav .theme-toggle,
+header nav #theme-toggle {
+  position: fixed !important;
+  right: 20px !important; 
+  top: 24px !important; /* Fixed position at top header level */
+  transform: none !important;
+}
+
+/* Mobile adjustments for theme toggle */
+@media (max-width: 768px) {
+  /* Center the theme toggle on mobile */
+  .theme-toggle,
+  #theme-toggle {
+    position: fixed !important;
+    top: 24px !important;
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  /* Remove the previous right-side positioning on mobile */
+  header nav .theme-toggle,
+  header nav #theme-toggle {
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+}
+
+/* ...existing code... */
+
+/* CRITICAL FIX: Better menu spacing to prevent Contact-Lightbulb overlap */
+header nav .container {
+  padding-right: 80px !important; /* Increased space on right for theme toggle */
+  position: relative; /* Ensure proper positioning context */
+}
+
+/* Make nav links container narrower to accommodate the toggle */
+.nav-links {
+  max-width: 580px !important; /* Slightly reduced width */
+  margin-right: 60px !important; /* Increased margin from toggle */
+  justify-content: flex-end !important; /* Push items to the end */
+}
+
+/* Reduce gap between nav items for better spacing */
+.nav-links li {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+}
+
+/* Smaller but still readable menu items */
+.nav-links a {
+  font-size: 0.95rem;
+  padding: 8px 12px !important;
+}
+
+/* Ensure the Contact button has proper spacing from the toggle */
+.nav-links li:last-child {
+  margin-right: 60px !important; /* Much more space before the toggle */
+}
+
+/* Properly position the theme toggle to the right */
+.theme-toggle,
+#theme-toggle {
+  position: absolute !important;
+  top: 50% !important;
+  right: 20px !important;
+  transform: translateY(-50%) !important;
+  z-index: 1000;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ensure consistent toggle position across all pages */
+header nav .theme-toggle,
+header nav #theme-toggle {
+  position: absolute !important;
+  right: 20px !important; 
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+/* Mobile-specific adjustments remain the same */
+@media (max-width: 768px) {
+  /* ...existing mobile code... */
+}
+
+/* Showcase page specific styles remain unchanged */
+/* ...existing code... */
+
+/* FIX: Navigation link hover underline animation */
+.nav-links a {
+  position: relative;
+  display: inline-block; /* Changed from inline-flex to better control width */
+  color: var(--dark-color);
+  font-weight: 500;
+  padding: 8px 12px !important;
+  text-align: center;
+}
+
+.nav-links a:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%; /* Position from center */
+  width: 0; /* Start with no width */
+  height: 2px;
+  background: var(--gradient-1);
+  transition: var(--transition);
+  transform: translateX(-50%); /* Center the underline */
+}
+
+.nav-links a:hover:after {
+  width: 80%; /* Only underline most of the text width, not full container */
+}
+
+/* Specific fix for Work and Ecommerce links */
+.nav-links a[href*="web-design.html"],
+.nav-links a[href*="ecommerce.html"] {
+  display: inline-block; /* Force inline-block for these specific links */
+  white-space: nowrap; /* Prevent text wrapping */
+  width: auto; /* Let content determine width */
+}
+
+.nav-links a[href*="web-design.html"]:after,
+.nav-links a[href*="ecommerce.html"]:after {
+  width: 0; /* Start with zero width */
+  left: 50%; /* Center the underline */
+  transform: translateX(-50%); /* Ensure centering */
+  max-width: 80%; /* Don't let it exceed text width */
+}
+
+.nav-links a[href*="web-design.html"]:hover:after,
+.nav-links a[href*="ecommerce.html"]:hover:after {
+  width: 80%; /* Only underline most of the text width */
+}
+
+/* Also apply this fix to any other main navigation links */
+.nav-links > li > a:after {
+  max-width: 80%; /* Limit all main nav links' underline width */
+}
+
+/* ...existing code... */

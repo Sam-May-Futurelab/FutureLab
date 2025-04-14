@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8E854NCS56"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8E854NCS56');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO-optimized title and meta tags for e-commerce services page -->
+    <title>Expert E-Commerce Solutions | Shopify Development | FutureLab</title>
+    <meta name="description" content="Custom e-commerce solutions that convert visitors into customers. Specializing in Shopify development, beautiful product showcases, and brand-focused online stores.">
+    <meta name="keywords" content="e-commerce website, Shopify development, online store, product showcase, conversion optimization, UK web designer, e-commerce solutions">
+    <meta name="author" content="FutureLab Solutions">
+    
+    <!-- Open Graph for link previews -->
+    <meta property="og:title" content="Expert E-Commerce Solutions | FutureLab">
+    <meta property="og:description" content="Beautiful online stores that showcase your brand and convert visitors into customers. Shopify experts with a focus on results.">
+    <meta property="og:image" content="https://futurelab.solutions/assets/ecommerce-preview.png">
+    <meta property="og:url" content="https://futurelab.solutions/ecommerce">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon links -->
+    <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="assets/favicon/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="assets/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/favicon/favicon-96x96.png" sizes="96x96" type="image/png">
+    
+    <!-- Android icons -->
+    <link rel="icon" href="assets/favicon/android-icon-36x36.png" sizes="36x36" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-48x48.png" sizes="48x48" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-72x72.png" sizes="72x72" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-96x96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-144x144.png" sizes="144x144" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-192x192.png" sizes="192x192" type="image/png">
+    
+    <!-- Apple touch icons -->
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-57x57.png" sizes="57x57">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-60x60.png" sizes="60x60">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-76x76.png" sizes="76x76">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-114x114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-144x144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-180x180.png" sizes="180x180">
+    
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="testimonials.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="mobile-hero.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#4361ee">
+    <script src="simple-menu.js" defer></script>
+    <script src="mobile-responsive.js" defer></script>
+    
+    <!-- E-commerce specific styles -->
+    <style>
+        /* Product showcase styling */
+        .product-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .product-item {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(230, 230, 250, 0.7);
+        }
+        
+        .dark-theme .product-item {
+            background: #1e293b;
+            border-color: rgba(55, 65, 81, 0.5);
+        }
+        
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .product-image {
+            height: 220px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .product-item:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+        
+        .product-details {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        .dark-theme .product-title {
+            color: white;
+        }
+        
+        .product-description {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Platform features section */
+        .platform-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .platform-feature {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(230, 230, 250, 0.7);
+        }
+        
+        .dark-theme .platform-feature {
+            background: #1e293b;
+            border-color: rgba(55, 65, 81, 0.5);
+        }
+        
+        .platform-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .platform-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+        
+        .dark-theme .platform-icon {
+            background: rgba(76, 201, 240, 0.1);
+        }
+        
+        .platform-feature h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: var(--dark-color);
+        }
+        
+        .dark-theme .platform-feature h3 {
+            color: white;
+        }
+        
+        .platform-feature ul {
+            margin-top: 20px;
+            padding-left: 20px;
+        }
+        
+        .platform-feature ul li {
+            margin-bottom: 10px;
+            position: relative;
+            color: var(--gray-color);
+        }
+        
+        .platform-feature ul li:before {
+            content: '✓';
+            color: var(--primary-color);
+            position: absolute;
+            left: -20px;
+            font-weight: bold;
+        }
+        
+        /* Process steps with numbers */
+        .ecommerce-process {
+            margin: 70px 0;
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 50px;
+        }
+        
+        .process-steps:before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(67, 97, 238, 0.15);
+            z-index: 1;
+        }
+        
+        .process-step {
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            padding: 0 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.2);
+        }
+        
+        .process-step h4 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+        }
+        
+        .dark-theme .process-step h4 {
+            color: white;
+        }
+        
+        .process-step p {
+            color: var(--gray-color);
+            font-size: 0.95rem;
+        }
+        
+        /* Case study section */
+        .case-study {
+            background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%);
+            padding: 80px 0;
+            margin: 50px 0;
+            border-radius: var(--border-radius);
+        }
+        
+        .dark-theme .case-study {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        
+        .case-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .case-image {
+            flex: 1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            max-width: 500px;
+        }
+        
+        .case-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: var(--border-radius);
+        }
+        
+        .case-details {
+            flex: 1;
+        }
+        
+        .case-details h3 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: var(--dark-color);
+        }
+        
+        .dark-theme .case-details h3 {
+            color: white;
+        }
+        
+        .case-details p {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+        }
+        
+        .result-highlight {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .dark-theme .result-highlight {
+            background: #1e293b;
+        }
+        
+        .result-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .dark-theme .result-title {
+            color: white;
+        }
+        
+        .result-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .stat {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        /* Shopify features highlight */
+        .shopify-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 25px;
+            text-align: center;
+            margin: 50px 0;
+        }
+        
+        .shopify-feature {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px 15px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(230, 230, 250, 0.7);
+        }
+        
+        .dark-theme .shopify-feature {
+            background: #1e293b;
+            border-color: rgba(55, 65, 81, 0.5);
+        }
+        
+        .shopify-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .dark-theme .feature-title {
+            color: white;
+        }
+        
+        .feature-text {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        /* Pricing table for e-commerce */
+        .ecommerce-pricing {
+            margin: 70px 0;
+        }
+        
+        .pricing-table {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        
+        .pricing-plan {
+            flex: 1;
+            min-width: 300px;
+            max-width: 350px;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(230, 230, 250, 0.7);
+            position: relative;
+        }
+        
+        .dark-theme .pricing-plan {
+            background: #1e293b;
+            border-color: rgba(55, 65, 81, 0.5);
+        }
+        
+        .pricing-plan:hover {
+            transform: translateY(-7px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .pricing-plan.featured {
+            transform: scale(1.05);
+            border: none;
+            box-shadow: 0 15px 50px rgba(67, 97, 238, 0.2);
+            z-index: 2;
+        }
+        
+        .pricing-plan.featured:hover {
+            transform: scale(1.05) translateY(-7px);
+        }
+        
+        .pricing-header {
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid rgba(230, 230, 250, 0.7);
+            background: rgba(67, 97, 238, 0.02);
+        }
+        
+        .dark-theme .pricing-header {
+            background: rgba(76, 201, 240, 0.05);
+            border-color: rgba(55, 65, 81, 0.5);
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .dark-theme .plan-name {
+            color: white;
+        }
+        
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .price-suffix {
+            font-size: 1rem;
+            color: var(--gray-color);
+        }
+        
+        .plan-description {
+            color: var(--gray-color);
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .pricing-body {
+            padding: 30px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+        
+        .feature-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+            color: var(--gray-color);
+        }
+        
+        .feature-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gradient-1);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        /* Mobile responsiveness for e-commerce page */
+        @media (max-width: 992px) {
+            .case-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .case-image {
+                max-width: 100%;
+            }
+            
+            .process-steps:before {
+                display: none;
+            }
+            
+            .process-step {
+                margin-bottom: 50px;
+                width: 100%;
+                flex: none;
+            }
+        }
+        
+        @media (max-width: 768px) {            
+            .pricing-plan {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .pricing-plan.featured {
+                transform: scale(1);
+            }
+            
+            .pricing-plan.featured:hover {
+                transform: translateY(-7px);
+            }
+            
+            .result-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Futurelab</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#portfolio">Work</a></li>
+                <li><a href="ecommerce.html" class="active">E-Commerce</a></li>
+                <li><a href="web-design.html">Web Design</a></li>
+                <li><a href="showcase" class="showcase-link">Showcase</a></li>
+                <li><a href="index.html#contact" class="btn btn-outline">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+                <i class="fas fa-lightbulb"></i>
+                <div class="toggle-glow"></div>
+            </button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="mobile-menu-overlay"></div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="animated-gradient-bg"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="animate-in gradient-text">Professional E-Commerce Solutions That Convert</h1>
+                    <p class="animate-in stagger-1">Beautiful <span class="highlight-text">online stores</span> that showcase your products, <span class="highlight-text">strengthen your brand</span>, and <span class="highlight-text">turn visitors into customers</span> — built by a certified Shopify Partner.</p>
+                    <div class="hero-buttons animate-in stagger-2">
+                        <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+                        <a href="#ecommerce-process" class="btn btn-secondary">How It Works</a>
+                    </div>
+                </div>
+                <div class="hero-image animate-in stagger-2">
+                    <img src="assets/ecommerce-hero.png" alt="E-Commerce Store Illustration" class="ecommerce-hero-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- E-commerce Services Section -->
+        <section id="services" class="services section-transition">
+            <div class="container">
+                <h2 class="section-title">E-Commerce Services</h2>
+                <p class="section-subtitle">Complete e-commerce solutions for businesses of all sizes</p>
+                
+                <div class="platform-features">
+                    <div class="platform-feature">
+                        <div class="platform-icon">
+                            <i class="fab fa-shopify"></i>
+                        </div>
+                        <h3>Shopify Development</h3>
+                        <p>Custom Shopify stores developed with your unique brand and business goals in mind. As a Shopify Partner, I deliver stores that drive sales.</p>
+                        <ul>
+                            <li>Custom theme development</li>
+                            <li>Store setup & configuration</li>
+                            <li>Product catalog setup</li>
+                            <li>Custom app integration</li>
+                            <li>Shopify Plus enterprise solutions</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="platform-feature">
+                        <div class="platform-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3>Brand-Focused Design</h3>
+                        <p>Your online store should be an extension of your brand identity. I create cohesive, memorable shopping experiences that build customer trust.</p>
+                        <ul>
+                            <li>Custom product showcases</li>
+                            <li>Brand-aligned visual design</li>
+                            <li>Consistent messaging &amp; tone</li>
+                            <li>Lifestyle product photography</li>
+                            <li>Conversion-focused layouts</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="platform-feature">
+                        <div class="platform-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Conversion Optimization</h3>
+                        <p>Turn browsers into buyers with strategic store layouts, user-friendly navigation, and optimized checkout processes.</p>
+                        <ul>
+                            <li>Simplified checkout process</li>
+                            <li>Strategic product recommendations</li>
+                            <li>Abandoned cart recovery</li>
+                            <li>Customer review integration</li>
+                            <li>Upsell & cross-sell optimization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shopify Features Section -->
+        <section class="section-transition">
+            <div class="container">
+                <h2 class="section-title">Why Choose Shopify?</h2>
+                <p class="section-subtitle">The world's leading e-commerce platform powering over 1 million businesses</p>
+                
+                <div class="shopify-features">
+                    <div class="shopify-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="feature-title">Quick Setup</div>
+                        <div class="feature-text">Launch your store in days, not months</div>
+                    </div>
+                    
+                    <div class="shopify-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="feature-title">Mobile-Ready</div>
+                        <div class="feature-text">Perfect shopping experience on all devices</div>
+                    </div>
+                    
+                    <div class="shopify-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-title">Secure</div>
+                        <div class="feature-text">PCI-compliant checkout & secure hosting</div>
+                    </div>
+                    
+                    <div class="shopify-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="feature-title">Payment Options</div>
+                        <div class="feature-text">Accept 100+ payment methods</div>
+                    </div>
+                    
+                    <div class="shopify-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="feature-title">Analytics</div>
+                        <div class="feature-text">Detailed insights & reporting</div>
+                    </div>
+                    
+                    <div class="shopify-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="feature-title">International</div>
+                        <div class="feature-text">Sell globally with multi-currency</div>
+                    </div>
+                    
+                    <!-- Add two new features to balance the grid (3x3 instead of 3x2+2) -->
+                    <div class="shopify-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="feature-title">SEO Friendly</div>
+                        <div class="feature-text">Optimized for search rankings</div>
+                    </div>
+                    
+                    <div class="shopify-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <div class="feature-title">App Ecosystem</div>
+                        <div class="feature-text">6000+ apps to extend functionality</div>
+                    </div>
+                    
+                    <!-- Add a 9th feature for a perfect 3x3 grid -->
+                    <div class="shopify-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div class="feature-title">Easy Updates</div>
+                        <div class="feature-text">Manage your store from anywhere</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- E-commerce Process Section -->
+        <section id="ecommerce-process" class="ecommerce-process section-transition">
+            <div class="container">
+                <h2 class="section-title">My E-Commerce Development Process</h2>
+                <p class="section-subtitle">A proven approach to creating successful online stores</p>
+                
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h4>Discovery & Planning</h4>
+                        <p>Understanding your business goals, products, target audience, and brand to develop a strategic e-commerce plan.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h4>Store Design</h4>
+                        <p>Creating a custom design that showcases your products beautifully and aligns with your brand identity.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h4>Development</h4>
+                        <p>Building your store with clean code, optimizing for performance, and implementing essential e-commerce functionality.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h4>Product Setup</h4>
+                        <p>Configuring your product catalog with optimized images, descriptions, and variants to maximize conversions.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <h4>Testing & Launch</h4>
+                        <p>Comprehensive testing across devices and browsers, followed by a smooth store launch with minimal disruption.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">6</div>
+                        <h4>Post-Launch Support</h4>
+                        <p>Ongoing support, analytics review, and optimization to continuously improve your store's performance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Case Study Section -->
+        <section class="case-study">
+            <div class="container">
+                <h2 class="section-title">E-commerce Success Story</h2>
+                
+                <div class="case-content">
+                    <div class="case-image">
+                        <img src="assets/pokespud-mockup.png" alt="PokeSpud E-commerce Success Story">
+                    </div>
+                    <div class="case-details">
+                        <h3>PokeSpud - Pokémon Trading Cards</h3>
+                        <p>PokeSpud came to me needing an online store that would appeal to Pokémon card collectors while providing a seamless shopping experience. The challenge was to create a site that balanced brand personality with e-commerce functionality.</p>
+                        
+                        <p>I developed a custom Shopify store with:</p>
+                        <ul>
+                            <li>Custom theme development with Pokémon-inspired design elements</li>
+                            <li>Advanced product filtering for their extensive card catalog</li>
+                            <li>Mobile-optimized shopping experience</li>
+                            <li>Integrated inventory management system</li>
+                            <li>Custom pre-order functionality for upcoming releases</li>
+                        </ul>
+                        
+                        <div class="result-highlight">
+                            <div class="result-title">The Results</div>
+                            <p>After launching the new online store, PokeSpud saw significant improvements in key business metrics:</p>
+                            
+                            <div class="result-stats">
+                                <div class="stat">
+                                    <div class="stat-number">+127%</div>
+                                    <div class="stat-label">Conversion Rate</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-number">-32%</</div>
+                                    <div class="stat-label">Cart Abandonment</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-number">+86%</div>
+                                    <div class="stat-label">Mobile Sales</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-sm">View Full Case Study</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- E-commerce Pricing Section -->
+        <section class="ecommerce-pricing section-transition" id="pricing">
+            <div class="container">
+                <h2 class="section-title">E-commerce Pricing</h2>
+                <p class="section-subtitle">Transparent pricing for custom e-commerce solutions</p>
+                
+                <div class="pricing-table">
+                    <div class="pricing-plan">
+                        <div class="pricing-header">
+                            <div class="plan-name">Starter Store</div>
+                            <div class="plan-price">£1,000<span class="price-suffix">+</span></div>
+                            <div class="plan-description">Perfect for new businesses launching their first online store</div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="feature-list">
+                                <li>Custom Shopify store setup</li>
+                                <li>Customized existing theme</li>
+                                <li>Up to 25 products setup</li>
+                                <li>Basic SEO optimization</li>
+                                <li>Payment gateway integration</li>
+                                <li>Mobile responsive design</li>
+                                <li>Basic training session</li>
+                            </ul>
+                            <a href="#contact" class="btn btn-primary full-width">Get Started</a>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-plan featured">
+                        <div class="featured-badge">Popular</div>
+                        <div class="pricing-header">
+                            <div class="plan-name">Growth Store</div>
+                            <div class="plan-price">£2,500<span class="price-suffix">+</span></div>
+                            <div class="plan-description">For established businesses ready to scale their e-commerce operations</div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="feature-list">
+                                <li>Custom theme development</li>
+                                <li>Up to 100 products setup</li>
+                                <li>Advanced product filtering</li>
+                                <li>Enhanced product photography</li>
+                                <li>Comprehensive SEO strategy</li>
+                                <li>Email marketing integration</li>
+                                <li>Advanced analytics setup</li>
+                                <li>3 months post-launch support</li>
+                            </ul>
+                            <a href="#contact" class="btn btn-primary full-width">Get Started</a>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-plan">
+                        <div class="pricing-header">
+                            <div class="plan-name">Enterprise Store</div>
+                            <div class="plan-price">£5,000<span class="price-suffix">+</span></div>
+                            <div class="plan-description">Comprehensive solution for large inventories and complex requirements</div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="feature-list">
+                                <li>Premium custom theme development</li>
+                                <li>Unlimited product setup</li>
+                                <li>Custom app development</li>
+                                <li>Inventory management system</li>
+                                <li>Multi-currency support</li>
+                                <li>International shipping setup</li>
+                                <li>CRM & ERP integrations</li>
+                                <li>6 months post-launch support</li>
+                            </ul>
+                            <a href="#contact" class="btn btn-primary full-width">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="custom-solution text-center" style="margin-top: 40px;">
+                    <h3>Need a Custom Solution?</h3>
+                    <p>Every business has unique requirements. Contact me for a personalized quote tailored to your specific e-commerce needs.</p>
+                    <a href="#contact" class="btn btn-secondary" style="margin-top: 20px;">Request Custom Quote</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq section-transition">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How long does it take to build an e-commerce store?</h3>
+                            <button class="faq-toggle" aria-label="Toggle answer">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Typical timeframes for e-commerce projects:</p>
+                            <ul>
+                                <li><strong>Starter Store:</strong> 2-3 weeks</li>
+                                <li><strong>Growth Store:</strong> 4-6 weeks</li>
+                                <li><strong>Enterprise Store:</strong> 8-12 weeks</li>
+                            </ul>
+                            <p>The exact timeline depends on the complexity of your store, the number of products, custom functionality requirements, and content readiness.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do I own my Shopify store?</h3>
+                            <button class="faq-toggle" aria-label="Toggle answer">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, you own your store and all its content. Shopify operates on a subscription model where you pay a monthly fee to use their platform, but the store itself, including all products, content, and customer data, belongs to you.</p>
+                            <p>Any custom code or themes I develop for your store will also be your property, and you'll have full access to all files and assets created during the project.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What ongoing costs should I expect with a Shopify store?</h3>
+                            <button class="faq-toggle" aria-label="Toggle answer">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Main ongoing costs for a Shopify store include:</p>
+                            <ul>
+                                <li><strong>Shopify subscription:</strong> £19 - £259 per month depending on the plan</li>
+                                <li><strong>Transaction fees:</strong> 2% - 0.5% per transaction if not using Shopify Payments</li>
+                                <li><strong>Apps:</strong> £0 - £100+ per month depending on which apps you choose</li>
+                                <li><strong>Domain name:</strong> Around £10 - £20 per year</li>
+                            </ul>
+                            <p>I'll help you choose the most cost-effective options for your specific business needs.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I update my store myself after it's built?</h3>
+                            <button class="faq-toggle" aria-label="Toggle answer">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! One of Shopify's biggest advantages is its user-friendly admin interface. After your store is built, you'll be able to:</p>
+                            <ul>
+                                <li>Add, edit, or remove products</li>
+                                <li>Update content and images</li>
+                                <li>Process orders and manage inventory</li>
+                                <li>Create discount codes and sales</li>
+                                <li>View analytics and reports</li>
+                            </ul>
+                            <p>I also provide a comprehensive training session to ensure you're comfortable managing your store, plus documentation for future reference.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="animated-gradient-bg"></div>
+            <div class="container">
+                <h2 class="section-title">Start Your E-commerce Project</h2>
+            
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <p>Ready to launch or upgrade your online store? Contact me for a free consultation and let's discuss how I can help your business grow with a custom e-commerce solution.</p>
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:sam@futurelab.solutions">sam@futurelab.solutions</a>
+                            </div>
+                            <div class="contact-method">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+447806946463">+44 7806 946463</a>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form" action="https://formspree.io/f/xldjpewg" method="POST">
+                        <input type="hidden" name="_subject" value="New E-commerce Inquiry from FutureLab">
+                        <input type="hidden" name="_next" value="https://futurelabs.solutions/thank-you">
+                        
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company (optional)</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                        <div class="form-group">
+                            <label for="store-type">Store Type</label>
+                            <select id="store-type" name="store-type">
+                                <option value="" disabled selected>Select your store type</option>
+                                <option value="new-store">New Store Launch</option>
+                                <option value="redesign">Store Redesign</option>
+                                <option value="migration">Platform Migration</option>
+                                <option value="optimization">Conversion Optimization</option>
+                                <option value="other">Other (specify below)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Budget Range (optional)</label>
+                            <select id="budget" name="budget">
+                                <option value="" selected>Please select...</option>
+                                <option value="under-1000">Under £1,000</option>
+                                <option value="1000-2500">£1,000 - £2,500</option>
+                                <option value="2500-5000">£2,500 - £5,000</option>
+                                <option value="5000+">£5,000+</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="message">Project Details</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary full-width">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">FutureLab</div>
+                <p class="footer-tagline">Building the digital solutions of tomorrow</p>
+                <div class="footer-social">
+                    <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023-2025 FutureLab. All rights reserved. | <a href="https://futurelab.solutions">futurelab.solutions</a> | <a href="privacy-policy.html">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="mobile-responsive.js"></script>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                
+                question.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('active');
+                    
+                    // Close all FAQ items
+                    faqItems.forEach(otherItem => {
+                        otherItem.classList.remove('active');
+                    });
+                    
+                    // If this item wasn't open before, open it
+                    if (!isOpen) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

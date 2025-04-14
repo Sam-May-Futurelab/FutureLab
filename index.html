@@ -134,70 +134,63 @@
         });
     </script>
     
-    <!-- Mobile menu styling overhaul -->
+    <!-- Simplified mobile menu styling -->
     <style>
-        /* Make hamburger more clickable on mobile */
+        /* Basic hamburger styling */
         .hamburger {
-            cursor: pointer;
-            z-index: 9999;
-            position: relative;
             display: none;
+            cursor: pointer;
             width: 30px;
             height: 24px;
+            position: relative;
+            z-index: 100;
         }
         
-        /* Make hamburger spans more visible */
         .hamburger span {
             display: block;
             position: absolute;
             height: 3px;
             width: 100%;
             background: var(--dark-color);
-            border-radius: 3px;
-            opacity: 1;
-            transform: rotate(0deg);
+            border-radius: 2px;
             transition: .25s ease-in-out;
-            pointer-events: none; /* Ensure spans don't interfere with clicks */
         }
         
         .dark-theme .hamburger span {
             background: #fff;
         }
         
-        .hamburger span:nth-child(1) {
-            top: 0px;
-        }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 10px; }
+        .hamburger span:nth-child(3) { top: 20px; }
         
-        .hamburger span:nth-child(2) {
+        /* Active state animation */
+        .hamburger.active span:nth-child(1) {
             top: 10px;
+            transform: rotate(135deg);
         }
         
-        .hamburger span:nth-child(3) {
-            top: 20px;
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px);
         }
         
-        /* Mobile overlay styling */
-        .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 998;
-            display: none;
+        .hamburger.active span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
         }
         
-        .mobile-menu-overlay.active {
-            display: block;
+        /* Basic navigation styling */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
         
-        /* Display hamburger on mobile only */
+        /* Simple mobile menu */
         @media (max-width: 768px) {
             .hamburger {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
+                display: block;
             }
             
             .nav-links {
@@ -205,18 +198,13 @@
                 top: 70px;
                 left: 0;
                 right: 0;
-                width: 100%; /* Full width */
-                margin: 0 auto; /* Center the menu */
                 background: white;
                 flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                padding: 20px 0; /* Remove horizontal padding */
+                padding: 20px;
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
                 transform: translateY(-150%);
                 transition: transform 0.3s ease;
-                z-index: 999;
-                text-align: center;
+                z-index: 99;
             }
             
             .dark-theme .nav-links {
@@ -229,57 +217,136 @@
             
             .nav-links li {
                 margin: 10px 0;
-                width: 100%; /* Full width for menu items */
-            }
-            
-            .nav-links li a {
-                display: block; /* Block instead of inline-block */
-                padding: 10px 0; /* Remove horizontal padding */
-                font-size: 0.95rem; /* Reduce font size */
-                width: 100%; /* Full width */
+                width: 100%;
                 text-align: center;
             }
             
-            /* Style contact button specifically in mobile menu */
-            .nav-links li a.btn {
-                margin: 10px auto !important;
-                padding: 10px 20px !important;
-                width: 160px; /* Fixed width */
-                max-width: 80%; /* Ensure it's not too wide on small devices */
-                display: block !important;
+            .nav-links li a {
+                display: block;
+                padding: 10px 0;
+                width: 100%;
             }
             
-            /* Active hamburger animation */
-            .hamburger.active span:nth-child(1) {
-                top: 10px;
-                transform: rotate(135deg);
-            }
+            /* No menu hiding - all menu items are visible */
             
-            .hamburger.active span:nth-child(2) {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            
-            .hamburger.active span:nth-child(3) {
-                top: 10px;
-                transform: rotate(-135deg);
+            /* Simple theme toggle position */
+            .theme-toggle {
+                position: absolute;
+                right: 60px;
+                top: 50%;
+                transform: translateY(-50%);
             }
             
             /* Prevent scrolling when menu is open */
             body.menu-open {
                 overflow: hidden;
             }
-            
-            /* Ensure the theme toggle is properly positioned */
-            .theme-toggle {
-                position: absolute;
-                right: 70px; /* Position to the left of hamburger */
-                top: 50%;
-                transform: translateY(-50%);
-                z-index: 50;
-            }
         }
     </style>
+    
+    <!-- CRITICAL FIX: E-Commerce menu link visibility -->
+    <style>
+        /* Force E-Commerce link to be visible with maximum priority */
+        .nav-links li a[href="ecommerce.html"],
+        nav ul li:nth-child(3) a,
+        nav .nav-links li:nth-child(3) {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: static !important;
+            height: auto !important;
+            width: auto !important;
+            overflow: visible !important;
+            clip: auto !important;
+            clip-path: none !important;
+            margin: 0 !important;
+            transform: none !important;
+            pointer-events: auto !important;
+            color: var(--dark-color) !important;
+            text-decoration: none !important;
+        }
+        
+        /* Dark theme specific fix */
+        .dark-theme .nav-links li a[href="ecommerce.html"] {
+            color: #fff !important;
+        }
+        
+        /* Ensure E-Commerce parent li is displayed */
+        .nav-links li:nth-child(3) {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* DEBUG: Temporarily highlight the menu item to confirm visibility */
+        .nav-links li:nth-child(3) a {
+            position: relative;
+        }
+    </style>
+    
+    <!-- JavaScript to ensure E-Commerce link is visible -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to ensure E-Commerce link is visible
+            function fixEcommerceLink() {
+                // Get all navigation items
+                var navLinks = document.querySelectorAll('.nav-links li a');
+                var ecommerceFound = false;
+                
+                // Check if E-Commerce link exists
+                for (var i = 0; i < navLinks.length; i++) {
+                    if (navLinks[i].href.includes('ecommerce.html') || 
+                        navLinks[i].textContent.includes('E-Commerce') || 
+                        navLinks[i].textContent.includes('E-commerce') || 
+                        navLinks[i].textContent.includes('ecommerce')) {
+                        
+                        // Found E-Commerce link, make sure it's visible
+                        navLinks[i].style.display = 'block';
+                        navLinks[i].style.visibility = 'visible';
+                        navLinks[i].style.opacity = '1';
+                        navLinks[i].parentElement.style.display = 'list-item';
+                        navLinks[i].parentElement.style.visibility = 'visible';
+                        navLinks[i].parentElement.style.opacity = '1';
+                        
+                        console.log('E-Commerce link found and fixed:', navLinks[i]);
+                        ecommerceFound = true;
+                        break;
+                    }
+                }
+                
+                // If E-Commerce link wasn't found, try to restore it
+                if (!ecommerceFound) {
+                    // Get the ul element
+                    var navUl = document.querySelector('.nav-links');
+                    if (navUl) {
+                        // Create new E-Commerce link
+                        var liElement = document.createElement('li');
+                        var aElement = document.createElement('a');
+                        aElement.href = 'ecommerce.html';
+                        aElement.textContent = 'E-Commerce';
+                        liElement.appendChild(aElement);
+                        
+                        // Insert it in the right position (after Web Design)
+                        var webDesignLi = document.querySelector('a[href="web-design.html"]').parentElement;
+                        if (webDesignLi && webDesignLi.nextElementSibling) {
+                            navUl.insertBefore(liElement, webDesignLi.nextElementSibling);
+                        } else {
+                            navUl.appendChild(liElement);
+                        }
+                        
+                        console.log('E-Commerce link not found, created new one');
+                    }
+                }
+            }
+            
+            // Run fix on page load
+            fixEcommerceLink();
+            
+            // Also run it after a slight delay to catch any JS-based manipulations
+            setTimeout(fixEcommerceLink, 500);
+            setTimeout(fixEcommerceLink, 1500);
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -287,13 +354,13 @@
             <div class="logo">Futurelab</div>
             <ul class="nav-links">
                 <li><a href="#">Home</a></li>
-                <li><a href="web-design.html">Web Design</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#portfolio">Work</a></li>
+                <li><a href="ecommerce.html">E-Commerce</a></li>
+                <li><a href="web-design.html">Web Design</a></li>
                 <li><a href="showcase" class="showcase-link">Showcase</a></li>
                 <li><a href="#contact" class="btn btn-outline">Contact</a></li>
             </ul>
-            <!-- We'll replace this with our new container via JS -->
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
                 <i class="fas fa-lightbulb"></i>
                 <div class="toggle-glow"></div>
@@ -966,7 +1033,15 @@
                     <a href="https://instagram.com/futurelab.solutions" target="_blank"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom"></div>
+            <div class="footer-bottom">
+                <p>
+                    &copy; 2023-2025 FutureLab. All rights reserved. | 
+                    <a href="https://futurelab.solutions" class="animated-underline">futurelab.solutions</a> | 
+                    <a href="privacy-policy.html" class="animated-underline">Privacy Policy</a>
+                </p>
+            </div>
+        </div>
+    </footer>
     <!-- Fix script loading order - KEEP ALL ORIGINAL SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script src="mobile-redirect.js"></script>
