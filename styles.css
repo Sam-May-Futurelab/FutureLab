@@ -604,81 +604,11 @@ nav {
     color: var(--primary-color);
 }
 
-/* Fix hamburger menu toggle styling */
+/* Remove hamburger menu toggle styling */
 .hamburger, 
 .menu-toggle, 
 .mobile-menu-button {
-  display: block;
-  width: 30px;
-  height: 22px;
-  position: relative;
-  cursor: pointer;
-  z-index: 1000;
-  background: transparent; /* Remove any background */
-  border: none;
-  padding: 0;
-}
-
-/* Create hamburger icon with spans */
-.hamburger span,
-.menu-toggle span,
-.mobile-menu-button span {
-  display: block;
-  position: absolute;
-  height: 3px;
-  width: 100%;
-  background: #0f172a; /* Dark color for light theme */
-  border-radius: 3px;
-  opacity: 1;
-  left: 0;
-  transform: rotate(0deg);
-  transition: .25s ease-in-out;
-}
-
-.dark-theme .hamburger span,
-.dark-theme .menu-toggle span,
-.dark-theme .mobile-menu-button span {
-  background: #f8fafc; /* Light color for dark theme */
-}
-
-/* Position the lines */
-.hamburger span:nth-child(1),
-.menu-toggle span:nth-child(1),
-.mobile-menu-button span:nth-child(1) {
-  top: 0px;
-}
-
-.hamburger span:nth-child(2),
-.menu-toggle span:nth-child(2),
-.mobile-menu-button span:nth-child(2) {
-  top: 9px;
-}
-
-.hamburger span:nth-child(3),
-.menu-toggle span:nth-child(3),
-.mobile-menu-button span:nth-child(3) {
-  top: 18px;
-}
-
-/* Transform spans when active */
-.hamburger.active span:nth-child(1),
-.menu-toggle.active span:nth-child(1),
-.mobile-menu-button.active span:nth-child(1) {
-  top: 9px;
-  transform: rotate(45deg);
-}
-
-.hamburger.active span:nth-child(2),
-.menu-toggle.active span:nth-child(2),
-.mobile-menu-button.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.active span:nth-child(3),
-.menu-toggle.active span:nth-child(3),
-.mobile-menu-button.active span:nth-child(3) {
-  top: 9px;
-  transform: rotate(-45deg);
+  display: none !important; /* Ensure it's always hidden */
 }
 
 /* Fix mobile menu dropdown styling */
@@ -743,7 +673,7 @@ nav {
 
 /* IMPROVED MOBILE NAVIGATION MENU */
 @media (max-width: 768px) {
-  /* Enhanced Mobile Menu Layout */
+  /* Enhanced Mobile Menu Layout - keeping basic menu layout but removing toggle functionality */
   .nav-links {
     position: fixed;
     top: 0;
@@ -759,8 +689,7 @@ nav {
     justify-content: center;
     padding: 60px 30px !important;
     z-index: 100;
-    transform: translateX(100%);
-    transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    /* Remove transform that was hiding the menu */
     overflow-y: auto;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
   }
@@ -768,19 +697,12 @@ nav {
   /* Improved menu alignment and spacing */
   .nav-links li {
     margin: 15px 0;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    transition-delay: 0.1s;
+    /* Remove opacity and transform animations */
     width: 100%;
     text-align: center;
   }
   
-  /* Handle sequential fade-in of menu items */
-  .nav-links li:nth-child(2) { transition-delay: 0.15s; }
-  .nav-links li:nth-child(3) { transition-delay: 0.2s; }
-  .nav-links li:nth-child(4) { transition-delay: 0.25s; }
-  .nav-links li:nth-child(5) { transition-delay: 0.3s; }
+  /* Remove menu item animation delays */
   
   /* Large touch-friendly menu items */
   .nav-links a {
@@ -802,17 +724,7 @@ nav {
     display: block;
   }
   
-  /* Active menu state - enter from the right instead of clipping */
-  .nav-links.active {
-    transform: translateX(0);
-    display: flex;
-  }
-  
-  /* Show menu items with animation when active */
-  .nav-links.active li {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* Remove active menu state animations */
   
   /* Dark mode support */
   .dark-theme .nav-links {
@@ -824,76 +736,22 @@ nav {
     color: var(--light-color, white);
   }
   
-  /* Better hamburger menu positioning */
-  .hamburger {
-    z-index: 200;
-    position: relative;
-  }
+  /* Remove hamburger positioning */
 }
 
-/* Improved hamburger-to-X animation (preserving what the client likes) */
-.hamburger {
-  cursor: pointer;
-  width: 30px;
-  height: 25px;
-  position: relative;
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .hamburger span {
-    display: block;
-    width: 100%;
-    height: 3px;
-    background: var(--dark-color, #0f172a);
-    border-radius: 3px;
-    transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-  }
-  
-  /* Special animation for each span */
-  .hamburger span:nth-of-type(1) {
-    transform-origin: top left;
-  }
-  
-  .hamburger span:nth-of-type(2) {
-    transform-origin: center;
-  }
-  
-  .hamburger span:nth-of-type(3) {
-    transform-origin: bottom left;
-  }
-  
-  /* X formation when active */
-  .hamburger.active span:nth-of-type(1) {
-    transform: rotate(45deg) translate(0px, -2px);
-    width: 120%;
-  }
-  
-  .hamburger.active span:nth-of-type(2) {
-    opacity: 0;
-    transform: scale(0);
-  }
-  
-  .hamburger.active span:nth-of-type(3) {
-    transform: rotate(-45deg) translate(0px, 2px);
-    width: 120%;
-  }
-  
-  /* Dark mode support */
-  .dark-theme .hamburger span {
-    background: var(--light-color, white);
-  }
-}
-
-/* Prevent scrolling when menu is open */
-body.menu-open {
-  overflow: hidden;
+/* EMERGENCY FIX FOR MOBILE MENU SCROLLABILITY */
+.nav-links.active,
+.mobile-nav.active, 
+.main-nav.active {
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  display: block !important;
+  -webkit-overflow-scrolling: touch !important;
+  position: fixed !important;
+  top: 70px !important; /* Adjust based on your header height */
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
 }
 
 /* IMPROVED MOBILE MENU STYLES - MAKE LARGER & MORE ACCESSIBLE */
@@ -2529,8 +2387,8 @@ footer:before {
 
 /* HAMBURGER POSITION FIX */
 @media (max-width: 768px) {
-  /* Position hamburger menu to the right */
-  .hamburger {
+  /* Reposition theme toggle now that hamburger is gone */
+  .theme-toggle {
     position: absolute;
     right: 15px;
     top: 50%;

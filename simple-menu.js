@@ -1,133 +1,13 @@
 /**
- * Simple Mobile Menu
- * Handles mobile navigation toggle and ensures proper display of the contact button
+ * Simple Menu JS
+ * 
+ * This file has been cleared of hamburger menu functionality.
+ * We will re-implement a proper mobile menu later.
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Get DOM elements
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.querySelector('.nav-links');
-  
-  if (!hamburger || !navLinks) {
-    console.warn('Mobile menu elements not found - menu initialization skipped.');
-    return;
-  }
-  
-  // Fix contact button styling to ensure it's centered and properly displayed
-  const contactBtn = navLinks.querySelector('.btn.btn-outline');
-  if (contactBtn) {
-    contactBtn.style.marginBottom = '20px';
-    contactBtn.style.display = 'block';
-    contactBtn.style.padding = '12px 20px';
-    contactBtn.style.textAlign = 'center';
-    contactBtn.style.width = '70%';
-    contactBtn.style.marginLeft = 'auto';
-    contactBtn.style.marginRight = 'auto';
-  }
-  
-  // Toggle mobile menu with proper event handling
-  hamburger.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Toggle active classes
-    hamburger.classList.toggle('active');
-    navLinks.classList.toggle('active');
-    
-    // Add body class to prevent background scrolling when menu is open
-    if (navLinks.classList.contains('active')) {
-      document.body.classList.add('menu-open');
-    } else {
-      document.body.classList.remove('menu-open');
-    }
-  });
-  
-  // Close menu when clicking a link
-  const links = navLinks.querySelectorAll('a');
-  links.forEach(link => {
-    link.addEventListener('click', function() {
-      hamburger.classList.remove('active');
-      navLinks.classList.remove('active');
-      document.body.classList.remove('menu-open');
-    });
-  });
-  
-  // Close menu when clicking outside
-  document.addEventListener('click', function(e) {
-    if (navLinks.classList.contains('active') && 
-        !navLinks.contains(e.target) && 
-        !hamburger.contains(e.target)) {
-      hamburger.classList.remove('active');
-      navLinks.classList.remove('active');
-      document.body.classList.remove('menu-open');
-    }
-  });
-  
-  // Close menu with escape key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-      hamburger.classList.remove('active');
-      navLinks.classList.remove('active');
-      document.body.classList.remove('menu-open');
-    }
-  });
-  
-  // Add CSS to fix mobile menu and contact button
-  const style = document.createElement('style');
-  style.textContent = `
-    @media (max-width: 768px) {
-      .nav-links {
-        padding: 60px 30px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        height: 100vh !important;
-        width: 100% !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        transform: translateX(100%) !important;
-        transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
-      }
-      
-      .nav-links.active {
-        transform: translateX(0) !important;
-      }
-      
-      .nav-links li {
-        width: 100% !important;
-        text-align: center !important;
-        margin: 15px 0 !important;
-      }
-      
-      .nav-links a {
-        font-size: 1.4rem !important;
-        padding: 15px !important;
-        display: block !important;
-        text-align: center !important;
-        width: 100% !important;
-      }
-      
-      .nav-links .btn.btn-outline {
-        margin: 20px auto !important;
-        width: 70% !important;
-        padding: 16px !important;
-        text-align: center !important;
-        display: block !important;
-      }
-      
-      .hamburger {
-        z-index: 200 !important;
-      }
-      
-      body.menu-open {
-        overflow: hidden !important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
+  // Future mobile menu functionality will be added here
+  console.log('Mobile menu functionality removed as requested');
 });
 
 /**
