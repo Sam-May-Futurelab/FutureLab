@@ -272,6 +272,55 @@
             /* Remove hamburger menu positioning styles */
         }
     </style>
+    
+    <!-- CRITICAL FIX: Theme toggle and contact button overlap -->
+    <style>
+        /* Force proper positioning of theme toggle */
+        .theme-toggle, #theme-toggle {
+            position: absolute !important;
+            right: 20px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            z-index: 1000 !important;
+            margin: 0 !important;
+        }
+        
+        /* Add space to nav links container to prevent overlap */
+        @media (min-width: 769px) {
+            .nav-links {
+                padding-right: 70px !important; /* Make space for theme toggle */
+                box-sizing: border-box !important;
+            }
+            
+            /* Ensure the contact button doesn't get too close to toggle */
+            .nav-links li:last-child {
+                padding-right: 5px !important;
+                margin-right: 0 !important;
+            }
+            
+            /* Fix container positioning */
+            header nav.container {
+                position: relative !important;
+                padding-right: 60px !important; /* Space for theme toggle */
+            }
+            
+            /* Fix the contact button specifically */
+            .nav-links li:last-child a.btn {
+                margin-right: 15px !important;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) and (min-width: 769px) {
+            .nav-links li {
+                margin: 0 5px !important; /* Reduce horizontal spacing on smaller screens */
+            }
+            
+            .nav-links li a {
+                padding: 8px 10px !important; /* Smaller padding on links */
+            }
+        }
+    </style>
 </head>
 <body>
     <header>

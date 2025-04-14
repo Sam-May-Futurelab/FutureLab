@@ -651,6 +651,55 @@
 </head>
 <body>
     <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Futurelab</a>
+            <!-- Add hamburger menu button if missing -->
+            <button class="hamburger mobile-menu-button" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#portfolio">Work</a></li>
+                <li><a href="ecommerce.html" class="active">E-Commerce</a></li>
+                <li><a href="web-design.html">Web Design</a></li>
+                <li><a href="showcase" class="showcase-link">Showcase</a></li>
+                <li><a href="index.html#contact" class="btn btn-outline">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+                <i class="fas fa-lightbulb"></i>
+                <div class="toggle-glow"></div>
+            </button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="mobile-menu-overlay"></div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="animated-gradient-bg"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="animate-in gradient-text">Professional E-Commerce Solutions That Convert</h1>
+                    <p class="animate-in stagger-1">Beautiful <span class="highlight-text">online stores</span> that showcase your products, <span class="highlight-text">strengthen your brand</span>, and <span class="highlight-text">turn visitors into customers</span> — built by a certified Shopify Partner.</p>
+                    <div class="hero-buttons animate-in stagger-2">
+                        <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+                        <a href="#ecommerce-process" class="btn btn-secondary">How It Works</a>
+                    </div>
+                </div>
+                <div class="hero-image animate-in stagger-2">
+                    <img src="assets/ecommerce-hero.png" alt="E-Commerce Store Illustration" class="ecommerce-hero-image">
+                </div>
+            </div>
+        </section>
+
         <!-- E-commerce Services Section -->
         <section id="services" class="services section-transition">
             <div class="container">
