@@ -1531,5 +1531,24 @@
             });
         });
     </script>
+    
+    <!-- Custom spacing fix for hero image on mobile -->
+    <style>
+        /* Reduce the gap above the hero image on mobile */
+        @media (max-width: 768px) {
+            .hero-buttons {
+                margin-bottom: 10px !important; /* Reduce bottom margin */
+            }
+            
+            .hero-image {
+                margin-top: -30px; /* Pull image up more aggressively */
+            }
+            
+            /* Make hero content more compact */
+            .hero .container {
+                gap: 20px; /* Reduce gap between content and image */
+            }
+        }
+    </style>
 </body>
 </html>

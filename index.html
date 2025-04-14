@@ -1522,5 +1522,16 @@
             });
         });
     </script>
+    
+    <!-- Add specific styling for theme toggle position on desktop only -->
+    <style>
+        /* Index page specific - move theme toggle down on desktop only */
+        @media (min-width: 769px) {
+            body .theme-toggle,
+            body #theme-toggle {
+                top: 45px !important; /* Move toggle down by increasing top position */
+            }
+        }
+    </style>
 </body>
 </html>
