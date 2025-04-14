@@ -1699,7 +1699,7 @@ nav {
 .price span {
     font-size: 1rem;
     font-weight: 400;
-    color: var(--gray-color);
+    color: var (--gray-color);
 }
 
 .price-tag {
@@ -4452,81 +4452,6 @@ header nav #theme-toggle {
   transform: none !important;
 }
 
-/* Mobile adjustments for theme toggle */
-@media (max-width: 768px) {
-  /* Center the theme toggle on mobile */
-  .theme-toggle,
-  #theme-toggle {
-    position: fixed !important;
-    top: 24px !important;
-    right: auto !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-  }
-  
-  /* Remove the previous right-side positioning on mobile */
-  header nav .theme-toggle,
-  header nav #theme-toggle {
-    right: auto !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-  }
-}
-
-/* ...existing code... */
-
-/* CRITICAL FIX: Better menu spacing to prevent Contact-Lightbulb overlap */
-header nav .container {
-  padding-right: 80px !important; /* Increased space on right for theme toggle */
-  position: relative; /* Ensure proper positioning context */
-}
-
-/* Make nav links container narrower to accommodate the toggle */
-.nav-links {
-  max-width: 580px !important; /* Slightly reduced width */
-  margin-right: 60px !important; /* Increased margin from toggle */
-  justify-content: flex-end !important; /* Push items to the end */
-}
-
-/* Reduce gap between nav items for better spacing */
-.nav-links li {
-  margin-left: 0;
-  margin-right: 0;
-  padding: 0;
-}
-
-/* Smaller but still readable menu items */
-.nav-links a {
-  font-size: 0.95rem;
-  padding: 8px 12px !important;
-}
-
-/* Ensure the Contact button has proper spacing from the toggle */
-.nav-links li:last-child {
-  margin-right: 60px !important; /* Much more space before the toggle */
-}
-
-/* Properly position the theme toggle to the right */
-.theme-toggle,
-#theme-toggle {
-  position: absolute !important;
-  top: 50% !important;
-  right: 20px !important;
-  transform: translateY(-50%) !important;
-  z-index: 1000;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Ensure consistent toggle position across all pages */
-header nav .theme-toggle,
-header nav #theme-toggle {
-  position: absolute !important;
-  right: 20px !important; 
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-}
-
 /* Mobile-specific adjustments remain the same */
 @media (max-width: 768px) {
   /* ...existing mobile code... */
@@ -4535,56 +4460,386 @@ header nav #theme-toggle {
 /* Showcase page specific styles remain unchanged */
 /* ...existing code... */
 
-/* FIX: Navigation link hover underline animation */
-.nav-links a {
-  position: relative;
-  display: inline-block; /* Changed from inline-flex to better control width */
-  color: var(--dark-color);
-  font-weight: 500;
-  padding: 8px 12px !important;
-  text-align: center;
+/* ...existing code... */
+
+/* CRITICAL FIX: Mobile Menu Toggle Position & Centering */
+@media (max-width: 768px) {
+  /* Move hamburger menu toggle away from the right edge */
+  .hamburger, 
+  .menu-toggle, 
+  .mobile-menu-button {
+    position: absolute !important;
+    top: 50% !important;
+    right: 30px !important; /* Increased from 20px to move away from edge */
+    transform: translateY(-50%) !important;
+    z-index: 1010 !important;
+    cursor: pointer;
+    background: none !important;
+    border: none !important;
+    padding: 8px !important;
+    margin-right: 0 !important;
+  }
+  
+  /* Add padding around hamburger for larger tap target */
+  .hamburger span,
+  .menu-toggle span,
+  .mobile-menu-button span {
+    display: block !important;
+    width: 24px !important;
+    height: 2px !important;
+    margin: 5px 0 !important;
+    background-color: var(--dark-color) !important;
+  }
+  
+  /* IMPORTANT: Ensure mobile menu content is centered on ALL pages */
+  .nav-links.active,
+  .mobile-nav.active,
+  .main-nav.active {
+    /* Force center alignment */
+    text-align: center !important;
+    align-items: center !important;
+    padding: 20px !important;
+  }
+  
+  /* Force center alignment for all menu items */
+  .nav-links.active a,
+  .mobile-nav.active a,
+  .main-nav.active a,
+  .nav-links.active li,
+  .mobile-nav.active li,
+  .main-nav.active li {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Ensure uniform spacing around menu items */
+  .nav-links.active li,
+  .mobile-nav.active li,
+  .main-nav.active li {
+    margin: 8px 0 !important;
+  }
+  
+  /* Ensure proper header container padding */
+  header nav.container {
+    padding-right: 50px !important; /* Increase padding to match hamburger position */
+  }
 }
 
-.nav-links a:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%; /* Position from center */
-  width: 0; /* Start with no width */
-  height: 2px;
-  background: var(--gradient-1);
-  transition: var(--transition);
-  transform: translateX(-50%); /* Center the underline */
+/* Ensure consistent styling across all pages - higher specificity */
+@media (max-width: 768px) {
+  /* Target all possible page types */
+  body .nav-links.active,
+  body .mobile-nav.active,
+  body .main-nav.active,
+  .showcase-page .nav-links.active,
+  .page-template .nav-links.active {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: center !important;
+  }
+  
+  /* Force centered button alignment in mobile menu */
+  body .nav-links.active .btn,
+  body .mobile-nav.active .btn,
+  body .main-nav.active .btn {
+    margin: 15px auto !important;
+    display: inline-block !important;
+    text-align: center !important;
+  }
 }
 
-.nav-links a:hover:after {
-  width: 80%; /* Only underline most of the text width, not full container */
+/* ...existing code... */
+
+/* CRITICAL FIX: Mobile Menu Toggle Positioning */
+@media (max-width: 768px) {
+  /* Show hamburger menu on mobile and position it properly */
+  .hamburger, 
+  .menu-toggle, 
+  .mobile-menu-button {
+    display: block !important;
+    position: absolute !important;
+    top: 50% !important;
+    right: 20px !important;
+    transform: translateY(-50%) !important;
+    z-index: 1010 !important;
+    cursor: pointer;
+    background: none !important;
+    border: none !important;
+    padding: 8px !important;
+  }
+  
+  /* Hamburger icon styling */
+  .hamburger span,
+  .menu-toggle span,
+  .mobile-menu-button span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin: 5px 0;
+    background-color: var(--dark-color);
+    transition: all 0.3s ease;
+  }
+  
+  .dark-theme .hamburger span,
+  .dark-theme .menu-toggle span,
+  .dark-theme .mobile-menu-button span {
+    background-color: var(--light-color);
+  }
+  
+  /* Move theme toggle to left side to avoid conflict with hamburger */
+  .theme-toggle,
+  #theme-toggle {
+    position: absolute !important;
+    top: 50% !important;
+    left: 20px !important;
+    right: auto !important;
+    transform: translateY(-50%) !important;
+    margin-left: 0 !important;
+  }
+  
+  /* Fix container positioning for proper layout */
+  header nav.container {
+    position: relative;
+    padding-right: 20px !important;
+    padding-left: 60px !important; /* Make room for theme toggle on left */
+  }
+  
+  /* Override any previous mobile theme toggle positioning */
+  header nav .theme-toggle,
+  header nav #theme-toggle {
+    position: absolute !important;
+    top: 50% !important;
+    left: 20px !important;
+    right: auto !important;
+    transform: translateY(-50%) !important;
+  }
 }
 
-/* Specific fix for Work and Ecommerce links */
-.nav-links a[href*="web-design.html"],
-.nav-links a[href*="ecommerce.html"] {
-  display: inline-block; /* Force inline-block for these specific links */
-  white-space: nowrap; /* Prevent text wrapping */
-  width: auto; /* Let content determine width */
+/* Override any conflicting hamburger hide rules */
+@media (max-width: 768px) {
+  /* Force correct display of hamburger menu button */
+  .hamburger, 
+  .menu-toggle, 
+  .mobile-menu-button {
+    display: block !important;
+  }
 }
 
-.nav-links a[href*="web-design.html"]:after,
-.nav-links a[href*="ecommerce.html"]:after {
-  width: 0; /* Start with zero width */
-  left: 50%; /* Center the underline */
-  transform: translateX(-50%); /* Ensure centering */
-  max-width: 80%; /* Don't let it exceed text width */
+/* ...existing code... */
+
+/* ...existing code... */
+
+/* CRITICAL FIX: Mobile menu & theme toggle for ecommerce page */
+@media (max-width: 768px) {
+  /* UNIVERSAL hamburger menu for ALL pages including ecommerce */
+  .hamburger, 
+  .menu-toggle, 
+  .mobile-menu-button {
+    display: block !important;
+    position: absolute !important;
+    top: 50% !important;
+    right: 20px !important;
+    transform: translateY(-50%) !important;
+    z-index: 1010 !important;
+    cursor: pointer;
+    background: none !important;
+    border: none !important;
+    padding: 8px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  
+  /* Ensure hamburger icon is visible on ALL pages */
+  .hamburger span,
+  .menu-toggle span,
+  .mobile-menu-button span {
+    display: block !important;
+    width: 24px !important;
+    height: 2px !important;
+    margin: 5px 0 !important;
+    background-color: var(--dark-color) !important;
+    transition: all 0.3s ease !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  /* Dark theme support for hamburger */
+  .dark-theme .hamburger span,
+  .dark-theme .menu-toggle span,
+  .dark-theme .mobile-menu-button span {
+    background-color: var(--light-color) !important;
+  }
+  
+  /* Prevent theme toggle from overlapping logo by moving it left */
+  .theme-toggle, 
+  #theme-toggle {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    left: 20px !important; /* Consistently position on left side */
+    right: auto !important; /* Reset right positioning */
+    margin: 0 !important;
+    z-index: 999 !important; /* Below hamburger but above other content */
+  }
+  
+  /* Fix logo positioning to prevent overlap with theme toggle */
+  .logo {
+    position: absolute !important;
+    left: 50% !important; 
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+  
+  /* Ensure menu container has proper positioning */
+  header nav.container {
+    position: relative !important;
+    padding: 15px 60px !important; /* Add padding on both sides */
+    height: 60px !important; /* Consistent height for header */
+  }
+  
+  /* Ensure the mobile menu is working on ALL pages including ecommerce */
+  .nav-links.active,
+  .mobile-nav.active,
+  .main-nav.active {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    max-height: 80vh !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    overflow-y: auto !important;
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 70px !important; /* Consistent top position below header */
+    padding: 20px !important;
+    background: white !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    z-index: 999 !important;
+    transform: none !important;
+  }
+  
+  /* Dark theme support for mobile menu */
+  .dark-theme .nav-links.active,
+  .dark-theme .mobile-nav.active,
+  .dark-theme .main-nav.active {
+    background: #1e293b !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3) !important;
+  }
 }
 
-.nav-links a[href*="web-design.html"]:hover:after,
-.nav-links a[href*="ecommerce.html"]:hover:after {
-  width: 80%; /* Only underline most of the text width */
+/* Ensure menu functions on both index and ecommerce pages */
+@media (max-width: 768px) {
+  /* Add default collapsed state for all pages */
+  .nav-links:not(.active),
+  .mobile-nav:not(.active),
+  .main-nav:not(.active) {
+    display: none !important; /* Hide when not active */
+  }
 }
 
-/* Also apply this fix to any other main navigation links */
-.nav-links > li > a:after {
-  max-width: 80%; /* Limit all main nav links' underline width */
+/* ...existing code... */
+
+/* ...existing code... */
+
+/* CRITICAL FIX: Make hamburger menu lines WHITE in dark mode for all pages */
+@media (max-width: 768px) {
+  /* Ensure hamburger icon is visible on ALL pages in dark mode */
+  .dark-theme .hamburger span,
+  .dark-theme .menu-toggle span,
+  .dark-theme .mobile-menu-button span,
+  .dark-theme header .hamburger span,
+  .dark-theme header .menu-toggle span,
+  .dark-theme header .mobile-menu-button span {
+    background-color: white !important; /* Force white color instead of using var(--light-color) */
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Apply this to all pages, including specialized ones */
+  .dark-theme.showcase-page .hamburger span,
+  .dark-theme.showcase-page .menu-toggle span,
+  .dark-theme.showcase-page .mobile-menu-button span,
+  .dark-theme[class*="page"] .hamburger span,
+  .dark-theme[class*="page"] .menu-toggle span,
+  .dark-theme[class*="page"] .mobile-menu-button span {
+    background-color: white !important;
+  }
+  
+  /* Higher specificity selectors for edge cases */
+  body.dark-theme header nav .hamburger span,
+  body.dark-theme header nav .menu-toggle span,
+  body.dark-theme header nav .mobile-menu-button span {
+    background-color: white !important;
+  }
+}
+
+/* ...existing code... */
+
+/* FIX: Mobile Menu Container Centering */
+@media (max-width: 768px) {
+  /* Properly center the entire menu container on mobile */
+  .nav-links.active,
+  .mobile-nav.active, 
+  .main-nav.active {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Add proper container padding */
+  .nav-links.active,
+  .mobile-nav.active,
+  .main-nav.active {
+    padding: 20px !important; /* Equal padding all around */
+  }
+  
+  /* Fix any potential transform issues */
+  body .nav-links.active,
+  body .mobile-nav.active,
+  body .main-nav.active,
+  .showcase-page .nav-links.active,
+  .page-template .nav-links.active,
+  body[class*="page"] .nav-links.active {
+    transform: translateX(0) !important;
+    -webkit-transform: translateX(0) !important;
+  }
+  
+  /* Reset any absolute positioning values that might be causing shift */
+  .hamburger, 
+  .menu-toggle, 
+  .mobile-menu-button {
+    right: 20px !important;
+    margin-right: 0 !important;
+  }
+  
+  /* Ensure menu container has zero bias */
+  header nav.container + .nav-links.active,
+  header nav.container + .mobile-nav.active,
+  header nav.container + .main-nav.active {
+    position: fixed !important;
+    top: 70px !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+  }
 }
 
 /* ...existing code... */

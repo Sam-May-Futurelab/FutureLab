@@ -263,3 +263,62 @@
     background-position: 0% 0%;
   }
 }
+
+/* Web Design Hero Animations */
+
+/* Make sure hero animations display properly */
+.hero-subtitle,
+.animated-hero-text,
+.hero-tagline,
+.gradient-text,
+.hero-section p {
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: fadeInUp 0.8s ease-out forwards !important;
+  display: block !important;
+}
+
+/* Ensure staggered animations work */
+.stagger-1 {
+  animation-delay: 0.2s !important;
+}
+
+.stagger-2 {
+  animation-delay: 0.4s !important;
+}
+
+/* Basic animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Force animations to run */
+* {
+  animation-play-state: running !important;
+}
+
+/* Specifically target web-design page hero section */
+.web-design-hero .hero-subtitle,
+.web-design-hero .animated-text {
+  display: block !important;
+  opacity: 1 !important;
+  animation: fadeInUp 0.8s forwards !important;
+}

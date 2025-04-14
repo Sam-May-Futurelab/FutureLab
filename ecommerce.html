@@ -15,13 +15,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO-optimized title and meta tags for e-commerce services page -->
-    <title>Expert E-Commerce Solutions | Shopify Development | FutureLab</title>
+    <title>Expert E-Commerce Solutions | Shopify Development | Futurelab</title>
     <meta name="description" content="Custom e-commerce solutions that convert visitors into customers. Specializing in Shopify development, beautiful product showcases, and brand-focused online stores.">
     <meta name="keywords" content="e-commerce website, Shopify development, online store, product showcase, conversion optimization, UK web designer, e-commerce solutions">
-    <meta name="author" content="FutureLab Solutions">
+    <meta name="author" content="Futurelab Solutions">
     
     <!-- Open Graph for link previews -->
-    <meta property="og:title" content="Expert E-Commerce Solutions | FutureLab">
+    <meta property="og:title" content="Expert E-Commerce Solutions | Futureab">
     <meta property="og:description" content="Beautiful online stores that showcase your brand and convert visitors into customers. Shopify experts with a focus on results.">
     <meta property="og:image" content="https://futurelab.solutions/assets/ecommerce-preview.png">
     <meta property="og:url" content="https://futurelab.solutions/ecommerce">
@@ -599,52 +599,58 @@
             }
         }
     </style>
+    
+    <!-- CRITICAL FIX: Theme toggle and contact button overlap -->
+    <style>
+        /* Force proper positioning of theme toggle */
+        .theme-toggle, #theme-toggle {
+            position: absolute !important;
+            right: 20px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            z-index: 1000 !important;
+            margin: 0 !important;
+        }
+        
+        /* Add space to nav links container to prevent overlap */
+        @media (min-width: 769px) {
+            .nav-links {
+                padding-right: 70px !important; /* Make space for theme toggle */
+                box-sizing: border-box !important;
+            }
+            
+            /* Ensure the contact button doesn't get too close to toggle */
+            .nav-links li:last-child {
+                padding-right: 5px !important;
+                margin-right: 0 !important;
+            }
+            
+            /* Fix container positioning */
+            header nav.container {
+                position: relative !important;
+                padding-right: 60px !important; /* Space for theme toggle */
+            }
+            
+            /* Fix the contact button specifically */
+            .nav-links li:last-child a.btn {
+                margin-right: 15px !important;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) and (min-width: 769px) {
+            .nav-links li {
+                margin: 0 5px !important; /* Reduce horizontal spacing on smaller screens */
+            }
+            
+            .nav-links li a {
+                padding: 8px 10px !important; /* Smaller padding on links */
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="container">
-            <div class="logo">Futurelab</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#services">Services</a></li>
-                <li><a href="index.html#portfolio">Work</a></li>
-                <li><a href="ecommerce.html" class="active">E-Commerce</a></li>
-                <li><a href="web-design.html">Web Design</a></li>
-                <li><a href="showcase" class="showcase-link">Showcase</a></li>
-                <li><a href="index.html#contact" class="btn btn-outline">Contact</a></li>
-            </ul>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
-                <i class="fas fa-lightbulb"></i>
-                <div class="toggle-glow"></div>
-            </button>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="mobile-menu-overlay"></div>
-        </nav>
-    </header>
-
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="animated-gradient-bg"></div>
-            <div class="container">
-                <div class="hero-content">
-                    <h1 class="animate-in gradient-text">Professional E-Commerce Solutions That Convert</h1>
-                    <p class="animate-in stagger-1">Beautiful <span class="highlight-text">online stores</span> that showcase your products, <span class="highlight-text">strengthen your brand</span>, and <span class="highlight-text">turn visitors into customers</span> — built by a certified Shopify Partner.</p>
-                    <div class="hero-buttons animate-in stagger-2">
-                        <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
-                        <a href="#ecommerce-process" class="btn btn-secondary">How It Works</a>
-                    </div>
-                </div>
-                <div class="hero-image animate-in stagger-2">
-                    <img src="assets/ecommerce-hero.png" alt="E-Commerce Store Illustration" class="ecommerce-hero-image">
-                </div>
-            </div>
-        </section>
-
         <!-- E-commerce Services Section -->
         <section id="services" class="services section-transition">
             <div class="container">
@@ -1056,7 +1062,7 @@
                         </div>
                     </div>
                     <form class="contact-form" action="https://formspree.io/f/xldjpewg" method="POST">
-                        <input type="hidden" name="_subject" value="New E-commerce Inquiry from FutureLab">
+                        <input type="hidden" name="_subject" value="New E-commerce Inquiry from Futurelab">
                         <input type="hidden" name="_next" value="https://futurelabs.solutions/thank-you">
                         
                         <div class="form-group">
@@ -1118,7 +1124,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2023-2025 FutureLab. All rights reserved. | <a href="https://futurelab.solutions">futurelab.solutions</a> | <a href="privacy-policy.html">Privacy Policy</a></p>
+                <p>© 2023-2025 Futurelab. All rights reserved. | <a href="https://futurelab.solutions">futurelab.solutions</a> | <a href="privacy-policy.html">Privacy Policy</a></p>
             </div>
         </div>
     </footer>
