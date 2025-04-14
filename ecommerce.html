@@ -598,6 +598,88 @@
                 gap: 20px;
             }
         }
+        
+        /* Enhanced FAQ Styling - Match web-design.html */
+        .faq-item {
+            border: 1px solid rgba(67, 97, 238, 0.2);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dark-theme .faq-question {
+            background: #1e293b;
+        }
+        
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .faq-toggle {
+            background: rgba(67, 97, 238, 0.1);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .faq-answer {
+            height: 0;
+            overflow: hidden;
+            transition: height 0.3s ease;
+            padding: 0 20px;
+            background: rgba(67, 97, 238, 0.03);
+        }
+        
+        .dark-theme .faq-answer {
+            background: rgba(67, 97, 238, 0.05);
+        }
+        
+        .faq-item.active .faq-answer {
+            height: auto;
+            padding: 20px;
+        }
+        
+        .faq-answer ul {
+            margin-bottom: 15px;
+        }
+        
+        .faq-answer li {
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .faq-question {
+                padding: 15px;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 15px;
+            }
+        }
     </style>
     
     <!-- CRITICAL FIX: Theme toggle and contact button overlap -->
@@ -843,7 +925,6 @@
         <section id="ecommerce-process" class="ecommerce-process section-transition">
             <div class="container">
                 <h2 class="section-title">My E-Commerce Development Process</h2>
-                <p class="section-subtitle">A proven approach to creating successful online stores</p>
                 
                 <div class="process-steps">
                     <div class="process-step">
@@ -936,13 +1017,12 @@
         <section class="ecommerce-pricing section-transition" id="pricing">
             <div class="container">
                 <h2 class="section-title">E-commerce Pricing</h2>
-                <p class="section-subtitle">Transparent pricing for custom e-commerce solutions</p>
                 
                 <div class="pricing-table">
                     <div class="pricing-plan">
                         <div class="pricing-header">
                             <div class="plan-name">Starter Store</div>
-                            <div class="plan-price">£1,000<span class="price-suffix">+</span></div>
+                            <div class="plan-price">£500<span class="price-suffix">+</span></div>
                             <div class="plan-description">Perfect for new businesses launching their first online store</div>
                         </div>
                         <div class="pricing-body">
@@ -963,7 +1043,7 @@
                         <div class="featured-badge">Popular</div>
                         <div class="pricing-header">
                             <div class="plan-name">Growth Store</div>
-                            <div class="plan-price">£2,500<span class="price-suffix">+</span></div>
+                            <div class="plan-price">£1000<span class="price-suffix">+</span></div>
                             <div class="plan-description">For established businesses ready to scale their e-commerce operations</div>
                         </div>
                         <div class="pricing-body">
@@ -984,7 +1064,7 @@
                     <div class="pricing-plan">
                         <div class="pricing-header">
                             <div class="plan-name">Enterprise Store</div>
-                            <div class="plan-price">£5,000<span class="price-suffix">+</span></div>
+                            <div class="plan-price">£2,000<span class="price-suffix">+</span></div>
                             <div class="plan-description">Comprehensive solution for large inventories and complex requirements</div>
                         </div>
                         <div class="pricing-body">
@@ -1163,7 +1243,7 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">FutureLab</div>
+                <div class="footer-logo">Futurelab</div>
                 <p class="footer-tagline">Building the digital solutions of tomorrow</p>
                 <div class="footer-social">
                     <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
@@ -1183,26 +1263,62 @@
     <script src="mobile-responsive.js"></script>
 
     <script>
-        // FAQ Toggle Functionality
+        // Replace the existing FAQ Toggle Functionality with this improved version
         document.addEventListener('DOMContentLoaded', function() {
+            // Enhanced FAQ functionality with smooth animations
             const faqItems = document.querySelectorAll('.faq-item');
             
+            // First, remove any existing click event listeners to avoid conflicts
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const clone = question.cloneNode(true);
+                question.parentNode.replaceChild(clone, question);
+            });
+            
+            // Then set up the proper event listeners
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
                 const answer = item.querySelector('.faq-answer');
                 
-                question.addEventListener('click', () => {
-                    const isOpen = item.classList.contains('active');
+                // Set initial state - important for proper height calculations
+                if (item.classList.contains('active')) {
+                    answer.style.height = answer.scrollHeight + 'px';
+                } else {
+                    answer.style.height = '0px';
+                }
+                
+                question.addEventListener('click', function() {
+                    console.log('FAQ question clicked');
+                    // Toggle current item
+                    const isActive = item.classList.contains('active');
                     
-                    // Close all FAQ items
+                    // Close other items
                     faqItems.forEach(otherItem => {
-                        otherItem.classList.remove('active');
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.faq-answer').style.height = '0px';
+                        }
                     });
                     
-                    // If this item wasn't open before, open it
-                    if (!isOpen) {
+                    // Toggle current item
+                    if (isActive) {
+                        answer.style.height = '0px';
+                        item.classList.remove('active');
+                        console.log('Closing FAQ item');
+                    } else {
                         item.classList.add('active');
+                        answer.style.height = answer.scrollHeight + 'px';
+                        console.log('Opening FAQ item, height set to: ' + answer.scrollHeight + 'px');
                     }
+                });
+            });
+            
+            // Ensure we properly handle window resize for responsive layouts
+            window.addEventListener('resize', function() {
+                const activeItems = document.querySelectorAll('.faq-item.active');
+                activeItems.forEach(item => {
+                    const answer = item.querySelector('.faq-answer');
+                    answer.style.height = answer.scrollHeight + 'px';
                 });
             });
         });
