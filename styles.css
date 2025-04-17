@@ -4865,3 +4865,52 @@ header nav #theme-toggle {
 }
 
 /* ...existing code... */
+
+/* CRITICAL FIX: Custom Pricing Section Styling */
+.custom-pricing {
+  margin: 60px auto 20px;
+  padding: 40px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.05) 0%, rgba(76, 201, 240, 0.05) 100%);
+  border-radius: var(--border-radius);
+  max-width: 800px;
+  box-shadow: var(--box-shadow);
+}
+
+.custom-pricing h3 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: var(--dark-color);
+}
+
+.dark-theme .custom-pricing h3 {
+  color: white; /* Explicitly set to white instead of var(--light-color) */
+}
+
+.custom-pricing p {
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+  color: var(--gray-color);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.custom-pricing .btn {
+  padding: 12px 30px;
+  margin-top: 10px;
+  font-size: 1.1rem;
+}
+
+/* Override any conflicting styles from ecommerce.html inline styling */
+.ecommerce-pricing .custom-pricing,
+section .container .custom-pricing,
+section[id="pricing"] .container .custom-pricing {
+  margin-top: 60px !important;
+  padding: 40px !important;
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.05) 0%, rgba(76, 201, 240, 0.05) 100%) !important;
+  border-radius: var(--border-radius) !important;
+  text-align: center !important;
+}
+
+/* ...existing code... */
