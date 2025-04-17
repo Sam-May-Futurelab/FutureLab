@@ -64,7 +64,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="theme-color" content="#4361ee">
     <script src="simple-menu.js" defer></script>
-    <script src="mobile-responsive.js" defer></script>
     
     <!-- E-commerce specific styles -->
     <style>
@@ -747,12 +746,308 @@
         }
     }
 </style>
+    <!-- Inline hamburger menu fix for mobile - placed before other scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+            const body = document.body;
+            
+            if (!hamburger || !navLinks) {
+                console.warn('Mobile menu elements not found');
+                return;
+            }
+            
+            // Function to toggle the menu
+            function toggleMenu(e) {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                
+                console.log('Menu toggle activated'); // Debug log
+                
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                
+                if (mobileOverlay) {
+                    mobileOverlay.classList.toggle('active');
+                }
+                
+                if (navLinks.classList.contains('active')) {
+                    body.classList.add('menu-open');
+                } else {
+                    body.classList.remove('menu-open');
+                }
+            }
+            
+            // Add multiple event listeners for better mobile support
+            hamburger.addEventListener('click', toggleMenu);
+            
+            // Special handling for touch events
+            hamburger.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // Prevent any default behavior
+                toggleMenu(e);
+            }, { passive: false });
+            
+            // Also handle menu closing
+            const links = navLinks.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    if (mobileOverlay) mobileOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                });
+            });
+            
+            // Close menu when clicking overlay
+            if (mobileOverlay) {
+                mobileOverlay.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    mobileOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                });
+            }
+        });
+    </script>
+    
+    <!-- Hamburger menu CSS fixes -->
+    <style>
+        /* Make hamburger more clickable on mobile */
+        .hamburger {
+            cursor: pointer;
+            z-index: 9999;
+            position: relative;
+            display: none;
+            width: 30px;
+            height: 24px;
+        }
+        
+        /* Make hamburger spans more visible */
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--dark-color);
+            border-radius: 3px;
+            opacity: 1;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+            pointer-events: none; /* Ensure spans don't interfere with clicks */
+        }
+        
+        .dark-theme .hamburger span {
+            background: #fff;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2) {
+            top: 10px;
+        }
+        
+        .hamburger span:nth-child(3) {
+            top: 20px;
+        }
+        
+        /* Mobile overlay styling */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+        
+        /* Display hamburger on mobile only */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                width: 100%; /* Full width */
+                margin: 0 auto; /* Center the menu */
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 20px 0; /* Remove horizontal padding */
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+                text-align: center;
+            }
+            
+            .dark-theme .nav-links {
+                background: #1e293b;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+                width: 100%; /* Full width for menu items */
+            }
+            
+            .nav-links li a {
+                display: block; /* Block instead of inline-block */
+                padding: 10px 0; /* Remove horizontal padding */
+                font-size: 0.95rem; /* Reduce font size */
+                width: 100%; /* Full width */
+                text-align: center;
+            }
+            
+            /* Style contact button specifically in mobile menu */
+            .nav-links li a.btn {
+                margin: 10px auto !important;
+                padding: 10px 20px !important;
+                width: 160px; /* Fixed width */
+                max-width: 80%; /* Ensure it's not too wide on small devices */
+                display: block !important;
+            }
+            
+            /* Active hamburger animation */
+            .hamburger.active span:nth-child(1) {
+                top: 10px;
+                transform: rotate(135deg);
+            }
+            
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            
+            .hamburger.active span:nth-child(3) {
+                top: 10px;
+                transform: rotate(-135deg);
+            }
+            
+            /* Prevent scrolling when menu is open */
+            body.menu-open {
+                overflow: hidden;
+            }
+        }
+    </style>
+    <!-- Hamburger menu positioning fix -->
+    <style>
+        /* Position the hamburger menu with some space from the right edge */
+        @media (max-width: 768px) {
+            .hamburger, 
+            .hamburger.mobile-menu-button {
+                position: absolute;
+                right: 20px !important; /* Increased space from edge (was likely closer to edge) */
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
+            /* Ensure the theme toggle has proper positioning in relation to hamburger */
+            .theme-toggle, 
+            #theme-toggle {
+                right: 70px !important; /* Move theme toggle further left */
+            }
+            
+            /* Add some space between logo and hamburger */
+            .logo {
+                margin-right: auto;
+            }
+        }
+    </style>
+    
+    <!-- CRITICAL FIX: Hamburger menu clickability issue -->
+    <style>
+        @media (max-width: 768px) {
+            /* Ensure hamburger menu is fully clickable */
+            .hamburger, 
+            .hamburger.mobile-menu-button {
+                position: absolute !important;
+                right: 20px !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                z-index: 1100 !important; /* Higher z-index to ensure it's above all other elements */
+                width: 40px !important; /* Explicit width */
+                height: 40px !important; /* Explicit height */
+                padding: 8px !important; /* Add some padding for larger touch target */
+                background-color: transparent !important;
+                pointer-events: auto !important; /* Ensure it receives click events */
+                cursor: pointer !important;
+                isolation: isolate !important; /* Create a new stacking context */
+            }
+            
+            /* Move theme toggle further from hamburger to prevent overlap */
+            .theme-toggle, 
+            #theme-toggle {
+                right: 70px !important; /* Move further left to avoid overlap */
+            }
+            
+            /* Fix potential overlap with the logo */
+            .logo {
+                max-width: 120px !important; /* Limit logo width to prevent overlap */
+            }
+            
+            /* Ensure navigation links don't interfere with hamburger */
+            .nav-links {
+                pointer-events: none !important; /* Disable pointer events when not active */
+            }
+            
+            .nav-links.active {
+                pointer-events: auto !important; /* Re-enable pointer events when active */
+            }
+            
+            /* Clear any floating elements that might affect layout */
+            header nav.container::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+        }
+    </style>
+    <!-- CRITICAL FIX: Hamburger menu clickability issue -->
+    <style>
+        @media (max-width: 768px) {
+            /* Super high specificity for hamburger positioning */
+            body .hamburger, 
+            body header nav .hamburger,
+            .hamburger.mobile-menu-button,
+            header nav .container .hamburger,
+            body[class] header .hamburger {
+                right: 15px !important; /* Move away from edge */
+                padding-right: 10px !important; /* Add padding */
+                margin-right: 10px !important; /* Add margin */
+                position: absolute !important;
+                z-index: 1100 !important;
+                cursor: pointer !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav class="container">
             <a href="index.html" class="logo">Futurelab</a>
-            <!-- Add hamburger menu button if missing -->
+            <!-- Keep only this hamburger button and remove the duplicate below -->
             <button class="hamburger mobile-menu-button" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
@@ -771,11 +1066,6 @@
                 <i class="fas fa-lightbulb"></i>
                 <div class="toggle-glow"></div>
             </button>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
             <div class="mobile-menu-overlay"></div>
         </nav>
     </header>
@@ -1044,13 +1334,12 @@
                         </div>
                         <div class="pricing-body">
                             <ul class="feature-list">
-                                <li>Custom Shopify store setup</li>
-                                <li>Customized existing theme</li>
-                                <li>Up to 25 products setup</li>
-                                <li>Basic SEO optimization</li>
-                                <li>Payment gateway integration</li>
-                                <li>Mobile responsive design</li>
-                                <li>Basic training session</li>
+                                <li>Custom Shopify setup with theme customisation</li>
+                                <li>Add up to 25 products to get selling quickly</li>
+                                <li>Basic SEO setup to help you get discovered</li>
+                                <li>Payment gateway integration (Stripe, PayPal, etc.)</li>
+                                <li>Mobile-friendly design and easy checkout experience</li>
+                                <li>Includes training session so you can manage the store with confidence</li>
                             </ul>
                             <a href="#contact" class="btn btn-primary full-width">Get Started</a>
                         </div>
@@ -1065,14 +1354,14 @@
                         </div>
                         <div class="pricing-body">
                             <ul class="feature-list">
-                                <li>Custom theme development</li>
-                                <li>Up to 100 products setup</li>
+                                <li>Bespoke Shopify theme development for a more custom feel</li>
+                                <li>Add up to 100 products with advanced filtering options</li>
                                 <li>Advanced product filtering</li>
-                                <li>Enhanced product photography</li>
-                                <li>Comprehensive SEO strategy</li>
-                                <li>Email marketing integration</li>
-                                <li>Advanced analytics setup</li>
-                                <li>3 months post-launch support</li>
+                                <li>Enhanced product photography support (optional)</li>
+                                <li>Full SEO strategy to boost search visibility</li>
+                                <li>Email marketing tools integration (e.g. Klaviyo, Mailchimp)</li>
+                                <li>Advanced analytics to track performance</li>
+                                <li>Includes 3 months of post-launch support</li>
                             </ul>
                             <a href="#contact" class="btn btn-primary full-width">Get Started</a>
                         </div>
@@ -1082,18 +1371,17 @@
                         <div class="pricing-header">
                             <div class="plan-name">Enterprise Store</div>
                             <div class="plan-price">£2,000<span class="price-suffix">+</span></div>
-                            <div class="plan-description">Comprehensive solution for large inventories and complex requirements</div>
+                            <div class="plan-description">Best for large stores with complex or international needs</div>
                         </div>
                         <div class="pricing-body">
                             <ul class="feature-list">
-                                <li>Premium custom theme development</li>
-                                <li>Unlimited product setup</li>
-                                <li>Custom app development</li>
+                                <li>Fully bespoke theme development to match your brand</li>
+                                <li>Unlimited product setup with custom collections</li>
+                                <li>Custom Shopify apps or feature development</li>
                                 <li>Inventory management system</li>
                                 <li>Multi-currency support</li>
                                 <li>International shipping setup</li>
-                                <li>CRM & ERP integrations</li>
-                                <li>6 months post-launch support</li>
+                                <li>Includes 6 months of post-launch support</li>
                             </ul>
                             <a href="#contact" class="btn btn-primary full-width">Get Started</a>
                         </div>
@@ -1285,7 +1573,6 @@
 
     <!-- Scripts -->
     <script src="script.js"></script>
-    <script src="mobile-responsive.js"></script>
 
     <script>
         // Replace the existing FAQ Toggle Functionality with this improved version

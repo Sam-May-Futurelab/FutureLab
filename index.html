@@ -347,6 +347,52 @@
             setTimeout(fixEcommerceLink, 1500);
         });
     </script>
+    
+    <!-- Add specific styling for theme toggle position on desktop only -->
+    <style>
+        /* Index page specific - move theme toggle down on desktop only */
+        @media (min-width: 769px) {
+            body .theme-toggle,
+            body #theme-toggle {
+                top: 45px !important; /* Move toggle down by increasing top position */
+            }
+        }
+    </style>
+    
+    <!-- Force hamburger menu position to be away from the right edge -->
+    <style>
+        @media (max-width: 768px) {
+            /* Target with high specificity to override all other styles */
+            body header nav .hamburger,
+            header .hamburger,
+            nav .container .hamburger,
+            .hamburger {
+                position: absolute !important;
+                right: 20px !important; /* Creates 20px space from right edge */
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                margin-right: 0 !important;
+                z-index: 1000 !important;
+            }
+        }
+    </style>
+    
+    <!-- Move hamburger menu away from right edge -->
+    <style>
+        @media (max-width: 768px) {
+            /* Super high specificity to override all other styles */
+            body header nav .hamburger,
+            body .hamburger,
+            .hamburger,
+            body[class] header .hamburger,
+            nav .container .hamburger {
+                right: 15px !important; /* More space from right edge */
+                padding-right: 10px !important; /* Additional padding */
+                margin-right: 10px !important; /* Additional margin */
+                position: absolute !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -504,22 +550,37 @@
                     <h3>Starting Packages</h3>
                     <div class="pricing-grid">
                         <div class="price-card">
-                            <h4>Basic Website</h4>
+                            <h4>Starter Website</h4>
                             <p class="price">From £350</p>
-                            <p>Perfect for small businesses getting started online</p>
-                            <p>Fast, mobile-friendly, and professionally built for your brand.</p>
+                            <ul class="price-features">
+                                <li>Ideal for small businesses, freelancers, and local services</li>
+                                <li>Includes up to 3 custom-designed pages</li>
+                                <li>Fast, mobile-friendly, and SEO-ready</li>
+                                <li>Contact forms, social links, and Google indexing included</li>
+                                <li>Can include small e-commerce setup (up to 5 products)</li>
+                            </ul>
                         </div>
                         <div class="price-card">
-                            <h4>E-commerce Site</h4>
-                            <p class="price">From £1000+</p>
-                            <p>Full-featured online store with payment processing</p>
-                            <p>Ready to sell online with Stripe, Shopify, or custom checkout.</p>
+                            <h4>Professional Site / Store</h4>
+                            <p class="price">From £750+</p>
+                            <ul class="price-features">
+                                <li>Custom design - Perfect for brands looking to grow and stand out</li>
+                                <li>Custom multi-page site or e-commerce store built to suit your needs</li>
+                                <li>Premium features available – booking systems, memberships, multilingual support, and more</li>
+                                <li>On-page SEO best practices baked in from the start</li>
+                                <li>Includes site training or handover for easy ongoing edits</li>
+                            </ul>
                         </div>
                         <div class="price-card">
                             <h4>App MVP</h4>
-                            <p class="price">From £2,000 - £5,000+</p>
-                            <p>Custom mobile applications for iOS and Android</p>
-                            <p>Perfect for startups looking to validate or demo their product.</p>
+                            <p class="price">From £2,000+</p>
+                            <ul class="price-features">
+                                <li>Lightweight mobile or web app to validate your idea</li>
+                                <li>Cross-platform builds (iOS/Android)</li>
+                                <li>Backend setup (e.g. Firebase, Supabase)</li>
+                                <li>Features like auth, user data, file upload, APIs</li>
+                                <li>Ideal for early-stage startups, demos, or investor decks</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -1054,41 +1115,6 @@
     
     <!-- REMOVE THE TYPEWRITER SCRIPT AND REPLACE WITH A SIMPLE CHECK TO RESTORE TEXT IF MISSING -->
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Wait a moment and then ensure our h1 text is visible
-        setTimeout(function() {
-          const heroHeading = document.querySelector('.hero-content h1');
-          if (heroHeading && (!heroHeading.textContent || heroHeading.textContent.trim() === '')) {
-            console.log("Restoring missing hero heading text");
-            heroHeading.textContent = 'Custom Digital Solutions for Forward-Thinking Businesses.';
-          }
-        }, 100);
-      });
-    </script>
-
-    <!-- Cookie banner styles and functionality -->
-    <style>
-        .cookie-banner {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            max-width: 400px;
-            background-color: white;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-            border-radius: 10px;
-            padding: 20px;
-            z-index: 1000;
-            display: none; /* Hidden by default, shown via JS */
-            border: 1px solid rgba(230, 230, 250, 0.7);
-            animation: slide-up 0.5s ease forwards;
-        }
-
-        .dark-theme .cookie-banner {
-            background-color: #1e293b;
-            border-color: rgba(55, 65, 81, 0.5);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
         @keyframes slide-up {
             from { transform: translateY(100px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }

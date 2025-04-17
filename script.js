@@ -1188,3 +1188,50 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 });
+
+// Ensure pricing cards have proper bullet point structure
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to convert paragraph lists to actual bullet lists if needed
+    function ensurePricingBullets() {
+        const priceCards = document.querySelectorAll('.price-card');
+        
+        priceCards.forEach(card => {
+            // Skip if the card already has a proper list
+            if (card.querySelector('ul.price-features')) return;
+            
+            // Find all paragraphs in the card that come after the price
+            const priceParagraph = card.querySelector('.price');
+            if (!priceParagraph) return;
+            
+            // Create a new list
+            const bulletList = document.createElement('ul');
+            bulletList.className = 'price-features';
+            
+            // Get all the paragraphs that follow the price
+            let nextElement = priceParagraph.nextElementSibling;
+            
+            while (nextElement && nextElement.tagName === 'P') {
+                // Create a list item from the paragraph content
+                const listItem = document.createElement('li');
+                listItem.innerHTML = nextElement.innerHTML;
+                bulletList.appendChild(listItem);
+                
+                // Store the next paragraph before we remove the current one
+                const toRemove = nextElement;
+                nextElement = nextElement.nextElementSibling;
+                
+                // Remove the original paragraph
+                toRemove.parentNode.removeChild(toRemove);
+            }
+            
+            // Add the list after the price
+            priceParagraph.insertAdjacentElement('afterend', bulletList);
+        });
+    }
+    
+    // Run immediately
+    ensurePricingBullets();
+    
+    // Also run after a short delay in case of dynamic content
+    setTimeout(ensurePricingBullets, 500);
+});
