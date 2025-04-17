@@ -3970,7 +3970,7 @@ footer:before {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-fill-color: transparent;
+    
     animation: gradient-shift 8s ease infinite;
 }
 

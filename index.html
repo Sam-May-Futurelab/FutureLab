@@ -1113,64 +1113,7 @@
     <script src="simple-menu.js"></script>
     <script src="analytics-integration.js"></script>
     
-    <!-- REMOVE THE TYPEWRITER SCRIPT AND REPLACE WITH A SIMPLE CHECK TO RESTORE TEXT IF MISSING -->
-    <script>
-        @keyframes slide-up {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
 
-        .cookie-content p {
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-        }
-
-        .cookie-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        @media (max-width: 480px) {
-            .cookie-banner {
-                left: 10px;
-                right: 10px;
-                bottom: 10px;
-                max-width: none;
-            }
-        }
-    </style>
-
-    <script>
-        // Cookie banner functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const cookieBanner = document.getElementById('cookie-banner');
-            const acceptBtn = document.getElementById('cookie-accept');
-            const declineBtn = document.getElementById('cookie-decline');
-            
-            // Check if user has already made a choice
-            const cookieConsent = localStorage.getItem('cookieConsent');
-            
-            // If no choice has been made yet, show the banner
-            if (cookieConsent === null) {
-                setTimeout(() => {
-                    cookieBanner.style.display = 'block';
-                }, 1000);
-            }
-            
-            // Handle accept button click
-            acceptBtn.addEventListener('click', () => {
-                localStorage.setItem('cookieConsent', 'accepted');
-                cookieBanner.style.display = 'none';
-            });
-            
-            // Handle decline button click
-            declineBtn.addEventListener('click', () => {
-                localStorage.setItem('cookieConsent', 'declined');
-                cookieBanner.style.display = 'none';
-            });
-        });
-    </script>
 
     <!-- Add mobile spacing fix style with more aggressive spacing reduction -->
     <style>
@@ -1356,7 +1299,7 @@
                 #4361ee);
             background-size: 200% auto;
             background-clip: text;
-            text-fill-color: transparent;
+            
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             
