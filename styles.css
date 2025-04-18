@@ -1856,6 +1856,58 @@ nav {
     border-radius: 50%;
 }
 
+/* NEW STYLING FOR POKESPUD AND MPFILMS MOCKUP IMAGES */
+.portfolio-item img[src*="pokespud-mockup"],
+.portfolio-item img[src*="mpfilms-mockup"] {
+  border-radius: 16px; /* Softer corners */
+  display: block; /* Ensure it can be properly centered */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+  max-width: 90%; /* Prevent hitting edge of container */
+  width: auto; /* Allow natural sizing */
+  height: auto; /* Maintain aspect ratio */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Modified positioning for pokespud mockup (in reverse layout) - move away from right edge */
+.portfolio-item.reverse img[src*="pokespud-mockup"] {
+  margin-right: 15%; /* Move image away from right edge toward text */
+  margin-left: auto; /* Keep it aligned to the right */
+  max-width: 100%; /* Slightly reduce max width */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition for smooth effect */
+}
+
+/* Modified positioning for mpfilms mockup - move away from left edge AND INCREASE SIZE */
+.portfolio-item:not(.reverse) img[src*="mpfilms-mockup"] {
+  margin-left: 10%; /* Reduced left margin to allow for larger size */
+  margin-right: auto; /* Keep it aligned to the left */
+  max-width: 90%; /* Increased from 80% to make the image larger */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition for zoom effect */
+}
+
+/* Add hover effect for the mockup images */
+.portfolio-item img[src*="pokespud-mockup"]:hover {
+  transform: translateY(-5px) scale(1.1); /* Zoom effect on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Special handling for MPFilms hover to maintain the increased size */
+.portfolio-item:not(.reverse) img[src*="mpfilms-mockup"]:hover {
+  transform: translateY(-5px) scale(1.1); /* Fixed: Removed the initial 1.05 scale to allow the hover zoom to work properly */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Container styling to ensure proper fit */
+.pokespud-image-container,
+.section-feature-image,
+div:has(> img[src*="pokespud-mockup"]),
+div:has(> img[src*="mpfilms-mockup"]) {
+  overflow: hidden; /* Prevent any overflow */
+  padding: 0 15px; /* Add padding for breathing room */
+  text-align: center; /* For IE compatibility */
+}
+
 /* About Section */
 .about {
     padding: 120px 0;
