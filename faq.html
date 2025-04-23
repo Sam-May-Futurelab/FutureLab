@@ -80,7 +80,10 @@
             width: 30px;
             height: 24px;
             position: relative;
-            z-index: 100;
+            z-index: 1001; /* Increased z-index for better tap targeting */
+            padding: 15px; /* Add padding to increase tap target size */
+            margin: -15px; /* Offset padding to maintain visual size */
+            touch-action: manipulation; /* Improve touch behavior */
         }
         .hamburger span {
             display: block;
@@ -122,15 +125,22 @@
         .mobile-menu-overlay.active {
             display: block;
         }
+        header nav.container {
+            position: relative;
+        }
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 position: absolute;
-                right: 15px;
+                right: 35px !important; /* Much further from edge with !important flag */
                 top: 50%;
                 transform: translateY(-50%);
+                z-index: 1001 !important; /* Ensure it's above other elements */
+            }
+            .theme-toggle {
+                right: 10px !important; /* Increase spacing between toggle and hamburger */
             }
             .nav-links {
                 position: fixed;
@@ -169,6 +179,14 @@
             }
             body.menu-open {
                 overflow: hidden;
+            }
+        }
+        @media (max-width: 400px) {
+            .hamburger {
+                right: 25px !important; /* Slightly closer on very small screens but still accessible */
+            }
+            .theme-toggle {
+                right: 80px !important; /* Keep good spacing on small screens */
             }
         }
         .theme-toggle {
@@ -210,7 +228,7 @@
         }
         @media (max-width: 768px) {
             .theme-toggle {
-                right: 60px;
+                right: 85px;
             }
         }
 
@@ -356,6 +374,11 @@
         <section class="faq section-transition" id="faq">
             <div class="container">
                 <h2 class="section-title">Frequently Asked Questions</h2>
+                
+                <!-- Add introduction paragraph -->
+                <p style="max-width: 700px; margin: 0 auto 40px; text-align: center; line-height: 1.6; color: var(--gray-color);">
+                    Got questions? You're in the right place. Whether you're planning your first website or exploring a full e-commerce build, this page covers the most common things clients ask — from timelines and pricing to platforms and support. If you don't see your question here, feel free to <a href="contact.html" class="text-link">get in touch</a>!
+                </p>
                 
                 <!-- Project Timeline Section -->
                 <div class="faq-section">
@@ -625,23 +648,39 @@
             const mobileOverlay = document.querySelector('.mobile-menu-overlay');
             const body = document.body;
             if (hamburger && navLinks) {
+                // Improved toggleMenu function with better event handling
                 function toggleMenu(e) {
+                    // Ensure the event doesn't propagate to other elements
                     if (e) {
                         e.preventDefault();
                         e.stopPropagation();
                     }
+                    
+                    console.log("Hamburger menu clicked"); // Debug log
                     hamburger.classList.toggle('active');
                     navLinks.classList.toggle('active');
+                    
                     if (mobileOverlay) {
                         mobileOverlay.classList.toggle('active');
                     }
+                    
                     if (navLinks.classList.contains('active')) {
                         body.classList.add('menu-open');
                     } else {
                         body.classList.remove('menu-open');
                     }
                 }
-                hamburger.addEventListener('click', toggleMenu);
+                
+                // Remove any existing click listeners to prevent duplicates
+                hamburger.removeEventListener('click', toggleMenu);
+                
+                // Add both click and touchend listeners with capture phase
+                hamburger.addEventListener('click', toggleMenu, true);
+                hamburger.addEventListener('touchend', function(e) {
+                    e.preventDefault(); // Prevent default behavior
+                    toggleMenu(e);
+                }, { capture: true });
+                
                 navLinks.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', function() {
                         hamburger.classList.remove('active');
@@ -724,4 +763,3 @@
     </script>
 </body>
 </html>
-``` 
