@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8E854NCS56"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8E854NCS56');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO-optimized title and meta tags -->
+    <title>Contact Futurelab | Custom Web & App Development</title>
+    <meta name="description" content="Get in touch with Futurelab for web design, e-commerce development, or app solutions. Free consultation and project quotes for startups and businesses.">
+    <meta name="keywords" content="contact web developer, website quote, app development contact, digital consultation, UK web design">
+    <meta name="author" content="Futurelab Solutions">
+    
+    <!-- Open Graph for link previews -->
+    <meta property="og:title" content="Contact Futurelab | Custom Web & App Development">
+    <meta property="og:description" content="Get in touch for a free consultation about your next web or app project.">
+    <meta property="og:image" content="https://futurelab.solutions/assets/contact-preview.png">
+    <meta property="og:url" content="https://futurelab.solutions/contact">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="mobile-hero.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#4361ee">
+    <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <script src="simple-menu.js" defer></script>
+    <script src="mobile-responsive.js" defer></script>
+    
+    <!-- Contact page specific styles -->
+    <style>
+        /* Hero section with gradient background */
+        .contact-hero {
+            background: var(--gradient-1);
+            color: white;
+            padding: 120px 0 70px; /* Increased top padding for more space below nav */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1; /* Ensure proper stacking context */
+        }
+        
+        .dark-theme .contact-hero {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        
+        .contact-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 3; /* Higher z-index to ensure text is above blobs */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add text shadow for better readability */
+        }
+        
+        .contact-hero p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 3; /* Higher z-index to ensure text is above blobs */
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+        }
+        
+        .contact-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 2; /* Set z-index to be below text but above background */
+            animation: blob-float 15s infinite ease-in-out alternate;
+        }
+        
+        .contact-blob.blob-1 {
+            width: 600px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.15);
+            top: -250px;
+            right: -150px;
+            animation-delay: 0s;
+        }
+        
+        .contact-blob.blob-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            bottom: -300px;
+            left: -200px;
+            animation-delay: 5s;
+        }
+        
+        /* Add a third blob for more visual interest */
+        .contact-blob.blob-3 {
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.12);
+            top: 30%;
+            left: 20%;
+            animation-delay: 2.5s;
+        }
+        
+        /* Animation for blob movement */
+        @keyframes blob-float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(20px, -20px) scale(1.05);
+            }
+            100% {
+                transform: translate(-20px, 20px) scale(0.95);
+            }
+        }
+        
+        /* Mobile responsiveness for hero section */
+        @media (max-width: 768px) {
+            .contact-hero {
+                padding: 100px 0 60px; /* Slightly less padding on mobile but still enough */
+            }
+            
+            .contact-hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .contact-hero {
+                padding: 90px 0 50px; /* Adjusted for smaller screens */
+            }
+            
+            .contact-hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Contact layout */
+        .contact-section {
+            padding: 80px 0;
+            background: var(--bg-color);
+        }
+        
+        .dark-theme .contact-section {
+            background: var(--dark-bg);
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Contact form styling */
+        .contact-form-container {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-theme .contact-form-container {
+            background: #1e293b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .contact-form-header {
+            margin-bottom: 30px;
+        }
+        
+        .contact-form-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .dark-theme .contact-form-header h2 {
+            color: #e2e8f0;
+        }
+        
+        .contact-form-header p {
+            color: var(--gray-color);
+            font-size: 1rem;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .dark-theme .form-group label {
+            color: #e2e8f0;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: white;
+            color: var(--dark-color);
+        }
+        
+        .dark-theme .form-group input,
+        .dark-theme .form-group select,
+        .dark-theme .form-group textarea {
+            border-color: #334155;
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-submit {
+            margin-top: 10px;
+        }
+        
+        .form-submit button {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .form-submit button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        /* Contact info sidebar */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .contact-info-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .dark-theme .contact-info-header h2 {
+            color: #e2e8f0;
+        }
+        
+        .contact-info-header p {
+            color: var(--gray-color);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-theme .contact-method {
+            background: #1e293b;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .contact-method:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(67, 97, 238, 0.15);
+        }
+        
+        .contact-method-icon {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            border-radius: 50%;
+            background: rgba(67, 97, 238, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+        
+        .contact-method-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-method-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        
+        .dark-theme .contact-method-title {
+            color: #e2e8f0;
+        }
+        
+        .contact-method-value {
+            font-size: 0.95rem;
+            color: var(--gray-color);
+        }
+        
+        .contact-method-value a {
+            color: var(--gray-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .contact-method-value a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Social links */
+        .contact-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(67, 97, 238, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Location section */
+        .location-section {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+        
+        .dark-theme .location-section {
+            background: rgba(30, 41, 59, 0.5);
+        }
+        
+        .location-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .location-container h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+        
+        .dark-theme .location-container h2 {
+            color: #e2e8f0;
+        }
+        
+        .location-container p {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            color: var(--gray-color);
+            font-size: 1.1rem;
+        }
+        
+        .location-map {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark-theme .location-map {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .location-map iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        /* Success message */
+        .form-success {
+            display: none;
+            background: #10b981;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .form-success.active {
+            display: block;
+        }
+        
+        /* Error message */
+        .form-error {
+            display: none;
+            background: #ef4444;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .form-error.active {
+            display: block;
+        }
+        
+        /* Field error */
+        .field-error {
+            font-size: 0.85rem;
+            color: #ef4444;
+            margin-top: 4px;
+            display: none;
+        }
+        
+        .field-error.active {
+            display: block;
+        }
+        
+        /* Enhanced focus states for accessibility */
+        input:focus, 
+        select:focus, 
+        textarea:focus, 
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3);
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 1024px) {
+            .contact-container {
+                gap: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .contact-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .contact-hero p {
+                font-size: 1.1rem;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-form-container {
+                padding: 30px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .location-container h2 {
+                font-size: 1.8rem;
+            }
+            
+            .location-container p {
+                font-size: 1rem;
+            }
+            
+            .location-map {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .contact-hero {
+                padding: 80px 0 40px;
+            }
+            
+            .contact-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .contact-hero p {
+                font-size: 1rem;
+            }
+            
+            .contact-form-container {
+                padding: 20px;
+            }
+            
+            .location-section {
+                padding: 60px 0;
+            }
+            
+            .location-map {
+                height: 250px;
+            }
+        }
+
+        /* Add spacing between sections */
+        .section-spacer {
+            height: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .section-spacer {
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-spacer {
+                height: 40px;
+            }
+        }
+
+        /* Enhanced theme toggle styling with better tap target */
+        .theme-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px; /* Increased width */
+            height: 44px; /* Increased height */
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            z-index: 100;
+            padding: 0;
+        }
+        
+        /* Add visual feedback for the theme toggle */
+        .theme-toggle:active {
+            transform: translateY(-50%) scale(0.9);
+        }
+        
+        .theme-toggle i {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .theme-toggle:hover i {
+            transform: rotate(20deg);
+        }
+        
+        /* Add a subtle shine animation when toggled */
+        @keyframes toggle-shine {
+            0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(67, 97, 238, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
+        }
+        
+        .toggle-animation {
+            animation: toggle-shine 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Futurelab</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="ecommerce.html">E-Commerce</a></li>
+                <li><a href="web-design.html">Web Design</a></li>
+                <li><a href="showcase.html">Showcase</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+                <i class="fas fa-lightbulb"></i>
+                <div class="toggle-glow"></div>
+            </button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="mobile-menu-overlay"></div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="contact-hero">
+            <div class="contact-blob blob-1"></div>
+            <div class="contact-blob blob-2"></div>
+            <div class="contact-blob blob-3"></div> <!-- Added third blob for more visual interest -->
+            <div class="container">
+                <h1>Let's Build Something Brilliant Together</h1>
+                <p>Ready to start your project, get a quote, or chat about ideas? Just fill out the form below — I'll be in touch within 24 hours.</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <div class="contact-container">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <div class="contact-form-header">
+                        <h2>Send a Message</h2>
+                        <p>Let me know what you're working on — I'll reply as soon as possible.</p>
+                    </div>
+                    
+                    <div class="form-success" id="form-success">
+                        <strong>Thank you!</strong> Your message has been sent successfully.
+                    </div>
+                    
+                    <div class="form-error" id="form-error">
+                        <strong>Oops!</strong> There was a problem sending your message. Please try again.
+                    </div>
+                    
+                    <form class="contact-form" id="contact-form" action="https://formspree.io/f/xldjpewg" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" required>
+                                <div class="field-error" id="name-error">Please enter your name.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                                <div class="field-error" id="email-error">Please enter a valid email address.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="company">Company (Optional)</label>
+                                <input type="text" id="company" name="company">
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="" disabled selected>Please select...</option>
+                                    <option value="website-project">Website Project</option>
+                                    <option value="ecommerce-project">E-Commerce Project</option>
+                                    <option value="app-project">App Development</option>
+                                    <option value="consultation">Request Consultation</option>
+                                    <option value="quote">Request a Quote</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <div class="field-error" id="subject-error">Please select a subject.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                            <div class="field-error" id="message-error">Please enter your message.</div>
+                        </div>
+                        
+                        <div class="form-submit">
+                            <button type="submit" id="submit-btn">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <div class="contact-info-header">
+                        <h2>Contact Info</h2>
+                        <p>Prefer to reach out directly? I'm available Monday to Friday, 9am–6pm GMT.</p>
+                    </div>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-method-content">
+                                <div class="contact-method-title">📧 Email</div>
+                                <div class="contact-method-value">
+                                    <a href="mailto:sam@futurelab.solutions">sam@futurelab.solutions</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-method-content">
+                                <div class="contact-method-title">📞 Phone</div>
+                                <div class="contact-method-value">
+                                    <a href="tel:+447806946463">+44 7806 946463</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="contact-method-content">
+                                <div class="contact-method-title">📅 Book a Free Call</div>
+                                <div class="contact-method-value">
+                                    <a href="https://calendly.com/sam-futurelab" target="_blank">Schedule via Calendly</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-social">
+                        <a href="https://www.linkedin.com/in/sam-may-/" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/ChiefSpuddy/CardWizz" target="_blank" class="social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://instagram.com/futurelab.solutions" target="_blank" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section class="location-section">
+            <div class="location-container">
+                <h2>📍 Based in London</h2>
+                <p>Working remotely with clients worldwide. In-person meetings available around London and the South East.</p>
+                
+                <div class="location-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158858.47340002653!2d-0.24168120642536509!3d51.52855824164916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e0!3m2!1sen!2suk!4v1682342523318!5m2!1sen!2suk" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section spacer -->
+        <div class="section-spacer"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Futurelab</div>
+                <div class="footer-tagline">Building digital products for startups, creators, and small businesses.</div>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/sam-may-/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/ChiefSpuddy/CardWizz" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="mailto:sam@futurelab.solutions" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 Futurelab Solutions. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Consolidated theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            if (themeToggle) {
+                console.log("Theme toggle found during DOM load");
+                
+                // Remove all existing event listeners by cloning and replacing the element
+                const newThemeToggle = themeToggle.cloneNode(true);
+                themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+                
+                // Add a single, robust event handler to the new element
+                newThemeToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("Theme toggle clicked - executing toggle function");
+                    
+                    // Add visual feedback animation
+                    this.classList.add('toggle-animation');
+                    setTimeout(() => this.classList.remove('toggle-animation'), 600);
+                    
+                    // Toggle the theme
+                    document.body.classList.toggle('dark-theme');
+                    
+                    // Store preference in localStorage
+                    if (document.body.classList.contains('dark-theme')) {
+                        localStorage.setItem('theme', 'dark');
+                        this.querySelector('i').className = 'fas fa-lightbulb';
+                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
+                    } else {
+                        localStorage.setItem('theme', 'light');
+                        this.querySelector('i').className = 'far fa-lightbulb';
+                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#4361ee');
+                    }
+                    
+                    console.log("Theme toggled to:", document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+                });
+                
+                // Apply initial theme state
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-theme');
+                    newThemeToggle.querySelector('i').className = 'fas fa-lightbulb';
+                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
+                } else {
+                    document.body.classList.remove('dark-theme');
+                    newThemeToggle.querySelector('i').className = 'far fa-lightbulb';
+                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#4361ee');
+                }
+            } else {
+                console.error("Theme toggle button not found during DOM load");
+            }
+            
+            // Mobile menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+            const body = document.body;
+            
+            if (hamburger && navLinks) {
+                // Improved toggleMenu function with better event handling
+                function toggleMenu(e) {
+                    // Ensure the event doesn't propagate to other elements
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    
+                    console.log("Hamburger menu clicked"); // Debug log
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    
+                    if (mobileOverlay) {
+                        mobileOverlay.classList.toggle('active');
+                    }
+                    
+                    if (navLinks.classList.contains('active')) {
+                        body.classList.add('menu-open');
+                    } else {
+                        body.classList.remove('menu-open');
+                    }
+                }
+                
+                // Remove any existing click listeners to prevent duplicates
+                hamburger.removeEventListener('click', toggleMenu);
+                
+                // Add both click and touchend listeners with capture phase
+                hamburger.addEventListener('click', toggleMenu, true);
+                hamburger.addEventListener('touchend', function(e) {
+                    e.preventDefault(); // Prevent default behavior
+                    toggleMenu(e);
+                }, { capture: true });
+                
+                // Close menu when clicking on links
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        if (mobileOverlay) mobileOverlay.classList.remove('active');
+                        body.classList.remove('menu-open');
+                    });
+                });
+                
+                // Close menu when clicking overlay
+                if (mobileOverlay) {
+                    mobileOverlay.addEventListener('click', function() {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        mobileOverlay.classList.remove('active');
+                        body.classList.remove('menu-open');
+                    });
+                }
+            }
+            
+            // Form validation and submission
+            const contactForm = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const formSuccess = document.getElementById('form-success');
+            const formError = document.getElementById('form-error');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Disable submit button during submission
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                    }
+                    
+                    // Reset error messages
+                    formError.classList.remove('active');
+                    document.querySelectorAll('.field-error').forEach(error => {
+                        error.classList.remove('active');
+                    });
+                    
+                    // Validate form
+                    let isValid = true;
+                    const name = document.getElementById('name');
+                    const email = document.getElementById('email');
+                    const subject = document.getElementById('subject');
+                    const message = document.getElementById('message');
+                    
+                    if (!name.value.trim()) {
+                        document.getElementById('name-error').classList.add('active');
+                        isValid = false;
+                    }
+                    
+                    if (!email.value.trim() || !isValidEmail(email.value)) {
+                        document.getElementById('email-error').classList.add('active');
+                        isValid = false;
+                    }
+                    
+                    if (!subject.value) {
+                        document.getElementById('subject-error').classList.add('active');
+                        isValid = false;
+                    }
+                    
+                    if (!message.value.trim()) {
+                        document.getElementById('message-error').classList.add('active');
+                        isValid = false;
+                    }
+                    
+                    if (!isValid) {
+                        // Re-enable submit button if validation fails
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+                        }
+                        return;
+                    }
+                    
+                    // Submit form using Formspree
+                    const formData = new FormData(contactForm);
+                    
+                    fetch(contactForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Show success message
+                            formSuccess.classList.add('active');
+                            contactForm.reset();
+                        } else {
+                            // Show error message
+                            formError.classList.add('active');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        formError.classList.add('active');
+                    })
+                    .finally(() => {
+                        // Re-enable submit button
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+                        }
+                        
+                        // Scroll to top of form container for visibility of status message
+                        const formContainer = document.querySelector('.contact-form-container');
+                        if (formContainer) {
+                            formContainer.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                });
+            }
+            
+            // Email validation helper function
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+        });
+    </script>
+</body>
+</html>
