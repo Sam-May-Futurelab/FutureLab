@@ -615,20 +615,30 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update calculation and UI
         function updateCalculator() {
-            // Base price depends on website type
+            // Updated package pricing to match your real offers
             const websiteTypes = {
-                1: 1000, // Basic Informational
-                2: 2000, // Business with CMS
-                3: 3000, // E-Commerce
-                4: 5000  // Custom Web App
+                'starter': 350,      // Starter Website
+                'professional': 750, // Professional Site/Store
+                'ecommerce': 500,    // E-Commerce Starter Store
+                'app': 2000          // App MVP
             };
             
             // Get values from inputs
-            const basePrice = websiteTypes[websiteTypeSelect.value] || websiteTypes[1];
+            const selectedType = websiteTypeSelect.value || 'starter';
+            const basePrice = websiteTypes[selectedType] || websiteTypes['starter'];
             const pageCount = parseInt(pageSlider.value) || 1;
-            const pagePrice = (pageCount - 1) * 100; // £100 per additional page
-            const seoPrice = seoOption && seoOption.checked ? 500 : 0;
-            const cmsPrice = cmsOption && cmsOption.checked ? 800 : 0;
+            // Per-page price: Starter/Professional: £75, E-Commerce: £100, App: £150
+            let pagePrice = 0;
+            if (selectedType === 'starter' || selectedType === 'professional') {
+                pagePrice = (pageCount - 1) * 75;
+            } else if (selectedType === 'ecommerce') {
+                pagePrice = (pageCount - 1) * 100;
+            } else if (selectedType === 'app') {
+                pagePrice = (pageCount - 1) * 150;
+            }
+            // Add-ons
+            const seoPrice = seoOption && seoOption.checked ? 350 : 0;
+            const cmsPrice = cmsOption && cmsOption.checked ? 400 : 0;
             
             // Calculate total
             const total = basePrice + pagePrice + seoPrice + cmsPrice;
@@ -1202,7 +1212,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 background: #fff;
                 border-radius: 50%;
                 box-shadow: 0 0 4px 2px rgba(255, 255, 255, 0.7);
-                transform: rotate(${angle}deg);
                 opacity: 0;
                 animation: shooting-star 2s ease-out forwards;
                 z-index: 10;
