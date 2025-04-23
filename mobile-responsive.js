@@ -216,11 +216,6 @@ function debounce(func, wait) {
   };
 }
 
-/**
- * Mobile Responsive Enhancements
- * Improves the mobile experience across the site
- */
-
 document.addEventListener('DOMContentLoaded', function() {
   // Detect mobile devices
   const isMobile = window.innerWidth < 768;
@@ -256,14 +251,133 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-/**
- * Mobile Responsive Navigation System
- * 
- * REMOVED: All hamburger menu functionality has been removed.
- * A new navigation system will be implemented later.
- */
-
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu functionality removed
     console.log('Mobile menu functionality removed as requested');
+});
+
+// Immediate self-executing function to protect hero heading content
+(function() {
+    // Run this code as soon as possible
+    function protectHeroHeading() {
+        // Target hero heading with data-no-animation
+        const heroHeading = document.querySelector('h1[data-no-animation], .hero h1[data-no-animation], .animate-in.gradient-text');
+        
+        if (heroHeading) {
+            console.log("Protected heading found:", heroHeading.innerText);
+            
+            // Store the original content
+            const originalText = heroHeading.innerText;
+            const originalHTML = heroHeading.innerHTML;
+            
+            // Force visibility with inline styles having highest specificity
+            heroHeading.setAttribute('style', 
+                'display: block !important; ' +
+                'visibility: visible !important; ' + 
+                'opacity: 1 !important; ' +
+                'min-height: auto !important;'
+            );
+            
+            // Set a flag on the element that it's protected
+            heroHeading.setAttribute('data-protected', 'true');
+            
+            // Periodically check that content hasn't been cleared
+            const checkInterval = setInterval(function() {
+                if (heroHeading.innerText === '' || !heroHeading.innerText) {
+                    console.log("Hero heading was cleared, restoring content");
+                    heroHeading.innerHTML = originalHTML;
+                    
+                    // Re-apply protection styles
+                    heroHeading.setAttribute('style', 
+                        'display: block !important; ' +
+                        'visibility: visible !important; ' + 
+                        'opacity: 1 !important; ' +
+                        'min-height: auto !important;'
+                    );
+                }
+            }, 100); // Check every 100ms
+            
+            // Stop checking after 5 seconds
+            setTimeout(function() {
+                clearInterval(checkInterval);
+                console.log("Hero heading protection complete");
+            }, 5000);
+            
+            // Override any attempt to modify the heading in the future
+            const originalSetAttribute = heroHeading.setAttribute;
+            heroHeading.setAttribute = function(name, value) {
+                if ((name === 'style' && value.includes('display: none')) || 
+                    (name === 'style' && value.includes('visibility: hidden')) ||
+                    name === 'data-no-animation' || 
+                    name === 'data-typewriter-applied') {
+                    console.log("Blocked attempt to modify hero heading:", name, value);
+                    return;
+                }
+                return originalSetAttribute.call(this, name, value);
+            };
+        } else {
+            console.log("No hero heading with data-no-animation found");
+        }
+    }
+    
+    // Try executing immediately
+    protectHeroHeading();
+    
+    // Also run when DOM is interactive
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', protectHeroHeading);
+    }
+    
+    // Run one more time after a short delay to catch any late modifications
+    setTimeout(protectHeroHeading, 100);
+    setTimeout(protectHeroHeading, 500);
+    setTimeout(protectHeroHeading, 1000);
+})();
+
+// Add direct override for typewriter effect
+document.addEventListener('DOMContentLoaded', function() {
+    // Find all typewriter functions and disable them for hero headings with data-no-animation
+    setTimeout(function() {
+        // Find typewriter function references
+        const globalFunctions = [
+            'typeWriter', 
+            'typewriterEffect', 
+            'animateTypewriter', 
+            'heroTypewriter'
+        ];
+        
+        // Try to disable them
+        globalFunctions.forEach(funcName => {
+            if (typeof window[funcName] === 'function') {
+                const originalFunc = window[funcName];
+                window[funcName] = function(...args) {
+                    const targetHeading = document.querySelector('h1[data-no-animation], .hero h1[data-no-animation]');
+                    if (targetHeading) {
+                        console.log(`Blocked ${funcName} execution on protected element`);
+                        return;
+                    }
+                    return originalFunc.apply(this, args);
+                };
+                console.log(`Overrode ${funcName} function`);
+            }
+        });
+        
+        // Extra protection: add CSS that ensures the heading is visible
+        const style = document.createElement('style');
+        style.textContent = `
+            h1[data-no-animation], 
+            .hero h1[data-no-animation],
+            .hero h1.gradient-text[data-no-animation] {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                min-height: auto !important;
+                position: relative !important;
+                left: auto !important;
+                top: auto !important;
+                pointer-events: auto !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }, 200);
 });

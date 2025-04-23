@@ -1057,65 +1057,110 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Fix and enhance typewriter effect on hero heading for desktop
 document.addEventListener('DOMContentLoaded', function() {
-  // Try multiple selectors for hero heading
-  const heroHeading = document.querySelector('.hero h1, .hero .hero-title, .hero .section-title, .hero-title, .section-title');
-  if (!heroHeading) {
-    console.warn('Typewriter effect: No hero heading found for typewriter animation.');
-    return;
-  }
-
-  const isMobile = window.innerWidth <= 768 || 
-                   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-  // Desktop typewriter animation
-  if (!isMobile) {
-    const originalText = heroHeading.innerText;
-    const originalHTML = heroHeading.innerHTML; // Store for fallback
-    heroHeading.innerHTML = ''; // Clear for animation
-
-    // Store min-height to prevent layout shift
-    const computedStyle = window.getComputedStyle(heroHeading);
-    heroHeading.style.minHeight = computedStyle.height;
-
-    let charIndex = 0;
-    const typeSpeed = 40; // ms per character
-
-    function typeWriter() {
-      if (charIndex < originalText.length) {
-        heroHeading.innerHTML += originalText.charAt(charIndex);
-        charIndex++;
-        setTimeout(typeWriter, typeSpeed);
-      } else {
-        // Add blinking cursor at the end
-        const cursor = document.createElement('span');
-        cursor.className = 'typing-cursor';
-        cursor.innerHTML = '|';
-        heroHeading.appendChild(cursor);
-
-        // Remove cursor after delay
-        setTimeout(() => {
-          if (cursor.parentNode === heroHeading) {
-            heroHeading.removeChild(cursor);
-          }
-        }, 3000);
-      }
+  // Only run on index.html and web-design.html
+  const path = window.location.pathname.replace(/\\/g, '/').toLowerCase();
+  if (
+    path.endsWith('/index.html') ||
+    path.endsWith('/index') ||
+    path === '/' ||
+    path.endsWith('/web-design.html') ||
+    path.endsWith('/web-design')
+  ) {
+    console.log('Typewriter effect: Valid page detected:', path);
+    
+    // Try multiple selectors for hero heading
+    const heroHeading = document.querySelector(
+      '.hero h1, .hero .hero-title, .hero .section-title, .hero-title, .section-title'
+    );
+    
+    if (!heroHeading) {
+      console.warn('Typewriter effect: No hero heading found for typewriter animation.');
+      return;
     }
+    
+    // Debug what we found
+    console.log('Typewriter effect: Found heading element:', heroHeading.tagName, 
+                'with classes:', heroHeading.className,
+                'and content:', heroHeading.innerText.substring(0, 20) + '...');
+    
+    // Prevent running if already animated or has data-no-animation attribute
+    if (heroHeading.dataset.typewriterApplied || heroHeading.dataset.noAnimation) {
+      console.log('Typewriter effect: Animation skipped - element has data-typewriter-applied or data-no-animation attribute');
+      return;
+    }
+    
+    // Mark as processed to avoid double animation
+    heroHeading.dataset.typewriterApplied = "true";
 
-    // Add fallback if typewriter doesn't start within 2 seconds
-    const fallbackTimer = setTimeout(() => {
-      heroHeading.innerHTML = originalHTML;
-      console.warn('Typewriter effect: Fallback triggered, restoring original HTML.');
-    }, 2000);
+    const isMobile = window.innerWidth <= 768 ||
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    // Start typing after short delay
-    setTimeout(() => {
-      clearTimeout(fallbackTimer); // Clear fallback timer
-      typeWriter(); // Start typewriter
-      console.log('Typewriter effect: Started on hero heading.');
-    }, 500);
+    // Desktop typewriter animation
+    if (!isMobile) {
+      console.log('Typewriter effect: Starting animation');
+      
+      const originalText = heroHeading.innerText;
+      const originalHTML = heroHeading.innerHTML; // Store for fallback
+      
+      // Store original styles to prevent layout shift
+      const computedStyle = window.getComputedStyle(heroHeading);
+      const originalMinHeight = heroHeading.style.minHeight;
+      
+      // Force minimal styling to ensure animation works
+      Object.assign(heroHeading.style, {
+        minHeight: computedStyle.height,
+        display: 'block',
+        visibility: 'visible',
+        opacity: '1'
+      });
+      
+      // Clear the content for animation
+      heroHeading.innerHTML = '';
+      
+      let charIndex = 0;
+      const typeSpeed = 40; // ms per character
+
+      function typeWriter() {
+        if (charIndex < originalText.length) {
+          heroHeading.innerHTML += originalText.charAt(charIndex);
+          charIndex++;
+          setTimeout(typeWriter, typeSpeed);
+        } else {
+          // Add blinking cursor at the end
+          const cursor = document.createElement('span');
+          cursor.className = 'typing-cursor';
+          cursor.innerHTML = '|';
+          heroHeading.appendChild(cursor);
+
+          // Remove cursor after delay
+          setTimeout(() => {
+            if (cursor.parentNode === heroHeading) {
+              heroHeading.removeChild(cursor);
+            }
+          }, 3000);
+          
+          console.log('Typewriter effect: Animation completed successfully');
+        }
+      }
+
+      // Add fallback if typewriter doesn't start within 2 seconds
+      const fallbackTimer = setTimeout(() => {
+        heroHeading.innerHTML = originalHTML;
+        heroHeading.style.minHeight = originalMinHeight;
+        console.warn('Typewriter effect: Fallback triggered, restoring original HTML.');
+      }, 2000);
+
+      // Start typing after short delay
+      setTimeout(() => {
+        clearTimeout(fallbackTimer); // Clear fallback timer
+        typeWriter(); // Start typewriter
+        console.log('Typewriter effect: Started on hero heading.');
+      }, 500);
+    } else {
+      console.log('Typewriter effect: Skipped on mobile device');
+    }
   } else {
-    // Enhanced mobile hero implementation
-    // ...existing code for mobile hero background...
+    console.log('Typewriter effect: Page not matching index or web-design, skipping:', path);
   }
 });
 

@@ -330,9 +330,9 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="ecommerce.html">E-Commerce</a></li>
                 <li><a href="web-design.html" class="active">Web Design</a></li>
-                <li><a href="showcase" class="showcase-link">Showcase</a></li>
+                <li><a href="showcase.html">Showcase</a></li>
                 <li><a href="faq.html">FAQ</a></li>
-                <li><a href="index.html#contact" class="btn btn-outline">Contact</a></li>
+                <li><a href="contact.html" class="btn btn-outline">Contact</a></li>
             </ul>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
                 <i class="fas fa-lightbulb"></i>
@@ -1508,119 +1508,74 @@
                 max-width: none;
             }
         }
-    </style>
-    
-    <!-- Updated FAQ script with better animation -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Enhanced FAQ functionality with smooth animations
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                const answer = item.querySelector('.faq-answer');
-                
-                // Set initial state
-                if (item.classList.contains('active')) {
-                    answer.style.height = answer.scrollHeight + 'px';
-                } else {
-                    answer.style.height = '0px';
-                }
-                
-                question.addEventListener('click', () => {
-                    // Toggle current item
-                    const isActive = item.classList.contains('active');
-                    
-                    // Close other items
-                    faqItems.forEach(otherItem => {
-                        if (otherItem !== item && otherItem.classList.contains('active')) {
-                            otherItem.classList.remove('active');
-                            otherItem.querySelector('.faq-answer').style.height = '0px';
-                        }
-                    });
-                    
-                    // Toggle current item
-                    if (isActive) {
-                        answer.style.height = '0px';
-                        item.classList.remove('active');
-                    } else {
-                        item.classList.add('active');
-                        answer.style.height = answer.scrollHeight + 'px';
-                    }
-                });
-            });
-            
-            // Cookie banner functionality
-            const cookieBanner = document.getElementById('cookie-banner');
-            const acceptBtn = document.getElementById('cookie-accept');
-            const declineBtn = document.getElementById('cookie-decline');
-            
-            // Check if user has already made a choice
-            const cookieConsent = localStorage.getItem('cookieConsent');
-            
-            // If no choice has been made yet, show the banner
-            if (cookieConsent === null) {
-                setTimeout(() => {
-                    cookieBanner.style.display = 'block';
-                }, 1000);
-            }
-            
-            // Handle accept button click
-            acceptBtn.addEventListener('click', () => {
-                localStorage.setItem('cookieConsent', 'accepted');
-                cookieBanner.style.display = 'none';
-            });
-            
-            // Handle decline button click
-            declineBtn.addEventListener('click', () => {
-                localStorage.setItem('cookieConsent', 'declined');
-                cookieBanner.style.display = 'none';
-            });
-        });
-    </script>
 
-    <!-- Simple fix for FAQ accordions -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Simple, direct accordion functionality
-            const faqQuestions = document.querySelectorAll('.faq-question');
+        /* Matching gradient text effect from index page */
+        .gradient-text {
+            /* Enhanced gradient with more vibrant colors and wider range */
+            background-image: linear-gradient(90deg, 
+                #4361ee, 
+                #3a86ff, 
+                #4cc9f0, 
+                #3a86ff, 
+                #4361ee);
+            background-size: 200% auto;
+            background-clip: text;
             
-            faqQuestions.forEach(question => {
-                question.addEventListener('click', () => {
-                    // Get the parent FAQ item
-                    const faqItem = question.parentElement;
-                    // Toggle the active class
-                    faqItem.classList.toggle('active');
-                    
-                    // Get the answer element
-                    const answer = faqItem.querySelector('.faq-answer');
-                    
-                    // Toggle the height
-                    if (faqItem.classList.contains('active')) {
-                        answer.style.height = answer.scrollHeight + 'px';
-                    } else {
-                        answer.style.height = '0';
-                    }
-                });
-            });
-        });
-    </script>
-    
-    <!-- Custom spacing fix for hero image on mobile -->
-    <style>
-        /* Reduce the gap above the hero image on mobile */
-        @media (max-width: 768px) {
-            .hero-buttons {
-                margin-bottom: 10px !important; /* Reduce bottom margin */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            /* Faster animation for more obvious effect */
+            animation: gradient-flow 3s ease infinite alternate;
+            
+            /* Add text outline for better visibility */
+            text-shadow: 
+                0 0 1px rgba(67, 97, 238, 0.2),
+                0 0 15px rgba(76, 201, 240, 0.3);
+                
+            /* Make text bolder for better color display */
+            font-weight: 700;
+            
+            /* Add slight scale effect during animation */
+            transform-origin: center;
+            animation: gradient-flow 3s ease infinite alternate,
+                       pulse-text 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradient-flow {
+            0% {
+                background-position: 0% 50%;
             }
-            
-            .hero-image {
-                margin-top: -30px; /* Pull image up more aggressively */
+            100% {
+                background-position: 100% 50%;
             }
-            
-            /* Make hero content more compact */
-            .hero .container {
-                gap: 20px; /* Reduce gap between content and image */
+        }
+
+        @keyframes pulse-text {
+            0% {
+                transform: scale(1);
+                text-shadow: 0 0 1px rgba(67, 97, 238, 0.2),
+                             0 0 15px rgba(76, 201, 240, 0.3);
+            }
+            100% {
+                transform: scale(1.02);
+                text-shadow: 0 0 2px rgba(67, 97, 238, 0.4),
+                             0 0 20px rgba(76, 201, 240, 0.5);
+            }
+        }
+
+        /* Add smooth reveal animation */
+        .hero-content h1 {
+            animation: smooth-reveal 1.2s ease forwards;
+        }
+
+        @keyframes smooth-reveal {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
