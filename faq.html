@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions | Futurelab</title>
+    <meta name="description" content="Answers to common questions about Futurelab's web design, e-commerce, and app development services.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="showcase.css">
+    <link rel="stylesheet" href="showcase-additional.css">
+    <link rel="stylesheet" href="mobile-hero.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#4361ee">
+    <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <script src="simple-menu.js" defer></script>
+    <script src="mobile-responsive.js" defer></script>
+    <script src="script.js" defer></script>
+    <style>
+        .faq-item {
+            border: 1px solid rgba(67, 97, 238, 0.2);
+            border-radius: 8px;
+            margin-bottom: 18px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.04);
+            transition: box-shadow 0.3s;
+        }
+        .dark-theme .faq-item {
+            background: #1e293b;
+            border-color: rgba(55, 65, 81, 0.5);
+        }
+        .faq-item:hover {
+            box-shadow: 0 8px 24px rgba(67, 97, 238, 0.10);
+        }
+        .faq-toggle {
+            background: rgba(67, 97, 238, 0.1);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color, #4361ee);
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-left: 18px;
+            font-size: 1.1rem;
+        }
+        .faq-toggle:hover {
+            background: rgba(67, 97, 238, 0.18);
+        }
+        .faq-item.active .faq-toggle {
+            background: var(--primary-color, #4361ee);
+            color: #fff;
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(.4,0,.2,1), padding 0.3s;
+            padding: 0 24px;
+            background: rgba(67, 97, 238, 0.03);
+        }
+        .dark-theme .faq-answer {
+            background: rgba(67, 97, 238, 0.05);
+        }
+        .faq-item.active .faq-answer {
+            padding: 0 24px 18px;
+            max-height: 500px;
+        }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 24px;
+            position: relative;
+            z-index: 100;
+        }
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--dark-color);
+            border-radius: 2px;
+            transition: .25s ease-in-out;
+        }
+        .dark-theme .hamburger span {
+            background: #fff;
+        }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 10px; }
+        .hamburger span:nth-child(3) { top: 20px; }
+        .hamburger.active span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .hamburger.active span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+        }
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                width: 100%;
+                margin: 0 auto;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 20px 0;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+                text-align: center;
+            }
+            .dark-theme .nav-links {
+                background: #1e293b;
+            }
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            .nav-links li {
+                margin: 10px 0;
+                width: 100%;
+                text-align: center;
+            }
+            .nav-links li a {
+                display: block;
+                padding: 10px 0;
+                width: 100%;
+                text-align: center;
+            }
+            body.menu-open {
+                overflow: hidden;
+            }
+        }
+        .theme-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: background 0.2s;
+            z-index: 100;
+        }
+        .theme-toggle:hover {
+            background: rgba(67, 97, 238, 0.1);
+        }
+        .dark-theme .theme-toggle {
+            color: #e2e8f0;
+        }
+        .toggle-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(67,97,238,0.2) 0%, rgba(67,97,238,0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .theme-toggle:hover .toggle-glow {
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .theme-toggle {
+                right: 60px;
+            }
+        }
+
+        /* Add more padding above the FAQ section title */
+        .faq.section-transition {
+            padding-top: 80px;
+            padding-bottom: 40px; /* Add bottom padding to create gap */
+            margin-bottom: 20px; /* Additional margin for more separation */
+        }
+        
+        .faq .section-title {
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* Improved styling for FAQ question titles */
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1.13rem;
+            font-weight: 500;
+            color: var(--dark-color, #22223b);
+            padding: 0 0 0 10px; /* Add left padding to move text away from the edge */
+            line-height: 1.4;
+            flex-grow: 1;  /* Make the heading take available space, pushing the toggle button to the right */
+            transition: color 0.2s;
+        }
+        
+        .dark-theme .faq-question h3 {
+            color: #e2e8f0;
+        }
+        
+        /* Add visual improvement to the question container */
+        .faq-question {
+            padding: 22px 24px;
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+        
+        .dark-theme .faq-question {
+            background: #1e293b;
+        }
+        
+        /* Hover effect for better interactivity */
+        .faq-item:hover .faq-question {
+            background-color: rgba(67, 97, 238, 0.03);
+        }
+        
+        .dark-theme .faq-item:hover .faq-question {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        /* Active state for better visibility */
+        .faq-item.active .faq-question h3 {
+            color: var(--primary-color, #4361ee);
+            font-weight: 500;
+        }
+
+        /* Ensure FAQ bullet points display correctly */
+        .faq-answer ul {
+            list-style-type: disc;
+            padding-left: 24px;
+            margin: 12px 0;
+        }
+        
+        .faq-answer li {
+            position: relative;
+            padding: 5px 0;
+            margin-bottom: 5px;
+            display: list-item; /* Explicitly set display for list items */
+        }
+        
+        /* Ensure bullet color matches theme */
+        .dark-theme .faq-answer ul {
+            color: #e2e8f0;
+        }
+        
+        /* Additional styling for nested lists if needed */
+        .faq-answer ul ul {
+            list-style-type: circle;
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+
+        /* Ensure last FAQ item has bottom margin */
+        .faq-list .faq-item:last-child {
+            margin-bottom: 30px; /* Extra space after the last FAQ */
+        }
+
+        /* FAQ Section Styling */
+        .faq-section {
+            margin-bottom: 40px;
+        }
+        
+        .faq-section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(67, 97, 238, 0.2);
+        }
+        
+        .dark-theme .faq-section-title {
+            border-bottom-color: rgba(67, 97, 238, 0.3);
+        }
+        
+        /* Additional spacing between sections */
+        .faq-section:not(:first-child) {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Futurelab</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="ecommerce.html">E-Commerce</a></li>
+                <li><a href="web-design.html">Web Design</a></li>
+                <li><a href="showcase.html">Showcase</a></li>
+                <li><a href="faq.html" class="active">FAQ</a></li>
+                <li><a href="contact.html" class="btn btn-outline">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+                <i class="fas fa-lightbulb"></i>
+                <div class="toggle-glow"></div>
+            </button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="mobile-menu-overlay"></div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="faq section-transition" id="faq">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                
+                <!-- Project Timeline Section -->
+                <div class="faq-section">
+                    <h3 class="faq-section-title">Project Timeline & Process</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>How long does it take to build a website?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Most brochure websites take 2-4 weeks. E-commerce and custom projects may take longer depending on requirements. You'll get a clear timeline before we start.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>How long does a typical project take?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Timeline varies by project complexity. Simple websites typically take 2-3 weeks, while e-commerce sites or complex web applications may take 4-8 weeks. We'll provide a detailed timeline during our initial consultation based on your specific requirements.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>What platforms do you use?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>We build custom sites using modern frameworks (React, Next.js, Astro), Shopify for e-commerce, and can integrate with WordPress or other CMS if needed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pricing Section -->
+                <div class="faq-section">
+                    <h3 class="faq-section-title">Pricing & Payment</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>How much does a website cost?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Starter websites begin at £350, e-commerce from £500, and custom projects are quoted based on your needs. Use our <a href="showcase.html#calculator">pricing calculator</a> for an instant estimate.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Can I pay in installments?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes! We typically work with a 50% deposit to begin work, with the remaining balance due upon project completion. For larger projects, we can arrange milestone-based payment schedules to spread the cost over the development timeline.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>What's included in the quote?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Our quotes are comprehensive and include design, development, testing, and initial content integration. We also include:</p>
+                                <ul>
+                                    <li>Mobile-responsive design</li>
+                                    <li>Basic SEO setup</li>
+                                    <li>Browser compatibility testing</li>
+                                    <li>Site launch and setup</li>
+                                    <li>30 days of post-launch support</li>
+                                </ul>
+                                <p>Additional services like ongoing maintenance, advanced SEO, or content creation are available as add-ons.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Support & Management Section -->
+                <div class="faq-section">
+                    <h3 class="faq-section-title">Website Management & Support</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Will I be able to update the site myself later?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Absolutely! We can build your site with user-friendly content management systems that make updates easy, even for non-technical users. We also provide training sessions to ensure you're comfortable managing your site and offer ongoing support if needed.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Do you offer ongoing support?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Absolutely. We offer flexible support and maintenance packages, or can help on an ad-hoc basis as your business grows.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Can you help with content and images?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes! We can provide copywriting, source high-quality stock images, and help you structure your content for best results.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Do you offer hosting or domain services?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>While we don't directly sell hosting or domains, we can recommend reliable providers based on your needs and handle all the technical setup for you. We can also manage hosting migration if you're moving from an existing provider.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Technical Questions Section -->
+                <div class="faq-section">
+                    <h3 class="faq-section-title">Technical & Business Questions</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Do I even need a website if I'm a small business?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes, even small businesses benefit greatly from having a professional website. It serves as your 24/7 digital storefront that:</p>
+                                <ul>
+                                    <li>Builds credibility with potential customers</li>
+                                    <li>Makes your business discoverable in local searches</li>
+                                    <li>Provides essential information (hours, location, services)</li>
+                                    <li>Showcases testimonials and builds trust</li>
+                                    <li>Can generate leads even outside business hours</li>
+                                </ul>
+                                <p>We can create appropriately scaled solutions for businesses of all sizes.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>How fast should a website load?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Ideally, websites should load in under 3 seconds. Users typically abandon sites that take longer than that to load. All our sites are built with performance optimization in mind, including compressed images, efficient code, and modern best practices to ensure fast loading times across all devices and connection speeds.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>What's the difference between an eCommerce website and a regular website?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>An eCommerce website includes functionality to sell products or services online, with features like:</p>
+                                <ul>
+                                    <li>Product catalogs and inventory management</li>
+                                    <li>Shopping cart and secure checkout process</li>
+                                    <li>Payment gateway integration</li>
+                                    <li>Customer account management</li>
+                                    <li>Order processing and shipping integration</li>
+                                </ul>
+                                <p>Regular websites primarily provide information but don't typically include direct selling capabilities. eCommerce sites are generally more complex to build and maintain but offer the benefit of direct online sales.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>My website is very old. Can you modernize it?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Definitely! Modernizing outdated websites is one of our specialties. We can transform your old site into a contemporary, mobile-friendly, and secure platform while maintaining your brand identity. This usually includes updating visual design, improving site speed, enhancing security, and ensuring mobile compatibility.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Can you redesign my existing website or app?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes! We specialize in redesigns and can modernize your existing site while preserving its content and improving functionality. We'll start with an audit of your current site to identify what's working, what needs improvement, and opportunities to enhance user experience.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- About Futurelab Section -->
+                <div class="faq-section">
+                    <h3 class="faq-section-title">About Futurelab</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>Where are you based?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>I'm based in London, UK.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>I'm a tech newbie. Can you help me through the process?</h3>
+                                <button class="faq-toggle" aria-label="Toggle answer"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Absolutely! We work with clients of all technical backgrounds and pride ourselves on making the process simple and transparent. We'll explain everything in clear, non-technical terms, guide you through each step, and provide comprehensive training on how to use your new site once it's completed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Futurelab</div>
+                <div class="footer-tagline">Building digital products for startups, creators, and small businesses.</div>
+                <div class="footer-social">
+                    <a href="https://twitter.com/futurelabweb" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://github.com/futurelab-solutions" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="mailto:hello@futurelab.solutions" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 Futurelab Solutions. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('dark-theme');
+                    
+                    // Store preference in localStorage
+                    if (document.body.classList.contains('dark-theme')) {
+                        localStorage.setItem('theme', 'dark');
+                        this.querySelector('i').className = 'fas fa-lightbulb';
+                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
+                    } else {
+                        localStorage.setItem('theme', 'light');
+                        this.querySelector('i').className = 'far fa-lightbulb';
+                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#4361ee');
+                    }
+                });
+            
+                // Check for saved theme preference
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-theme');
+                    themeToggle.querySelector('i').className = 'fas fa-lightbulb';
+                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
+                } else {
+                    themeToggle.querySelector('i').className = 'far fa-lightbulb';
+                }
+            }
+            
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+            const body = document.body;
+            if (hamburger && navLinks) {
+                function toggleMenu(e) {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    if (mobileOverlay) {
+                        mobileOverlay.classList.toggle('active');
+                    }
+                    if (navLinks.classList.contains('active')) {
+                        body.classList.add('menu-open');
+                    } else {
+                        body.classList.remove('menu-open');
+                    }
+                }
+                hamburger.addEventListener('click', toggleMenu);
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        if (mobileOverlay) mobileOverlay.classList.remove('active');
+                        body.classList.remove('menu-open');
+                    });
+                });
+                if (mobileOverlay) {
+                    mobileOverlay.addEventListener('click', function() {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        mobileOverlay.classList.remove('active');
+                        body.classList.remove('menu-open');
+                    });
+                }
+            }
+            document.querySelectorAll('.faq-toggle').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const item = btn.closest('.faq-item');
+                    item.classList.toggle('active');
+                    document.querySelectorAll('.faq-item').forEach(function(other) {
+                        if (other !== item) other.classList.remove('active');
+                    });
+                });
+            });
+            document.querySelectorAll('.faq-question').forEach(function(q) {
+                q.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('faq-toggle')) {
+                        const item = q.closest('.faq-item');
+                        item.classList.toggle('active');
+                        document.querySelectorAll('.faq-item').forEach(function(other) {
+                            if (other !== item) other.classList.remove('active');
+                        });
+                    }
+                });
+            });
+        });
+
+        // Add immediate self-executing function to ensure theme toggle works
+        (function() {
+            // Direct theme toggle implementation that won't conflict with other code
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                console.log("Found theme toggle, adding event listener");
+                
+                // Force add click event (will work even if other code also adds listeners)
+                themeToggle.onclick = function(e) {
+                    console.log("Theme toggle clicked");
+                    document.body.classList.toggle('dark-theme');
+                    
+                    // Update localStorage
+                    if (document.body.classList.contains('dark-theme')) {
+                        localStorage.setItem('theme', 'dark');
+                        this.querySelector('i').className = 'fas fa-lightbulb';
+                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
+                    } else {
+                        localStorage.setItem('theme', 'light');
+                        this.querySelector('i').className = 'far fa-lightbulb';
+                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#4361ee');
+                    }
+                };
+                
+                // Apply initial theme state
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-theme');
+                    themeToggle.querySelector('i').className = 'fas fa-lightbulb';
+                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
+                } else {
+                    document.body.classList.remove('dark-theme');
+                    themeToggle.querySelector('i').className = 'far fa-lightbulb';
+                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#4361ee');
+                }
+            } else {
+                console.error("Theme toggle button not found");
+            }
+        })(); // Execute immediately
+    </script>
+</body>
+</html>
+``` 

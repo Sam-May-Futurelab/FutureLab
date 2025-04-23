@@ -187,65 +187,85 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // 3. Number Counter Animation
-    const statsSection = document.createElement('section');
-    statsSection.className = 'stats';
-    statsSection.innerHTML = `
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item" data-count="50">
-                    <h3 class="counter">0</h3>
-                    <p>Projects Completed</p>
-                </div>
-                <div class="stat-item" data-count="98">
-                    <h3 class="counter">0</h3>
-                    <p>Happy Clients</p>
-                </div>
-                <div class="stat-item" data-count="5">
-                    <h3 class="counter">0</h3>
-                    <p>Years Experience</p>
-                </div>
-                <div class="stat-item" data-count="2">
-                    <h3 class="counter">0</h3>
-                    <p>Awards Received</p>
-                </div>
-            </div>
+    // Only add stats section if we're NOT on the FAQ page
+    const isFaqPage = window.location.pathname.includes('faq.html');
+    
+    if (!isFaqPage) {
+        const statsSection = document.createElement('section');
+        statsSection.className = 'stats';
+        statsSection.innerHTML = `
+<div class="container">
+    <div class="stats-grid">
+        <div class="stat-item" data-count="15">
+            <h3 class="counter">0</h3>
+            <p>Projects Completed</p>
         </div>
-    `;
-    
-    // Insert the stats section before the contact section
-    const contactSection = document.getElementById('contact');
-    document.querySelector('main').insertBefore(statsSection, contactSection);
-    
-    // Animate the counters when in view
-    const counters = document.querySelectorAll('.counter');
-    
-    function startCounters() {
-        counters.forEach(counter => {
-            const target = +counter.parentElement.dataset.count;
-            const count = +counter.innerText;
-            const increment = target / 100;
-            
-            if (count < target) {
-                counter.innerText = Math.ceil(count + increment);
-                setTimeout(startCounters, 20);
-            } else {
-                counter.innerText = target;
-            }
-        });
+        <div class="stat-item" data-count="8">
+            <h3 class="counter">0</h3>
+            <p>Happy Clients</p>
+        </div>
+        <div class="stat-item" data-count="2">
+            <h3 class="counter">0</h3>
+            <p>Years Experience</p>
+        </div>
+        <div class="stat-item" data-count="1">
+            <h3 class="counter">0</h3>
+            <p>UK-Based Designer</p> <!-- Or "Conversion-Focused Design" -->
+        </div>
+    </div>
+</div>
+        `;
+        
+        // Insert the stats section before the contact section
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            document.querySelector('main').insertBefore(statsSection, contactSection);
+        }
+        
+        // Animate the counters when in view
+        const counters = document.querySelectorAll('.counter');
+        
+        function startCounters() {
+            counters.forEach(counter => {
+                const target = +counter.parentElement.dataset.count;
+                const count = +counter.innerText;
+                const increment = target / 100;
+                
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(startCounters, 20);
+                } else {
+                    counter.innerText = target;
+                }
+            });
+        }
+        
+        // Start counters when they come into view
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                    entry.target.classList.add('counted');
+                    startCounters();
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        statsObserver.observe(statsSection);
     }
     
-    // Start counters when they come into view
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-                entry.target.classList.add('counted');
-                startCounters();
-            }
-        });
-    }, { threshold: 0.5 });
+    // Add extra padding for FAQ section headers
+    const faqSection = document.querySelector('.faq.section-transition');
+    const faqTitle = document.querySelector('.faq .section-title');
     
-    statsObserver.observe(statsSection);
+    if (faqSection) {
+        faqSection.style.paddingTop = '80px';
+    }
     
+    if (faqTitle) {
+        faqTitle.style.marginTop = '30px';
+        faqTitle.style.marginBottom = '50px';
+    }
+
     // 4. Interactive service cards with 3D tilt effect
     const serviceCards = document.querySelectorAll('.service-card');
     
