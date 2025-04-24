@@ -679,6 +679,44 @@
                 padding: 15px;
             }
         }
+        
+        /* Gradient title animation styles */
+        .gradient-title {
+            background-image: linear-gradient(90deg, 
+                #4361ee, 
+                #3a86ff, 
+                #4cc9f0, 
+                #3a86ff, 
+                #4361ee);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            animation: gradient-flow 3s ease infinite alternate;
+            text-shadow: 0 0 1px rgba(67, 97, 238, 0.2),
+                        0 0 15px rgba(76, 201, 240, 0.3);
+            font-weight: 700;
+        }
+
+        /* Animation keyframes for the gradient effect */
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Dark theme adjustments */
+        .dark-theme .gradient-title {
+            text-shadow: 0 0 2px rgba(76, 201, 240, 0.3),
+                        0 0 15px rgba(67, 97, 238, 0.4);
+        }
+
+        /* Make sure the title maintains proper layout if it's a block element */
+        .ecommerce-hero-content h1.gradient-title {
+            display: block;
+            width: 100%;
+            margin-bottom: 25px;
+        }
     </style>
     
     <!-- CRITICAL FIX: Theme toggle and contact button overlap -->
@@ -1075,7 +1113,7 @@
             <div class="animated-gradient-bg"></div>
             <div class="container">
                 <div class="hero-content">
-                    <h1 class="animate-in gradient-text">Professional E-Commerce Solutions That Convert</h1>
+                    <h1 class="gradient-title">Professional E-Commerce Solutions That Convert</h1>
                     <p class="animate-in stagger-1">Beautiful <span class="highlight-text">online stores</span> that showcase your products, <span class="highlight-text">strengthen your brand</span>, and <span class="highlight-text">turn visitors into customers</span> — built by a certified Shopify Partner.</p>
                     <div class="hero-buttons animate-in stagger-2">
                         <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
@@ -1636,4 +1674,3 @@
     </script>
 </body>
 </html>
-``` 
