@@ -46,7 +46,7 @@
         .contact-hero {
             background: var(--gradient-1);
             color: white;
-            padding: 120px 0 70px; /* Increased top padding for more space below nav */
+            padding: 160px 0 70px; /* Increased from 120px to 160px for more space below navbar */
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -125,9 +125,15 @@
         }
         
         /* Mobile responsiveness for hero section */
+        @media (max-width: 992px) {
+            .contact-hero {
+                padding: 140px 0 70px; /* Slightly less padding on medium screens */
+            }
+        }
+
         @media (max-width: 768px) {
             .contact-hero {
-                padding: 100px 0 60px; /* Slightly less padding on mobile but still enough */
+                padding: 130px 0 60px; /* Adjusted for mobile but still with good spacing */
             }
             
             .contact-hero h1 {
@@ -137,7 +143,7 @@
         
         @media (max-width: 480px) {
             .contact-hero {
-                padding: 90px 0 50px; /* Adjusted for smaller screens */
+                padding: 120px 0 50px; /* Minimum spacing on very small screens */
             }
             
             .contact-hero h1 {
@@ -797,6 +803,26 @@
         .contact-hero .container {
             position: relative;
             z-index: 4;
+        }
+    </style>
+    <style>
+        /* Increased spacing fix - simple override for contact hero section */
+        .contact-hero {
+            padding-top: 220px !important; /* Much more space below navbar */
+            padding-bottom: 70px !important;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .contact-hero {
+                padding-top: 200px !important; /* Still plenty of space on mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-hero {
+                padding-top: 180px !important; /* Generous space on small screens */
+            }
         }
     </style>
 </head>
