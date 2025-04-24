@@ -815,7 +815,9 @@
         <!-- FAQ Section - New addition -->
         <section id="faq" class="faq section-transition">
             <div class="container">
-                <h2 class="section-title">Frequently Asked Questions</h2>
+                <h2 class="section-title">
+                    <a href="faq.html" class="gradient-title-link">Frequently Asked Questions</a>
+                </h2>
                 
                 <div class="faq-container">
                     <!-- FAQ Item 1 -->
@@ -1555,6 +1557,48 @@
                 padding: 0 15px 15px;
             }
         }
+
+        /* Animated gradient title link styling */
+        .gradient-title-link {
+            /* Use the same gradient as other gradient text */
+            background-image: linear-gradient(90deg, 
+                #4361ee, 
+                #3a86ff, 
+                #4cc9f0, 
+                #3a86ff, 
+                #4361ee);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            /* Animation for gradient movement */
+            animation: gradient-flow 3s ease infinite alternate;
+            
+            /* Text enhancement */
+            text-shadow: 0 0 1px rgba(67, 97, 238, 0.2),
+                        0 0 15px rgba(76, 201, 240, 0.3);
+            font-weight: 700;
+            
+            /* Make it look like a regular title */
+            text-decoration: none;
+            display: inline-block;
+            
+            /* Interactive hover effect */
+            transition: transform 0.3s ease;
+        }
+
+        .gradient-title-link:hover {
+            transform: translateY(-3px);
+            text-shadow: 0 0 2px rgba(67, 97, 238, 0.4),
+                        0 0 20px rgba(76, 201, 240, 0.5);
+        }
+        
+        /* Ensure animations work properly in dark theme */
+        .dark-theme .gradient-title-link {
+            text-shadow: 0 0 2px rgba(76, 201, 240, 0.3),
+                        0 0 15px rgba(67, 97, 238, 0.4);
+        }
     </style>
 
     <!-- Add JavaScript for FAQ toggle functionality -->
@@ -1582,3 +1626,4 @@
     </script>
 </body>
 </html>
+``` 

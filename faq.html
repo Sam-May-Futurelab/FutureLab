@@ -234,14 +234,68 @@
 
         /* Add more padding above the FAQ section title */
         .faq.section-transition {
-            padding-top: 80px;
-            padding-bottom: 40px; /* Add bottom padding to create gap */
-            margin-bottom: 20px; /* Additional margin for more separation */
+            padding-top: 120px !important; /* Increased from 80px to 120px */
+            padding-bottom: 40px;
+            margin-bottom: 20px;
+        }
+        
+        /* Responsive adjustments for different screen sizes */
+        @media (max-width: 992px) {
+            .faq.section-transition {
+                padding-top: 110px !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .faq.section-transition {
+                padding-top: 100px !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .faq.section-transition {
+                padding-top: 90px !important;
+            }
         }
         
         .faq .section-title {
             margin-top: 30px;
             margin-bottom: 50px;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Updated gradient title styling for proper centering */
+        .gradient-title {
+            background-image: linear-gradient(90deg, 
+                #4361ee, 
+                #3a86ff, 
+                #4cc9f0, 
+                #3a86ff, 
+                #4361ee);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block; /* Changed from inline-block to block */
+            width: 100%; /* Ensure it takes full width */
+            text-align: center; /* Center the text within the element */
+            animation: gradient-flow 3s ease infinite alternate;
+            text-shadow: 0 0 1px rgba(67, 97, 238, 0.2),
+                        0 0 15px rgba(76, 201, 240, 0.3);
+            font-weight: 700;
+        }
+
+        /* Animation keyframes for the gradient effect */
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Dark theme adjustments */
+        .dark-theme .gradient-title {
+            text-shadow: 0 0 2px rgba(76, 201, 240, 0.3),
+                        0 0 15px rgba(67, 97, 238, 0.4);
         }
 
         /* Improved styling for FAQ question titles */
@@ -373,7 +427,7 @@
     <main>
         <section class="faq section-transition" id="faq">
             <div class="container">
-                <h2 class="section-title">Frequently Asked Questions</h2>
+                <h2 class="section-title gradient-title">Frequently Asked Questions</h2>
                 
                 <!-- Add introduction paragraph -->
                 <p style="max-width: 700px; margin: 0 auto 40px; text-align: center; line-height: 1.6; color: var(--gray-color);">
