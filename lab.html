@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page Generator | Futurelab</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#4361ee">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">FutureLab</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="ecommerce.html">Ecommerce</a></li>
+                <li><a href="web-design.html">Web Design</a></li>
+                <li><a href="showcase.html">Showcase</a></li>
+                <li><a href="lab.html" class="active">Lab</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html" class="btn btn-outline">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+                <i class="fas fa-lightbulb"></i>
+                <div class="toggle-glow"></div>
+            </button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="mobile-menu-overlay"></div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero section-transition">
+            <div class="container">
+                <div class="hero-content" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    <h1 class="gradient-text">Build Your Perfect Landing Page in Minutes with AI</h1>
+                    <p class="animated-hero-text">Finally, a flexible, AI-powered landing page builder that's easy to use. Visually design, develop, and launch on-brand landing pages without writing a single line of code.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="form-section section-transition">
+            <div class="container">
+                <h2 class="section-title">Get Started Instantly</h2>
+                <p style="text-align: center; margin-bottom: 30px;">Tell our AI about your project, and watch your landing page come to life.</p>
+                <form id="page-generator-form" class="interactive-form">
+                    <div class="form-group">
+                        <label for="business-type" class="form-label">Business Type</label>
+                        <input type="text" id="business-type" name="business-type" class="form-input" placeholder="e.g., Bakery, Tech Startup" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="design-preferences" class="form-label">Design Preferences</label>
+                        <textarea id="design-preferences" name="design-preferences" class="form-input" placeholder="e.g., Modern, Minimalist, Vibrant" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="target-audience" class="form-label">Target Audience</label>
+                        <input type="text" id="target-audience" name="target-audience" class="form-input" placeholder="e.g., Young Professionals, Families" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Generate Page</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="preview-section section-transition">
+            <div class="container">
+                <h2 class="section-title">Preview</h2>
+                <div id="page-preview" class="preview-container" style="background: #f0f2f5; border: 1px solid #e0e4e8; border-radius: var(--border-radius); padding: 30px; margin-top: 40px; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+                    <p style="color: var(--gray-color); font-style: italic;">Your generated landing page will appear here.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Landing Page Generator Focused Content Sections -->
+
+        <section class="ai-problem-solution-section section-transition">
+            <div class="container">
+                <h2 class="section-title">Tired of Slow, Complicated Page Builders?</h2>
+                <p>Traditional website building can be a drag. Hours spent wrestling with clunky interfaces, limited templates, and slow-loading pages that just don't convert. It's time for a smarter, faster way to build.</p>
+                
+                <div class="subsection" style="margin-top: 40px; text-align: center;">
+                    <h3 style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 15px;">Meet the Futurelab AI Page Generator</h3>
+                    <p>The fastest, most intuitive way to build pixel-perfect landing pages. Our AI understands your needs and crafts high-performing designs in minutes, not days. Visually design, develop, and launch on-brand pages that captivate and convert.</p>
+                    <div class="image-placeholder" style="text-align: center; padding: 20px; border: 1px dashed var(--light-gray); margin: 30px auto; background: #e9ecef; border-radius: var(--border-radius-sm); max-width: 600px;">[AI Generator Interface Mockup]</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="ai-performance-section section-transition">
+            <div class="container">
+                <h2 class="section-title">Convert More with Lightning-Fast Pages</h2>
+                <p>Up to 38% of your visitors will bounce if your page loads slowly. Don't let speed kill your conversions.</p>
+                <p>The Futurelab AI Page Generator builds optimized, lightweight pages designed to load in under 1 second, potentially reducing your bounce rate by up to 75% and keeping your visitors engaged.</p>
+                <div class="image-placeholder" style="text-align: center; padding: 20px; border: 1px dashed var(--light-gray); margin: 30px auto; background: #e9ecef; border-radius: var(--border-radius-sm); max-width: 500px;">[Speed Comparison Graphic / Fast Loading Icon]</div>
+                <p style="text-align:center; margin-top:20px;"><a href="#form-section" class="btn btn-secondary">Try the Generator & See the Speed</a></p>
+            </div>
+        </section>
+
+        <section class="ai-features-section section-transition">
+            <div class="container">
+                <h2 class="section-title">Create Stunning Pages in Under 30 Minutes</h2>
+                <p>Our AI-powered platform streamlines the entire design and development process, packed with features to bring your vision to life quickly:</p>
+                <ul style="list-style: none; padding-left: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <li style="background: var(--light-color); padding: 20px; border-radius: var(--border-radius-sm); box-shadow: var(--box-shadow-sm);"><i class="fas fa-cubes" style="color: var(--primary-color); margin-right: 10px;"></i> <strong>Vast Component Library:</strong> Access hundreds of pre-designed blocks and dozens of versatile components.</li>
+                    <li style="background: var(--light-color); padding: 20px; border-radius: var(--border-radius-sm); box-shadow: var(--box-shadow-sm);"><i class="fas fa-layer-group" style="color: var(--primary-color); margin-right: 10px;"></i> <strong>Professionally Designed Templates:</strong> Start with a variety of high-converting templates tailored to different industries.</li>
+                    <li style="background: var(--light-color); padding: 20px; border-radius: var(--border-radius-sm); box-shadow: var(--box-shadow-sm);"><i class="fas fa-magic" style="color: var(--primary-color); margin-right: 10px;"></i> <strong>Intuitive AI Editor:</strong> Effortlessly customize layouts, content, and styles with our smart editor. No coding needed.</li>
+                    <li style="background: var(--light-color); padding: 20px; border-radius: var(--border-radius-sm); box-shadow: var(--box-shadow-sm);"><i class="fas fa-mobile-alt" style="color: var(--primary-color); margin-right: 10px;"></i> <strong>Fully Mobile Responsive:</strong> Pages look perfect on any device, automatically.</li>
+                </ul>
+                <div class="image-placeholder" style="text-align: center; padding: 20px; border: 1px dashed var(--light-gray); margin: 30px auto; background: #e9ecef; border-radius: var(--border-radius-sm); max-width: 600px;">[Feature Showcase / Drag & Drop Mockup]</div>
+            </div>
+        </section>
+
+        <section class="ai-customization-section section-transition">
+            <div class="container">
+                <h2 class="section-title">Unique, On-Brand Designs, Effortlessly</h2>
+                <p>Stand out from the crowd. The Futurelab AI Page Generator gives you the creative freedom to build truly unique landing pages that reflect your brand identity:</p>
+                <ul style="list-style: none; padding-left: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <li style="background: var(--light-color); padding: 20px; border-radius: var(--border-radius-sm); box-shadow: var(--box-shadow-sm);"><i class="fas fa-palette" style="color: var(--primary-color); margin-right: 10px;"></i> <strong>Full Color Customization:</strong> Easily match your brand's color palette or explore new schemes.</li>
+                    <li style="background: var(--light-color); padding: 20px; border-radius: var(--border-radius-sm); box-shadow: var(--box-shadow-sm);"><i class="fas fa-font" style="color: var(--primary-color); margin-right: 10px;"></i> <strong>Typography Control:</strong> Use Google Fonts or upload your custom fonts for perfect branding.</li>
+                    <li style="background: var(--light-color); padding: 20px; border-radius: var(--border-radius-sm); box-shadow: var(--box-shadow-sm);"><i class="fas fa-puzzle-piece" style="color: var(--primary-color); margin-right: 10px;"></i> <strong>Mix & Match Components:</strong> Combine different elements and sections to create your ideal layout.</li>
+                    <li style="background: var(--light-color); padding: 20px; border-radius: var(--border-radius-sm); box-shadow: var(--box-shadow-sm);"><i class="fas fa-sync-alt" style="color: var(--primary-color); margin-right: 10px;"></i> <strong>Reusable Sections:</strong> Save your custom designs as reusable components for future pages.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="cta-futurelab-lab section-transition">
+            <div class="container" style="text-align: center;">
+                <h2 class="section-title">Ready to Launch Your Next Landing Page?</h2>
+                <p>Experience the power and simplicity of AI-driven design. Generate your first landing page for free and see the Futurelab difference.</p>
+                <p class="ai-pricing-statement" style="font-size: 1.2rem; font-weight: 600; margin-top: 25px; color: var(--primary-color);">Unlock full access and unlimited page generations for just £20!</p>
+                <a href="#form-section" class="btn btn-primary" style="margin-top: 25px; padding: 14px 30px; font-size: 1.1rem;">Start Building with AI Now</a>
+                <p style="margin-top: 15px;">No credit card required for your first page. No coding skills needed.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Futurelab</div>
+                <div class="footer-tagline">Building digital products for startups, creators, and small businesses.</div>
+                <div class="footer-social">
+                    <a href="https://twitter.com/futurelabweb" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://github.com/futurelab-solutions" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="mailto:hello@futurelab.solutions" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 Futurelab Solutions. All rights reserved. <a href="privacy-policy.html" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="simple-menu.js"></script>
+    <script src="js/lab.js"></script>
+</body>
+</html>
