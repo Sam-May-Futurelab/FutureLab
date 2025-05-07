@@ -47,9 +47,18 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Re-initialize theme toggle functionality after header is injected
             if (window.initializeThemeToggle) {
-                setTimeout(window.initializeThemeToggle, 100); // Slight delay to ensure DOM is ready
+                window.initializeThemeToggle(); // Ensure immediate initialization
             } else {
                 console.warn('initializeThemeToggle function not found');
+            }
+
+            // Update the theme toggle icon immediately to prevent old icon from flashing
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                const isDark = document.body.classList.contains('dark-theme');
+                themeToggle.innerHTML = isDark
+                    ? '<i class="fas fa-sun"></i><div class="toggle-glow"></div>'
+                    : '<i class="fas fa-moon"></i><div class="toggle-glow"></div>';
             }
         })
         .catch(error => console.error('Error loading header:', error));

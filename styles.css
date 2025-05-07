@@ -834,6 +834,7 @@ nav {
     height: auto;
     padding: 8px 16px;
     margin: auto 0;
+    margin-left: 20px; /* Add spacing between the theme toggle and the contact button */
 }
 
 .nav-links a.btn.btn-outline {
@@ -848,6 +849,10 @@ nav {
 .dark-theme .nav-links a.btn.btn-outline:hover {
     background-color: var(--primary-color);
     color: var(--light-color);
+}
+
+.theme-toggle {
+    margin-right: 20px; /* Add spacing between the theme toggle and the contact button */
 }
 
 /* Fix hamburger menu behavior and visibility */

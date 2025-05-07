@@ -272,14 +272,14 @@
                 flex-direction: column;
                 justify-content: space-between;
                 position: absolute;
-                right: 35px !important;
+                right: 25px !important;
                 top: 50%;
                 transform: translateY(-50%);
                 z-index: 1001 !important;
             }
             
             .theme-toggle {
-                right: 85px !important;
+                right: 85px !important; /* Ensure it is to the left of the hamburger */
             }
             
             .nav-links {
@@ -332,6 +332,15 @@
                 width: 160px;
                 max-width: 80%;
                 display: block !important;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .theme-toggle {
+                position: absolute;
+                right: -175px; /* Move it to the far right */
+                top: 50%;
+                transform: translateY(-50%);
             }
         }
         
