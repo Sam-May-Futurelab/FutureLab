@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futurelab</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#4361ee">
+    
+    <style>
+        /* Header-specific styling */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 100;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark-theme header {
+            background-color: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        header nav.container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .dark-theme .logo {
+            color: #f8fafc;
+        }
+        
+        .logo-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+        
+        .logo-link:hover {
+            transform: translateY(-2px);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links li a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+            padding: 5px 3px;
+        }
+        
+        .dark-theme .nav-links li a {
+            color: #e2e8f0;
+        }
+        
+        .nav-links li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links li a.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .nav-links li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        .nav-links li a.btn {
+            color: white;
+            background: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: var(--border-radius-sm);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links li a.btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .nav-links li a.btn-outline {
+            color: var(--primary-color);
+            background: transparent;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .dark-theme .nav-links li a.btn-outline {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .nav-links li a.btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .dark-theme .nav-links li a.btn-outline:hover {
+            background: var(--secondary-color);
+            color: var(--dark-color);
+        }
+        
+        /* Theme toggle styling */
+        .theme-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            z-index: 100;
+            padding: 0;
+        }
+        
+        .dark-theme .theme-toggle {
+            color: #e2e8f0;
+        }
+        
+        .theme-toggle:active {
+            transform: translateY(-50%) scale(0.9);
+        }
+        
+        .theme-toggle i {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .theme-toggle:hover i {
+            transform: rotate(20deg);
+        }
+        
+        @keyframes toggle-shine {
+            0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(67, 97, 238, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
+        }
+        
+        .toggle-animation {
+            animation: toggle-shine 0.6s ease-out;
+        }
+        
+        .toggle-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.2) 0%, rgba(67, 97, 238, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .theme-toggle:hover .toggle-glow {
+            opacity: 1;
+        }
+        
+        /* Hamburger menu styling */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 24px;
+            position: relative;
+            z-index: 1001;
+            padding: 15px;
+            margin: -15px;
+            touch-action: manipulation;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--dark-color);
+            border-radius: 2px;
+            transition: .25s ease-in-out;
+        }
+        
+        .dark-theme .hamburger span {
+            background: #fff;
+        }
+        
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 10px; }
+        .hamburger span:nth-child(3) { top: 20px; }
+        
+        .hamburger.active span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+        
+        /* Mobile styling */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                position: absolute;
+                right: 35px !important;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 1001 !important;
+            }
+            
+            .theme-toggle {
+                right: 85px !important;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                width: 100%;
+                margin: 0 auto;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 20px 0;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+                text-align: center;
+            }
+            
+            .dark-theme .nav-links {
+                background: #1e293b;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-links li a {
+                display: block;
+                padding: 10px 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            body.menu-open {
+                overflow: hidden;
+            }
+            
+            .nav-links li a.btn {
+                margin: 10px auto !important;
+                padding: 10px 20px !important;
+                width: 160px;
+                max-width: 80%;
+                display: block !important;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .hamburger {
+                right: 25px !important;
+            }
+            
+            .theme-toggle {
+                right: 70px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo-link">
+                <div class="logo">Futurelab</div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" id="nav-home">Home</a></li>
+                <li><a href="ecommerce.html" id="nav-ecommerce">E-Commerce</a></li>
+                <li><a href="web-design.html" id="nav-webdesign">Web Design</a></li>
+                <li><a href="showcase.html" id="nav-showcase">Showcase</a></li>
+                <li><a href="lab.html" id="nav-lab">Lab</a></li>
+                <li><a href="faq.html" id="nav-faq">FAQ</a></li>
+                <li><a href="contact.html" class="btn btn-outline" id="nav-contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+                <i class="fas fa-lightbulb"></i>
+                <div class="toggle-glow"></div>
+            </button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="mobile-menu-overlay"></div>
+        </nav>
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set active navigation link based on current page
+            function setActiveNavLink() {
+                const currentPath = window.location.pathname;
+                const pageName = currentPath.split('/').pop();
+                
+                // Remove 'active' class from all nav links
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Apply 'active' class to the current page nav link
+                if (pageName === '' || pageName === 'index.html') {
+                    document.getElementById('nav-home').classList.add('active');
+                } else if (pageName === 'ecommerce.html') {
+                    document.getElementById('nav-ecommerce').classList.add('active');
+                } else if (pageName === 'web-design.html') {
+                    document.getElementById('nav-webdesign').classList.add('active');
+                } else if (pageName === 'showcase.html') {
+                    document.getElementById('nav-showcase').classList.add('active');
+                } else if (pageName === 'lab.html') {
+                    document.getElementById('nav-lab').classList.add('active');
+                } else if (pageName === 'faq.html') {
+                    document.getElementById('nav-faq').classList.add('active');
+                } else if (pageName === 'contact.html') {
+                    document.getElementById('nav-contact').classList.add('active');
+                }
+            }
+            
+            // Mobile menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+            const body = document.body;
+            
+            if (hamburger && navLinks) {
+                function toggleMenu(e) {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    
+                    if (mobileOverlay) {
+                        mobileOverlay.classList.toggle('active');
+                    }
+                    
+                    if (navLinks.classList.contains('active')) {
+                        body.classList.add('menu-open');
+                    } else {
+                        body.classList.remove('menu-open');
+                    }
+                }
+                
+                hamburger.addEventListener('click', toggleMenu, true);
+                hamburger.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    toggleMenu(e);
+                }, { capture: true });
+                
+                // Close menu when clicking on links
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        if (mobileOverlay) mobileOverlay.classList.remove('active');
+                        body.classList.remove('menu-open');
+                    });
+                });
+                
+                // Close menu when clicking overlay
+                if (mobileOverlay) {
+                    mobileOverlay.addEventListener('click', function() {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        mobileOverlay.classList.remove('active');
+                        body.classList.remove('menu-open');
+                    });
+                }
+            }
+            
+            // Set active navigation link
+            setActiveNavLink();
+        });
+    </script>
+</body>
+</html>

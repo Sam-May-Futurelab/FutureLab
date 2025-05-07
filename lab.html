@@ -6,37 +6,28 @@
     <title>Landing Page Generator | Futurelab</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="lab.css">
+    <link rel="stylesheet" href="questionnaire.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="theme-color" content="#4361ee">
+    <script src="js/headerInclude.js" defer></script>
+    <script src="js/theme-toggle.js" defer></script>
+    <script src="js/lab.js" defer></script>
+    <script src="js/questionnaire.js" defer></script>
+    <script src="js/simple-menu.js" defer></script>
+    
+    <style>
+        /* Add some padding to the top of main to account for the fixed header */
+        main {
+            padding-top: 80px; /* Adjust as needed based on your header height */
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <a href="index.html" class="logo">FutureLab</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="ecommerce.html">Ecommerce</a></li>
-                <li><a href="web-design.html">Web Design</a></li>
-                <li><a href="showcase.html">Showcase</a></li>
-                <li><a href="lab.html" class="active">Lab</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="contact.html" class="btn btn-outline">Contact</a></li>
-            </ul>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
-                <i class="fas fa-lightbulb"></i>
-                <div class="toggle-glow"></div>
-            </button>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="mobile-menu-overlay"></div>
-        </nav>
-    </header>
+    <!-- The header will be injected here by headerInclude.js -->
 
     <main>
         <section class="hero section-transition">
@@ -48,25 +39,228 @@
             </div>
         </section>
 
-        <section class="form-section section-transition">
+        <!-- New AI Questionnaire Form Section -->
+        <section class="questionnaire-section section-transition">
             <div class="container">
-                <h2 class="section-title">Get Started Instantly</h2>
-                <p style="text-align: center; margin-bottom: 30px;">Tell our AI about your project, and watch your landing page come to life.</p>
-                <form id="page-generator-form" class="interactive-form">
-                    <div class="form-group">
-                        <label for="business-type" class="form-label">Business Type</label>
-                        <input type="text" id="business-type" name="business-type" class="form-input" placeholder="e.g., Bakery, Tech Startup" required>
+                <h2 class="section-title">Tell Us About Your Project</h2>
+                <p class="questionnaire-intro">Complete this brief questionnaire and our AI will generate your perfect landing page.</p>
+                
+                <div class="questionnaire-container">
+                    <!-- Progress indicator -->
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-steps">
+                            <div class="progress-step active" data-step="1">
+                                <div class="step-indicator">1</div>
+                                <span class="step-label">Basics</span>
+                            </div>
+                            <div class="progress-step" data-step="2">
+                                <div class="step-indicator">2</div>
+                                <span class="step-label">Goals</span>
+                            </div>
+                            <div class="progress-step" data-step="3">
+                                <div class="step-indicator">3</div>
+                                <span class="step-label">Design</span>
+                            </div>
+                            <div class="progress-step" data-step="4">
+                                <div class="step-indicator">4</div>
+                                <span class="step-label">Content</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="design-preferences" class="form-label">Design Preferences</label>
-                        <textarea id="design-preferences" name="design-preferences" class="form-input" placeholder="e.g., Modern, Minimalist, Vibrant" rows="3" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="target-audience" class="form-label">Target Audience</label>
-                        <input type="text" id="target-audience" name="target-audience" class="form-input" placeholder="e.g., Young Professionals, Families" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary full-width">Generate Page</button>
-                </form>
+
+                    <!-- Questionnaire form -->
+                    <form id="ai-questionnaire" class="questionnaire-form">
+                        <!-- Step 1: Basic Information -->
+                        <div class="form-step active" data-step="1">
+                            <h3 class="step-title"><i class="fas fa-info-circle"></i> Basic Information</h3>
+                            
+                            <div class="form-field">
+                                <label for="business-name">What's your business name?</label>
+                                <input type="text" id="business-name" name="businessName" placeholder="e.g., The Cozy Corner Cafe" required>
+                                <span class="field-note">This will be prominently displayed on your landing page.</span>
+                            </div>
+                            
+                            <div class="form-field">
+                                <label for="business-type">What industry are you in?</label>
+                                <input type="text" id="business-type" name="businessType" placeholder="e.g., Bakery, Tech Startup, SaaS" required>
+                                <span class="field-note">This helps our AI understand your market context.</span>
+                            </div>
+                            
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-next">Continue <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: Goals and Audience -->
+                        <div class="form-step" data-step="2">
+                            <h3 class="step-title"><i class="fas fa-bullseye"></i> Goals & Audience</h3>
+                            
+                            <div class="form-field">
+                                <label for="primary-goal">What's the main goal for your landing page?</label>
+                                <input type="text" id="primary-goal" name="primaryGoal" placeholder="e.g., Get sign-ups, Book appointments, Sell products" required>
+                                <span class="field-note">This will be your primary call-to-action (CTA).</span>
+                            </div>
+                            
+                            <div class="form-field">
+                                <label for="target-audience">Who's your target audience?</label>
+                                <input type="text" id="target-audience" name="targetAudience" placeholder="e.g., Young Professionals, Families, Developers" required>
+                                <span class="field-note">Knowing your audience helps create targeted messaging.</span>
+                            </div>
+                            
+                            <div class="form-field">
+                                <label>What are your key selling points? (1-3)</label>
+                                <div class="selling-points-container">
+                                    <div class="selling-point">
+                                        <span class="point-number">1</span>
+                                        <input type="text" name="sellingPoints[]" placeholder="e.g., Freshly baked goods daily" required>
+                                    </div>
+                                    <div class="selling-point">
+                                        <span class="point-number">2</span>
+                                        <input type="text" name="sellingPoints[]" placeholder="e.g., Cozy atmosphere">
+                                    </div>
+                                    <div class="selling-point">
+                                        <span class="point-number">3</span>
+                                        <input type="text" name="sellingPoints[]" placeholder="e.g., Locally sourced ingredients">
+                                    </div>
+                                </div>
+                                <span class="field-note">These will be highlighted features on your page.</span>
+                            </div>
+                            
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-prev"><i class="fas fa-arrow-left"></i> Back</button>
+                                <button type="button" class="btn btn-next">Continue <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3: Design Preferences -->
+                        <div class="form-step" data-step="3">
+                            <h3 class="step-title"><i class="fas fa-paint-brush"></i> Design Preferences</h3>
+                            
+                            <div class="form-field">
+                                <label for="design-preferences">How would you describe your preferred design style?</label>
+                                <textarea id="design-preferences" name="designPreferences" placeholder="e.g., Modern, Minimalist, Vibrant, Playful, Professional, Techy" required></textarea>
+                                <span class="field-note">Use descriptive keywords to guide the AI's design choices.</span>
+                            </div>
+                            
+                            <div class="form-field color-selection">
+                                <label>Brand Colors</label>
+                                <div class="color-pickers">
+                                    <div class="color-picker">
+                                        <span class="color-label">Primary</span>
+                                        <div class="color-inputs">
+                                            <input type="color" id="primary-color" name="primaryColor" value="#4361EE">
+                                            <input type="text" id="primary-color-hex" name="primaryColorHex" value="#4361EE">
+                                        </div>
+                                    </div>
+                                    <div class="color-picker">
+                                        <span class="color-label">Secondary</span>
+                                        <div class="color-inputs">
+                                            <input type="color" id="secondary-color" name="secondaryColor" value="#4CC9F0">
+                                            <input type="text" id="secondary-color-hex" name="secondaryColorHex" value="#4CC9F0">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ai-color-suggestion">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="ai-colors" name="aiColors">
+                                        <span class="checkmark"></span>
+                                        Let AI suggest colors based on my design preferences
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-field">
+                                <label for="logo-input">Logo (Optional)</label>
+                                <input type="text" id="logo-input" name="logo" placeholder="Enter logo text (e.g., MyBrand) or image URL">
+                                <span class="field-note">Text for a simple logo, or provide a link to your image.</span>
+                            </div>
+                            
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-prev"><i class="fas fa-arrow-left"></i> Back</button>
+                                <button type="button" class="btn btn-next">Continue <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4: Content Sections -->
+                        <div class="form-step" data-step="4">
+                            <h3 class="step-title"><i class="fas fa-layer-group"></i> Page Sections</h3>
+                            
+                            <div class="form-field">
+                                <label>Which sections would you like to include?</label>
+                                <div class="sections-grid">
+                                    <div class="section-option">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox" name="sections[]" value="hero" checked>
+                                            <span class="checkmark"></span>
+                                            <span class="section-name"><i class="fas fa-star"></i> Hero Section</span>
+                                        </label>
+                                    </div>
+                                    <div class="section-option">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox" name="sections[]" value="features" checked>
+                                            <span class="checkmark"></span>
+                                            <span class="section-name"><i class="fas fa-list"></i> Features / Benefits</span>
+                                        </label>
+                                    </div>
+                                    <div class="section-option">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox" name="sections[]" value="about">
+                                            <span class="checkmark"></span>
+                                            <span class="section-name"><i class="fas fa-info-circle"></i> About Us</span>
+                                        </label>
+                                    </div>
+                                    <div class="section-option">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox" name="sections[]" value="testimonials">
+                                            <span class="checkmark"></span>
+                                            <span class="section-name"><i class="fas fa-quote-right"></i> Testimonials</span>
+                                        </label>
+                                    </div>
+                                    <div class="section-option">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox" name="sections[]" value="pricing">
+                                            <span class="checkmark"></span>
+                                            <span class="section-name"><i class="fas fa-tag"></i> Pricing Table</span>
+                                        </label>
+                                    </div>
+                                    <div class="section-option">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox" name="sections[]" value="faq">
+                                            <span class="checkmark"></span>
+                                            <span class="section-name"><i class="fas fa-question-circle"></i> FAQ</span>
+                                        </label>
+                                    </div>
+                                    <div class="section-option">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox" name="sections[]" value="contact" checked>
+                                            <span class="checkmark"></span>
+                                            <span class="section-name"><i class="fas fa-envelope"></i> Contact Form/Info</span>
+                                        </label>
+                                    </div>
+                                    <div class="section-option">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox" name="sections[]" value="cta" checked>
+                                            <span class="checkmark"></span>
+                                            <span class="section-name"><i class="fas fa-bullhorn"></i> Call to Action</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <span class="field-note">Select the sections you want to include, or let AI suggest based on your goals.</span>
+                            </div>
+                            
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-prev"><i class="fas fa-arrow-left"></i> Back</button>
+                                <button type="submit" class="btn btn-generate">
+                                    <span class="btn-text">Generate My Page</span>
+                                    <div class="btn-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </section>
 
@@ -160,8 +354,14 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script src="simple-menu.js"></script>
-    <script src="js/lab.js"></script>
+    <!-- Loading overlay for generation process -->
+    <div class="generation-overlay">
+        <div class="generation-modal">
+            <div class="generation-spinner"></div>
+            <h3>Generating Your Page</h3>
+            <p class="generation-step">Analyzing your inputs...</p>
+        </div>
+    </div>
+
 </body>
 </html>
