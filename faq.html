@@ -17,10 +17,21 @@
     <meta name="theme-color" content="#4361ee">
     <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
     <link rel="manifest" href="assets/favicon/site.webmanifest">
+    
+    <!-- Add scripts for the unified header -->
+    <script src="js/headerInclude.js" defer></script>
+    <script src="js/theme-toggle.js" defer></script>
     <script src="simple-menu.js" defer></script>
     <script src="mobile-responsive.js" defer></script>
     <script src="script.js" defer></script>
+    
     <style>
+        /* Add padding to account for fixed header */
+        main {
+            padding-top: 80px; /* Adjust based on your header height */
+        }
+        
+        /* FAQ Section Styling */
         .faq-item {
             border: 1px solid rgba(67, 97, 238, 0.2);
             border-radius: 8px;
@@ -30,13 +41,16 @@
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.04);
             transition: box-shadow 0.3s;
         }
+        
         .dark-theme .faq-item {
             background: #1e293b;
             border-color: rgba(55, 65, 81, 0.5);
         }
+        
         .faq-item:hover {
             box-shadow: 0 8px 24px rgba(67, 97, 238, 0.10);
         }
+        
         .faq-toggle {
             background: rgba(67, 97, 238, 0.1);
             border: none;
@@ -52,14 +66,17 @@
             margin-left: 18px;
             font-size: 1.1rem;
         }
+        
         .faq-toggle:hover {
             background: rgba(67, 97, 238, 0.18);
         }
+        
         .faq-item.active .faq-toggle {
             background: var(--primary-color, #4361ee);
             color: #fff;
             transform: rotate(180deg);
         }
+        
         .faq-answer {
             max-height: 0;
             overflow: hidden;
@@ -67,235 +84,14 @@
             padding: 0 24px;
             background: rgba(67, 97, 238, 0.03);
         }
+        
         .dark-theme .faq-answer {
             background: rgba(67, 97, 238, 0.05);
         }
+        
         .faq-item.active .faq-answer {
             padding: 0 24px 18px;
             max-height: 500px;
-        }
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            width: 30px;
-            height: 24px;
-            position: relative;
-            z-index: 1001; /* Increased z-index for better tap targeting */
-            padding: 15px; /* Add padding to increase tap target size */
-            margin: -15px; /* Offset padding to maintain visual size */
-            touch-action: manipulation; /* Improve touch behavior */
-        }
-        .hamburger span {
-            display: block;
-            position: absolute;
-            height: 3px;
-            width: 100%;
-            background: var(--dark-color);
-            border-radius: 2px;
-            transition: .25s ease-in-out;
-        }
-        .dark-theme .hamburger span {
-            background: #fff;
-        }
-        .hamburger span:nth-child(1) { top: 0; }
-        .hamburger span:nth-child(2) { top: 10px; }
-        .hamburger span:nth-child(3) { top: 20px; }
-        .hamburger.active span:nth-child(1) {
-            top: 10px;
-            transform: rotate(135deg);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-        .hamburger.active span:nth-child(3) {
-            top: 10px;
-            transform: rotate(-135deg);
-        }
-        .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 998;
-            display: none;
-        }
-        .mobile-menu-overlay.active {
-            display: block;
-        }
-        header nav.container {
-            position: relative;
-        }
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                position: absolute;
-                right: 35px !important; /* Much further from edge with !important flag */
-                top: 50%;
-                transform: translateY(-50%);
-                z-index: 1001 !important; /* Ensure it's above other elements */
-            }
-            .theme-toggle {
-                right: 10px !important; /* Increase spacing between toggle and hamburger */
-            }
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                right: 0;
-                width: 100%;
-                margin: 0 auto;
-                background: white;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                padding: 20px 0;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-                transform: translateY(-150%);
-                transition: transform 0.3s ease;
-                z-index: 999;
-                text-align: center;
-            }
-            .dark-theme .nav-links {
-                background: #1e293b;
-            }
-            .nav-links.active {
-                transform: translateY(0);
-            }
-            .nav-links li {
-                margin: 10px 0;
-                width: 100%;
-                text-align: center;
-            }
-            .nav-links li a {
-                display: block;
-                padding: 10px 0;
-                width: 100%;
-                text-align: center;
-            }
-            body.menu-open {
-                overflow: hidden;
-            }
-        }
-        @media (max-width: 400px) {
-            .hamburger {
-                right: 25px !important; /* Slightly closer on very small screens but still accessible */
-            }
-            .theme-toggle {
-                right: 80px !important; /* Keep good spacing on small screens */
-            }
-        }
-        .theme-toggle {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--dark-color);
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            transition: background 0.2s;
-            z-index: 100;
-        }
-        .theme-toggle:hover {
-            background: rgba(67, 97, 238, 0.1);
-        }
-        .dark-theme .theme-toggle {
-            color: #e2e8f0;
-        }
-        .toggle-glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(67,97,238,0.2) 0%, rgba(67,97,238,0) 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .theme-toggle:hover .toggle-glow {
-            opacity: 1;
-        }
-        @media (max-width: 768px) {
-            .theme-toggle {
-                right: 85px;
-            }
-        }
-
-        /* Add more padding above the FAQ section title */
-        .faq.section-transition {
-            padding-top: 120px !important; /* Increased from 80px to 120px */
-            padding-bottom: 40px;
-            margin-bottom: 20px;
-        }
-        
-        /* Responsive adjustments for different screen sizes */
-        @media (max-width: 992px) {
-            .faq.section-transition {
-                padding-top: 110px !important;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .faq.section-transition {
-                padding-top: 100px !important;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .faq.section-transition {
-                padding-top: 90px !important;
-            }
-        }
-        
-        .faq .section-title {
-            margin-top: 30px;
-            margin-bottom: 50px;
-            text-align: center;
-            width: 100%;
-        }
-
-        /* Updated gradient title styling for proper centering */
-        .gradient-title {
-            background-image: linear-gradient(90deg, 
-                #4361ee, 
-                #3a86ff, 
-                #4cc9f0, 
-                #3a86ff, 
-                #4361ee);
-            background-size: 200% auto;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: block; /* Changed from inline-block to block */
-            width: 100%; /* Ensure it takes full width */
-            text-align: center; /* Center the text within the element */
-            animation: gradient-flow 3s ease infinite alternate;
-            text-shadow: 0 0 1px rgba(67, 97, 238, 0.2),
-                        0 0 15px rgba(76, 201, 240, 0.3);
-            font-weight: 700;
-        }
-
-        /* Animation keyframes for the gradient effect */
-        @keyframes gradient-flow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        /* Dark theme adjustments */
-        .dark-theme .gradient-title {
-            text-shadow: 0 0 2px rgba(76, 201, 240, 0.3),
-                        0 0 15px rgba(67, 97, 238, 0.4);
         }
 
         /* Improved styling for FAQ question titles */
@@ -344,37 +140,39 @@
             font-weight: 500;
         }
 
-        /* Ensure FAQ bullet points display correctly */
-        .faq-answer ul {
-            list-style-type: disc;
-            padding-left: 24px;
-            margin: 12px 0;
-        }
-        
-        .faq-answer li {
-            position: relative;
-            padding: 5px 0;
-            margin-bottom: 5px;
-            display: list-item; /* Explicitly set display for list items */
-        }
-        
-        /* Ensure bullet color matches theme */
-        .dark-theme .faq-answer ul {
-            color: #e2e8f0;
-        }
-        
-        /* Additional styling for nested lists if needed */
-        .faq-answer ul ul {
-            list-style-type: circle;
-            padding-left: 20px;
-            margin: 5px 0;
+        /* Gradient title styling */
+        .gradient-title {
+            background-image: linear-gradient(90deg, 
+                #4361ee, 
+                #3a86ff, 
+                #4cc9f0, 
+                #3a86ff, 
+                #4361ee);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block; /* Changed from inline-block to block */
+            width: 100%; /* Ensure it takes full width */
+            text-align: center; /* Center the text within the element */
+            animation: gradient-flow 3s ease infinite alternate;
+            text-shadow: 0 0 1px rgba(67, 97, 238, 0.2),
+                        0 0 15px rgba(76, 201, 240, 0.3);
+            font-weight: 700;
         }
 
-        /* Ensure last FAQ item has bottom margin */
-        .faq-list .faq-item:last-child {
-            margin-bottom: 30px; /* Extra space after the last FAQ */
+        /* Animation keyframes for the gradient effect */
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
+        /* Dark theme adjustments */
+        .dark-theme .gradient-title {
+            text-shadow: 0 0 2px rgba(76, 201, 240, 0.3),
+                        0 0 15px rgba(67, 97, 238, 0.4);
+        }
+        
         /* FAQ Section Styling */
         .faq-section {
             margin-bottom: 40px;
@@ -400,29 +198,7 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">Futurelab</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="ecommerce.html">E-Commerce</a></li>
-                <li><a href="web-design.html">Web Design</a></li>
-                <li><a href="showcase.html">Showcase</a></li>
-                <li><a href="faq.html" class="active">FAQ</a></li>
-                <li><a href="contact.html" class="btn btn-outline">Contact</a></li>
-            </ul>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
-                <i class="fas fa-lightbulb"></i>
-                <div class="toggle-glow"></div>
-            </button>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="mobile-menu-overlay"></div>
-        </nav>
-    </header>
+    <!-- The header will be injected here by headerInclude.js -->
 
     <main>
         <section class="faq section-transition" id="faq">
@@ -665,93 +441,10 @@
             </div>
         </div>
     </footer>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Theme toggle functionality
-            const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', function() {
-                    document.body.classList.toggle('dark-theme');
-                    
-                    // Store preference in localStorage
-                    if (document.body.classList.contains('dark-theme')) {
-                        localStorage.setItem('theme', 'dark');
-                        this.querySelector('i').className = 'fas fa-lightbulb';
-                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
-                    } else {
-                        localStorage.setItem('theme', 'light');
-                        this.querySelector('i').className = 'far fa-lightbulb';
-                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#4361ee');
-                    }
-                });
-            
-                // Check for saved theme preference
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme === 'dark') {
-                    document.body.classList.add('dark-theme');
-                    themeToggle.querySelector('i').className = 'fas fa-lightbulb';
-                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
-                } else {
-                    themeToggle.querySelector('i').className = 'far fa-lightbulb';
-                }
-            }
-            
-            const hamburger = document.querySelector('.hamburger');
-            const navLinks = document.querySelector('.nav-links');
-            const mobileOverlay = document.querySelector('.mobile-menu-overlay');
-            const body = document.body;
-            if (hamburger && navLinks) {
-                // Improved toggleMenu function with better event handling
-                function toggleMenu(e) {
-                    // Ensure the event doesn't propagate to other elements
-                    if (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }
-                    
-                    console.log("Hamburger menu clicked"); // Debug log
-                    hamburger.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                    
-                    if (mobileOverlay) {
-                        mobileOverlay.classList.toggle('active');
-                    }
-                    
-                    if (navLinks.classList.contains('active')) {
-                        body.classList.add('menu-open');
-                    } else {
-                        body.classList.remove('menu-open');
-                    }
-                }
-                
-                // Remove any existing click listeners to prevent duplicates
-                hamburger.removeEventListener('click', toggleMenu);
-                
-                // Add both click and touchend listeners with capture phase
-                hamburger.addEventListener('click', toggleMenu, true);
-                hamburger.addEventListener('touchend', function(e) {
-                    e.preventDefault(); // Prevent default behavior
-                    toggleMenu(e);
-                }, { capture: true });
-                
-                navLinks.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', function() {
-                        hamburger.classList.remove('active');
-                        navLinks.classList.remove('active');
-                        if (mobileOverlay) mobileOverlay.classList.remove('active');
-                        body.classList.remove('menu-open');
-                    });
-                });
-                if (mobileOverlay) {
-                    mobileOverlay.addEventListener('click', function() {
-                        hamburger.classList.remove('active');
-                        navLinks.classList.remove('active');
-                        mobileOverlay.classList.remove('active');
-                        body.classList.remove('menu-open');
-                    });
-                }
-            }
+            // FAQ toggle functionality
             document.querySelectorAll('.faq-toggle').forEach(function(btn) {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
@@ -762,6 +455,7 @@
                     });
                 });
             });
+            
             document.querySelectorAll('.faq-question').forEach(function(q) {
                 q.addEventListener('click', function(e) {
                     if (!e.target.classList.contains('faq-toggle')) {
@@ -774,46 +468,6 @@
                 });
             });
         });
-
-        // Add immediate self-executing function to ensure theme toggle works
-        (function() {
-            // Direct theme toggle implementation that won't conflict with other code
-            const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                console.log("Found theme toggle, adding event listener");
-                
-                // Force add click event (will work even if other code also adds listeners)
-                themeToggle.onclick = function(e) {
-                    console.log("Theme toggle clicked");
-                    document.body.classList.toggle('dark-theme');
-                    
-                    // Update localStorage
-                    if (document.body.classList.contains('dark-theme')) {
-                        localStorage.setItem('theme', 'dark');
-                        this.querySelector('i').className = 'fas fa-lightbulb';
-                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
-                    } else {
-                        localStorage.setItem('theme', 'light');
-                        this.querySelector('i').className = 'far fa-lightbulb';
-                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#4361ee');
-                    }
-                };
-                
-                // Apply initial theme state
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme === 'dark') {
-                    document.body.classList.add('dark-theme');
-                    themeToggle.querySelector('i').className = 'fas fa-lightbulb';
-                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
-                } else {
-                    document.body.classList.remove('dark-theme');
-                    themeToggle.querySelector('i').className = 'far fa-lightbulb';
-                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#4361ee');
-                }
-            } else {
-                console.error("Theme toggle button not found");
-            }
-        })(); // Execute immediately
     </script>
 </body>
 </html>

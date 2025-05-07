@@ -31,11 +31,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 console.log('Header successfully injected');
+                
+                // Remove any additional theme toggle elements that might exist
+                const themeToggles = document.querySelectorAll('.theme-toggle');
+                if (themeToggles.length > 1) {
+                    // Keep only the one in the header
+                    const headerToggle = headerElement.querySelector('.theme-toggle');
+                    themeToggles.forEach(toggle => {
+                        if (toggle !== headerToggle) {
+                            toggle.remove();
+                        }
+                    });
+                }
             }
             
             // Re-initialize theme toggle functionality after header is injected
             if (window.initializeThemeToggle) {
-                window.initializeThemeToggle();
+                setTimeout(window.initializeThemeToggle, 100); // Slight delay to ensure DOM is ready
+            } else {
+                console.warn('initializeThemeToggle function not found');
             }
         })
         .catch(error => console.error('Error loading header:', error));
