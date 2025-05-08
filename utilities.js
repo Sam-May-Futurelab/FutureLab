@@ -32,6 +32,3 @@ function formatCurrency(amount, currency = 'GBP', locale = 'en-GB') {
         maximumFractionDigits: 0
     }).format(amount);
 }
-
-// Note: We've removed the createStoreMap and showRouteOnMap functions
-// as they are no longer needed with the new Feedback Widget component

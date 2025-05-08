@@ -65,53 +65,10 @@
     <meta name="theme-color" content="#4361ee">
     <script src="js/headerInclude.js"></script>
     <script src="simple-menu.js" defer></script>
+    <script src="js/theme-toggle.js" defer></script>
     
     <!-- Add theme toggle initialization script -->
-    <script>
-        // Define global theme toggle initialization function that headerInclude.js will call
-        window.initializeThemeToggle = function() {
-            const themeToggle = document.getElementById('theme-toggle');
-            if (!themeToggle) {
-                // console.warn('initializeThemeToggle (index.html): Theme toggle button not found.');
-                return;
-            }
-            
-            // Update toggle icon based on current theme
-            function updateToggleIcon() {
-                const isDark = document.body.classList.contains('dark-theme');
-                themeToggle.innerHTML = isDark ? 
-                    '<i class="fas fa-sun"></i><div class="toggle-glow"></div>' : 
-                    '<i class="fas fa-moon"></i><div class="toggle-glow"></div>';
-            }
-            
-            // Apply theme toggle functionality
-            themeToggle.addEventListener('click', function() {
-                document.body.classList.toggle('dark-theme');
-                
-                // Store theme preference
-                const isDark = document.body.classList.contains('dark-theme');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                
-                // Update meta theme color for browser UI
-                const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-                if (metaThemeColor) {
-                    metaThemeColor.setAttribute('content', isDark ? '#0f172a' : '#4361ee');
-                }
-                
-                // Update icon
-                updateToggleIcon();
-                
-                // Add animation effect
-                themeToggle.classList.add('toggle-animation');
-                setTimeout(() => {
-                    themeToggle.classList.remove('toggle-animation');
-                }, 600);
-            });
-            
-            // Set initial icon on load
-            updateToggleIcon();
-        };
-    </script>
+    <!-- Removed inline initializeThemeToggle script to avoid conflicts. Relies on js/theme-toggle.js -->
 </head>
 <body>
     <!-- The header will be dynamically inserted by headerInclude.js -->
@@ -124,7 +81,7 @@
                 <div class="hero-content">
                     <!-- Add stylish gradient effect to heading with animation -->
                     <h1 class="animate-in gradient-text" style="display: block !important; visibility: visible !important; opacity: 1 !important; min-height: auto !important;" data-no-animation="true">Custom Digital Solutions for Forward-Thinking Businesses.</h1>
-                    <p class="animate-in stagger-1">Fast turnaround. Custom builds. No bloat. I combine development expertise with business insight to create solutions that actually work for your business.</p>
+                    <p class="animate-in stagger-1">Fast turnaround. Custom builds. No bloat. We combine development expertise with business insight to create solutions that actually work for your business.</p>
                     <div class="hero-buttons animate-in stagger-2">
                         <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
                         <a href="#portfolio" class="btn btn-secondary">See My Work</a>
@@ -199,7 +156,7 @@
         <section id="services" class="services section-transition">
             <div class="animated-gradient-bg"></div>
             <div class="container">
-                <h2 class="section-title">My Services</h2>
+                <h2 class="section-title">Our Services</h2>
                 <div class="services-grid">
                     <div class="service-card">
                         <div class="service-icon">
@@ -285,7 +242,7 @@
         <!-- Portfolio Section -->
         <section id="portfolio" class="portfolio section-transition">
             <div class="container">
-                <h2 class="section-title">My Work</h2>
+                <h2 class="section-title">Our Work</h2>
                 <div class="portfolio-grid">
                     <div class="portfolio-item">
                         <div class="portfolio-image">
@@ -652,7 +609,7 @@
                             </button>
                         </div>
                         <div class="faq-answer">
-                            <p>Absolutely! Many of my clients aren't tech-savvy, and that's completely fine. I provide:</p>
+                            <p>Absolutely! Many of our clients aren't tech-savvy, and that's completely fine. I provide:</p>
                             <ul>
                                 <li>Clear, jargon-free explanations at every stage</li>
                                 <li>Regular updates in plain language</li>
@@ -660,7 +617,7 @@
                                 <li>Documentation and tutorial videos tailored to your needs</li>
                                 <li>Ongoing support for questions that come up later</li>
                             </ul>
-                            <p>My goal is to make the entire process stress-free and educational, so you feel empowered rather than overwhelmed.</p>
+                            <p>The goal is to make the entire process stress-free and educational for you, so you feel empowered rather than overwhelmed.</p>
                         </div>
                     </div>
                     
@@ -680,7 +637,7 @@
                                 <li>Optimized images and code for maximum performance</li>
                                 <li>Mobile optimization to ensure fast loading on all devices</li>
                             </ul>
-                            <p>All my websites are built with performance in mind, using modern techniques like lazy loading, code minification, and optimized hosting recommendations to ensure your visitors don't bounce due to slow load times.</p>
+                            <p>All of our websites are built with performance in mind, using modern techniques like lazy loading, code minification, and optimized hosting recommendations to ensure your visitors don't bounce due to slow load times.</p>
                         </div>
                     </div>
                     
@@ -738,7 +695,7 @@
                             <a href="https://calendly.com/sam-futurelab" target="_blank" class="btn btn-primary btn-calendly">
                                 <i class="fas fa-calendar-alt"></i> Schedule a Meeting
                             </a>
-                            <p class="calendly-description">Choose a convenient time to discuss your project directly on my calendar</p>
+                            <p class="calendly-description">Choose a convenient time to discuss your project directly on our calendar</p>
                         </div>
                     </div>
                     <form class="contact-form" action="https://formspree.io/f/xldjpewg" method="POST">

@@ -224,25 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Fallback theme application on load (body class and meta tag)
-    // This ensures the theme is set correctly if headerInclude.js's IIFE somehow fails or is delayed.
-    // Event listeners for the toggle button are handled by window.initializeThemeToggle.
-    const savedTheme = localStorage.getItem('theme');
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-
-    if (savedTheme === 'dark') {
-        if (!document.body.classList.contains('dark-theme')) {
-            document.body.classList.add('dark-theme');
-        }
-        if (metaThemeColor) {
-            metaThemeColor.setAttribute('content', '#0f172a');
-        }
-    } else { 
-        if (document.body.classList.contains('dark-theme')) {
-            document.body.classList.remove('dark-theme');
-        }
-        if (metaThemeColor) {
-            metaThemeColor.setAttribute('content', '#4361ee');
-        }
-    }
+    // Dynamic year for footer
+    const currentYear = new Date().getFullYear();
 });

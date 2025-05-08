@@ -132,8 +132,5 @@ function initializeThemeToggle() {
     }
 }
 
-// Run the initialization
-initializeThemeToggle();
-
 // Export the function to allow manual re-initialization if needed
 window.initializeThemeToggle = initializeThemeToggle;

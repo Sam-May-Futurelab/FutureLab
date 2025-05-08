@@ -146,24 +146,15 @@
         
         /* Theme toggle styling */
         .theme-toggle {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
+            background: transparent;
             border: none;
-            cursor: pointer;
             color: var(--dark-color);
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
+            cursor: pointer;
+            font-size: 1.3rem;
             border-radius: 50%;
-            transition: all 0.2s ease;
-            z-index: 100;
-            padding: 0;
+            margin-left: 15px;
+            transition: color 0.3s, transform 0.3s;
+            z-index: 1001;
         }
         
         .dark-theme .theme-toggle {
@@ -212,10 +203,7 @@
             cursor: pointer;
             width: 30px;
             height: 24px;
-            position: relative;
             z-index: 1001;
-            padding: 15px;
-            margin: -15px;
             touch-action: manipulation;
         }
         
@@ -273,8 +261,10 @@
         /* Mobile styling */
         @media (max-width: 768px) {
             header nav.container {
-                padding: 15px 0;
                 height: 70px;
+                display: flex;
+                align-items: center;
+                padding: 0 15px;
             }
 
             .hamburger {
@@ -282,14 +272,9 @@
                 flex-direction: column;
                 justify-content: space-between;
                 position: absolute;
-                right: 25px !important;
                 top: 50%;
                 transform: translateY(-50%);
-                z-index: 1001 !important;
-            }
-            
-            .theme-toggle {
-                right: 85px !important;
+                z-index: 1001;
             }
             
             .nav-links {
@@ -349,22 +334,15 @@
         }
         
         @media (min-width: 769px) {
-            .theme-toggle {
+            /* .theme-toggle {
                 position: absolute;
-                right: -175px;
+                right: -175px; 
                 top: 50%;
                 transform: translateY(-50%);
-            }
+            } */ /* This block is correctly commented out or removed as per previous suggestions */
         }
         
         @media (max-width: 400px) {
-            .hamburger {
-                right: 25px !important;
-            }
-            
-            .theme-toggle {
-                right: 70px !important;
-            }
         }
     </style>
 </head>
@@ -384,7 +362,7 @@
                 <li><a href="contact.html" class="btn btn-outline" id="nav-contact">Contact</a></li>
             </ul>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
-                <i class="fas fa-lightbulb"></i>
+                <i class="fas fa-moon"></i> <!-- Default to moon, js will update -->
                 <div class="toggle-glow"></div>
             </button>
             <div class="hamburger">
@@ -397,94 +375,79 @@
     </header>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set active navigation link based on current page
-            function setActiveNavLink() {
-                const currentPath = window.location.pathname;
-                const pageName = currentPath.split('/').pop();
-                
-                // Remove 'active' class from all nav links
-                document.querySelectorAll('.nav-links a').forEach(link => {
-                    link.classList.remove('active');
-                });
-                
-                // Apply 'active' class to the current page nav link
-                if (pageName === '' || pageName === 'index.html') {
-                    document.getElementById('nav-home').classList.add('active');
-                } else if (pageName === 'ecommerce.html') {
-                    document.getElementById('nav-ecommerce').classList.add('active');
-                } else if (pageName === 'web-design.html') {
-                    document.getElementById('nav-webdesign').classList.add('active');
-                } else if (pageName === 'showcase.html') {
-                    document.getElementById('nav-showcase').classList.add('active');
-                } else if (pageName === 'lab.html') {
-                    document.getElementById('nav-lab').classList.add('active');
-                } else if (pageName === 'faq.html') {
-                    document.getElementById('nav-faq').classList.add('active');
-                } else if (pageName === 'contact.html') {
-                    document.getElementById('nav-contact').classList.add('active');
-                }
-            }
-            
-            // Mobile menu functionality
-            const hamburger = document.querySelector('.hamburger');
-            const navLinks = document.querySelector('.nav-links');
-            const mobileOverlay = document.querySelector('.mobile-menu-overlay');
-            const body = document.body;
-            
-            let simpleMenuInitialized = window.SimpleMenu && hamburger && hamburger.getAttribute('data-simple-menu-active');
+        // Script executes when injected by headerInclude.js
 
-            if (hamburger && navLinks && !simpleMenuInitialized) {
-                function toggleMenu(e) {
-                    if (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }
-                    
-                    hamburger.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                    
-                    if (mobileOverlay) {
-                        mobileOverlay.classList.toggle('active');
-                    }
-                    
-                    if (navLinks.classList.contains('active')) {
-                        body.classList.add('menu-open');
-                    } else {
-                        body.classList.remove('menu-open');
-                    }
+        // Set active navigation link based on current page
+        function setActiveNavLink() {
+            const currentPath = window.location.pathname;
+            const pageName = currentPath.split('/').pop();
+            
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            if (pageName === '' || pageName === 'index.html') {
+                document.getElementById('nav-home')?.classList.add('active');
+            } else if (pageName === 'ecommerce.html') {
+                document.getElementById('nav-ecommerce')?.classList.add('active');
+            } else if (pageName === 'web-design.html') {
+                document.getElementById('nav-webdesign')?.classList.add('active');
+            } else if (pageName === 'showcase.html') {
+                document.getElementById('nav-showcase')?.classList.add('active');
+            } else if (pageName === 'lab.html') {
+                document.getElementById('nav-lab')?.classList.add('active');
+            } else if (pageName === 'faq.html') {
+                document.getElementById('nav-faq')?.classList.add('active');
+            } else if (pageName === 'contact.html') {
+                document.getElementById('nav-contact')?.classList.add('active');
+            }
+        }
+        
+        // Mobile menu functionality
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+        const body = document.body;
+
+        if (hamburger && navLinks) {
+            function toggleMenu(event) {
+                if (event) {
+                     event.preventDefault(); // Prevent default action, especially for touch
                 }
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
                 
-                hamburger.addEventListener('click', toggleMenu, true);
-                hamburger.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                    toggleMenu(e);
-                }, { capture: true });
-                
-                // Close menu when clicking on links
-                navLinks.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', function() {
-                        hamburger.classList.remove('active');
-                        navLinks.classList.remove('active');
-                        if (mobileOverlay) mobileOverlay.classList.remove('active');
-                        body.classList.remove('menu-open');
-                    });
-                });
-                
-                // Close menu when clicking overlay
                 if (mobileOverlay) {
-                    mobileOverlay.addEventListener('click', function() {
-                        hamburger.classList.remove('active');
-                        navLinks.classList.remove('active');
-                        mobileOverlay.classList.remove('active');
-                        body.classList.remove('menu-open');
-                    });
+                    mobileOverlay.classList.toggle('active');
                 }
+                
+                body.classList.toggle('menu-open', navLinks.classList.contains('active'));
             }
             
-            // Set active navigation link
-            setActiveNavLink();
-        });
+            hamburger.addEventListener('click', toggleMenu);
+            
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (navLinks.classList.contains('active')) {
+                        toggleMenu(); // Close menu
+                    }
+                });
+            });
+            
+            if (mobileOverlay) {
+                mobileOverlay.addEventListener('click', function() {
+                     if (navLinks.classList.contains('active')) {
+                        toggleMenu(); // Close menu
+                    }
+                });
+            }
+        }
+        
+        setActiveNavLink();
+
+        // Theme toggle JS is removed from here.
+        // It will be handled by initializeThemeToggle from the main page,
+        // called by headerInclude.js.
     </script>
 </body>
 </html>

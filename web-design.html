@@ -65,52 +65,10 @@
     <meta name="theme-color" content="#4361ee">
     <script src="js/headerInclude.js"></script>
     <script src="simple-menu.js" defer></script>
+    <script src="js/theme-toggle.js" defer></script>
     
     <!-- Add theme toggle initialization script -->
-    <script>
-        // Define global theme toggle initialization function that headerInclude.js will call
-        // This should ideally be defined in js/theme-toggle.js and included globally
-        // For now, keeping it here as per previous structure, but flag for review.
-        window.initializeThemeToggle = function() {
-            const themeToggle = document.getElementById('theme-toggle');
-            if (!themeToggle) return;
-            
-            // Update toggle icon based on current theme
-            function updateToggleIcon() {
-                const isDark = document.body.classList.contains('dark-theme');
-                themeToggle.innerHTML = isDark ? 
-                    '<i class="fas fa-sun"></i><div class="toggle-glow"></div>' : 
-                    '<i class="fas fa-moon"></i><div class="toggle-glow"></div>';
-            }
-            
-            // Apply theme toggle functionality
-            themeToggle.addEventListener('click', function() {
-                document.body.classList.toggle('dark-theme');
-                
-                // Store theme preference
-                const isDark = document.body.classList.contains('dark-theme');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                
-                // Update meta theme color for browser UI
-                const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-                if (metaThemeColor) {
-                    metaThemeColor.setAttribute('content', isDark ? '#0f172a' : '#4361ee');
-                }
-                
-                // Update icon
-                updateToggleIcon();
-                
-                // Add animation effect
-                themeToggle.classList.add('toggle-animation');
-                setTimeout(() => {
-                    themeToggle.classList.remove('toggle-animation');
-                }, 600);
-            });
-            
-            // Set initial icon on load
-            updateToggleIcon();
-        };
-    </script>
+    <!-- Removed inline initializeThemeToggle script to avoid conflicts. Relies on js/theme-toggle.js -->
 </head>
 <body>
     <!-- The header will be dynamically inserted by headerInclude.js -->
