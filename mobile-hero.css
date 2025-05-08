@@ -15,11 +15,7 @@
     top: 24px !important;
     z-index: 1000 !important;
   }
-  
-  /* Hide the original orb on mobile */
-  .hero .orb-container {
-    display: none !important;
-  }
+
   
   /* Mobile-optimized hero background */
   .mobile-hero-bg {

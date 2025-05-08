@@ -441,32 +441,56 @@
             </div>
         </div>
     </footer>
-    
+
+    <!-- Cookie Consent Banner (ensure it's included if not globally managed) -->
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cookie-content">
+            <p>This website uses cookies to ensure you get the best experience. <a href="privacy-policy.html">Learn more</a></p>
+            <div class="cookie-buttons">
+                <button id="cookie-accept" class="btn btn-sm btn-primary">Accept</button>
+                <button id="cookie-decline" class="btn btn-sm btn-outline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="utilities.js"></script> <!-- Ensure utilities is loaded -->
+    <script src="mobile-responsive.js"></script> <!-- mobile-responsive.js now uses utilities.js -->
+    <!-- <script src="mobile-redirect.js"></script> Removed as redundant -->
+    <script src="script.js"></script>
+    <script src="testimonials.js"></script> <!-- If testimonials are on this page -->
+    <script src="simple-menu.js"></script> <!-- Ensure this is included if not already -->
+    <script src="analytics-integration.js"></script>
+
+    <!-- FAQ toggle functionality is now handled by script.js -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // FAQ toggle functionality
-            document.querySelectorAll('.faq-toggle').forEach(function(btn) {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const item = btn.closest('.faq-item');
-                    item.classList.toggle('active');
-                    document.querySelectorAll('.faq-item').forEach(function(other) {
-                        if (other !== item) other.classList.remove('active');
-                    });
+            // Cookie banner functionality
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptBtn = document.getElementById('cookie-accept');
+            const declineBtn = document.getElementById('cookie-decline');
+            const cookieConsent = localStorage.getItem('cookieConsent');
+
+            if (cookieConsent === null && cookieBanner) {
+                setTimeout(() => {
+                    cookieBanner.style.display = 'block';
+                }, 1000);
+            }
+
+            if (acceptBtn) {
+                acceptBtn.addEventListener('click', () => {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    if (cookieBanner) cookieBanner.style.display = 'none';
                 });
-            });
-            
-            document.querySelectorAll('.faq-question').forEach(function(q) {
-                q.addEventListener('click', function(e) {
-                    if (!e.target.classList.contains('faq-toggle')) {
-                        const item = q.closest('.faq-item');
-                        item.classList.toggle('active');
-                        document.querySelectorAll('.faq-item').forEach(function(other) {
-                            if (other !== item) other.classList.remove('active');
-                        });
-                    }
+            }
+
+            if (declineBtn) {
+                declineBtn.addEventListener('click', () => {
+                    localStorage.setItem('cookieConsent', 'declined');
+                    if (cookieBanner) cookieBanner.style.display = 'none';
                 });
-            });
+            }
         });
     </script>
 </body>

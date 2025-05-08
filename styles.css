@@ -437,20 +437,34 @@ section.services,
 
 /* SECTION TITLE SPACING FIX */
 /* Adding proper spacing between section titles and their blue underlines */
+/* This rule is now the primary source for section title underlines */
 .section-title::after,
-h2.section-title::after,
-.section-title:after,
-h2:after,
-section h2:after {
+section > h2::after, /* Targets h2 elements that are direct children of a section */
+.contact-form-header h2::after, /* Specificity for contact page headers if needed */
+.contact-info-header h2::after,
+.location-container h2::after,
+h2.section-title::after { /* If h2 also has section-title class */
   content: '';
   display: block;
-  margin-top: 25px !important; /* SIGNIFICANTLY increase space between title text and blue line */
   width: 80px;
   height: 4px;
-  background-color: var(--primary-color);
+  background: var(--primary-color);
+  margin: 15px auto 0; /* Top margin, auto for left/right centers it */
   border-radius: 2px;
-  position: relative !important;
-  bottom: auto !important;
+  position: relative; /* Ensures margin auto works correctly */
+  left: auto; /* Override any inherited left values */
+  transform: none; /* Override any inherited transforms */
+}
+
+/* Ensure parent text is centered for the underline to appear centered underneath */
+/* This might be too broad for all h2s; apply to specific contexts or use .section-title */
+.section-title,
+section > h2, /* Targets h2 elements that are direct children of a section */
+.contact-form-header h2, /* Specificity for contact page headers */
+.contact-info-header h2,
+.location-container h2,
+h2.section-title { /* If h2 also has section-title class */
+  text-align: center;
 }
 
 /* Mobile adjustments for section title spacing */
@@ -1236,32 +1250,6 @@ nav {
   }
 }
 
-/* Hide 3D orb animation on mobile devices */
-@media (max-width: 768px) {
-  /* Target the 3D animation in hero section */
-  .hero-section .hero-3d-element,
-  .hero-section .hero-animation-container,
-  .hero-section .floating-elements,
-  .hero-section .animated-gradient,
-  #trusted-brands .animated-3d-element,
-  .brands-section .animated-3d-element,
-  .trusted-section .animated-3d-element {
-    display: none !important; /* Hide on mobile */
-  }
-  
-  /* Ensure text is properly visible without the animation */
-  .hero-section .hero-content {
-    width: 100%;
-    text-align: center;
-    padding: 0 20px;
-  }
-  
-  /* Add more space where the animation would have been */
-  .hero-section {
-    padding: 60px 0;
-    min-height: auto;
-  }
-}
 
 /* FIX FOR MOBILE MENU - Make it scrollable */
 @media (max-width: 768px) {
@@ -1290,17 +1278,7 @@ nav {
     top: 0 !important;
     box-shadow: none !important;
   }
-  
-  /* HIDE 3D ORB UNDER "TRUSTED BY BRANDS" SECTION ON MOBILE */
-  .brands-section .animated-3d-element,
-  .brands-section .hero-3d-element,
-  .brands-section .hero-animation-container,
-  .brands-section .hero-3d-object,
-  .brands-section .hero-3d-container,
-  .brands-section .floating-elements,
-  .brands-section .animated-gradient {
-    display: none !important; /* Force hide on mobile */
-  }
+ 
   
   /* Better readability for brand section on mobile without 3D elements */
   .brands-section .section-title,
@@ -1340,46 +1318,7 @@ nav {
     overflow: hidden !important;
   }
 }
-
-/* URGENT FIX: COMPLETELY HIDE 3D ORB on MOBILE */
-@media (max-width: 768px) {
-  /* Target specific brand section containing the 3D orb */
-  #trusted-brands .animated-3d-element,
-  #trusted-brands .hero-3d-element,
-  #trusted-brands .hero-animation-container,
-  #trusted-brands .hero-3d-object,
-  #trusted-brands .floating-elements,
-  #trusted-brands .animated-gradient,
-  .section-brands .animated-3d-element,
-  .section-brands .floating-elements,
-  .brands-section .animated-3d-element,
-  .brands-section .floating-elements,
-  .trusted-section .animated-3d-element,
-  section:has(h2:contains("Trust")) .animated-3d-element {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    width: 0 !important;
-    overflow: hidden !important;
-  }
   
-  /* EMERGENCY FIX FOR MOBILE MENU SCROLLABILITY */
-  .nav-links.active,
-  .mobile-nav.active, 
-  .main-nav.active {
-    max-height: 80vh !important;
-    overflow-y: auto !important;
-    display: block !important;
-    -webkit-overflow-scrolling: touch !important;
-    position: fixed !important;
-    top: 70px !important; /* Adjust based on your header height */
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 1000 !important;
-  }
-}
-
 /* CRITICAL FIX: FORCE MOCKUP IMAGES TO PROPER SIZE ON MOBILE */
 @media (max-width: 768px) {
   img[src*="cardwizz-mockup.png"],

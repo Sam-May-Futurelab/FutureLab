@@ -37,6 +37,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
+            height: 80px;
+            box-sizing: border-box;
             position: relative;
         }
         
@@ -259,14 +261,22 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 998;
             display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
         .mobile-menu-overlay.active {
             display: block;
+            opacity: 1;
         }
         
         /* Mobile styling */
         @media (max-width: 768px) {
+            header nav.container {
+                padding: 15px 0;
+                height: 70px;
+            }
+
             .hamburger {
                 display: flex;
                 flex-direction: column;
@@ -279,12 +289,12 @@
             }
             
             .theme-toggle {
-                right: 85px !important; /* Ensure it is to the left of the hamburger */
+                right: 85px !important;
             }
             
             .nav-links {
                 position: fixed;
-                top: 80px;
+                top: 70px;
                 left: 0;
                 right: 0;
                 width: 100%;
@@ -299,6 +309,9 @@
                 transition: transform 0.3s ease;
                 z-index: 999;
                 text-align: center;
+                max-height: calc(100vh - 70px);
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
             }
             
             .dark-theme .nav-links {
@@ -338,7 +351,7 @@
         @media (min-width: 769px) {
             .theme-toggle {
                 position: absolute;
-                right: -175px; /* Move it to the far right */
+                right: -175px;
                 top: 50%;
                 transform: translateY(-50%);
             }
@@ -419,7 +432,9 @@
             const mobileOverlay = document.querySelector('.mobile-menu-overlay');
             const body = document.body;
             
-            if (hamburger && navLinks) {
+            let simpleMenuInitialized = window.SimpleMenu && hamburger && hamburger.getAttribute('data-simple-menu-active');
+
+            if (hamburger && navLinks && !simpleMenuInitialized) {
                 function toggleMenu(e) {
                     if (e) {
                         e.preventDefault();

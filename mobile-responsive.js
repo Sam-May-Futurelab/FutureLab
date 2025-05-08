@@ -7,13 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
   initMobileOptimizations();
   
   // Hide comparison section on mobile devices
+  // This is also in mobile-redirect.js. Consolidating here.
   function handleComparisonVisibility() {
     const comparisonSection = document.querySelector('.comparison');
     if (comparisonSection) {
       if (window.innerWidth <= 768) {
         comparisonSection.style.display = 'none';
       } else {
-        comparisonSection.style.display = '';
+        comparisonSection.style.display = ''; // Or 'block', 'flex', etc., depending on its default
       }
     }
   }
@@ -23,6 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Call on window resize
   window.addEventListener('resize', handleComparisonVisibility);
+
+  // Mobile menu functionality is primarily handled by header.html's inline script.
+  // The log message below confirms this script acknowledges that.
+  // console.log('Mobile menu functionality removed as requested / handled by header.html');
 });
 
 /**
@@ -36,7 +41,8 @@ function initMobileOptimizations() {
   optimizeTouchInteractions();
   
   // Add fast-click to eliminate 300ms delay on some mobile browsers
-  enableFastClick();
+  // Consider if this is still needed with modern browsers. Can sometimes interfere.
+  // enableFastClick(); 
   
   // Handle orientation changes
   handleOrientationChanges();
@@ -85,42 +91,6 @@ function optimizeTouchInteractions() {
       this.classList.remove('touch-active');
     }, { passive: true });
   });
-}
-
-/**
- * Enable fast-click to remove 300ms delay on some mobile browsers
- */
-function enableFastClick() {
-  if ('addEventListener' in document) {
-    document.addEventListener('DOMContentLoaded', function() {
-      // Simple fast click implementation
-      const attachFastClick = function(element) {
-        let startX, startY;
-        
-        element.addEventListener('touchstart', function(e) {
-          startX = e.touches[0].clientX;
-          startY = e.touches[0].clientY;
-        }, false);
-        
-        element.addEventListener('touchend', function(e) {
-          // Only trigger click if user hasn't moved too much (avoid click on scroll)
-          if (e.changedTouches && e.changedTouches.length) {
-            const endX = e.changedTouches[0].clientX;
-            const endY = e.changedTouches[0].clientY;
-            
-            if (Math.abs(endX - startX) < 10 && Math.abs(endY - startY) < 10) {
-              e.preventDefault();
-              element.click();
-            }
-          }
-        }, false);
-      };
-      
-      // Apply to clickable elements
-      const clickableElements = document.querySelectorAll('button, a');
-      clickableElements.forEach(attachFastClick);
-    });
-  }
 }
 
 /**
@@ -251,133 +221,40 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu functionality removed
-    console.log('Mobile menu functionality removed as requested');
-});
-
 // Immediate self-executing function to protect hero heading content
 (function() {
-    // Run this code as soon as possible
-    function protectHeroHeading() {
-        // Target hero heading with data-no-animation
-        const heroHeading = document.querySelector('h1[data-no-animation], .hero h1[data-no-animation], .animate-in.gradient-text');
+    function protectHeroHeadingIfMarked() {
+        // Only target hero headings specifically marked with data-no-animation
+        const heroHeading = document.querySelector('.hero h1[data-no-animation]');
         
         if (heroHeading) {
-            console.log("Protected heading found:", heroHeading.innerText);
+            // console.log("mobile-responsive.js: Protected heading found:", heroHeading.innerText.substring(0,30)+"...");
             
-            // Store the original content
-            const originalText = heroHeading.innerText;
-            const originalHTML = heroHeading.innerHTML;
+            // Ensure visibility with inline styles.
+            // This is a safeguard in case other scripts or CSS might hide it.
+            // The typewriter script in script.js should respect data-no-animation.
+            const currentStyle = heroHeading.getAttribute('style') || '';
+            let newStyle = 'display: block !important; visibility: visible !important; opacity: 1 !important; min-height: auto !important;';
             
-            // Force visibility with inline styles having highest specificity
-            heroHeading.setAttribute('style', 
-                'display: block !important; ' +
-                'visibility: visible !important; ' + 
-                'opacity: 1 !important; ' +
-                'min-height: auto !important;'
-            );
-            
-            // Set a flag on the element that it's protected
-            heroHeading.setAttribute('data-protected', 'true');
-            
-            // Periodically check that content hasn't been cleared
-            const checkInterval = setInterval(function() {
-                if (heroHeading.innerText === '' || !heroHeading.innerText) {
-                    console.log("Hero heading was cleared, restoring content");
-                    heroHeading.innerHTML = originalHTML;
-                    
-                    // Re-apply protection styles
-                    heroHeading.setAttribute('style', 
-                        'display: block !important; ' +
-                        'visibility: visible !important; ' + 
-                        'opacity: 1 !important; ' +
-                        'min-height: auto !important;'
-                    );
-                }
-            }, 100); // Check every 100ms
-            
-            // Stop checking after 5 seconds
-            setTimeout(function() {
-                clearInterval(checkInterval);
-                console.log("Hero heading protection complete");
-            }, 5000);
-            
-            // Override any attempt to modify the heading in the future
-            const originalSetAttribute = heroHeading.setAttribute;
-            heroHeading.setAttribute = function(name, value) {
-                if ((name === 'style' && value.includes('display: none')) || 
-                    (name === 'style' && value.includes('visibility: hidden')) ||
-                    name === 'data-no-animation' || 
-                    name === 'data-typewriter-applied') {
-                    console.log("Blocked attempt to modify hero heading:", name, value);
-                    return;
-                }
-                return originalSetAttribute.call(this, name, value);
-            };
+            // Preserve existing styles if they don't conflict
+            if (currentStyle && !currentStyle.includes('display:') && !currentStyle.includes('visibility:') && !currentStyle.includes('opacity:')) {
+                newStyle = currentStyle + '; ' + newStyle;
+            }
+            heroHeading.setAttribute('style', newStyle);
+            heroHeading.setAttribute('data-protected-by-mobile-responsive', 'true');
+
         } else {
-            console.log("No hero heading with data-no-animation found");
+            // console.log("mobile-responsive.js: No hero heading with data-no-animation found for protection.");
         }
     }
     
-    // Try executing immediately
-    protectHeroHeading();
-    
-    // Also run when DOM is interactive
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', protectHeroHeading);
+        document.addEventListener('DOMContentLoaded', protectHeroHeadingIfMarked);
+    } else {
+        protectHeroHeadingIfMarked(); // For already loaded DOM
     }
-    
-    // Run one more time after a short delay to catch any late modifications
-    setTimeout(protectHeroHeading, 100);
-    setTimeout(protectHeroHeading, 500);
-    setTimeout(protectHeroHeading, 1000);
+    // Run again after a short delay to catch late modifications if necessary,
+    // but this should ideally not be needed if scripts load in correct order.
+    setTimeout(protectHeroHeadingIfMarked, 150);
+    setTimeout(protectHeroHeadingIfMarked, 550);
 })();
-
-// Add direct override for typewriter effect
-document.addEventListener('DOMContentLoaded', function() {
-    // Find all typewriter functions and disable them for hero headings with data-no-animation
-    setTimeout(function() {
-        // Find typewriter function references
-        const globalFunctions = [
-            'typeWriter', 
-            'typewriterEffect', 
-            'animateTypewriter', 
-            'heroTypewriter'
-        ];
-        
-        // Try to disable them
-        globalFunctions.forEach(funcName => {
-            if (typeof window[funcName] === 'function') {
-                const originalFunc = window[funcName];
-                window[funcName] = function(...args) {
-                    const targetHeading = document.querySelector('h1[data-no-animation], .hero h1[data-no-animation]');
-                    if (targetHeading) {
-                        console.log(`Blocked ${funcName} execution on protected element`);
-                        return;
-                    }
-                    return originalFunc.apply(this, args);
-                };
-                console.log(`Overrode ${funcName} function`);
-            }
-        });
-        
-        // Extra protection: add CSS that ensures the heading is visible
-        const style = document.createElement('style');
-        style.textContent = `
-            h1[data-no-animation], 
-            .hero h1[data-no-animation],
-            .hero h1.gradient-text[data-no-animation] {
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                min-height: auto !important;
-                position: relative !important;
-                left: auto !important;
-                top: auto !important;
-                pointer-events: auto !important;
-            }
-        `;
-        document.head.appendChild(style);
-    }, 200);
-});

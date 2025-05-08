@@ -65,14 +65,16 @@
     <meta name="theme-color" content="#4361ee">
     <script src="js/headerInclude.js"></script>
     <script src="simple-menu.js" defer></script>
-    <script src="mobile-responsive.js" defer></script>
     
     <!-- Add theme toggle initialization script -->
     <script>
         // Define global theme toggle initialization function that headerInclude.js will call
         window.initializeThemeToggle = function() {
             const themeToggle = document.getElementById('theme-toggle');
-            if (!themeToggle) return;
+            if (!themeToggle) {
+                // console.warn('initializeThemeToggle (index.html): Theme toggle button not found.');
+                return;
+            }
             
             // Update toggle icon based on current theme
             function updateToggleIcon() {
@@ -109,13 +111,6 @@
             // Set initial icon on load
             updateToggleIcon();
         };
-        
-        // Initialize on DOMContentLoaded as a fallback
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.initializeThemeToggle) {
-                window.initializeThemeToggle();
-            }
-        });
     </script>
 </head>
 <body>

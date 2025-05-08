@@ -71,7 +71,10 @@
         // Define global theme toggle initialization function that headerInclude.js will call
         window.initializeThemeToggle = function() {
             const themeToggle = document.getElementById('theme-toggle');
-            if (!themeToggle) return;
+            if (!themeToggle) {
+                // console.warn('initializeThemeToggle (ecommerce.html): Theme toggle button not found.');
+                return;
+            }
             
             // Update toggle icon based on current theme
             function updateToggleIcon() {
@@ -109,12 +112,8 @@
             updateToggleIcon();
         };
         
-        // Initialize on DOMContentLoaded as a fallback
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.initializeThemeToggle) {
-                window.initializeThemeToggle();
-            }
-        });
+        // The call to initializeThemeToggle on DOMContentLoaded is removed from here,
+        // as headerInclude.js will call it after the header is injected.
     </script>
     
     <!-- E-commerce specific styles -->
@@ -1276,67 +1275,47 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="utilities.js"></script> <!-- Ensure utilities is loaded -->
+    <script src="mobile-responsive.js"></script> <!-- mobile-responsive.js now uses utilities.js -->
     <script src="script.js"></script>
-
+    <script src="testimonials.js"></script>
+    <script src="simple-menu.js"></script> <!-- Ensure this is included if not already -->
+    <script src="analytics-integration.js"></script>
+    
+    <!-- FAQ toggle functionality is now handled by script.js -->
     <script>
-        // Replace the existing FAQ Toggle Functionality with this improved version
         document.addEventListener('DOMContentLoaded', function() {
-            // Enhanced FAQ functionality with smooth animations
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            // First, remove any existing click event listeners to avoid conflicts
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                const clone = question.cloneNode(true);
-                question.parentNode.replaceChild(clone, question);
-            });
-            
-            // Then set up the proper event listeners
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                const answer = item.querySelector('.faq-answer');
-                
-                // Set initial state - important for proper height calculations
-                if (item.classList.contains('active')) {
-                    answer.style.height = answer.scrollHeight + 'px';
-                } else {
-                    answer.style.height = '0px';
+            // Specific e-commerce page scripts can go here if needed
+            // For example, initializing product filters, cart interactions, etc.
+
+            // Cookie banner functionality (if not handled globally or by another script)
+            const cookieBanner = document.getElementById('cookie-banner');
+            if (cookieBanner) {
+                const acceptBtn = document.getElementById('cookie-accept');
+                const declineBtn = document.getElementById('cookie-decline');
+                const cookieConsent = localStorage.getItem('cookieConsent');
+
+                if (cookieConsent === null) {
+                    setTimeout(() => {
+                        cookieBanner.style.display = 'block';
+                    }, 1000);
                 }
-                
-                question.addEventListener('click', function() {
-                    console.log('FAQ question clicked');
-                    // Toggle current item
-                    const isActive = item.classList.contains('active');
-                    
-                    // Close other items
-                    faqItems.forEach(otherItem => {
-                        if (otherItem !== item && otherItem.classList.contains('active')) {
-                            otherItem.classList.remove('active');
-                            otherItem.querySelector('.faq-answer').style.height = '0px';
-                        }
+
+                if (acceptBtn) {
+                    acceptBtn.addEventListener('click', () => {
+                        localStorage.setItem('cookieConsent', 'accepted');
+                        cookieBanner.style.display = 'none';
                     });
-                    
-                    // Toggle current item
-                    if (isActive) {
-                        answer.style.height = '0px';
-                        item.classList.remove('active');
-                        console.log('Closing FAQ item');
-                    } else {
-                        item.classList.add('active');
-                        answer.style.height = answer.scrollHeight + 'px';
-                        console.log('Opening FAQ item, height set to: ' + answer.scrollHeight + 'px');
-                    }
-                });
-            });
-            
-            // Ensure we properly handle window resize for responsive layouts
-            window.addEventListener('resize', function() {
-                const activeItems = document.querySelectorAll('.faq-item.active');
-                activeItems.forEach(item => {
-                    const answer = item.querySelector('.faq-answer');
-                    answer.style.height = answer.scrollHeight + 'px';
-                });
-            });
+                }
+
+                if (declineBtn) {
+                    declineBtn.addEventListener('click', () => {
+                        localStorage.setItem('cookieConsent', 'declined');
+                        cookieBanner.style.display = 'none';
+                    });
+                }
+            }
         });
     </script>
 </body>

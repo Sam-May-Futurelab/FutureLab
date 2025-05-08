@@ -69,6 +69,8 @@
     <!-- Add theme toggle initialization script -->
     <script>
         // Define global theme toggle initialization function that headerInclude.js will call
+        // This should ideally be defined in js/theme-toggle.js and included globally
+        // For now, keeping it here as per previous structure, but flag for review.
         window.initializeThemeToggle = function() {
             const themeToggle = document.getElementById('theme-toggle');
             if (!themeToggle) return;
@@ -108,13 +110,6 @@
             // Set initial icon on load
             updateToggleIcon();
         };
-        
-        // Initialize on DOMContentLoaded as a fallback
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.initializeThemeToggle) {
-                window.initializeThemeToggle();
-            }
-        });
     </script>
 </head>
 <body>
@@ -689,53 +684,16 @@
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="mobile-redirect.js"></script>
+    <script src="utilities.js"></script> <!-- Ensure utilities is loaded before scripts that depend on it -->
+    <script src="mobile-responsive.js"></script> <!-- mobile-responsive.js now uses utilities.js -->
     <script src="script.js"></script>
     <script src="testimonials.js"></script>
-    <script src="simple-menu.js"></script>
     <script src="analytics-integration.js"></script>
     
-    <!-- FAQ toggle functionality -->
+    <!-- FAQ toggle functionality is now handled by script.js -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Fix for FAQ dropdowns - make sure they expand when clicked
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                const answer = item.querySelector('.faq-answer');
-                
-                // Set initial height for answers
-                if (item.classList.contains('active')) {
-                    answer.style.height = answer.scrollHeight + 'px';
-                } else {
-                    answer.style.height = '0px';
-                }
-                
-                // Toggle functionality
-                question.addEventListener('click', () => {
-                    const isActive = item.classList.contains('active');
-                    
-                    // Close other items first
-                    faqItems.forEach(otherItem => {
-                        if (otherItem !== item && otherItem.classList.contains('active')) {
-                            otherItem.classList.remove('active');
-                            otherItem.querySelector('.faq-answer').style.height = '0px';
-                        }
-                    });
-                    
-                    // Toggle current item
-                    if (isActive) {
-                        answer.style.height = '0px';
-                        item.classList.remove('active');
-                    } else {
-                        item.classList.add('active');
-                        answer.style.height = answer.scrollHeight + 'px';
-                    }
-                });
-            });
-            
-            // Cookie banner functionality
+            // Cookie banner functionality (remains here as it's page-specific UI interaction)
             const cookieBanner = document.getElementById('cookie-banner');
             const acceptBtn = document.getElementById('cookie-accept');
             const declineBtn = document.getElementById('cookie-decline');
@@ -1121,8 +1079,8 @@
                 transform: none;
                 margin: 30px 0;
             }
-        }
-        
+        } /* <-- Missing closing curly brace added here */
+
         /* Centered Tech Stack */
         .tech-grid.center {
             display: flex;

@@ -46,7 +46,10 @@
         // Define global theme toggle initialization function that headerInclude.js will call
         window.initializeThemeToggle = function() {
             const themeToggle = document.getElementById('theme-toggle');
-            if (!themeToggle) return;
+            if (!themeToggle) {
+                // console.warn('initializeThemeToggle (contact.html): Theme toggle button not found.');
+                return;
+            }
             
             // Update toggle icon based on current theme
             function updateToggleIcon() {
@@ -84,12 +87,8 @@
             updateToggleIcon();
         };
         
-        // Initialize on DOMContentLoaded as a fallback
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.initializeThemeToggle) {
-                window.initializeThemeToggle();
-            }
-        });
+        // The call to initializeThemeToggle on DOMContentLoaded is removed from here,
+        // as headerInclude.js will call it after the header is injected.
     </script>
     
     <!-- Contact page specific styles -->
@@ -1279,5 +1278,10 @@
             }
         });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="mobile-redirect.js"></script>
+    <script src="script.js"></script>
+    <script src="testimonials.js"></script>
+    <script src="analytics-integration.js"></script>
 </body>
 </html>

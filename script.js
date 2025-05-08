@@ -1,1228 +1,248 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Navigation Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-    
-    hamburger.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-    
-    // ENHANCED MOBILE MENU - Replace earlier version with this improved implementation
-    const menuToggle = document.querySelector('.hamburger');
-    const mobileNav = document.querySelector('.nav-links');
-    
-    if (menuToggle && mobileNav) {
-        // Toggle mobile menu with improved body handling
-        menuToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            this.classList.toggle('active');
-            mobileNav.classList.toggle('active');
-            
-            // Add/remove menu-open class to body to prevent scrolling
-            if (mobileNav.classList.contains('active')) {
-                document.body.classList.add('menu-open');
-            } else {
-                document.body.classList.remove('menu-open');
-            }
-        });
-        
-        // Close menu when clicking a link
-        const menuLinks = mobileNav.querySelectorAll('a');
-        menuLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                menuToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.classList.remove('menu-open');
-            });
-        });
-        
-        // Close menu when clicking escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-                menuToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.classList.remove('menu-open');
-            }
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (mobileNav.classList.contains('active') && 
-                !mobileNav.contains(e.target) && 
-                !menuToggle.contains(e.target)) {
-                menuToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.classList.remove('menu-open');
-            }
-        });
-    }
-    
-    // Fix viewport height on mobile
-    const fixViewportHeight = () => {
-        // Mobile viewport height fix (especially for iOS Safari)
-        const vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
-    
-    // Run initially and on resize
-    fixViewportHeight();
-    window.addEventListener('resize', fixViewportHeight);
-    
-    // Smooth Scrolling for Anchor Links
+    // Theme Toggle Functionality:
+    // This is now primarily handled by headerInclude.js calling window.initializeThemeToggle.
+    // No direct event listener for #theme-toggle should be added here at the top level
+    // to avoid errors if the header isn't loaded yet.
+
+    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Close mobile menu if open
-            if (navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                hamburger.classList.remove('active');
-            }
-            
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                const headerHeight = document.querySelector('header').offsetHeight;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                
-                window.scrollTo({
-                    top: targetPosition - headerHeight,
+            const hrefAttribute = this.getAttribute('href');
+            // Ensure the target element exists and is not just "#"
+            if (hrefAttribute && hrefAttribute.length > 1 && document.querySelector(hrefAttribute)) {
+                e.preventDefault();
+                document.querySelector(hrefAttribute).scrollIntoView({
                     behavior: 'smooth'
                 });
+            } else if (hrefAttribute === '#') {
+                e.preventDefault(); // Prevent jumping to top for empty hash
             }
         });
     });
-    
-    // Header Background Change on Scroll
-    const header = document.querySelector('header');
-    
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-    
-    // Lazy load images
-    const images = document.querySelectorAll('img[data-src]');
-    
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
+
+    // Intersection Observer for animations
+    const animatedElements = document.querySelectorAll('.animate-in, .section-transition');
+    if (animatedElements.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const image = entry.target;
-                    image.src = image.dataset.src;
-                    image.removeAttribute('data-src');
-                    imageObserver.unobserve(image);
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
                 }
             });
-        });
-        
-        images.forEach(img => {
-            imageObserver.observe(img);
-        });
-    } else {
-        // Fallback for browsers that don't support IntersectionObserver
-        images.forEach(img => {
-            img.src = img.dataset.src;
-        });
-    }
-    
-    // Reveal animations on scroll
-    const animateElements = document.querySelectorAll('.service-card, .portfolio-item, .price-card');
-    
-    if ('IntersectionObserver' in window) {
-        const animationObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-        
-        animateElements.forEach(element => {
-            animationObserver.observe(element);
-        });
-    }
-    
-    // Parallax effect for hero section
-    const heroSection = document.querySelector('.hero');
-    
-    window.addEventListener('scroll', function() {
-        const scrollPosition = window.pageYOffset;
-        if (scrollPosition < 800) {
-            const parallaxValue = scrollPosition * 0.15;
-            heroSection.style.backgroundPosition = `center -${parallaxValue}px`;
-        }
-    });
-    
-    // Floating tech labels random movement
-    const floatingTech = document.querySelectorAll('.floating-tech');
-    
-    floatingTech.forEach(tech => {
-        const randomDelay = Math.random() * 2;
-        const randomDuration = 6 + Math.random() * 4;
-        
-        tech.style.animationDelay = `${randomDelay}s`;
-        tech.style.animationDuration = `${randomDuration}s`;
-    });
-
-    // NEW ANIMATIONS AND IMPROVEMENTS
-
-    // 2. Scroll Progress Indicator
-    const progressBar = document.createElement('div');
-    progressBar.className = 'scroll-progress';
-    document.body.appendChild(progressBar);
-    
-    window.addEventListener('scroll', function() {
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-        progressBar.style.width = scrolled + '%';
-    });
-    
-    // 3. Number Counter Animation
-    // Only add stats section if we're NOT on the FAQ page
-    const isFaqPage = window.location.pathname.includes('faq.html');
-    
-    if (!isFaqPage) {
-        const statsSection = document.createElement('section');
-        statsSection.className = 'stats';
-        statsSection.innerHTML = `
-<div class="container">
-    <div class="stats-grid">
-        <div class="stat-item" data-count="15">
-            <h3 class="counter">0</h3>
-            <p>Projects Completed</p>
-        </div>
-        <div class="stat-item" data-count="8">
-            <h3 class="counter">0</h3>
-            <p>Happy Clients</p>
-        </div>
-        <div class="stat-item" data-count="2">
-            <h3 class="counter">0</h3>
-            <p>Years Experience</p>
-        </div>
-        <div class="stat-item" data-count="1">
-            <h3 class="counter">0</h3>
-            <p>UK-Based Designer</p> <!-- Or "Conversion-Focused Design" -->
-        </div>
-    </div>
-</div>
-        `;
-        
-        // Insert the stats section before the contact section
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-            document.querySelector('main').insertBefore(statsSection, contactSection);
-        }
-        
-        // Animate the counters when in view
-        const counters = document.querySelectorAll('.counter');
-        
-        function startCounters() {
-            counters.forEach(counter => {
-                const target = +counter.parentElement.dataset.count;
-                const count = +counter.innerText;
-                const increment = target / 100;
-                
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + increment);
-                    setTimeout(startCounters, 20);
-                } else {
-                    counter.innerText = target;
-                }
-            });
-        }
-        
-        // Start counters when they come into view
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-                    entry.target.classList.add('counted');
-                    startCounters();
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        statsObserver.observe(statsSection);
-    }
-    
-    // Add extra padding for FAQ section headers
-    const faqSection = document.querySelector('.faq.section-transition');
-    const faqTitle = document.querySelector('.faq .section-title');
-    
-    if (faqSection) {
-        faqSection.style.paddingTop = '80px';
-    }
-    
-    if (faqTitle) {
-        faqTitle.style.marginTop = '30px';
-        faqTitle.style.marginBottom = '50px';
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => observer.observe(el));
     }
 
-    // 4. Interactive service cards with 3D tilt effect
-    const serviceCards = document.querySelectorAll('.service-card');
-    
-    serviceCards.forEach(card => {
-        card.addEventListener('mousemove', function(e) {
-            const cardRect = this.getBoundingClientRect();
-            const x = e.clientX - cardRect.left;
-            const y = e.clientY - cardRect.top;
-            
-            const centerX = cardRect.width / 2;
-            const centerY = cardRect.height / 2;
-            
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
-            
-            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
-        });
-    });
+    // Hamburger Menu Functionality (Fallback if not handled by header.html's inline script)
+    const hamburger = document.querySelector('.hamburger'); 
+    const navLinks = document.querySelector('.nav-links'); 
+    const mobileOverlay = document.querySelector('.mobile-menu-overlay'); 
+    const body = document.body;
 
-    // Add touch support for service card tilt effect
-    serviceCards.forEach(card => {
-        // Add touch support (limited tilt for better mobile experience)
-        card.addEventListener('touchmove', function(e) {
-            if (window.innerWidth <= 992) return; // Disable on small screens
-            
+    // Check if header's own script is active (simple-menu.js might set a flag or be identifiable)
+    // For now, we assume if simple-menu.js is included and active, it handles the menu.
+    // The inline script in header.html is more direct.
+    const headerInlineScriptActive = document.getElementById('header-inline-script-active'); // Assuming header.html script adds this ID to its <script> tag
+
+    if (hamburger && navLinks && !headerInlineScriptActive && !window.SimpleMenu) { // Also check if simple-menu.js is not globally available
+        // console.warn('script.js: Attaching fallback hamburger menu listeners.');
+        const toggleMenu = (e) => {
+            if (e) e.preventDefault(); // Prevent default action if event object exists
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            if (mobileOverlay) mobileOverlay.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        };
+
+        hamburger.addEventListener('click', toggleMenu, true);
+        // Adding touchend for better mobile responsiveness, ensuring it doesn't double-trigger with click
+        let touchmoved;
+        hamburger.addEventListener('touchstart', (e) => {
+            touchmoved = false;
+        }, { passive: true });
+        hamburger.addEventListener('touchmove', (e) => {
+            touchmoved = true;
+        }, { passive: true });
+        hamburger.addEventListener('touchend', function(e) {
+            if (touchmoved) return;
             e.preventDefault();
-            const touch = e.touches[0];
-            const cardRect = this.getBoundingClientRect();
-            const x = touch.clientX - cardRect.left;
-            const y = touch.clientY - cardRect.top;
-            
-            const centerX = cardRect.width / 2;
-            const centerY = cardRect.height / 2;
-            
-            // Reduce tilt amount for touch devices
-            const rotateX = (y - centerY) / 30;
-            const rotateY = (centerX - x) / 30;
-            
-            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(5px)`;
-        });
-        
-        card.addEventListener('touchend', function() {
-            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
-        });
-    });
-    
-    // 5. Theme toggle implementation (simplified elegant version)
-    const themeToggle = document.getElementById('theme-toggle');
+            toggleMenu(e);
+        }, { capture: true, passive: false });
 
-    if (themeToggle) {
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem('theme');
-        
-        // Default to dark mode if no preference exists
-        if (savedTheme === 'light') {
-            document.body.classList.remove('dark-theme');
-        } else {
-            document.body.classList.add('dark-theme');
-            localStorage.setItem('theme', 'dark');
-        }
-        
-        // Update icon based on current theme
-        function updateThemeIcon() {
-            if (document.body.classList.contains('dark-theme')) {
-                themeToggle.innerHTML = '<i class="fas fa-lightbulb"></i><div class="toggle-glow"></div>';
-                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
-            } else {
-                themeToggle.innerHTML = '<i class="far fa-lightbulb"></i><div class="toggle-glow"></div>';
-                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#4361ee');
-            }
-        }
-        
-        // Set initial icon
-        updateThemeIcon();
-        
-        // Toggle theme on click with enhanced animation
-        themeToggle.addEventListener('click', function() {
-            // Add a quick pulse animation on click
-            this.style.transform = 'scale(1.2) rotate(15deg)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 300);
-            
-            document.body.classList.toggle('dark-theme');
-            
-            if (document.body.classList.contains('dark-theme')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-            
-            updateThemeIcon();
-            updateOrbColors();
-        });
-        
-        // Add subtle hover glow effect
-        themeToggle.addEventListener('mouseenter', function() {
-            const glow = this.querySelector('.toggle-glow');
-            if (glow) glow.style.opacity = '1';
-        });
-        
-        themeToggle.addEventListener('mouseleave', function() {
-            const glow = this.querySelector('.toggle-glow');
-            if (glow) glow.style.opacity = '0';
-        });
-    }
-    
-    // Update orb colors based on theme with improved colors
-    function updateOrbColors() {
-        const orbCore = document.querySelector('.orb-core');
-        const glow = document.querySelector('.glow');
-        const rays = document.querySelectorAll('.ray');
-        const techSymbols = document.querySelectorAll('.tech-symbol');
-        const particles = document.querySelectorAll('.particle');
-        
-        if (orbCore) {
-            const isDarkMode = document.body.classList.contains('dark-theme');
-            orbCore.style.transition = 'background 1s ease, box-shadow 1s ease';
-            
-            if (isDarkMode) {
-                // Dark mode colors - cooler blue/purple with better visibility
-                orbCore.style.background = 'radial-gradient(circle at 30% 30%, rgba(124, 58, 237, 0.95), rgba(79, 70, 229, 0.85) 60%, rgba(99, 102, 241, 0.75) 100%)';
-                orbCore.style.boxShadow = '0 0 60px rgba(124, 58, 237, 0.6), inset 0 0 30px rgba(255, 255, 255, 0.3)';
-                
-                if (glow) {
-                    glow.style.background = 'radial-gradient(circle at center, rgba(124, 58, 237, 0.4) 0%, rgba(79, 70, 229, 0.2) 30%, transparent 70%)';
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (hamburger.classList.contains('active')) {
+                    toggleMenu(); // Call without event object
                 }
-                
-                rays.forEach(ray => {
-                    ray.style.background = 'linear-gradient(to top, rgba(124, 58, 237, 0.8), rgba(124, 58, 237, 0))';
-                });
-                
-                // Also update tech symbols and particles for better visibility
-                techSymbols.forEach(symbol => {
-                    symbol.style.color = '#818cf8';
-                    symbol.style.textShadow = '0 0 10px rgba(124, 58, 237, 0.8)';
-                });
-                
-                particles.forEach(particle => {
-                    particle.style.background = '#818cf8';
-                    particle.style.boxShadow = '0 0 20px rgba(124, 58, 237, 0.8), 0 0 40px rgba(124, 58, 237, 0.4)';
-                });
-            } else {
-                // Light mode colors - original blue
-                orbCore.style.background = 'radial-gradient(circle at 30% 30%, rgba(76, 201, 240, 0.95), rgba(67, 97, 238, 0.85) 60%, rgba(58, 134, 255, 0.75) 100%)';
-                orbCore.style.boxShadow = '0 0 60px rgba(76, 201, 240, 0.6), inset 0 0 30px rgba(255, 255, 255, 0.3)';
-                
-                if (glow) {
-                    glow.style.background = 'radial-gradient(circle at center, rgba(76, 201, 240, 0.4) 0%, rgba(67, 97, 238, 0.2) 30%, transparent 70%)';
-                }
-                
-                rays.forEach(ray => {
-                    ray.style.background = 'linear-gradient(to top, rgba(76, 201, 240, 0.8), rgba(76, 201, 240, 0))';
-                });
-                
-                // Reset tech symbols and particles
-                techSymbols.forEach(symbol => {
-                    symbol.style.color = '';
-                    symbol.style.textShadow = '';
-                });
-                
-                particles.forEach(particle => {
-                    particle.style.background = '';
-                    particle.style.boxShadow = '';
-                });
-            }
-        }
-    }
-    
-    // 6. Cursor follower effect (desktop only)
-    if (window.innerWidth > 992) {
-        const cursor = document.createElement('div');
-        cursor.className = 'cursor-follower';
-        document.body.appendChild(cursor);
-        
-        document.addEventListener('mousemove', function(e) {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-        
-        // Add active class when hovering over interactive elements
-        document.querySelectorAll('a, button, .service-card, .portfolio-item').forEach(item => {
-            item.addEventListener('mouseenter', () => cursor.classList.add('active'));
-            item.addEventListener('mouseleave', () => cursor.classList.remove('active'));
-        });
-    }
-
-    // Check if testimonials JS is loaded correctly
-    if (typeof updateTestimonialSlider !== 'function') {
-        console.log('Loading testimonials fallback...');
-        // Testimonial Slider Functionality
-        const slider = document.querySelector('.testimonial-slider');
-        if (slider) {
-            const slides = document.querySelectorAll('.testimonial-slide');
-            const prevBtn = document.querySelector('.testimonial-nav .prev');
-            const nextBtn = document.querySelector('.testimonial-nav .next');
-            
-            let currentIndex = 0;
-            const slideCount = slides.length;
-            
-            function updateSlider() {
-                slides.forEach((slide, index) => {
-                    if (index === currentIndex) {
-                        slide.style.opacity = '1';
-                        slide.style.transform = 'translateX(0)';
-                        slide.style.zIndex = '2';
-                    } else {
-                        slide.style.opacity = '0';
-                        slide.style.transform = index < currentIndex ? 'translateX(-50px)' : 'translateX(50px)';
-                        slide.style.zIndex = '1';
-                    }
-                });
-            }
-            
-            // Initialize slider
-            updateSlider();
-            
-            // Event listeners for navigation
-            if(prevBtn && nextBtn) {
-                prevBtn.addEventListener('click', function() {
-                    currentIndex = (currentIndex - 1 + slideCount) % slideCount;
-                    updateSlider();
-                });
-                
-                nextBtn.addEventListener('click', function() {
-                    currentIndex = (currentIndex + 1) % slideCount;
-                    updateSlider();
-                });
-                
-                // Auto-advance every 5 seconds
-                setInterval(function() {
-                    currentIndex = (currentIndex + 1) % slideCount;
-                    updateSlider();
-                }, 5000);
-            }
-        }
-    }
-
-    // Initialize Lottie Animation
-    const lottieContainer = document.getElementById('lottie-animation');
-    if (lottieContainer) {
-        // Choose one of these animations based on your preference
-        const animationPath = 'https://lottie.host/embed/d0640935-5e6b-45af-aef7-2c93dfad96f0/MzDhMt63pm.json'; // Web/App Development Animation
-        // Alternative animations:
-        // 'https://lottie.host/embed/79b154c2-6b9d-42bf-a3ce-d0f4385a640b/itQigGvwW1.json' // Code Animation
-        // 'https://lottie.host/embed/60335dd2-3d63-400f-a610-b66c2a7c6f63/F58VeZr0aY.json' // Design & Development
-        
-        const animation = lottie.loadAnimation({
-            container: lottieContainer,
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: animationPath
-        });
-        
-        animation.addEventListener('DOMLoaded', function() {
-            // Add class to indicate animation is loaded
-            document.body.classList.add('lottie-loaded');
-            
-            // Optional: Add subtle interactivity to the animation
-            lottieContainer.addEventListener('mouseenter', function() {
-                animation.setSpeed(1.5); // Speed up on hover
-            });
-            lottieContainer.addEventListener('mouseleave', function() {
-                animation.setSpeed(1); // Return to normal speed
             });
         });
+
+        if (mobileOverlay) {
+            mobileOverlay.addEventListener('click', () => toggleMenu()); // Call without event object
+        }
+    } else if (!hamburger || !navLinks) {
+        // console.warn("script.js: Hamburger or nav-links not found for fallback menu logic.");
     }
 
-    // Enhanced Interactive 3D Orb Animation
-    const orbContainer = document.querySelector('.orb-container');
-    const orb = document.querySelector('.orb');
 
-    if (orbContainer && orb) {
-        // Make the orb rotate on mouse movement with enhanced effects
-        orbContainer.addEventListener('mousemove', function(e) {
-            const containerRect = orbContainer.getBoundingClientRect();
-            const centerX = containerRect.width / 2;
-            const centerY = containerRect.height / 2;
-            const mouseX = e.clientX - containerRect.left;
-            const mouseY = e.clientY - containerRect.top;
-            
-            // Calculate rotation based on mouse position with smoother motion
-            const rotateY = (mouseX - centerX) / 10;
-            const rotateX = (centerY - mouseY) / 10;
-            
-            // Apply smooth transition for mouse interaction
-            orb.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)';
-            orb.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            
-            // Change intensity of glow based on mouse position
-            const distanceFromCenter = Math.sqrt(
-                Math.pow(mouseX - centerX, 2) + 
-                Math.pow(mouseY - centerY, 2)
-            );
-            
-            const glowElement = document.querySelector('.glow');
-            if (glowElement) {
-                const maxDistance = Math.sqrt(Math.pow(centerX, 2) + Math.pow(centerY, 2));
-                const normalizedDistance = 1 - (distanceFromCenter / maxDistance);
-                glowElement.style.opacity = 0.3 + (normalizedDistance * 0.4);
+    // Testimonial Slider
+    const testimonialSlider = document.querySelector('.testimonial-slider');
+    if (testimonialSlider) {
+        const slides = testimonialSlider.querySelectorAll('.testimonial-slide');
+        const prevButton = testimonialSlider.querySelector('.prev');
+        const nextButton = testimonialSlider.querySelector('.next');
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? 'block' : 'none';
+                slide.classList.toggle('active', i === index);
+            });
+        }
+
+        if (slides.length > 0) {
+            showSlide(currentIndex);
+
+            if (prevButton) {
+                prevButton.addEventListener('click', () => {
+                    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                    showSlide(currentIndex);
+                });
             }
-        });
-        
-        // Reset rotation when mouse leaves with smooth transition back to animation
-        orbContainer.addEventListener('mouseleave', function() {
-            orb.style.transform = 'rotateX(10deg) rotateY(0deg)';
-            orb.style.transition = 'transform 1s cubic-bezier(0.2, 0.8, 0.2, 1)';
-            
-            const glowElement = document.querySelector('.glow');
-            if (glowElement) {
-                glowElement.style.opacity = '';
+            if (nextButton) {
+                nextButton.addEventListener('click', () => {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    showSlide(currentIndex);
+                });
             }
-        });
-        
-        // Add touch interaction for mobile
-        orbContainer.addEventListener('touchmove', function(e) {
-            if (e.touches.length > 0) {
-                e.preventDefault(); // Prevent scrolling while interacting
-                const touch = e.touches[0];
-                const containerRect = orbContainer.getBoundingClientRect();
-                const centerX = containerRect.width / 2;
-                const centerY = containerRect.height / 2;
-                const touchX = touch.clientX - containerRect.left;
-                const touchY = touch.clientY - containerRect.top;
-                
-                // Calculate rotation with reduced intensity for mobile
-                const rotateY = (touchX - centerX) / 15;
-                const rotateX = (centerY - touchY) / 15;
-                
-                orb.style.transition = 'transform 0.1s ease-out';
-                orb.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                
-                // Create occasional particle effect on touch as well
-                if (Math.random() > 0.8) {
-                    createParticleTrail(touchX, touchY, containerRect);
+        }
+    }
+
+    // FAQ Toggle Functionality
+    const faqItems = document.querySelectorAll('.faq-item');
+    if (faqItems.length > 0) {
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            if (question && answer) {
+                // Initialize answer height for pre-opened items
+                if (item.classList.contains('active')) {
+                    answer.style.height = answer.scrollHeight + 'px';
+                } else {
+                    answer.style.height = '0px';
                 }
-            }
-        });
-        
-        // Reset on touch end
-        orbContainer.addEventListener('touchend', function() {
-            orb.style.transform = 'rotateX(10deg) rotateY(0deg)';
-            orb.style.transition = 'transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)';
-        });
-        
-        // Device orientation for mobile devices - subtle tilt based on device orientation
-        if (window.DeviceOrientationEvent && window.innerWidth <= 992) {
-            // Only apply if not currently being touched
-            window.addEventListener('deviceorientation', function(e) {
-                if (!orbContainer.classList.contains('touching')) {
-                    // Use beta (x-axis) and gamma (y-axis) values for tilt
-                    const tiltY = Math.min(Math.max(e.beta, -15), 15) / 2;
-                    const tiltX = Math.min(Math.max(e.gamma, -15), 15) / 2;
+
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
                     
-                    orb.style.transition = 'transform 0.4s ease-out';
-                    orb.style.transform = `rotateX(${tiltY}deg) rotateY(${tiltX}deg)`;
-                }
-            });
-            
-            // Add touching class to prevent orientation conflicts
-            orbContainer.addEventListener('touchstart', () => {
-                orbContainer.classList.add('touching');
-            });
-            orbContainer.addEventListener('touchend', () => {
-                orbContainer.classList.remove('touching');
-            });
-        }
-        
-        // Add keyframe animation for particle fade-out
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fade-out-particle {
-                0% { transform: scale(1); opacity: 0.8; }
-                100% { transform: scale(0); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Function to create particle trail on interaction
-        function createParticleTrail(x, y, containerRect) {
-            const particle = document.createElement('div');
-            particle.className = 'interaction-particle';
-            particle.style.cssText = `
-                position: absolute;
-                width: 5px;
-                height: 5px;
-                background: var(--primary-color);
-                border-radius: 50%;
-                opacity: 0.8;
-                filter: blur(1px);
-                pointer-events: none;
-                z-index: 10;
-                left: ${x}px;
-                top: ${y}px;
-                box-shadow: 0 0 10px var(--primary-color);
-                animation: fade-out-particle 1s forwards ease-out;
-            `;
-            
-            orbContainer.appendChild(particle);
-            
-            // Remove particle after animation completes
-            setTimeout(() => {
-                if (orbContainer.contains(particle)) {
-                    orbContainer.removeChild(particle);
-                }
-            }, 1000);
-        }
-        
-        // Create tech symbols and distribute them in 3D space
-        const techSymbols = document.querySelector('.tech-symbols');
-        if (techSymbols) {
-            const symbols = techSymbols.querySelectorAll('.tech-symbol');
-            symbols.forEach((symbol, index) => {
-                // Create 3D positioning for the tech symbols
-                const angleY = (index / symbols.length) * 360;
-                const radius = 150 + (Math.random() * 30);
-                const x = radius * Math.sin(angleY * Math.PI / 180);
-                const z = radius * Math.cos(angleY * Math.PI / 180);
-                const y = -50 + Math.random() * 100;
-                
-                symbol.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
-            });
-        }
-    }
-});
-
-// URGENT: COMPLETELY REMOVE BLUE ORB ANIMATION ON MOBILE DEVICES
-document.addEventListener('DOMContentLoaded', function() {
-  // Check if we're on mobile
-  const isMobile = window.innerWidth <= 768 || 
-                   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  
-  if (isMobile) {
-    console.log("Mobile detected: Removing blue orb animations");
-    
-    // Find and directly remove all 3D orb elements
-    const orbElements = document.querySelectorAll(
-      '.hero-3d-element, .hero-animation, .animated-orb, .orb-animation, ' +
-      '.animated-gradient, .floating-elements, .blue-orb, .animated-sphere, ' +
-      '.hero-animation-container, .hero-3d-container, .hero-3d-object'
-    );
-    
-    orbElements.forEach(element => {
-      // If the element exists, remove it completely from the DOM
-      if (element && element.parentNode) {
-        console.log("Removing orb element:", element);
-        element.parentNode.removeChild(element);
-      }
-    });
-    
-    // Stop any animation loops that might be running
-    if (window.requestAnimationFrame) {
-      // Find any animation loop functions in the global scope
-      const possibleAnimationFunctions = [
-        'animateOrb', 'renderOrb', 'updateOrb', 'drawOrb', 
-        'animateScene', 'renderScene', 'animate3D', 'render3D',
-        'updateAnimation', 'orbAnimation', 'animationLoop'
-      ];
-      
-      // Try to find and stop these functions
-      possibleAnimationFunctions.forEach(funcName => {
-        if (typeof window[funcName] === 'function') {
-          console.log("Disabling animation function:", funcName);
-          window[funcName] = function() { return false; };
-        }
-      });
-      
-      // Clear any animation frame callbacks
-      let id = window.requestAnimationFrame(function(){});
-      while(id--) {
-        window.cancelAnimationFrame(id);
-      }
-    }
-    
-    // Add CSS to ensure no orbs are visible
-    const style = document.createElement('style');
-    style.textContent = `
-      .hero-3d-element, .hero-animation, .animated-orb, .orb-animation,
-      .animated-gradient, .floating-elements, .blue-orb, .animated-sphere,
-      .hero-animation-container, .hero-3d-container, .hero-3d-object,
-      [class*="orb"], [class*="3d-"], [class*="animation"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        height: 0 !important;
-        width: 0 !important;
-        max-height: 0 !important;
-        max-width: 0 !important;
-        position: absolute !important;
-        pointer-events: none !important;
-        z-index: -9999 !important;
-        overflow: hidden !important;
-        animation: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-  }
-});
-
-// FIXED MOBILE MENU TOGGLE
-document.addEventListener('DOMContentLoaded', function() {
-    // Create hamburger spans if they don't exist
-    const hamburger = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
-    if (hamburger) {
-        // Check if hamburger already has span children
-        if (hamburger.querySelectorAll('span').length === 0) {
-            // Create three spans for the hamburger icon
-            for (let i = 0; i < 3; i++) {
-                const span = document.createElement('span');
-                hamburger.appendChild(span);
-            }
-        }
-        
-        // Fix mobile menu toggle functionality
-        hamburger.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Define which menu element to toggle based on what exists in the document
-            const navElement = 
-                document.querySelector('.nav-links') || 
-                document.querySelector('.mobile-nav') || 
-                document.querySelector('.main-nav');
-            
-            if (navElement) {
-                // Toggle active classes
-                this.classList.toggle('active');
-                navElement.classList.toggle('active');
-                
-                // Log state for debugging
-                console.log('Mobile menu toggled:', navElement.classList.contains('active'));
-            } else {
-                console.error('No navigation menu found to toggle');
-            }
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            const navElement = document.querySelector('.nav-links.active, .mobile-nav.active, .main-nav.active');
-            if (navElement && !navElement.contains(e.target) && !hamburger.contains(e.target)) {
-                navElement.classList.remove('active');
-                hamburger.classList.remove('active');
-            }
-        });
-    } else {
-        console.warn('No hamburger menu toggle found');
-    }
-});
-
-// CRITICAL FIX: Force proper image sizes on mobile
-document.addEventListener('DOMContentLoaded', function() {
-    function fixMockupImages() {
-        const mockupImages = document.querySelectorAll('img[src*="cardwizz-mockup.png"], img[src*="pokespud-mockup.png"]');
-        
-        mockupImages.forEach(img => {
-            // Force proper size and fit
-            Object.assign(img.style, {
-                maxWidth: '100%',
-                height: 'auto',
-                maxHeight: window.innerWidth <= 768 ? '300px' : 'none',
-                objectFit: 'contain',
-                display: 'block',
-                margin: '0 auto'
-            });
-            
-            // Also fix parent containers
-            let parent = img.parentElement;
-            for (let i = 0; i < 3; i++) { // Go up 3 levels of parents to fix containers
-                if (parent) {
-                    Object.assign(parent.style, {
-                        overflow: 'visible',
-                        height: 'auto',
-                        maxHeight: 'none'
+                    // Close all other active FAQ items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                            const otherAnswer = otherItem.querySelector('.faq-answer');
+                            if (otherAnswer) otherAnswer.style.height = '0px';
+                        }
                     });
-                    parent = parent.parentElement;
-                }
+
+                    // Toggle the current item
+                    item.classList.toggle('active');
+                    answer.style.height = item.classList.contains('active') ? answer.scrollHeight + 'px' : '0px';
+                });
             }
         });
     }
-    
-    // Run on load
-    fixMockupImages();
-    
-    // Run on resize
-    window.addEventListener('resize', fixMockupImages);
-    
-    // Run after a delay to ensure it works after any dynamic content loads
-    setTimeout(fixMockupImages, 1000);
-});
 
-// Fix 3D animation performance on mobile devices
-document.addEventListener('DOMContentLoaded', function() {
-    // Detect mobile devices for animation optimization
-    const isMobile = window.innerWidth < 768 || 
-                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    if (isMobile) {
-        // Find 3D animation elements
-        const animationElements = document.querySelectorAll('.hero-3d-container, .animated-3d-element, .hero-animation-container');
-        
-        animationElements.forEach(element => {
-            // Simplify animations for mobile
-            const animations = element.getAnimations ? element.getAnimations() : [];
-            animations.forEach(animation => {
-                // Reduce animation complexity
-                animation.playbackRate = 0.75; // Slow down for better performance
-            });
-            
-            // Add mobile-optimized class
-            element.classList.add('mobile-optimized');
-        });
-        
-        // Reduce frame rate of complex animations on low-end devices
-        if (navigator.deviceMemory && navigator.deviceMemory < 4) {
-            // For devices with less memory, further optimize
-            document.body.classList.add('reduce-motion');
-        }
-    }
-});
+    // Typewriter effect for hero heading
+    const typewriterHeading = document.querySelector('.hero h1.gradient-text');
+    if (typewriterHeading) {
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const validPagesForTypewriter = ['index.html', '', 'ecommerce.html']; // web-design.html has data-no-animation
 
-// Add enhanced smooth scroll handling with performance optimizations
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Navigation Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-    
-    hamburger.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-    
-    // Smooth Scrolling for Anchor Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
+        const originalText = typewriterHeading.getAttribute('data-original-text') || typewriterHeading.textContent;
+        typewriterHeading.setAttribute('data-original-text', originalText);
+
+        if (validPagesForTypewriter.includes(currentPath) &&
+            !typewriterHeading.hasAttribute('data-typewriter-applied') &&
+            !typewriterHeading.hasAttribute('data-no-animation')) {
             
-            // Close mobile menu if open
-            if (navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                hamburger.classList.remove('active');
-            }
+            typewriterHeading.textContent = '';
+            typewriterHeading.style.opacity = 1;
+            typewriterHeading.style.visibility = 'visible';
+            typewriterHeading.style.display = 'block';
             
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return; // Skip empty links
-            
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                const headerHeight = document.querySelector('header').offsetHeight;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                
-                // Use native smooth scroll with fallback
-                if ('scrollBehavior' in document.documentElement.style) {
-                    // Modern browsers with native smooth scrolling
-                    window.scrollTo({
-                        top: targetPosition - headerHeight,
-                        behavior: 'smooth'
-                    });
+            let i = 0;
+            const speed = 50;
+            const initialMinHeight = Math.max(50, typewriterHeading.offsetHeight || parseFloat(getComputedStyle(typewriterHeading).fontSize) * 1.5) + 'px';
+            typewriterHeading.style.minHeight = initialMinHeight;
+
+            function typeWriter() {
+                if (i < originalText.length) {
+                    typewriterHeading.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
                 } else {
-                    // Fallback for browsers without native smooth scrolling
-                    smoothScrollTo(targetPosition - headerHeight, 800);
+                    typewriterHeading.setAttribute('data-typewriter-applied', 'true');
+                    typewriterHeading.style.minHeight = 'auto';
                 }
             }
-        });
-    });
-    
-    // Smooth scrolling fallback function for older browsers
-    function smoothScrollTo(targetPosition, duration) {
-        const startPosition = window.pageYOffset;
-        const distance = targetPosition - startPosition;
-        let startTime = null;
-        
-        function animation(currentTime) {
-            if (startTime === null) startTime = currentTime;
-            const timeElapsed = currentTime - startTime;
-            const progress = Math.min(timeElapsed / duration, 1);
-            
-            // Easing function for smoother acceleration/deceleration
-            const ease = easeInOutQuad(progress);
-            
-            window.scrollTo(0, startPosition + distance * ease);
-            
-            if (timeElapsed < duration) {
-                requestAnimationFrame(animation);
-            }
-        }
-        
-        // Easing function
-        function easeInOutQuad(t) {
-            return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-        }
-        
-        requestAnimationFrame(animation);
-    }
-});
-
-// Make logo clickable - redirect to index.html
-document.addEventListener('DOMContentLoaded', function() {
-  // Find all possible logo elements
-  const logoElements = document.querySelectorAll('.logo, .site-logo, .navbar-logo, header .logo, .brand, .brand-logo');
-  
-  logoElements.forEach(logoElement => {
-    // Check if logo is already wrapped in a link
-    if (logoElement && !logoElement.closest('a')) {
-      // Create a wrapper link
-      const logoLink = document.createElement('a');
-      logoLink.href = 'index.html';
-      logoLink.setAttribute('aria-label', 'Go to homepage');
-      
-      // Clone the logo element to preserve any event listeners
-      const logoClone = logoElement.cloneNode(true);
-      
-      // Replace the original logo with the linked version
-      logoElement.parentNode.replaceChild(logoLink, logoElement);
-      logoLink.appendChild(logoClone);
-      
-      console.log('Logo made clickable with link to homepage');
-    } else if (logoElement && logoElement.closest('a')) {
-      // If logo is already in a link, make sure it points to index.html
-      const existingLink = logoElement.closest('a');
-      if (!existingLink.href.includes('index.html')) {
-        existingLink.href = 'index.html';
-        console.log('Updated existing logo link to point to homepage');
-      }
-    }
-  });
-});
-
-// Make logo clickable - redirect to index.html without the .html extension
-document.addEventListener('DOMContentLoaded', function() {
-  // Find all possible logo elements
-  const logoElements = document.querySelectorAll('.logo, .site-logo, .navbar-logo, header .logo, .brand, .brand-logo');
-  
-  logoElements.forEach(logoElement => {
-    // Check if logo is already wrapped in a link
-    if (logoElement && !logoElement.closest('a')) {
-      // Create a wrapper link
-      const logoLink = document.createElement('a');
-      logoLink.href = 'index';
-      logoLink.setAttribute('aria-label', 'Go to homepage');
-      
-      // Clone the logo element to preserve any event listeners
-      const logoClone = logoElement.cloneNode(true);
-      
-      // Replace the original logo with the linked version
-      logoElement.parentNode.replaceChild(logoLink, logoElement);
-      logoLink.appendChild(logoClone);
-      
-      console.log('Logo made clickable with link to homepage');
-    } else if (logoElement && logoElement.closest('a')) {
-      // If logo is already in a link, make sure it points to index without .html
-      const existingLink = logoElement.closest('a');
-      if (!existingLink.href.includes('/index') && !existingLink.href.endsWith('/')) {
-        existingLink.href = 'index';
-        console.log('Updated existing logo link to point to homepage');
-      }
-    }
-  });
-});
-
-// Hide showcase links on mobile
-document.addEventListener('DOMContentLoaded', function() {
-  function hideShowcaseOnMobile() {
-    if (window.innerWidth <= 768) {
-      const showcaseLinks = document.querySelectorAll('a[href*="showcase"], .showcase-link');
-      showcaseLinks.forEach(link => {
-        // Hide link
-        link.style.display = 'none';
-        // If link is in a list item, hide the list item too
-        const parentLi = link.closest('li');
-        if (parentLi) {
-          parentLi.style.display = 'none';
-        }
-      });
-    }
-  }
-  
-  // Run on page load
-  hideShowcaseOnMobile();
-  
-  // Also run on resize
-  window.addEventListener('resize', hideShowcaseOnMobile);
-});
-
-// Fix and enhance typewriter effect on hero heading for desktop
-document.addEventListener('DOMContentLoaded', function() {
-  // Only run on index.html and web-design.html
-  const path = window.location.pathname.replace(/\\/g, '/').toLowerCase();
-  if (
-    path.endsWith('/index.html') ||
-    path.endsWith('/index') ||
-    path === '/' ||
-    path.endsWith('/web-design.html') ||
-    path.endsWith('/web-design')
-  ) {
-    console.log('Typewriter effect: Valid page detected:', path);
-    
-    // Try multiple selectors for hero heading
-    const heroHeading = document.querySelector(
-      '.hero h1, .hero .hero-title, .hero .section-title, .hero-title, .section-title'
-    );
-    
-    if (!heroHeading) {
-      console.warn('Typewriter effect: No hero heading found for typewriter animation.');
-      return;
-    }
-    
-    // Debug what we found
-    console.log('Typewriter effect: Found heading element:', heroHeading.tagName, 
-                'with classes:', heroHeading.className,
-                'and content:', heroHeading.innerText.substring(0, 20) + '...');
-    
-    // Prevent running if already animated or has data-no-animation attribute
-    if (heroHeading.dataset.typewriterApplied || heroHeading.dataset.noAnimation) {
-      console.log('Typewriter effect: Animation skipped - element has data-typewriter-applied or data-no-animation attribute');
-      return;
-    }
-    
-    // Mark as processed to avoid double animation
-    heroHeading.dataset.typewriterApplied = "true";
-
-    const isMobile = window.innerWidth <= 768 ||
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-    // Desktop typewriter animation
-    if (!isMobile) {
-      console.log('Typewriter effect: Starting animation');
-      
-      const originalText = heroHeading.innerText;
-      const originalHTML = heroHeading.innerHTML; // Store for fallback
-      
-      // Store original styles to prevent layout shift
-      const computedStyle = window.getComputedStyle(heroHeading);
-      const originalMinHeight = heroHeading.style.minHeight;
-      
-      // Force minimal styling to ensure animation works
-      Object.assign(heroHeading.style, {
-        minHeight: computedStyle.height,
-        display: 'block',
-        visibility: 'visible',
-        opacity: '1'
-      });
-      
-      // Clear the content for animation
-      heroHeading.innerHTML = '';
-      
-      let charIndex = 0;
-      const typeSpeed = 40; // ms per character
-
-      function typeWriter() {
-        if (charIndex < originalText.length) {
-          heroHeading.innerHTML += originalText.charAt(charIndex);
-          charIndex++;
-          setTimeout(typeWriter, typeSpeed);
+            typeWriter();
         } else {
-          // Add blinking cursor at the end
-          const cursor = document.createElement('span');
-          cursor.className = 'typing-cursor';
-          cursor.innerHTML = '|';
-          heroHeading.appendChild(cursor);
-
-          // Remove cursor after delay
-          setTimeout(() => {
-            if (cursor.parentNode === heroHeading) {
-              heroHeading.removeChild(cursor);
-            }
-          }, 3000);
-          
-          console.log('Typewriter effect: Animation completed successfully');
+            typewriterHeading.textContent = originalText;
+            typewriterHeading.style.opacity = 1;
+            typewriterHeading.style.visibility = 'visible';
+            typewriterHeading.style.display = 'block';
+            typewriterHeading.style.minHeight = 'auto';
         }
-      }
-
-      // Add fallback if typewriter doesn't start within 2 seconds
-      const fallbackTimer = setTimeout(() => {
-        heroHeading.innerHTML = originalHTML;
-        heroHeading.style.minHeight = originalMinHeight;
-        console.warn('Typewriter effect: Fallback triggered, restoring original HTML.');
-      }, 2000);
-
-      // Start typing after short delay
-      setTimeout(() => {
-        clearTimeout(fallbackTimer); // Clear fallback timer
-        typeWriter(); // Start typewriter
-        console.log('Typewriter effect: Started on hero heading.');
-      }, 500);
-    } else {
-      console.log('Typewriter effect: Skipped on mobile device');
     }
-  } else {
-    console.log('Typewriter effect: Page not matching index or web-design, skipping:', path);
-  }
-});
 
-// Ensure hero animation runs on all pages with a hero section, regardless of heading
-document.addEventListener('DOMContentLoaded', function() {
-  const hero = document.querySelector('.hero');
-  if (!hero) {
-    console.warn('Hero animation: No .hero section found.');
-    return;
-  }
-  // If the hero animation is missing, log a warning
-  const orb = document.querySelector('.orb, .hero-animation, .hero-3d-element, .blue-orb');
-  if (!orb) {
-    console.warn('Hero animation: No orb/animation element found in hero section.');
-    // Optionally, you could inject a fallback animation or visual here
-  }
-  // ...existing code for orb/hero animation...
-});
+    // Cookie Consent Banner
+    const cookieBanner = document.getElementById('cookie-banner');
+    if (cookieBanner) {
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
 
-// Ensure pricing cards have proper bullet point structure
-document.addEventListener('DOMContentLoaded', function() {
-    // Function to convert paragraph lists to actual bullet lists if needed
-    function ensurePricingBullets() {
-        const priceCards = document.querySelectorAll('.price-card');
-        
-        priceCards.forEach(card => {
-            // Skip if the card already has a proper list
-            if (card.querySelector('ul.price-features')) return;
-            
-            // Find all paragraphs in the card that come after the price
-            const priceParagraph = card.querySelector('.price');
-            if (!priceParagraph) return;
-            
-            // Create a new list
-            const bulletList = document.createElement('ul');
-            bulletList.className = 'price-features';
-            
-            // Get all the paragraphs that follow the price
-            let nextElement = priceParagraph.nextElementSibling;
-            
-            while (nextElement && nextElement.tagName === 'P') {
-                // Create a list item from the paragraph content
-                const listItem = document.createElement('li');
-                listItem.innerHTML = nextElement.innerHTML;
-                bulletList.appendChild(listItem);
-                
-                // Store the next paragraph before we remove the current one
-                const toRemove = nextElement;
-                nextElement = nextElement.nextElementSibling;
-                
-                // Remove the original paragraph
-                toRemove.parentNode.removeChild(toRemove);
-            }
-            
-            // Add the list after the price
-            priceParagraph.insertAdjacentElement('afterend', bulletList);
-        });
+        if (localStorage.getItem('cookieConsent')) {
+            cookieBanner.style.display = 'none';
+        } else {
+            setTimeout(() => { cookieBanner.style.display = 'block'; }, 1000);
+        }
+
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieBanner.style.display = 'none';
+                if (window.initializeAnalytics) window.initializeAnalytics();
+            });
+        }
+        if (declineBtn) {
+            declineBtn.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'declined');
+                cookieBanner.style.display = 'none';
+            });
+        }
     }
-    
-    // Run immediately
-    ensurePricingBullets();
-    
-    // Also run after a short delay in case of dynamic content
-    setTimeout(ensurePricingBullets, 500);
+
+    // Fallback theme application on load (body class and meta tag)
+    // This ensures the theme is set correctly if headerInclude.js's IIFE somehow fails or is delayed.
+    // Event listeners for the toggle button are handled by window.initializeThemeToggle.
+    const savedTheme = localStorage.getItem('theme');
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+    if (savedTheme === 'dark') {
+        if (!document.body.classList.contains('dark-theme')) {
+            document.body.classList.add('dark-theme');
+        }
+        if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', '#0f172a');
+        }
+    } else { 
+        if (document.body.classList.contains('dark-theme')) {
+            document.body.classList.remove('dark-theme');
+        }
+        if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', '#4361ee');
+        }
+    }
 });
