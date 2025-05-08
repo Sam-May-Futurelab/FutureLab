@@ -1625,8 +1625,16 @@ nav {
 .service-card h3 {
     font-size: 1.5rem;
     margin-bottom: 15px;
-    color: var (--dark-color);
+    color: var(--dark-color);
     font-weight: 600;
+}
+
+.dark-theme .service-card h3 {
+    color: var(--dark-heading-color) !important;
+}
+
+.dark-theme .service-card p {
+    color: var(--dark-text-color) !important;
 }
 
 .service-details {
@@ -1640,6 +1648,10 @@ nav {
     margin-bottom: 12px;
 }
 
+.dark-theme .service-details li {
+    color: var(--dark-text-color) !important;
+}
+
 .service-details li:before {
     content: '';
     position: absolute;
@@ -1651,6 +1663,10 @@ nav {
     border-radius: 50%;
 }
 
+.dark-theme .service-details li:before {
+    background-color: rgba(var(--rgb-accent-color), 0.15) !important;
+}
+
 .service-details li:after {
     content: '✓';
     position: absolute;
@@ -1659,6 +1675,10 @@ nav {
     color: var(--primary-color);
     font-weight: bold;
     font-size: 0.8rem;
+}
+
+.dark-theme .service-details li:after {
+    color: var(--accent-color) !important;
 }
 
 .pricing {
@@ -1672,6 +1692,10 @@ nav {
     margin-bottom: 50px;
     color: var(--dark-color);
     font-weight: 600;
+}
+
+.dark-theme .pricing h3 {
+    color: var(--dark-heading-color) !important;
 }
 
 .pricing-grid {
@@ -1728,6 +1752,10 @@ nav {
     margin-bottom: 20px;
     color: var(--dark-color);
     font-weight: 600;
+}
+
+.dark-theme .price-card h4 {
+    color: var(--dark-heading-color) !important;
 }
 
 .price {
@@ -1887,6 +1915,14 @@ nav {
     font-weight: 600;
 }
 
+.dark-theme .portfolio-content h3 {
+    color: var(--dark-heading-color) !important;
+}
+
+.dark-theme .portfolio-content p {
+    color: var(--dark-text-color) !important;
+}
+
 .portfolio-tags {
     display: inline-block;
     color: var(--gray-color);
@@ -1913,6 +1949,10 @@ nav {
     color: var(--dark-color);
 }
 
+.dark-theme .portfolio-features li {
+    color: var(--dark-text-color) !important;
+}
+
 .portfolio-features li:before {
     content: '';
     position: absolute;
@@ -1922,6 +1962,10 @@ nav {
     height: 8px;
     background: var(--gradient-1);
     border-radius: 50%;
+}
+
+.dark-theme .portfolio-features li:before {
+    background: var(--accent-color) !important;
 }
 
 /* NEW STYLING FOR POKESPUD AND MPFILMS MOCKUP IMAGES */
@@ -2701,4 +2745,54 @@ footer:before {
 
 .dark-theme ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(to bottom, var(--accent-color), var(--secondary-color));
+}
+
+/* Styles for lab.html feature list items */
+.lab-feature-item {
+    background: var(--light-color);
+    padding: 20px;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--box-shadow-sm);
+    color: var(--dark-color); /* Explicit light theme text color */
+}
+
+.lab-feature-item i { /* Icon color for light theme */
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+.lab-feature-item strong { /* Strong tag color for light theme */
+    color: var(--dark-color);
+}
+
+.dark-theme .lab-feature-item {
+    background: var(--dark-card-bg) !important;
+    box-shadow: var(--dark-box-shadow);
+    color: var(--dark-text-color) !important;
+}
+
+.dark-theme .lab-feature-item i { /* Icon color for dark theme */
+    color: var(--accent-color) !important;
+}
+
+.dark-theme .lab-feature-item strong { /* Strong tag color for dark theme */
+    color: var(--dark-heading-color) !important;
+}
+
+/* Styles for lab.html image placeholders */
+.lab-image-placeholder {
+    text-align: center;
+    padding: 20px;
+    border: 1px dashed var(--light-gray);
+    margin: 30px auto;
+    background: #e9ecef; /* Specific light gray for placeholder bg */
+    border-radius: var(--border-radius-sm);
+    max-width: 600px;
+    color: var(--gray-color); /* Text color for placeholder text */
+}
+
+.dark-theme .lab-image-placeholder {
+    border-color: var(--dark-border-color);
+    background: var(--dark-subtle-bg) !important;
+    color: var(--dark-text-color) !important;
 }
