@@ -63,6 +63,11 @@ body, main {
     overflow-x: hidden;
 }
 
+/* Add main content padding to avoid overlap with fixed header */
+main {
+    padding-top: 90px; /* Desktop header height (nav 60px + header padding 2*15px) */
+}
+
 .container {
     width: 100%;
     max-width: 1300px;
@@ -884,6 +889,11 @@ nav {
         padding: 12px 24px;
         border-bottom: none; /* Remove separator if any */
         font-size: 1.1rem;
+    }
+
+    /* Adjust main content padding for mobile header height */
+    main {
+        padding-top: 70px; /* Mobile header height from header.html nav.container */
     }
 }
 

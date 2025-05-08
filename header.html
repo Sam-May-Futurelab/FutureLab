@@ -261,12 +261,12 @@
         /* Mobile styling */
         @media (max-width: 768px) {
             header nav.container {
-                height: 70px;
                 display: flex;
                 align-items: center;
                 justify-content: center; /* Center the logo */
                 padding: 0 15px; /* Keep existing padding */
                 position: relative; /* Ensures absolute children are positioned relative to this */
+                height: 70px; /* Explicit mobile height */
             }
 
             .hamburger {
@@ -278,6 +278,15 @@
                 transform: translateY(-50%);
                 left: 15px; /* Position hamburger on the left */
                 z-index: 1001;
+            }
+            
+            .theme-toggle { /* Added mobile-specific positioning */
+                position: absolute;
+                top: 50%;
+                right: 15px; /* Position theme toggle on the right */
+                transform: translateY(-50%);
+                margin-left: 0; /* Override desktop margin-left */
+                z-index: 1001; /* Ensure it's on top */
             }
             
             .nav-links {
@@ -334,25 +343,9 @@
                 max-width: 80%;
                 display: block !important;
             }
-
-            /* Theme toggle mobile positioning */
-            .theme-toggle {
-                position: absolute;
-                top: 50%;
-                right: 15px; /* Position theme toggle on the right */
-                transform: translateY(-50%);
-                margin-left: 0; /* Override desktop margin-left */
-                /* z-index: 1001; is already set globally and is fine */
-            }
         }
         
         @media (min-width: 769px) {
-            /* .theme-toggle {
-                position: absolute;
-                right: -175px; 
-                top: 50%;
-                transform: translateY(-50%);
-            } */ /* This block is correctly commented out or removed as per previous suggestions */
         }
         
         @media (max-width: 400px) {
