@@ -16,6 +16,20 @@
     --box-shadow: 0 10px 30px rgba(0, 30, 80, 0.08);
     --box-shadow-hover: 0 15px 35px rgba(0, 30, 80, 0.15);
     --transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+    /* Dark Theme Variables */
+    --dark-bg-color: #0f172a;
+    --dark-card-bg: #1e293b;
+    --dark-text-color: #cbd5e1;
+    --dark-heading-color: #f1f5f9;
+    --dark-border-color: #334155;
+    --dark-subtle-bg: #1a2438;
+    --dark-gradient-1: linear-gradient(135deg, #3a86ff 0%, #4361ee 100%);
+    --dark-gradient-2: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%);
+    --dark-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    --dark-box-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.3);
+    --rgb-primary-color: 58, 134, 255;
+    --rgb-accent-color: 76, 201, 240;
 }
 
 /* At the top, add these global smooth scrolling styles */
@@ -36,6 +50,13 @@ body {
     background-color: var(--light-color);
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Theme Body Styles */
+body.dark-theme {
+    color: var(--dark-text-color);
+    background-color: var(--dark-bg-color);
 }
 
 body, main {
@@ -55,6 +76,30 @@ a {
     text-decoration: none;
     color: var(--primary-color);
     transition: var(--transition);
+}
+
+/* Dark Theme General Text & Links */
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3,
+.dark-theme h4,
+.dark-theme h5,
+.dark-theme h6 {
+    color: var(--dark-heading-color);
+}
+
+.dark-theme p,
+.dark-theme li,
+.dark-theme span:not([class*="gradient"]):not([class*="logo"]):not([class*="price"]):not([class*="skill"]) {
+    color: var(--dark-text-color);
+}
+
+.dark-theme a:not(.btn):not(.footer-social a):not(.logo-link) {
+    color: var(--accent-color);
+}
+
+.dark-theme a:not(.btn):not(.footer-social a):not(.logo-link):hover {
+    color: var(--primary-color);
 }
 
 ul {
@@ -82,10 +127,9 @@ img[src*="profile-image"],
   object-fit: contain;
   border-radius: 8px;
   display: block;
-  margin: -70px auto auto auto; /* Much stronger upward shift */
+  margin: -70px auto auto auto;
   background: transparent !important;
   box-shadow: none !important;
-  /* Additional critical transparency fixes */
   isolation: isolate;
   mix-blend-mode: normal;
   position: relative;
@@ -137,7 +181,7 @@ section:has(img[src*="profile"]) {
 .client-testimonial-controls,
 .clients-slider-dots {
   position: relative;
-  z-index: 10 !important; /* Ensure controls are above content */
+  z-index: 10 !important;
 }
 
 /* Make all individual dots/toggles clickable */
@@ -163,7 +207,7 @@ section:has(img[src*="profile"]) {
 .client-testimonials,
 section:has(.testimonial),
 div:has(.testimonial) {
-  overflow: visible !important; /* Prevent cutting off controls */
+  overflow: visible !important;
 }
 
 /* Remove horizontal dividers between sections */
@@ -208,8 +252,8 @@ section, .services, .portfolio, .testimonials, .about, .contact {
 
 /* Reduce vertical spacing between sections */
 section {
-  margin-bottom: 60px; /* Reduced from likely 80px or 100px */
-  padding-top: 60px; /* Reduced from likely 80px or 100px */
+  margin-bottom: 60px;
+  padding-top: 60px;
 }
 
 /* Specifically reduce spacing above the services section */
@@ -219,8 +263,8 @@ section[id="services"],
 .services-container,
 section:has(.section-title:contains("Services")),
 section:has(h2:contains("My Services")) {
-  margin-top: 30px; /* Reduced top margin */
-  padding-top: 40px; /* Reduced top padding */
+  margin-top: 30px;
+  padding-top: 40px;
 }
 
 /* Reduce spacing after other common sections that might precede services */
@@ -229,25 +273,25 @@ section.hero-section,
 section.intro-section,
 #about,
 #hero {
-  margin-bottom: 40px; /* Reduced from likely 60px+ */
-  padding-bottom: 40px; /* Reduced from likely 60px+ */
+  margin-bottom: 40px;
+  padding-bottom: 40px;
 }
 
 /* Reduce gap between testimonials and about section */
 #about, .about {
-    padding-top: 50px; /* Increase padding to create more space */
+    padding-top: 50px;
 }
 
 /* Reduce spacing between testimonials and portfolio/work section */
 .portfolio, #portfolio {
-    padding-top: 20px; /* Reduce top padding */
-    margin-top: 10px; /* Reduce top margin */
+    padding-top: 20px;
+    margin-top: 10px;
 }
 
 /* Adjust spacing for section titles in the portfolio area */
 .portfolio .section-title, 
 #portfolio .section-title {
-    margin-bottom: 30px; /* Slightly reduced from default */
+    margin-bottom: 30px;
 }
 
 /* Adjust bottom spacing of testimonials */
@@ -277,20 +321,17 @@ section.intro-section,
 
 /* MOBILE-ONLY FIX: Prevent horizontal scrolling without affecting desktop */
 @media (max-width: 768px) {
-  /* Constrain body and html to prevent overflow */
   html, body {
     overflow-x: hidden;
     width: 100%;
     position: relative;
   }
   
-  /* Ensure images don't cause overflow on mobile */
   img {
     max-width: 100%;
     height: auto;
   }
   
-  /* Make containers respect the viewport width */
   .container, 
   section,
   .section {
@@ -298,7 +339,6 @@ section.intro-section,
     box-sizing: border-box;
   }
   
-  /* Ensure flex items wrap on small screens */
   .row, 
   .flex-container,
   [class*="d-flex"] {
@@ -310,13 +350,13 @@ section.intro-section,
 .pokespud-section img[src*="pokespud-mockup"],
 img[src*="pokespud-mockup"],
 .pokespud-mockup {
-  border-radius: 16px; /* Increased from 12px for softer corners */
-  display: block; /* Ensure it can be properly centered */
-  margin-left: auto; /* Center horizontally instead of pushing left */
-  margin-right: auto; /* Center horizontally */
-  max-width: 90%; /* Prevent hitting edge of container */
-  width: auto; /* Allow natural sizing */
-  height: auto; /* Maintain aspect ratio */
+  border-radius: 16px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 90%;
+  width: auto;
+  height: auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
 }
@@ -325,28 +365,24 @@ img[src*="pokespud-mockup"],
 .pokespud-image-container,
 .section-feature-image,
 div:has(> img[src*="pokespud-mockup"]) {
-  overflow: hidden; /* Prevent any overflow */
-  padding: 0 15px; /* Add padding for breathing room */
-  text-align: center; /* For IE compatibility */
+  overflow: hidden;
+  padding: 0 15px;
+  text-align: center;
 }
 
 /* VERTICAL SPACING ADJUSTMENTS */
-/* Reduce space between hero and services section */
 .trusted-brands-section,
 .clients {
-  margin-bottom: 20px; /* Reduced from default */
+  margin-bottom: 20px;
 }
 
-/* Reduce spacing above services section */
 section.services,
 #services,
 .services {
-  padding-top: 50px; /* Reduced spacing for desktop */
+  padding-top: 50px;
 }
 
-/* Mobile-specific spacing adjustments */
 @media (max-width: 768px) {
-  /* Further reduce spacing for mobile */
   .trusted-brands-section,
   .clients {
     margin-bottom: 10px;
@@ -355,10 +391,9 @@ section.services,
   section.services,
   #services,
   .services {
-    padding-top: 30px; /* Even less padding on mobile */
+    padding-top: 30px;
   }
   
-  /* Reduce space above portfolio/work section on mobile only */
   section.portfolio,
   #portfolio {
     padding-top: 30px;
@@ -366,35 +401,29 @@ section.services,
   }
 }
 
-/* MOBILE SECTION SPACING ADJUSTMENTS */
 @media (max-width: 768px) {
-  /* Reduce gap between Services and Portfolio sections */
   .services, 
   section#services {
-    padding-bottom: 20px !important; /* Reduce bottom padding */
-    margin-bottom: 0 !important;     /* Remove bottom margin */
+    padding-bottom: 20px !important;
+    margin-bottom: 0 !important;
   }
   
-  /* Target the pricing section specifically (it's at bottom of services) */
   .pricing {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
   }
   
-  /* Reduce space above Portfolio "My Work" section */
   .portfolio,
   section#portfolio {
     padding-top: 20px !important;
     margin-top: 0 !important;
   }
   
-  /* Reduce space above Testimonials "What Clients Say" section */
   section.testimonials {
     padding-top: 20px !important;
     margin-top: 20px !important;
   }
   
-  /* Adjust section titles to have less margin on mobile */
   .section-title {
     margin-bottom: 15px !important;
   }
@@ -403,7 +432,7 @@ section.services,
 /* Section Title */
 .section-title {
     font-size: 2.5rem;
-    margin-bottom: 15px; /* Overall space below the entire element */
+    margin-bottom: 15px;
     text-align: center;
     position: relative;
     font-weight: 700;
@@ -419,51 +448,58 @@ section.services,
     height: 4px;
     background: var(--gradient-1);
     border-radius: 2px;
-    margin-bottom: 25px; /* Add more space after the blue underline */
-    display: block; /* Ensure it's a block element */
-    margin-top: 30px; /* Increased space between text and blue line */
+    margin-bottom: 25px;
+    display: block;
+    margin-top: 30px;
 }
 
 /* Maintain proper spacing on mobile */
 @media (max-width: 768px) {
   .section-title {
-    margin-bottom: 40px; /* Slightly reduced for mobile but still adequate */
+    margin-bottom: 40px;
   }
   
   .section-title:after {
-    margin-top: 20px; /* Slightly reduced space on mobile, but still increased from original */
+    margin-top: 20px;
   }
 }
 
 /* SECTION TITLE SPACING FIX */
-/* Adding proper spacing between section titles and their blue underlines */
-/* This rule is now the primary source for section title underlines */
 .section-title::after,
-section > h2::after, /* Targets h2 elements that are direct children of a section */
-.contact-form-header h2::after, /* Specificity for contact page headers if needed */
+section > h2::after,
+.contact-form-header h2::after,
 .contact-info-header h2::after,
 .location-container h2::after,
-h2.section-title::after { /* If h2 also has section-title class */
+h2.section-title::after {
   content: '';
   display: block;
   width: 80px;
   height: 4px;
   background: var(--primary-color);
-  margin: 15px auto 0; /* Top margin, auto for left/right centers it */
+  margin: 15px auto 0;
   border-radius: 2px;
-  position: relative; /* Ensures margin auto works correctly */
-  left: auto; /* Override any inherited left values */
-  transform: none; /* Override any inherited transforms */
+  position: relative;
+  left: auto;
+  transform: none;
+}
+
+/* Dark Theme Section Title Underline */
+.dark-theme .section-title::after,
+.dark-theme section > h2::after,
+.dark-theme .contact-form-header h2::after,
+.dark-theme .contact-info-header h2::after,
+.dark-theme .location-container h2::after,
+.dark-theme h2.section-title::after {
+  background: var(--dark-gradient-1);
 }
 
 /* Ensure parent text is centered for the underline to appear centered underneath */
-/* This might be too broad for all h2s; apply to specific contexts or use .section-title */
 .section-title,
-section > h2, /* Targets h2 elements that are direct children of a section */
-.contact-form-header h2, /* Specificity for contact page headers */
+section > h2,
+.contact-form-header h2,
 .contact-info-header h2,
 .location-container h2,
-h2.section-title { /* If h2 also has section-title class */
+h2.section-title {
   text-align: center;
 }
 
@@ -474,7 +510,7 @@ h2.section-title { /* If h2 also has section-title class */
   .section-title:after,
   h2:after,
   section h2:after {
-    margin-top: 30px !important; /* Still good spacing, but slightly reduced for mobile */
+    margin-top: 30px !important;
   }
 }
 
@@ -514,6 +550,14 @@ h2.section-title { /* If h2 also has section-title class */
     box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
 }
 
+.dark-theme .btn-primary {
+    box-shadow: 0 4px 15px rgba(var(--rgb-primary-color), 0.4);
+}
+
+.dark-theme .btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(var(--rgb-primary-color), 0.5);
+}
+
 .btn-primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
@@ -526,11 +570,23 @@ h2.section-title { /* If h2 also has section-title class */
     box-shadow: 0 4px 15px rgba(67, 97, 238, 0.1);
 }
 
+.dark-theme .btn-secondary {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 4px 15px rgba(var(--rgb-accent-color), 0.2);
+}
+
 .btn-secondary:hover {
     background-color: var(--primary-color);
     color: white;
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(67, 97, 238, 0.2);
+}
+
+.dark-theme .btn-secondary:hover {
+    background-color: var(--accent-color);
+    color: var(--dark-bg-color);
+    box-shadow: 0 6px 20px rgba(var(--rgb-accent-color), 0.3);
 }
 
 .btn-sm {
@@ -544,10 +600,20 @@ h2.section-title { /* If h2 also has section-title class */
     color: var(--primary-color);
 }
 
+.dark-theme .btn-outline {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
 .btn-outline:hover {
     background-color: var(--primary-color);
     color: white;
     transform: translateY(-2px);
+}
+
+.dark-theme .btn-outline:hover {
+    background-color: var(--accent-color);
+    color: var(--dark-bg-color);
 }
 
 .full-width {
@@ -569,34 +635,56 @@ header {
     transition: var(--transition);
 }
 
+.dark-theme header {
+    background-color: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+
 header.scrolled {
     padding: 12px 0;
     background-color: rgba(255, 255, 255, 0.98);
     box-shadow: 0 5px 25px rgba(0, 30, 80, 0.08);
 }
 
+.dark-theme header.scrolled {
+    background-color: rgba(15, 23, 42, 0.95);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+}
+
 nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px; /* Set a consistent height */
+    height: 60px;
 }
 
 .nav-links {
     display: flex;
-    align-items: center; /* Ensure vertical centering */
+    align-items: center;
     gap: 30px;
-    height: 100%; /* Take full height of nav */
+    height: 100%;
 }
 
 .nav-links a {
     display: flex;
     align-items: center;
-    height: 100%; /* Take full height */
+    height: 100%;
     color: var(--dark-color);
     font-weight: 500;
     position: relative;
-    padding-bottom: 0; /* Remove padding that was causing misalignment */
+    padding-bottom: 0;
+}
+
+.dark-theme .nav-links a:not(.btn) {
+    color: var(--dark-text-color);
+}
+
+.dark-theme .nav-links a:not(.btn):hover {
+    color: var(--accent-color);
+}
+
+.dark-theme .nav-links a:not(.btn):after {
+    background: var(--dark-gradient-1);
 }
 
 .nav-links a:after {
@@ -622,7 +710,7 @@ nav {
 .hamburger, 
 .menu-toggle, 
 .mobile-menu-button {
-  display: none !important; /* Ensure it's always hidden */
+  display: none !important;
 }
 
 /* Fix mobile menu dropdown styling */
@@ -633,12 +721,11 @@ nav {
 }
 
 @media (max-width: 768px) {
-  /* Keep only what's necessary for the menu to work with simple-menu.js */
   .mobile-nav,
   .nav-links,
   .main-nav {
     position: fixed;
-    top: 70px; /* Adjust based on your header height */
+    top: 70px;
     left: 0;
     right: 0;
     width: 100%;
@@ -656,7 +743,7 @@ nav {
   .dark-theme .mobile-nav,
   .dark-theme .nav-links,
   .dark-theme .main-nav {
-    background: #1e293b;
+    background: var(--dark-card-bg);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   }
   
@@ -679,7 +766,7 @@ nav {
   display: block !important;
   -webkit-overflow-scrolling: touch !important;
   position: fixed !important;
-  top: 70px !important; /* Adjust based on your header height */
+  top: 70px !important;
   left: 0 !important;
   right: 0 !important;
   z-index: 1000 !important;
@@ -687,7 +774,6 @@ nav {
 
 /* IMPROVED MOBILE NAVIGATION MENU */
 @media (max-width: 768px) {
-  /* Enhanced Mobile Menu Layout - keeping basic menu layout but removing toggle functionality */
   .nav-links {
     position: fixed;
     top: 0;
@@ -703,22 +789,16 @@ nav {
     justify-content: center;
     padding: 60px 30px !important;
     z-index: 100;
-    /* Remove transform that was hiding the menu */
     overflow-y: auto;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
   }
   
-  /* Improved menu alignment and spacing */
   .nav-links li {
     margin: 15px 0;
-    /* Remove opacity and transform animations */
     width: 100%;
     text-align: center;
   }
   
-  /* Remove menu item animation delays */
-  
-  /* Large touch-friendly menu items */
   .nav-links a {
     font-size: 1.4rem;
     padding: 15px;
@@ -727,7 +807,6 @@ nav {
     text-align: center;
   }
   
-  /* Button styling in mobile menu - fix centering */
   .nav-links .btn {
     margin-top: 20px;
     width: 70%;
@@ -738,19 +817,14 @@ nav {
     display: block;
   }
   
-  /* Remove active menu state animations */
-  
-  /* Dark mode support */
   .dark-theme .nav-links {
     background: var(--dark-bg-color, #1e293b);
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
   }
   
   .dark-theme .nav-links a {
-    color: var(--light-color, white);
+    color: var(--dark-text-color);
   }
-  
-  /* Remove hamburger positioning */
 }
 
 /* EMERGENCY FIX FOR MOBILE MENU SCROLLABILITY */
@@ -762,7 +836,7 @@ nav {
   display: block !important;
   -webkit-overflow-scrolling: touch !important;
   position: fixed !important;
-  top: 70px !important; /* Adjust based on your header height */
+  top: 70px !important;
   left: 0 !important;
   right: 0 !important;
   z-index: 1000 !important;
@@ -770,13 +844,12 @@ nav {
 
 /* IMPROVED MOBILE MENU STYLES - MAKE LARGER & MORE ACCESSIBLE */
 @media (max-width: 768px) {
-  /* Enhanced mobile menu - larger and more accessible */
   .mobile-nav.active,
   .nav-links.active,
   .main-nav.active {
-    max-height: 85vh !important; /* Increased height to show more items */
+    max-height: 85vh !important;
     overflow-y: auto !important;
-    padding: 25px 20px 100px !important; /* Much more bottom padding */
+    padding: 25px 20px 100px !important;
     display: flex !important;
     flex-direction: column !important;
     -webkit-overflow-scrolling: touch !important;
@@ -789,7 +862,6 @@ nav {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
   }
   
-  /* Improve tap target size and spacing for menu items */
   .nav-links a,
   .mobile-nav a,
   .main-nav a,
@@ -800,7 +872,7 @@ nav {
     padding: 15px 0 !important;
     margin: 0 !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-    font-size: 16px !important; /* Ensure readable text size */
+    font-size: 16px !important;
   }
   
   .dark-theme .nav-links a,
@@ -812,7 +884,6 @@ nav {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
   }
   
-  /* Ensure the last item has no border */
   .nav-links a:last-child,
   .mobile-nav a:last-child,
   .main-nav a:last-child,
@@ -822,14 +893,12 @@ nav {
     border-bottom: none !important;
   }
   
-  /* Add visual indicator for tap targets */
   .nav-links a:active,
   .mobile-nav a:active,
   .main-nav a:active {
     background-color: rgba(67, 97, 238, 0.05) !important;
   }
   
-  /* Fix for Contact button in mobile menu */
   .nav-links a.btn,
   .mobile-nav a.btn,
   .main-nav a.btn {
@@ -848,7 +917,7 @@ nav {
     height: auto;
     padding: 8px 16px;
     margin: auto 0;
-    margin-left: 20px; /* Add spacing between the theme toggle and the contact button */
+    margin-left: 20px;
 }
 
 .nav-links a.btn.btn-outline {
@@ -866,19 +935,17 @@ nav {
 }
 
 .theme-toggle {
-    margin-right: 20px; /* Add spacing between the theme toggle and the contact button */
+    margin-right: 20px;
 }
 
 /* Fix hamburger menu behavior and visibility */
 @media (min-width: 769px) {
-  /* Hide hamburger on desktop by default */
   .hamburger, 
   .menu-toggle, 
   .mobile-menu-button {
     display: none !important;
   }
   
-  /* On desktop, nav links should always be visible regardless of active state */
   .nav-links, 
   .mobile-nav, 
   .main-nav {
@@ -898,14 +965,12 @@ nav {
 
 /* Ensure proper mobile menu display when active */
 @media (max-width: 768px) {
-  /* Hide nav links by default on mobile */
   .nav-links, 
   .mobile-nav, 
   .main-nav {
     display: none;
   }
   
-  /* Only show when active class is applied */
   .nav-links.active, 
   .mobile-nav.active, 
   .main-nav.active {
@@ -915,7 +980,6 @@ nav {
 
 /* Hide Showcase Links on Mobile */
 @media (max-width: 768px) {
-  /* Hide showcase navigation links on mobile */
   .nav-links a[href*="showcase"],
   .mobile-nav a[href*="showcase"],
   .main-nav a[href*="showcase"],
@@ -928,7 +992,6 @@ nav {
     display: none !important;
   }
   
-  /* Hide showcase nav item container */
   li:has(a[href*="showcase"]),
   li:has(a.showcase-link) {
     display: none !important;
@@ -941,6 +1004,10 @@ nav {
     background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%);
     position: relative;
     overflow: hidden;
+}
+
+.dark-theme .hero {
+    background: var(--dark-bg-color);
 }
 
 .hero:before {
@@ -982,7 +1049,6 @@ nav {
 .hero h1 {
     font-size: 3.2rem;
     margin-bottom: 25px;
-    color: var(--dark-color);
     line-height: 1.2;
     font-weight: 700;
     background: var(--gradient-1);
@@ -992,8 +1058,22 @@ nav {
     position: relative;
 }
 
+.dark-theme .hero h1 {
+    background: var(--dark-gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
 .hero h1 span {
     background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.dark-theme .hero h1 span {
+    background: var(--dark-gradient-1);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -1002,8 +1082,12 @@ nav {
 .hero p {
     font-size: 1.15rem;
     margin-bottom: 35px;
-    color: var (--gray-color);
+    color: var(--gray-color);
     max-width: 90%;
+}
+
+.dark-theme .hero p {
+    color: var(--dark-text-color);
 }
 
 .hero-buttons {
@@ -1047,8 +1131,18 @@ nav {
     font-size: 0.9rem;
 }
 
+.dark-theme .floating-tech {
+    background: var(--dark-card-bg);
+    color: var(--dark-text-color);
+    box-shadow: var(--dark-box-shadow);
+}
+
 .floating-tech i {
     color: var(--primary-color);
+}
+
+.dark-theme .floating-tech i {
+    color: var(--accent-color);
 }
 
 .tech-1 {
@@ -1100,6 +1194,10 @@ nav {
     color: var(--gray-color);
 }
 
+.dark-theme .clients-text {
+    color: var(--dark-text-color);
+}
+
 .clients-logos {
     display: flex;
     align-items: center;
@@ -1112,8 +1210,16 @@ nav {
     transition: var(--transition);
 }
 
+.dark-theme .client-logo {
+    opacity: 0.6;
+}
+
 .client-logo:hover {
     opacity: 0.8;
+}
+
+.dark-theme .client-logo:hover {
+    opacity: 0.9;
 }
 
 /* Fix for oversized client/brand logos */
@@ -1184,29 +1290,25 @@ nav {
 
 /* Fix for 3D animation glitches on mobile devices */
 @media (max-width: 768px) {
-  /* Optimize 3D animation performance on mobile */
   .hero-3d-container, 
   .hero-animation-container,
   .animated-3d-element {
-    transform: scale(0.8) !important; /* Reduce size on mobile */
+    transform: scale(0.8) !important;
     transform-style: preserve-3d;
-    will-change: transform; /* Hardware acceleration hint */
-    backface-visibility: hidden; /* Reduce visual artifacts */
+    will-change: transform;
+    backface-visibility: hidden;
     perspective: 1000px;
   }
   
-  /* Prevent overflow issues */
   .hero-section {
     overflow: hidden;
     height: auto !important;
   }
   
-  /* Simplify animation for better performance */
   .hero-3d-element, .float-animation {
-    animation-duration: 8s !important; /* Slower animation for better performance */
+    animation-duration: 8s !important;
   }
   
-  /* Force hardware acceleration for smoother rendering */
   .animated-3d-element,
   .hero-3d-object,
   .hero-3d-container {
@@ -1217,14 +1319,12 @@ nav {
     transform: translateZ(0);
   }
   
-  /* Fix case where animation container is too large */
   .hero-content-container {
     max-width: 100%;
     padding: 0 15px;
     box-sizing: border-box;
   }
   
-  /* Fix for specific hero mockup images that might be causing problems */
   img[src*="-mockup.png"],
   .hero-mockup-image,
   .device-preview {
@@ -1239,55 +1339,47 @@ nav {
   .hero-3d-container, 
   .hero-animation-container,
   .animated-3d-element {
-    transform: scale(0.6) !important; /* Further reduce size */
-    opacity: 0.9; /* Slightly reduce opacity for better text readability */
+    transform: scale(0.6) !important;
+    opacity: 0.9;
   }
   
-  /* Simplify or disable complex animations on very small screens */
   .floating-element,
   .animated-particle {
-    animation-play-state: paused; /* Pause secondary animations */
+    animation-play-state: paused;
   }
 }
-
 
 /* FIX FOR MOBILE MENU - Make it scrollable */
 @media (max-width: 768px) {
   .nav-links, .main-nav, .mobile-nav {
-    max-height: 80vh !important; /* Limit height to 80% of viewport */
-    overflow-y: auto !important; /* Make it scrollable */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-    padding-bottom: 30px !important; /* Add padding at the bottom */
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 30px !important;
   }
   
-  /* Additional styling for better mobile menu appearance */
   .nav-links li, .main-nav li, .mobile-nav li {
     margin: 12px 0 !important;
   }
   
-  /* Ensure hamburger toggle is visible and clickable */
   .hamburger, .menu-toggle, .mobile-menu-button {
     z-index: 1000 !important;
     display: block !important;
   }
   
-  /* Fix dropdown height and positioning */
   .dropdown-content, .submenu {
     position: relative !important;
     max-height: none !important;
     top: 0 !important;
     box-shadow: none !important;
   }
- 
   
-  /* Better readability for brand section on mobile without 3D elements */
   .brands-section .section-title,
   .brands-section .section-subtitle {
     text-align: center;
     width: 100%;
   }
   
-  /* Stronger constraints for mockup images on mobile */
   img[src*="-mockup.png"],
   .mockup-image,
   .phone-mockup,
@@ -1295,13 +1387,12 @@ nav {
   .device-preview img {
     max-width: 100% !important;
     height: auto !important;
-    max-height: 300px !important; /* Strict height limit */
+    max-height: 300px !important;
     object-fit: contain !important;
     margin: 0 auto !important;
     display: block !important;
   }
   
-  /* Fix showcase card layouts on mobile */
   .showcase-card,
   .project-card,
   .demo-card {
@@ -1309,7 +1400,6 @@ nav {
     height: auto !important;
   }
   
-  /* Ensure showcase preview areas don't overflow */
   .showcase-preview,
   .project-showcase,
   .demo-preview {
@@ -1333,7 +1423,6 @@ nav {
     margin: 0 auto !important;
   }
   
-  /* Also fix containers of these images */
   .demo-preview,
   .project-showcase {
     height: auto !important;
@@ -1346,7 +1435,6 @@ nav {
 
 /* TARGETED MOBILE SPACING ADJUSTMENTS */
 @media (max-width: 768px) {
-  /* Reduce space between "Trusted by innovative brands" and "My Services" section */
   .trusted-brands-section,
   .clients {
     margin-bottom: 10px;
@@ -1354,32 +1442,28 @@ nav {
   
   section.services,
   #services {
-    padding-top: 30px; /* Reduced from default value */
+    padding-top: 30px;
   }
   
-  /* Reduce space above "My Work" section */
   section.portfolio,
   #portfolio {
-    padding-top: 30px; /* Reduced from default value */
+    padding-top: 30px;
     margin-top: 10px;
   }
 }
 
 /* Improved portfolio image positioning for mobile */
 @media (max-width: 768px) {
-    /* Better vertical centering for portfolio images */
     .portfolio-item .portfolio-image {
-        padding: 20px 0; /* Add vertical padding for better positioning */
-        margin-bottom: 20px; /* Increase space below image */
+        padding: 20px 0;
+        margin-bottom: 20px;
     }
     
-    /* Specifically target CardWizz mockup for better positioning */
     img[src*="cardwizz-mockup.png"] {
-        margin-top: 15px; /* Move image down a bit */
-        margin-bottom: 25px; /* Add more space below the image */
+        margin-top: 15px;
+        margin-bottom: 25px;
     }
     
-    /* Also adjust the portfolio section padding for better spacing */
     .portfolio-item {
         padding: 20px 0;
     }
@@ -1387,18 +1471,15 @@ nav {
 
 /* Reduce padding around CardWizz mockup image on mobile */
 @media (max-width: 768px) {
-  /* Target specifically the CardWizz mockup */
   .portfolio-item .portfolio-image img[src*="cardwizz-mockup.png"] {
     margin: 0 !important;
-    padding: 5px !important; /* Reduced padding */
+    padding: 5px !important;
   }
   
-  /* Also reduce padding on the container */
   .portfolio-item .portfolio-image {
-    padding: 5px !important; /* Reduced padding */
+    padding: 5px !important;
   }
   
-  /* And ensure image size is manageable */
   .portfolio-image img {
     max-height: 320px !important;
   }
@@ -1406,29 +1487,24 @@ nav {
 
 /* Fix CardWizz mockup spacing on mobile - targeted approach */
 @media (max-width: 768px) {
-  /* More targeted selector for the CardWizz mockup specifically */
   .portfolio-item:first-child .portfolio-image {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
   }
   
-  /* Target the image itself */
   .portfolio-item:first-child img[src*="cardwizz-mockup.png"] {
     margin-bottom: 0 !important;
   }
   
-  /* Reduce top space in the content section */
   .portfolio-item:first-child .portfolio-content {
     padding-top: 10px !important;
     margin-top: 0 !important;
   }
   
-  /* Further reduce any margins on headings */
   .portfolio-item:first-child .portfolio-content h3 {
     margin-top: 0 !important;
   }
   
-  /* Also target the second portfolio item (PokeSpud) for consistency */
   .portfolio-item.reverse .portfolio-image {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
@@ -1461,6 +1537,10 @@ nav {
     overflow: hidden;
 }
 
+.dark-theme .services {
+    background-color: var(--dark-subtle-bg);
+}
+
 .services:before {
     content: "";
     position: absolute;
@@ -1471,6 +1551,11 @@ nav {
     background-image: radial-gradient(rgba(67, 97, 238, 0.03) 2px, transparent 2px);
     background-size: 30px 30px;
     z-index: 0;
+}
+
+.dark-theme .services:before {
+    background-image: radial-gradient(rgba(var(--rgb-accent-color), 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
 }
 
 .services-grid {
@@ -1493,6 +1578,12 @@ nav {
     display: flex;
     flex-direction: column;
     transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.5s ease;
+}
+
+.dark-theme .service-card {
+    background-color: var(--dark-card-bg);
+    box-shadow: var(--dark-box-shadow);
+    border-color: var(--dark-border-color);
 }
 
 .service-card:hover {
@@ -1600,6 +1691,12 @@ nav {
     box-shadow: var(--box-shadow);
 }
 
+.dark-theme .price-card {
+    background-color: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+    box-shadow: var(--dark-box-shadow);
+}
+
 .price-card:before {
     content: "";
     position: absolute;
@@ -1616,6 +1713,10 @@ nav {
     border-color: transparent;
     transform: translateY(-8px);
     box-shadow: var(--box-shadow-hover);
+}
+
+.dark-theme .price-card:hover {
+    box-shadow: var(--dark-box-shadow-hover);
 }
 
 .price-card:hover:before {
@@ -1646,9 +1747,13 @@ nav {
     color: var (--gray-color);
 }
 
+.dark-theme .price span {
+    color: var(--dark-text-color);
+}
+
 .price-tag {
     position: absolute;
-    top: -10px; /* Changed from -15px to -10px to move it down a bit */
+    top: -10px;
     right: 20px;
     background: var(--gradient-1);
     color: white;
@@ -1688,6 +1793,10 @@ nav {
     overflow: hidden;
 }
 
+.dark-theme .portfolio {
+    background: var(--dark-bg-color);
+}
+
 .portfolio:before {
     content: "";
     position: absolute;
@@ -1719,9 +1828,19 @@ nav {
     transition: var(--transition);
 }
 
+.dark-theme .portfolio-item {
+    background-color: var(--dark-card-bg);
+    box-shadow: var(--dark-box-shadow);
+    border: 1px solid var(--dark-border-color);
+}
+
 .portfolio-item:hover {
     box-shadow: var(--box-shadow-hover);
     transform: translateY(-5px);
+}
+
+.dark-theme .portfolio-item:hover {
+    box-shadow: var(--dark-box-shadow-hover);
 }
 
 .portfolio-item.reverse {
@@ -1778,6 +1897,11 @@ nav {
     border-radius: 30px;
 }
 
+.dark-theme .portfolio-tags {
+    color: var(--accent-color);
+    background-color: rgba(var(--rgb-accent-color), 0.1);
+}
+
 .portfolio-features {
     margin: 25px 0;
 }
@@ -1803,42 +1927,42 @@ nav {
 /* NEW STYLING FOR POKESPUD AND MPFILMS MOCKUP IMAGES */
 .portfolio-item img[src*="pokespud-mockup"],
 .portfolio-item img[src*="mpfilms-mockup"] {
-  border-radius: 16px; /* Softer corners */
-  display: block; /* Ensure it can be properly centered */
-  margin-left: auto; /* Center horizontally */
-  margin-right: auto; /* Center horizontally */
-  max-width: 90%; /* Prevent hitting edge of container */
-  width: auto; /* Allow natural sizing */
-  height: auto; /* Maintain aspect ratio */
+  border-radius: 16px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 90%;
+  width: auto;
+  height: auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Modified positioning for pokespud mockup (in reverse layout) - move away from right edge */
 .portfolio-item.reverse img[src*="pokespud-mockup"] {
-  margin-right: 15%; /* Move image away from right edge toward text */
-  margin-left: auto; /* Keep it aligned to the right */
-  max-width: 100%; /* Slightly reduce max width */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition for smooth effect */
+  margin-right: 15%;
+  margin-left: auto;
+  max-width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Modified positioning for mpfilms mockup - move away from left edge AND INCREASE SIZE */
 .portfolio-item:not(.reverse) img[src*="mpfilms-mockup"] {
-  margin-left: 10%; /* Reduced left margin to allow for larger size */
-  margin-right: auto; /* Keep it aligned to the left */
-  max-width: 90%; /* Increased from 80% to make the image larger */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition for zoom effect */
+  margin-left: 10%;
+  margin-right: auto;
+  max-width: 90%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Add hover effect for the mockup images */
 .portfolio-item img[src*="pokespud-mockup"]:hover {
-  transform: translateY(-5px) scale(1.1); /* Zoom effect on hover */
+  transform: translateY(-5px) scale(1.1);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 /* Special handling for MPFilms hover to maintain the increased size */
 .portfolio-item:not(.reverse) img[src*="mpfilms-mockup"]:hover {
-  transform: translateY(-5px) scale(1.1); /* Fixed: Removed the initial 1.05 scale to allow the hover zoom to work properly */
+  transform: translateY(-5px) scale(1.1);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
@@ -1847,9 +1971,9 @@ nav {
 .section-feature-image,
 div:has(> img[src*="pokespud-mockup"]),
 div:has(> img[src*="mpfilms-mockup"]) {
-  overflow: hidden; /* Prevent any overflow */
-  padding: 0 15px; /* Add padding for breathing room */
-  text-align: center; /* For IE compatibility */
+  overflow: hidden;
+  padding: 0 15px;
+  text-align: center;
 }
 
 /* About Section */
@@ -1858,6 +1982,10 @@ div:has(> img[src*="mpfilms-mockup"]) {
     background-color: white;
     position: relative;
     overflow: hidden;
+}
+
+.dark-theme .about {
+    background-color: var(--dark-subtle-bg);
 }
 
 .about:after {
@@ -1870,6 +1998,11 @@ div:has(> img[src*="mpfilms-mockup"]) {
     background-image: radial-gradient(rgba(67, 97, 238, 0.03) 2px, transparent 2px);
     background-size: 30px 30px;
     z-index: 0;
+}
+
+.dark-theme .about:after {
+    background-image: radial-gradient(rgba(var(--rgb-accent-color), 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
 }
 
 .about-content {
@@ -1899,10 +2032,19 @@ div:has(> img[src*="mpfilms-mockup"]) {
     z-index: -1;
 }
 
+.dark-theme .about-image:before {
+    background: var(--dark-gradient-1);
+    opacity: 0.15;
+}
+
 .about-image img {
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow-hover);
     transition: var(--transition);
+}
+
+.dark-theme .about-image img {
+    box-shadow: var(--dark-box-shadow-hover);
 }
 
 .about-text {
@@ -1918,6 +2060,13 @@ div:has(> img[src*="mpfilms-mockup"]) {
 
 .about-text h3 span {
     background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.dark-theme .about-text h3 span {
+    background: var(--dark-gradient-1);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -1947,9 +2096,18 @@ div:has(> img[src*="mpfilms-mockup"]) {
     overflow: hidden;
 }
 
+.dark-theme .skills span {
+    background-color: rgba(var(--rgb-accent-color), 0.1);
+    color: var(--accent-color);
+}
+
 .skills span:hover {
     background-color: rgba(67, 97, 238, 0.12);
     transform: translateY(-3px);
+}
+
+.dark-theme .skills span:hover {
+    background-color: rgba(var(--rgb-accent-color), 0.2);
 }
 
 .skills span::after {
@@ -1973,6 +2131,10 @@ div:has(> img[src*="mpfilms-mockup"]) {
     border-top: 1px solid var(--light-gray);
 }
 
+.dark-theme .education {
+    border-top-color: var(--dark-border-color);
+}
+
 .education h4 {
     font-size: 1.3rem;
     margin-bottom: 15px;
@@ -1986,6 +2148,10 @@ div:has(> img[src*="mpfilms-mockup"]) {
     background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%);
     position: relative;
     overflow: hidden;
+}
+
+.dark-theme .contact {
+    background: var(--dark-bg-color);
 }
 
 .contact:before {
@@ -2057,6 +2223,12 @@ div:has(> img[src*="mpfilms-mockup"]) {
     position: relative;
 }
 
+.dark-theme .contact-form {
+    background-color: var(--dark-card-bg);
+    box-shadow: var(--dark-box-shadow);
+    border-color: var(--dark-border-color);
+}
+
 .contact-form .form-group {
     margin-bottom: 20px;
 }
@@ -2069,7 +2241,7 @@ div:has(> img[src*="mpfilms-mockup"]) {
 }
 
 .dark-theme .contact-form label {
-    color: #e2e8f0;
+    color: var(--dark-heading-color);
 }
 
 .contact-form input,
@@ -2081,14 +2253,21 @@ div:has(> img[src*="mpfilms-mockup"]) {
     border-radius: 8px;
     font-size: 16px;
     transition: all 0.3s ease;
+    background-color: white;
+    color: var(--dark-color);
 }
 
 .dark-theme .contact-form input,
 .dark-theme .contact-form select,
 .dark-theme .contact-form textarea {
-    background-color: #1e293b;
-    border-color: #334155;
-    color: #e2e8f0;
+    background-color: var(--dark-subtle-bg);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-color);
+}
+
+.dark-theme .contact-form input::placeholder,
+.dark-theme .contact-form textarea::placeholder {
+    color: var(--gray-color);
 }
 
 .contact-form input:focus,
@@ -2097,6 +2276,13 @@ div:has(> img[src*="mpfilms-mockup"]) {
     border-color: var(--primary-color);
     outline: none;
     box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.dark-theme .contact-form input:focus,
+.dark-theme .contact-form select:focus,
+.dark-theme .contact-form textarea:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(var(--rgb-accent-color), 0.3);
 }
 
 .contact-form button[type="submit"] {
@@ -2180,6 +2366,10 @@ div:has(> img[src*="mpfilms-mockup"]) {
 .calendly-description {
   color: var(--gray-color);
   font-size: 0.9rem;
+}
+
+.dark-theme .calendly-description {
+  color: var(--dark-text-color);
 }
 
 /* Footer */
@@ -2371,7 +2561,6 @@ footer:before {
         max-width: 100%;
     }
     
-    /* Better spacing for mobile */
     .hero {
         padding: 130px 0 70px;
     }
@@ -2380,32 +2569,28 @@ footer:before {
         margin-bottom: 2rem;
     }
     
-    /* Improve form usability on mobile */
     .form-group input,
     .form-group select,
     .form-group textarea {
-        font-size: 16px; /* Prevents iOS zoom on focus */
+        font-size: 16px;
         padding: 12px;
     }
     
-    /* Adjust stats on mobile */
     .stat-item {
         padding: 20px 15px;
     }
     
-    /* Better positioned theme toggle */
     .theme-toggle {
         bottom: 20px;
         right: 20px;
         width: 45px;
         height: 45px;
-        z-index: 1010; /* Above all else */
+        z-index: 1010;
     }
 }
 
 /* HAMBURGER POSITION FIX */
 @media (max-width: 768px) {
-  /* Reposition theme toggle now that hamburger is gone */
   .theme-toggle {
     position: absolute;
     right: 15px;
@@ -2414,12 +2599,10 @@ footer:before {
     z-index: 100;
   }
   
-  /* Make sure header has proper positioning for absolute positioning */
   header nav.container {
     position: relative;
   }
   
-  /* Ensure theme toggle button doesn't conflict with hamburger */
   .theme-toggle {
     right: 60px;
   }
@@ -2455,7 +2638,6 @@ footer:before {
         display: none;
     }
     
-    /* Better padding for content on small screens */
     .service-card,
     .portfolio-content,
     .testimonial-content,
@@ -2463,7 +2645,6 @@ footer:before {
         padding: 25px 20px;
     }
     
-    /* Make buttons easier to tap */
     .btn {
         padding: 14px 20px;
         min-width: 120px;
@@ -2499,12 +2680,25 @@ footer:before {
     background: #f1f1f1;
 }
 
+.dark-theme ::-webkit-scrollbar-track {
+    background: var(--dark-subtle-bg);
+}
+
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(to bottom, #3a86ff, #4361ee);
     border-radius: 6px;
     border: 3px solid #f1f1f1;
 }
 
+.dark-theme ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+    border-color: var(--dark-subtle-bg);
+}
+
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(to bottom, #4361ee, #3a0ca3);
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, var(--accent-color), var(--secondary-color));
 }
