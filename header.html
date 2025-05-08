@@ -264,7 +264,9 @@
                 height: 70px;
                 display: flex;
                 align-items: center;
-                padding: 0 15px;
+                justify-content: center; /* Center the logo */
+                padding: 0 15px; /* Keep existing padding */
+                position: relative; /* Ensures absolute children are positioned relative to this */
             }
 
             .hamburger {
@@ -274,6 +276,7 @@
                 position: absolute;
                 top: 50%;
                 transform: translateY(-50%);
+                left: 15px; /* Position hamburger on the left */
                 z-index: 1001;
             }
             
@@ -330,6 +333,16 @@
                 width: 160px;
                 max-width: 80%;
                 display: block !important;
+            }
+
+            /* Theme toggle mobile positioning */
+            .theme-toggle {
+                position: absolute;
+                top: 50%;
+                right: 15px; /* Position theme toggle on the right */
+                transform: translateY(-50%);
+                margin-left: 0; /* Override desktop margin-left */
+                /* z-index: 1001; is already set globally and is fine */
             }
         }
         
