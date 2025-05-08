@@ -150,11 +150,22 @@
             border: none;
             color: var(--dark-color);
             cursor: pointer;
-            font-size: 1.3rem;
+            font-size: 1.3rem; /* Icon size */
+            
+            /* Standardize button box model and content alignment */
+            display: inline-flex; 
+            align-items: center;
+            justify-content: center;
+            padding: 0; 
+            line-height: 1; 
+            width: 40px; /* Consistent width for touch target */
+            height: 40px; /* Consistent height for touch target */
+            box-sizing: border-box; /* Ensure padding/border are included in width/height */
+
             border-radius: 50%;
-            margin-left: 15px;
+            margin-left: 15px; /* Desktop: space from nav links */
             transition: color 0.3s, transform 0.3s;
-            z-index: 1001;
+            z-index: 1001; /* Ensure it's above other elements */
         }
         
         .dark-theme .theme-toggle {
@@ -286,6 +297,7 @@
                 right: 15px; /* Position theme toggle on the right */
                 transform: translateY(-50%);
                 margin-left: 0; /* Override desktop margin-left */
+                /* Width, height, and other base styles are inherited from the general .theme-toggle style */
                 z-index: 1001; /* Ensure it's on top */
             }
             

@@ -630,64 +630,6 @@
             }
         }
 
-        /* Enhanced theme toggle styling with better tap target */
-        .theme-toggle {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--dark-color);
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px; /* Increased width */
-            height: 44px; /* Increased height */
-            border-radius: 50%;
-            transition: all 0.2s ease;
-            z-index: 100;
-            padding: 0;
-        }
-        
-        /* Add visual feedback for the theme toggle */
-        .theme-toggle:active {
-            transform: translateY(-50%) scale(0.9);
-        }
-        
-        .theme-toggle i {
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-        
-        .theme-toggle:hover i {
-            transform: rotate(20deg);
-        }
-        
-        /* Add a subtle shine animation when toggled */
-        @keyframes toggle-shine {
-            0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(67, 97, 238, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
-        }
-        
-        .toggle-animation {
-            animation: toggle-shine 0.6s ease-out;
-        }
-
-        /* Make logo clickable - add styles for the logo link */
-        .logo-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            transition: transform 0.2s ease;
-        }
-        
-        .logo-link:hover {
-            transform: translateY(-2px);
-        }
-
         /* Fix for blue underlines - overriding with stronger specificity */
         .contact-form-header h2::after,
         .contact-info-header h2::after,
