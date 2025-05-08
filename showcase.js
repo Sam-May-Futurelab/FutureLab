@@ -43,25 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             console.log("Showcase hamburger clicked");
             
-            // Toggle menu visibility
+            // Toggle menu visibility using classes
             showcaseMenu.classList.toggle('active');
             this.classList.toggle('active');
-            
-            // Force CSS properties
-            if (showcaseMenu.classList.contains('active')) {
-                showcaseMenu.style.display = 'block';
-                showcaseMenu.style.position = 'fixed';
-                showcaseMenu.style.top = '70px';
-                showcaseMenu.style.left = '0';
-                showcaseMenu.style.width = '100%';
-                showcaseMenu.style.background = '#fff';
-                showcaseMenu.style.padding = '20px';
-                showcaseMenu.style.zIndex = '999';
-                showcaseMenu.style.maxHeight = '80vh';
-                showcaseMenu.style.overflow = 'auto';
-            } else {
-                showcaseMenu.style = '';
-            }
         });
         
         // Close menu when clicking outside

@@ -125,31 +125,51 @@ document.addEventListener('DOMContentLoaded', function() {
     if (faqItems.length > 0) {
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
-            const answer = item.querySelector('.faq-answer');
-            if (question && answer) {
-                // Initialize answer height for pre-opened items
-                if (item.classList.contains('active')) {
-                    answer.style.height = answer.scrollHeight + 'px';
-                } else {
-                    answer.style.height = '0px';
-                }
 
+            if (question) {
                 question.addEventListener('click', () => {
-                    const isActive = item.classList.contains('active');
-                    
                     // Close all other active FAQ items
                     faqItems.forEach(otherItem => {
                         if (otherItem !== item && otherItem.classList.contains('active')) {
                             otherItem.classList.remove('active');
-                            const otherAnswer = otherItem.querySelector('.faq-answer');
-                            if (otherAnswer) otherAnswer.style.height = '0px';
                         }
                     });
 
-                    // Toggle the current item
+                    // Toggle the current item's active class
                     item.classList.toggle('active');
-                    answer.style.height = item.classList.contains('active') ? answer.scrollHeight + 'px' : '0px';
                 });
+            }
+        });
+    }
+
+    // Comparison Section Toggle Functionality
+    const toggleButton = document.querySelector('.comparison-toggle-btn');
+    const content = document.getElementById('comparison-content');
+
+    if (toggleButton && content) {
+        toggleButton.addEventListener('click', () => {
+            const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true' || false;
+            toggleButton.setAttribute('aria-expanded', !isExpanded);
+            content.style.display = isExpanded ? 'none' : 'block'; // Basic toggle
+            
+            // For CSS transition-based toggle (if using max-height and opacity)
+            if (!isExpanded) {
+                content.style.display = 'block'; // Need display block to measure scrollHeight
+                // Timeout to allow display:block to apply before transition starts
+                setTimeout(() => {
+                    content.classList.add('open');
+                    toggleButton.innerHTML = 'Hide Details <i class="fas fa-chevron-up"></i>';
+                }, 10); 
+            } else {
+                content.classList.remove('open');
+                toggleButton.innerHTML = 'Show Details <i class="fas fa-chevron-down"></i>';
+                // Listen for transition end to set display:none for accessibility and layout
+                // content.addEventListener('transitionend', function handleTransitionEnd() {
+                //     if (!content.classList.contains('open')) {
+                //         content.style.display = 'none';
+                //     }
+                //     content.removeEventListener('transitionend', handleTransitionEnd);
+                // });
             }
         });
     }

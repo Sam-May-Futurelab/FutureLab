@@ -66,9 +66,6 @@
     <script src="js/headerInclude.js"></script>
     <script src="simple-menu.js" defer></script>
     <script src="js/theme-toggle.js" defer></script>
-    
-    <!-- Add theme toggle initialization script -->
-    <!-- Removed inline initializeThemeToggle script to avoid conflicts. Relies on js/theme-toggle.js -->
 </head>
 <body>
     <!-- The header will be dynamically inserted by headerInclude.js -->
@@ -375,91 +372,88 @@
         </section>
         
         <!-- Comparison Section - NEW -->
-        <section id="comparison" class="comparison section-transition hide-on-mobile">
+        <section id="comparison" class="comparison section-transition">
             <div class="container">
-                <h2 class="section-title">Why Choose Futurelab?</h2>
-                <div class="comparison-intro">
-                    <h3 class="comparison-subtitle">Futurelab vs DIY Builders</h3>
-                    <p>Why businesses who start on Wix, Squarespace or UENI often end up here...</p>
+                <div class="comparison-toggle-header">
+                    <h2 class="section-title">Why Choose Futurelab?</h2>
+                    <button class="btn btn-outline btn-sm comparison-toggle-btn" aria-expanded="false" aria-controls="comparison-content">
+                        Show Details <i class="fas fa-chevron-down"></i>
+                    </button>
                 </div>
-                
-                <div class="comparison-table">
-                    <div class="comparison-header">
-                        <div class="comparison-feature">Feature</div>
-                        <div class="comparison-column">DIY Site Builders<br>(Wix, UENI, etc)</div>
-                        <div class="comparison-column highlight">Futurelab</div>
+
+                <div id="comparison-content" class="comparison-collapsible-content" style="display: none;">
+                    <div class="comparison-intro">
+                        <h3>Futurelab vs DIY Builders</h3>
+                        <p>Why businesses who start on Wix, Squarespace, or UENI often end up here...</p>
                     </div>
                     
-                    <div class="comparison-row">
-                        <div class="comparison-feature">Design</div>
-                        <div class="comparison-column">Template-based, limited customisation ❌</div>
-                        <div class="comparison-column highlight">100% custom-built to match your brand ✅</div>
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Futurelab</th>
+                                    <th>DIY Site Builders (Wix, UENI, etc)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="feature-name">Design</td>
+                                    <td>100% custom-built to match your brand <i class="fas fa-check-circle tick"></i></td>
+                                    <td>Template-based, limited customisation <i class="fas fa-times-circle cross"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Performance</td>
+                                    <td>Fast-loading, mobile-first and SEO-friendly <i class="fas fa-check-circle tick"></i></td>
+                                    <td>Often bloated and slow <i class="fas fa-times-circle cross"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Support</td>
+                                    <td>Personal communication, 1:1 access to your developer <i class="fas fa-check-circle tick"></i></td>
+                                    <td>Ticketed support, no direct contact <i class="fas fa-times-circle cross"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Ownership</td>
+                                    <td>You fully own your site & code <i class="fas fa-check-circle tick"></i></td>
+                                    <td>You rent the platform <i class="fas fa-times-circle cross"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Scalability</td>
+                                    <td>Flexible: add features, integrations, or apps anytime <i class="fas fa-check-circle tick"></i></td>
+                                    <td>Limited to what the platform allows <i class="fas fa-times-circle cross"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Functionality</td>
+                                    <td>Built around your specific business needs <i class="fas fa-check-circle tick"></i></td>
+                                    <td>Basic tools, often upsold <i class="fas fa-times-circle cross"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Look & Feel</td>
+                                    <td>Clean, modern, and built to convert visitors into customers <i class="fas fa-check-circle tick"></i></td>
+                                    <td>Can look generic or "cookie-cutter" <i class="fas fa-times-circle cross"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Cost</td>
+                                    <td>One-time investment that grows with your business <i class="fas fa-check-circle tick"></i></td>
+                                    <td>Low monthly fee, but long-term limitations <i class="fas fa-times-circle cross"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     
-                    <div class="comparison-row">
-                        <div class="comparison-feature">Performance</div>
-                        <div class="comparison-column">Often bloated and slow ❌</div>
-                        <div class="comparison-column highlight">Fast-loading, mobile-first and SEO-friendly ✅</div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-feature">Support</div>
-                        <div class="comparison-column">Ticketed support, no direct contact ❌</div>
-                        <div class="comparison-column highlight">Personal communication, 1:1 access to your developer ✅</div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-feature">Ownership</div>
-                        <div class="comparison-column">You rent the platform ❌</div>
-                        <div class="comparison-column highlight">You fully own your site & code ✅</div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-feature">Scalability</div>
-                        <div class="comparison-column">Limited to what the platform allows ❌</div>
-                        <div class="comparison-column highlight">Flexible: add features, integrations, or apps anytime ✅</div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-feature">Functionality</div>
-                        <div class="comparison-column">Basic tools, often upsold ❌</div>
-                        <div class="comparison-column highlight">Built around your specific business needs ✅</div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-feature">Look & Feel</div>
-                        <div class="comparison-column">Can look generic or "cookie-cutter" ❌</div>
-                        <div class="comparison-column highlight">Clean, modern, and built to convert visitors into customers ✅</div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-feature">Cost</div>
-                        <div class="comparison-column">Low monthly fee, but long-term limitations ❌</div>
-                        <div class="comparison-column highlight">One-time investment that grows with your business ✅</div>
-                    </div>
-                </div>
-                
-                <div class="comparison-conclusion">
-                    <h4>💡 Why it matters:</h4>
-                    <p>Your website isn't just a digital placeholder — it's your brand, your first impression, and your best salesperson.</p>
-                    
-                    <p class="matters-heading">If you're serious about growth, you need a site that:</p>
-                    <ul class="matters-list"></ul>
-                        <li><i class="fas fa-check"></i> Looks professional</li>
-                        <li><i class="fas fa-check"></i> Loads instantly</li>
-                        <li><i class="fas fa-check"></i> Works beautifully on mobile</li>
-                        <li><i class="fas fa-check"></i> Actually helps you convert leads or sell</li>
-                    </ul>
-                    
-                    <div class="business-focus">
-                        <h4>🚀 Built for Businesses That Want More</h4>
+                    <div class="comparison-conclusion">
+                        <h3><i class="fas fa-lightbulb"></i> Why it matters:</h3>
+                        <p>Your website isn't just a digital placeholder — it's your brand, your first impression, and your best salesperson.</p>
+                        <p>If you're serious about growth, you need a site that:</p>
+                        <ul>
+                            <li><i class="fas fa-check icon-bullet"></i> Looks professional</li>
+                            <li><i class="fas fa-check icon-bullet"></i> Loads instantly</li>
+                            <li><i class="fas fa-check icon-bullet"></i> Works beautifully on mobile</li>
+                            <li><i class="fas fa-check icon-bullet"></i> Actually helps you convert leads or sell</li>
+                        </ul>
+                        <h3><i class="fas fa-rocket"></i> Built for Businesses That Want More</h3>
                         <p>Futurelab sites are designed for founders, creatives, and small teams who want to stand out, not blend in.</p>
-                    </div>
-                    
-                    <p class="upgrade-text">Ready to upgrade from "just having a site" to something that works hard for your business?</p>
-                    
-                    <div class="cta-container">
-                        <a href="#contact" class="btn btn-primary">Let's Work Together</a>
+                        <p>Ready to upgrade from "just having a site" to something that works hard for your business?</p>
                     </div>
                 </div>
             </div>

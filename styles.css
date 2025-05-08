@@ -519,6 +519,185 @@ h2.section-title {
   }
 }
 
+/* FAQ Section */
+.faq {
+    padding: 80px 0;
+    background-color: var(--light-color);
+    position: relative;
+}
+
+.dark-theme .faq {
+    background-color: var(--dark-bg-color);
+}
+
+.faq .section-title a.gradient-title-link {
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transition: opacity 0.3s ease;
+}
+
+.dark-theme .faq .section-title a.gradient-title-link {
+    background: var(--dark-gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.faq .section-title a.gradient-title-link:hover {
+    opacity: 0.8;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.faq-item {
+    background-color: white;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 20px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--light-gray);
+    transition: var(--transition);
+}
+
+.dark-theme .faq-item {
+    background-color: var(--dark-card-bg);
+    box-shadow: var(--dark-box-shadow);
+    border-color: var(--dark-border-color);
+}
+
+.faq-item:hover {
+    box-shadow: var(--box-shadow-hover);
+    transform: translateY(-3px);
+}
+
+.dark-theme .faq-item:hover {
+    box-shadow: var(--dark-box-shadow-hover);
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    cursor: pointer;
+}
+
+.faq-question h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--dark-color);
+}
+
+.dark-theme .faq-question h3 {
+    color: var(--dark-heading-color);
+}
+
+.faq-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.3s ease;
+}
+
+.faq-toggle i {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+.dark-theme .faq-toggle i {
+    color: var(--accent-color);
+}
+
+.faq-item.active .faq-toggle {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    padding: 0 25px; /* Changed: Top and bottom padding to 0 when collapsed */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding-top 0.4s ease-out, padding-bottom 0.4s ease-out, border-top-color 0.4s ease-out;
+    border-top: 1px solid transparent;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px; /* Adjust as needed for content */
+    padding: 20px 25px 25px; /* Changed: Explicitly set all paddings for active state */
+    border-top-color: var(--light-gray);
+    /* Ensure transition properties match the ones being changed */
+    transition: max-height 0.5s ease-in, padding-top 0.5s ease-in, padding-bottom 0.5s ease-in, border-top-color 0.5s ease-in;
+}
+
+.dark-theme .faq-item.active .faq-answer {
+    border-top-color: var(--dark-border-color);
+}
+
+.faq-answer p {
+    margin-bottom: 15px;
+    line-height: 1.7;
+    color: var(--gray-color);
+}
+
+.dark-theme .faq-answer p {
+    color: var(--dark-text-color);
+}
+
+.faq-answer ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.faq-answer ul li {
+    margin-bottom: 8px;
+    color: var(--gray-color);
+}
+
+.dark-theme .faq-answer ul li {
+    color: var(--dark-text-color);
+}
+
+.faq-answer ul li strong {
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.dark-theme .faq-answer ul li strong {
+    color: var(--dark-heading-color);
+}
+
+/* FAQ Mobile Adjustments */
+@media (max-width: 768px) {
+    .faq {
+        padding: 60px 0;
+    }
+
+    .faq-question {
+        padding: 18px 20px;
+    }
+
+    .faq-question h3 {
+        font-size: 1.05rem;
+    }
+
+    .faq-answer {
+        padding: 0 20px;
+    }
+    
+    .faq-item.active .faq-answer {
+        padding-top: 15px;
+        padding-bottom: 20px;
+    }
+}
+
 /* Buttons */
 .btn {
     display: inline-block;
@@ -2742,4 +2921,299 @@ footer:before {
     border-color: var(--dark-border-color);
     background: var(--dark-subtle-bg) !important;
     color: var(--dark-text-color) !important;
+}
+
+/* Comparison Section Styling */
+.comparison {
+    padding: 80px 0;
+    background-color: var(--light-color);
+    /* text-align: center; Removed to allow button to align with title if needed */
+}
+
+.dark-theme .comparison {
+    background-color: var(--dark-subtle-bg);
+}
+
+.comparison-toggle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px; /* Space between header and collapsible content */
+    padding: 0 20px; /* Add some padding if container doesn't have it */
+}
+
+.comparison-toggle-header .section-title {
+    margin-bottom: 0; /* Remove default margin from section title */
+    text-align: left; /* Align title to the left */
+}
+
+.comparison-toggle-header .section-title:after {
+    display: none; /* Hide the underline for this specific title instance */
+}
+
+.comparison-toggle-btn {
+    padding: 10px 20px; /* Adjust padding as needed */
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.comparison-toggle-btn i {
+    transition: transform 0.3s ease;
+}
+
+.comparison-toggle-btn[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+.comparison-collapsible-content {
+    /* Styles for the content that will be toggled */
+    /* display: none; by default in HTML, JS will toggle */
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+    max-height: 0; /* Initially collapsed */
+    opacity: 0; /* Initially hidden */
+}
+
+.comparison-collapsible-content.open {
+    max-height: 3000px; /* Adjust to fit content, can be a large value */
+    opacity: 1;
+}
+
+.comparison-intro {
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    text-align: center; /* Center the intro text */
+}
+
+.comparison-intro h2 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    color: var(--dark-color);
+}
+
+.dark-theme .comparison-intro h2 {
+    color: var(--dark-heading-color);
+}
+
+.comparison-intro p {
+    font-size: 1.1rem;
+    color: var(--gray-color);
+    line-height: 1.7;
+}
+
+.dark-theme .comparison-intro p {
+    color: var(--dark-text-color);
+}
+
+.comparison-table {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    border-collapse: collapse;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Ensures border-radius is applied to table */
+    border: 1px solid var(--light-gray);
+}
+
+.dark-theme .comparison-table {
+    box-shadow: var(--dark-box-shadow);
+    border-color: var(--dark-border-color);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 18px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.dark-theme .comparison-table th,
+.dark-theme .comparison-table td {
+    border-bottom-color: var(--dark-border-color);
+}
+
+.comparison-table th {
+    background-color: #f0f4f8; /* Light, neutral header */
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--dark-color);
+}
+
+.dark-theme .comparison-table th {
+    background-color: var(--dark-card-bg); /* Slightly darker than card for contrast */
+    color: var(--dark-heading-color);
+}
+
+.comparison-table td {
+    font-size: 1rem;
+    color: var(--dark-color);
+}
+
+.dark-theme .comparison-table td {
+    color: var(--dark-text-color);
+}
+
+.comparison-table tr:last-child td {
+    border-bottom: none;
+}
+
+.comparison-table td:nth-child(2), /* "FutureLab" column */
+.comparison-table td:nth-child(3) { /* "Others" column */
+    text-align: center;
+}
+
+.comparison-table .feature-name {
+    font-weight: 500;
+}
+
+.comparison-table .tick {
+    color: var(--success-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.comparison-table .cross {
+    color: #e74c3c; /* A suitable red for "no" */
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.comparison-conclusion {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.comparison-conclusion p {
+    font-size: 1.1rem;
+    color: var(--gray-color);
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.dark-theme .comparison-conclusion p {
+    color: var(--dark-text-color);
+}
+
+.comparison-conclusion .btn {
+    margin-top: 10px;
+}
+
+/* Comparison Section Mobile Responsiveness */
+@media (max-width: 768px) {
+    .comparison {
+        padding: 60px 15px; /* More padding on sides for mobile */
+    }
+
+    .comparison-toggle-header {
+        flex-direction: column; /* Stack title and button on mobile */
+        align-items: flex-start; /* Align items to the start */
+        margin-bottom: 20px;
+    }
+
+    .comparison-toggle-header .section-title {
+        margin-bottom: 15px; /* Space between title and button on mobile */
+        text-align: center; /* Center title on mobile */
+    }
+    .comparison-toggle-header .section-title:after {
+        display: block; /* Show underline again on mobile if desired, or keep hidden */
+         margin: 15px auto 0; /* Center underline */
+    }
+
+    .comparison-toggle-btn {
+        align-self: center; /* Center the button on mobile */
+    }
+
+    .comparison-intro h2 {
+        font-size: 1.8rem;
+    }
+
+    .comparison-intro p {
+        font-size: 1rem;
+    }
+
+    /* Force table to not be like a table anymore */
+    .comparison-table table, 
+    .comparison-table thead, 
+    .comparison-table tbody, 
+    .comparison-table th, 
+    .comparison-table td, 
+    .comparison-table tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    .comparison-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .comparison-table tr {
+        border: 1px solid var(--light-gray);
+        border-radius: var(--border-radius-sm);
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .dark-theme .comparison-table tr {
+        border-color: var(--dark-border-color);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+
+    .comparison-table td {
+        /* Behave like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%; /* Space for the data label */
+        text-align: right; /* Align content to the right */
+        white-space: normal; /* Allow text wrapping */
+    }
+    .dark-theme .comparison-table td {
+        border-bottom-color: var(--dark-border-color);
+    }
+
+    .comparison-table td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 50%;
+        left: 15px; /* Left padding */
+        transform: translateY(-50%);
+        width: 45%; /* Width of the label */
+        padding-right: 10px;
+        white-space: nowrap; /* Keep label on one line */
+        text-align: left;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+    .dark-theme .comparison-table td:before {
+        color: var(--accent-color);
+    }
+
+    /* Label the data */
+    .comparison-table td:nth-of-type(1):before { content: "Feature"; }
+    .comparison-table td:nth-of-type(2):before { content: "FutureLab"; }
+    .comparison-table td:nth-of-type(3):before { content: "Others"; }
+
+    .comparison-table td:nth-child(2),
+    .comparison-table td:nth-child(3) {
+        text-align: right; /* Content to the right */
+    }
+    
+    .comparison-table .tick, .comparison-table .cross {
+        font-size: 1.3rem; /* Slightly smaller icons for mobile */
+    }
+
+    .comparison-conclusion p {
+        font-size: 1rem;
+    }
+    
+    section#comparison.comparison { /* Ensure it's displayed */
+        display: block !important; 
+    }
 }
