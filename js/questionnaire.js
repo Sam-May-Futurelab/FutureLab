@@ -592,17 +592,43 @@ document.addEventListener('DOMContentLoaded', function() {
             lastGeneratedHTML = aiOutput.html || '<!-- No HTML generated -->';
             lastGeneratedCSS = aiOutput.css || '/* No CSS generated */';
 
-            // Create preview HTML with inline styles for the iframe
-            let previewHTML = '<style>\n';
-            previewHTML += 'body { margin: 0; padding: 0; }\n'; // Basic reset for iframe
-            previewHTML += aiOutput.css || ''; // Embed the CSS directly for preview
-            previewHTML += '</style>\n';
-            previewHTML += aiOutput.html || '<!-- No HTML content to display -->';
+            // Create preview HTML for the iframe
+            let previewDocContent = `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>AI Generated Preview</title>
+                    <style>
+                        body { 
+                            margin: 0; 
+                            padding: 15px; /* Add some padding inside the iframe */
+                            background-color: #f0f0f0; /* Default light gray background */
+                            color: #333; /* Default dark text color */
+                            font-family: sans-serif; /* Basic font stack */
+                        }
+                        /* Embed AI-generated CSS */
+                        ${aiOutput.css || '/* No CSS from AI */'}
+                    </style>
+                </head>
+                <body>
+                    ${aiOutput.html || '<!-- No HTML content to display -->'}
+                </body>
+                </html>
+            `;
 
 
             setTimeout(() => { // Simulate finalization
                 generationOverlay.classList.remove('active');
-                pagePreview.innerHTML = previewHTML; // Display HTML with its own CSS in the iframe
+                
+                const iframe = pagePreview; // pagePreview is the iframe element
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                iframeDoc.open();
+                iframeDoc.write(previewDocContent);
+                iframeDoc.close();
+                
                 if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'block';
                 
                 const previewSection = document.querySelector('.preview-section');
