@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+function initializePageScripts() {
     // Theme Toggle Functionality:
     // This is now primarily handled by headerInclude.js calling window.initializeThemeToggle.
     // No direct event listener for #theme-toggle should be added here at the top level
@@ -40,15 +40,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileOverlay = document.querySelector('.mobile-menu-overlay'); 
     const body = document.body;
 
-    // Check if header's own script is active (simple-menu.js might set a flag or be identifiable)
-    // For now, we assume if simple-menu.js is included and active, it handles the menu.
-    // The inline script in header.html is more direct.
-    const headerInlineScriptActive = document.getElementById('header-inline-script-active'); // Assuming header.html script adds this ID to its <script> tag
+    const headerInlineScriptActive = document.getElementById('header-inline-script-active'); 
 
-    if (hamburger && navLinks && !headerInlineScriptActive && !window.SimpleMenu) { // Also check if simple-menu.js is not globally available
-        // console.warn('script.js: Attaching fallback hamburger menu listeners.');
+    if (hamburger && navLinks && !headerInlineScriptActive && !window.SimpleMenu) {
         const toggleMenu = (e) => {
-            if (e) e.preventDefault(); // Prevent default action if event object exists
+            if (e) e.preventDefault();
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
             if (mobileOverlay) mobileOverlay.classList.toggle('active');
@@ -56,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         hamburger.addEventListener('click', toggleMenu, true);
-        // Adding touchend for better mobile responsiveness, ensuring it doesn't double-trigger with click
         let touchmoved;
         hamburger.addEventListener('touchstart', (e) => {
             touchmoved = false;
@@ -74,18 +69,15 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 if (hamburger.classList.contains('active')) {
-                    toggleMenu(); // Call without event object
+                    toggleMenu();
                 }
             });
         });
 
         if (mobileOverlay) {
-            mobileOverlay.addEventListener('click', () => toggleMenu()); // Call without event object
+            mobileOverlay.addEventListener('click', () => toggleMenu());
         }
-    } else if (!hamburger || !navLinks) {
-        // console.warn("script.js: Hamburger or nav-links not found for fallback menu logic.");
     }
-
 
     // Testimonial Slider
     const testimonialSlider = document.querySelector('.testimonial-slider');
@@ -150,12 +142,10 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleButton.addEventListener('click', () => {
             const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true' || false;
             toggleButton.setAttribute('aria-expanded', !isExpanded);
-            content.style.display = isExpanded ? 'none' : 'block'; // Basic toggle
+            // content.style.display = isExpanded ? 'none' : 'block'; // Basic toggle
             
-            // For CSS transition-based toggle (if using max-height and opacity)
             if (!isExpanded) {
-                content.style.display = 'block'; // Need display block to measure scrollHeight
-                // Timeout to allow display:block to apply before transition starts
+                content.style.display = 'block'; 
                 setTimeout(() => {
                     content.classList.add('open');
                     toggleButton.innerHTML = 'Hide Details <i class="fas fa-chevron-up"></i>';
@@ -163,22 +153,31 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 content.classList.remove('open');
                 toggleButton.innerHTML = 'Show Details <i class="fas fa-chevron-down"></i>';
-                // Listen for transition end to set display:none for accessibility and layout
-                // content.addEventListener('transitionend', function handleTransitionEnd() {
-                //     if (!content.classList.contains('open')) {
-                //         content.style.display = 'none';
-                //     }
-                //     content.removeEventListener('transitionend', handleTransitionEnd);
-                // });
+                // Optional: set display to none after transition for accessibility/layout
+                // This requires the .comparison-collapsible-content.open to have a transition duration.
+                // Example: if transition is 0.3s, wait a bit longer.
+                // setTimeout(() => {
+                //    if (!content.classList.contains('open')) {
+                //        content.style.display = 'none';
+                //    }
+                // }, 300); 
             }
         });
+        // Ensure initial state matches button text if content is hidden by default via CSS
+        if (!content.classList.contains('open') && content.style.display !== 'block') {
+             toggleButton.innerHTML = 'Show Details <i class="fas fa-chevron-down"></i>';
+             toggleButton.setAttribute('aria-expanded', 'false');
+        } else if (content.classList.contains('open')) {
+            toggleButton.innerHTML = 'Hide Details <i class="fas fa-chevron-up"></i>';
+            toggleButton.setAttribute('aria-expanded', 'true');
+        }
     }
 
     // Typewriter effect for hero heading
     const typewriterHeading = document.querySelector('.hero h1.gradient-text');
     if (typewriterHeading) {
         const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-        const validPagesForTypewriter = ['index.html', '', 'ecommerce.html']; // web-design.html has data-no-animation
+        const validPagesForTypewriter = ['index.html', '', 'ecommerce.html'];
 
         const originalText = typewriterHeading.getAttribute('data-original-text') || typewriterHeading.textContent;
         typewriterHeading.setAttribute('data-original-text', originalText);
@@ -220,13 +219,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Cookie Consent Banner
     const cookieBanner = document.getElementById('cookie-banner');
     if (cookieBanner) {
-        const acceptBtn = document.getElementById('cookie-accept');
-        const declineBtn = document.getElementById('cookie-decline');
+        const acceptBtn = document.getElementById('accept-cookies'); // Changed from 'cookie-accept'
+        const declineBtn = document.getElementById('decline-cookies'); // Changed from 'cookie-decline'
 
         if (localStorage.getItem('cookieConsent')) {
             cookieBanner.style.display = 'none';
         } else {
-            setTimeout(() => { cookieBanner.style.display = 'block'; }, 1000);
+            // Ensure banner is visible if no consent is stored.
+            // The check for cookieConsent === null in faq.html inline script was more specific.
+            // This simpler logic should also work.
+            cookieBanner.style.display = 'block'; 
+            // setTimeout(() => { cookieBanner.style.display = 'block'; }, 1000); // Delay removed for faster appearance
         }
 
         if (acceptBtn) {
@@ -245,5 +248,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Dynamic year for footer
-    const currentYear = new Date().getFullYear();
-});
+    // const currentYear = new Date().getFullYear(); // This was not used, can be removed or implemented
+    // Example: document.getElementById('current-year').textContent = currentYear;
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePageScripts);
+} else {
+    initializePageScripts();
+}

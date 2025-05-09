@@ -20,10 +20,10 @@
     
     <!-- Add scripts for the unified header -->
     <script src="js/headerInclude.js"></script>
+    <script src="utilities.js" defer></script> <!-- Moved up and deferred -->
     <script src="js/theme-toggle.js" defer></script>
     <script src="simple-menu.js" defer></script>
-    <script src="mobile-responsive.js" defer></script>
-    <script src="script.js" defer></script>
+    <script src="mobile-responsive.js" defer></script> <!-- Now utilities.js is loaded before -->
     
     <style>
         /* Add padding to account for fixed header */
@@ -31,116 +31,7 @@
             padding-top: 80px; /* Adjust based on your header height */
         }
         
-        /* FAQ Section Styling */
-        .faq-item {
-            border: 1px solid rgba(67, 97, 238, 0.2);
-            border-radius: 8px;
-            margin-bottom: 18px;
-            overflow: hidden;
-            background: #fff;
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.04);
-            transition: box-shadow 0.3s;
-        }
-        
-        .dark-theme .faq-item {
-            background: #1e293b;
-            border-color: rgba(55, 65, 81, 0.5);
-        }
-        
-        .faq-item:hover {
-            box-shadow: 0 8px 24px rgba(67, 97, 238, 0.10);
-        }
-        
-        .faq-toggle {
-            background: rgba(67, 97, 238, 0.1);
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color, #4361ee);
-            transition: all 0.3s;
-            cursor: pointer;
-            margin-left: 18px;
-            font-size: 1.1rem;
-        }
-        
-        .faq-toggle:hover {
-            background: rgba(67, 97, 238, 0.18);
-        }
-        
-        .faq-item.active .faq-toggle {
-            background: var(--primary-color, #4361ee);
-            color: #fff;
-            transform: rotate(180deg);
-        }
-        
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s cubic-bezier(.4,0,.2,1), padding 0.3s;
-            padding: 0 24px;
-            background: rgba(67, 97, 238, 0.03);
-        }
-        
-        .dark-theme .faq-answer {
-            background: rgba(67, 97, 238, 0.05);
-        }
-        
-        .faq-item.active .faq-answer {
-            padding: 0 24px 18px;
-            max-height: 500px;
-        }
-
-        /* Improved styling for FAQ question titles */
-        .faq-question h3 {
-            margin: 0;
-            font-size: 1.13rem;
-            font-weight: 500;
-            color: var(--dark-color, #22223b);
-            padding: 0 0 0 10px; /* Add left padding to move text away from the edge */
-            line-height: 1.4;
-            flex-grow: 1;  /* Make the heading take available space, pushing the toggle button to the right */
-            transition: color 0.2s;
-        }
-        
-        .dark-theme .faq-question h3 {
-            color: #e2e8f0;
-        }
-        
-        /* Add visual improvement to the question container */
-        .faq-question {
-            padding: 22px 24px;
-            background: #fff;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.2s;
-        }
-        
-        .dark-theme .faq-question {
-            background: #1e293b;
-        }
-        
-        /* Hover effect for better interactivity */
-        .faq-item:hover .faq-question {
-            background-color: rgba(67, 97, 238, 0.03);
-        }
-        
-        .dark-theme .faq-item:hover .faq-question {
-            background-color: rgba(67, 97, 238, 0.05);
-        }
-        
-        /* Active state for better visibility */
-        .faq-item.active .faq-question h3 {
-            color: var(--primary-color, #4361ee);
-            font-weight: 500;
-        }
-
-        /* Gradient title styling */
+        /* Gradient title styling for FAQ page */
         .gradient-title {
             background-image: linear-gradient(90deg, 
                 #4361ee, 
@@ -152,49 +43,25 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: block; /* Changed from inline-block to block */
-            width: 100%; /* Ensure it takes full width */
-            text-align: center; /* Center the text within the element */
+            display: block; 
+            width: 100%; 
+            text-align: center; 
             animation: gradient-flow 3s ease infinite alternate;
             text-shadow: 0 0 1px rgba(67, 97, 238, 0.2),
                         0 0 15px rgba(76, 201, 240, 0.3);
             font-weight: 700;
         }
 
-        /* Animation keyframes for the gradient effect */
         @keyframes gradient-flow {
             0% { background-position: 0% 50%; }
             100% { background-position: 100% 50%; }
         }
 
-        /* Dark theme adjustments */
         .dark-theme .gradient-title {
             text-shadow: 0 0 2px rgba(76, 201, 240, 0.3),
                         0 0 15px rgba(67, 97, 238, 0.4);
         }
-        
-        /* FAQ Section Styling */
-        .faq-section {
-            margin-bottom: 40px;
-        }
-        
-        .faq-section-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 24px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(67, 97, 238, 0.2);
-        }
-        
-        .dark-theme .faq-section-title {
-            border-bottom-color: rgba(67, 97, 238, 0.3);
-        }
-        
-        /* Additional spacing between sections */
-        .faq-section:not(:first-child) {
-            margin-top: 50px;
-        }
+        /* Ensure FAQ item styles are loaded from styles.css, not duplicated here */
     </style>
 </head>
 <body>
@@ -455,43 +322,8 @@
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="utilities.js"></script> <!-- Ensure utilities is loaded -->
-    <script src="mobile-responsive.js"></script> <!-- mobile-responsive.js now uses utilities.js -->
-    <!-- <script src="mobile-redirect.js"></script> Removed as redundant -->
-    <script src="script.js"></script>
-    <script src="testimonials.js"></script> <!-- If testimonials are on this page -->
-    <script src="simple-menu.js"></script> <!-- Ensure this is included if not already -->
+    <script src="testimonials.js"></script>
     <script src="analytics-integration.js"></script>
-
-    <!-- FAQ toggle functionality is now handled by script.js -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Cookie banner functionality
-            const cookieBanner = document.getElementById('cookie-banner');
-            const acceptBtn = document.getElementById('cookie-accept');
-            const declineBtn = document.getElementById('cookie-decline');
-            const cookieConsent = localStorage.getItem('cookieConsent');
-
-            if (cookieConsent === null && cookieBanner) {
-                setTimeout(() => {
-                    cookieBanner.style.display = 'block';
-                }, 1000);
-            }
-
-            if (acceptBtn) {
-                acceptBtn.addEventListener('click', () => {
-                    localStorage.setItem('cookieConsent', 'accepted');
-                    if (cookieBanner) cookieBanner.style.display = 'none';
-                });
-            }
-
-            if (declineBtn) {
-                declineBtn.addEventListener('click', () => {
-                    localStorage.setItem('cookieConsent', 'declined');
-                    if (cookieBanner) cookieBanner.style.display = 'none';
-                });
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

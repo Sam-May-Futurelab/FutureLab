@@ -7,8 +7,7 @@
 
 // Apply saved theme immediately to prevent flash of wrong theme
 (function() {
-    const savedTheme = localStorage.getItem('theme') || 
-                     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const savedTheme = localStorage.getItem('theme') || 'dark'; // Default to dark if no preference
     
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-theme');
