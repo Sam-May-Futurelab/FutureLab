@@ -27,20 +27,20 @@ export default async function handler(req, res) {
             messages: [
                 {
                     role: "system",
-                    content: `You are an expert web developer. Your task is to generate HTML and CSS for a single-page landing page based on the user's specifications.
+                    content: `You are an expert web developer specializing in cutting-edge, creative, and modern landing page design. Your task is to generate HTML and CSS for a single-page landing page based on the user's specifications.
 Provide the HTML and CSS separately in a VALID JSON object format: {"html": "YOUR_HTML_CODE_AS_STRING", "css": "YOUR_CSS_CODE_AS_STRING"}.
-Ensure the HTML links to an external stylesheet named based on the project name (e.g., project-name.css). The CSS should be self-contained and ready to be saved as that external file.
-Use modern design principles and ensure the page is responsive.
-If the user provides specific colors, use them. If they ask for AI-selected colors, choose a complementary palette.
-If a font style is specified, use it.
-Ensure all requested sections are included and populated with relevant placeholder or user-provided content.
+The HTML should NOT link to any external stylesheet (e.g., do not include <link rel="stylesheet" href="...">). All CSS must be included directly in the "css" field of the JSON response.
+Strive for visually stunning, highly creative, and ultra-modern designs. Think about current design trends: consider elements like glassmorphism, neumorphism, brutalism (if appropriate for the tone), sophisticated minimalism, bold typography, micro-interactions (CSS-based if possible), and unique visual hierarchies. Avoid generic or "basic" templates at all costs.
+If the user provides specific colors, use them. If they ask for AI-selected colors, choose a complementary and modern palette that enhances the creative direction.
+If a font style is specified, use it. Otherwise, select a font that aligns with a modern and creative aesthetic. Import web fonts if necessary (e.g., from Google Fonts) directly within the CSS.
+Ensure all requested sections are included and populated with relevant placeholder or user-provided content, styled creatively.
 The HTML output MUST be a single string value. The CSS output MUST be a single string value.
 Example of expected JSON output:
 {
-  "html": "<!DOCTYPE html><html><head><title>My Page</title><link rel=\"stylesheet\" href=\"project-name.css\"></head><body><h1>Hello</h1></body></html>",
-  "css": "body { font-family: Arial; } h1 { color: blue; }"
+  "html": "<!DOCTYPE html><html><head><title>My Creative Page</title></head><body><div class=\\\"hero\\\"><h1 class=\\\"main-title\\\">Welcome</h1></div></body></html>",
+  "css": "body { font-family: 'Poppins', sans-serif; background-color: #1a1a1a; color: #f0f0f0; } .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; } .main-title { font-size: 5rem; font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }"
 }
-Your response MUST be only the JSON object, with no other text before or after it.`
+Your response MUST be only the JSON object, with no other text before or after it. Ensure the CSS is self-contained and does not rely on external files.`
                 },
                 {
                     role: "user",
@@ -140,7 +140,8 @@ function constructPrompt(data) {
 `;
         data.testimonials.forEach((t, i) => {
             if (t.text && t.author) { // Ensure testimonial has content
-                prompt += `  Testimonial ${i + 1}:\n`;
+                prompt += `  Testimonial ${i + 1}:
+`;
                 prompt += `    - Text: "${t.text}"\n`;
                 prompt += `    - Author: ${t.author}${t.title ? ', ' + t.title : ''}\n`;
             }
@@ -152,7 +153,8 @@ function constructPrompt(data) {
 `;
         data.pricingPlans.forEach((p, i) => {
             if (p.name && p.price) { // Ensure plan has content
-                prompt += `  Plan/Product ${i + 1}:\n`;
+                prompt += `  Plan/Product ${i + 1}:
+`;
                 prompt += `    - Name: ${p.name}\n`;
                 prompt += `    - Price: ${p.price}\n`;
                 if (p.features) prompt += `    - Features: ${p.features}\n`;
@@ -165,7 +167,8 @@ function constructPrompt(data) {
 `;
         data.faqs.forEach((f, i) => {
             if (f.question && f.answer) { // Ensure FAQ has content
-                prompt += `  FAQ ${i + 1}:\n`;
+                prompt += `  FAQ ${i + 1}:
+`;
                 prompt += `    - Question: ${f.question}\n`;
                 prompt += `    - Answer: ${f.answer}\n`;
             }
@@ -191,29 +194,17 @@ function constructPrompt(data) {
 `;
     prompt += `- Generate complete HTML for a single page and all necessary CSS.
 `;
-    prompt += `- The HTML should link to an external CSS file named '${safeProjectName}.css'. Make sure this exact filename is used in the <link> tag.
-`;
     prompt += `- Provide your response as a single, valid JSON object with two keys: "html" and "css". The value for "html" should be the full HTML code as a string. The value for "css" should be the full CSS code as a string. No other text or formatting outside this JSON object.
 `;
-    prompt += `- Ensure the CSS is modern, clean, and makes the page responsive across common device sizes (desktop, tablet, mobile). Use flexbox or grid for layout where appropriate.
+    prompt += `- The CSS MUST be self-contained within the "css" string. Do NOT include any <link rel="stylesheet" href="..."> tags in the HTML.
 `;
-    prompt += `- If specific colors are provided, use them. If 'AI-selected colors' is chosen, pick a professional and appealing color palette (e.g., a primary, secondary, accent, and neutral colors).
+    prompt += `- Aim for a MODERN, CREATIVE, and VISUALLY APPEALING design. Incorporate contemporary design trends and avoid generic templates. Consider unique layouts, bold typography, and engaging visual elements.
 `;
-    prompt += `- Use the specified font style throughout the page. If not specified, use a clean, modern sans-serif font (e.g., 'Open Sans', 'Roboto', or 'Lato'). Import web fonts if necessary (e.g., from Google Fonts).
+    prompt += `- Ensure the CSS makes the page responsive across common device sizes (desktop, tablet, mobile). Use flexbox or grid for layout where appropriate.
 `;
-    prompt += `- Structure the HTML semantically (use header, nav, main, section, article, footer, etc., where appropriate).
-`;
-    prompt += `- Populate sections with the provided content. If content for a requested section is minimal or missing, use relevant, high-quality placeholder text that fits the theme and business description.
-`;
-    prompt += `- For social media links, try to use common font icon classes (like Font Awesome, e.g., <i class="fab fa-twitter"></i>) or use text links if icons are not feasible. Assume Font Awesome might be available or provide simple text links.
+    prompt += `- For social media links, try to use common font icon classes (like Font Awesome, e.g., <i class="fab fa-twitter"></i>) or use text links if icons are not feasible. If using font icons, ensure the CSS includes the necessary @import or font-face rules if they are not commonly available by default. However, prefer inline SVGs or simple text links if complex icon font setup is too much for a single CSS string.
 `;
     prompt += `- Make the landing page visually appealing and user-friendly. Ensure good contrast for accessibility.
-`;
-    prompt += `- Do not include any explanations or comments outside of the HTML and CSS code itself (e.g., no "Here is your HTML:" before the code).
-`;
-    prompt += `- The HTML string must be properly escaped if it contains characters that would break JSON (though usually not an issue for HTML content itself).
-`;
-    prompt += `- The CSS string must also be properly escaped for JSON if needed.
 `;
     prompt += `- Double-check that the output is ONLY the JSON object as specified.
 `;
