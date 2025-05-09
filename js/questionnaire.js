@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const formSteps = document.querySelectorAll('.form-step');
     const progressBar = document.querySelector('.progress-fill');
     const progressSteps = document.querySelectorAll('.progress-step');
+    const questionnaireContainer = document.querySelector('.questionnaire-container'); // Added this line
     const nextBtns = document.querySelectorAll('.btn-next');
     const prevBtns = document.querySelectorAll('.btn-prev');
     const generateBtn = document.querySelector('.btn-generate');
@@ -36,9 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const pricingFieldsContainer = document.getElementById('pricing-fields-container');
     const faqSectionCheckbox = document.getElementById('faq-section-checkbox');
     const faqFieldsContainer = document.getElementById('faq-fields-container');
+    
+    // Dynamic entry containers and buttons
     const addPricingPlanBtn = document.getElementById('add-pricing-plan-btn');
     const pricingPlansDynamicContainer = document.getElementById('pricing-plans-dynamic-container');
     let pricingPlanIndex = 1; // Start index for dynamically added plans
+
+    const addTestimonialBtn = document.getElementById('add-testimonial-btn');
+    const testimonialsDynamicContainer = document.getElementById('testimonials-dynamic-container');
+    let testimonialIndex = 1; // Start index for dynamically added testimonials
+
+    const addFaqBtn = document.getElementById('add-faq-btn');
+    const faqDynamicContainer = document.getElementById('faq-dynamic-container');
+    let faqIndex = 1; // Start index for dynamically added FAQs
     
     let currentStep = 1;
     const totalSteps = formSteps.length;
@@ -151,6 +162,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (addPricingPlanBtn) {
             addPricingPlanBtn.addEventListener('click', addPricingPlanEntry);
         }
+
+        // Event listener for adding testimonials
+        if (addTestimonialBtn) {
+            addTestimonialBtn.addEventListener('click', addTestimonialEntry);
+        }
+
+        // Event listener for adding FAQs
+        if (addFaqBtn) {
+            addFaqBtn.addEventListener('click', addFaqEntry);
+        }
     }
     
     function goToNextStep() {
@@ -159,6 +180,9 @@ document.addEventListener('DOMContentLoaded', function() {
             currentStep++;
             formSteps[currentStep - 1].classList.add('active');
             updateProgressBar();
+            if (questionnaireContainer) {
+                questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
     }
     
@@ -168,6 +192,9 @@ document.addEventListener('DOMContentLoaded', function() {
             currentStep--;
             formSteps[currentStep - 1].classList.add('active');
             updateProgressBar();
+            if (questionnaireContainer) {
+                questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
     }
     
@@ -176,6 +203,9 @@ document.addEventListener('DOMContentLoaded', function() {
         currentStep = stepNumber;
         formSteps[currentStep - 1].classList.add('active');
         updateProgressBar();
+        if (questionnaireContainer) {
+            questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
     
     function updateProgressBar() {
@@ -211,6 +241,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 removeInvalidHighlight(input);
             }
         });
+
+        if (!isValid && questionnaireContainer) {
+            questionnaireContainer.scrollIntoView({ behavior: 'auto', block: 'start' }); // Changed to 'auto' for potentially better mobile compatibility
+        }
         
         return isValid;
     }
@@ -358,6 +392,68 @@ document.addEventListener('DOMContentLoaded', function() {
         pricingPlanIndex++;
     }
 
+    function addTestimonialEntry() {
+        if (!testimonialsDynamicContainer) return;
+
+        const newEntry = document.createElement('div');
+        newEntry.classList.add('testimonial-entry'); // Use a specific class for styling if needed
+        newEntry.innerHTML = `
+            <div class="form-field">
+                <label for="testimonial-text-${testimonialIndex}">Testimonial Text:</label>
+                <textarea id="testimonial-text-${testimonialIndex}" name="testimonials[${testimonialIndex}][text]" placeholder="e.g., Another great testimonial!" rows="3"></textarea>
+            </div>
+            <div class="form-field">
+                <label for="testimonial-author-${testimonialIndex}">Author Name:</label>
+                <input type="text" id="testimonial-author-${testimonialIndex}" name="testimonials[${testimonialIndex}][author]" placeholder="e.g., John Smith">
+            </div>
+            <div class="form-field">
+                <label for="testimonial-title-${testimonialIndex}">Author Title/Company (Optional):</label>
+                <input type="text" id="testimonial-title-${testimonialIndex}" name="testimonials[${testimonialIndex}][title]" placeholder="e.g., Lead Designer, Creative Solutions">
+            </div>
+            <button type="button" class="btn btn-remove-item" aria-label="Remove this testimonial entry">
+                <i class="fas fa-trash-alt"></i> Remove
+            </button>
+        `;
+
+        testimonialsDynamicContainer.appendChild(newEntry);
+
+        const removeBtn = newEntry.querySelector('.btn-remove-item');
+        removeBtn.addEventListener('click', () => {
+            newEntry.remove();
+        });
+
+        testimonialIndex++;
+    }
+
+    function addFaqEntry() {
+        if (!faqDynamicContainer) return;
+
+        const newEntry = document.createElement('div');
+        newEntry.classList.add('faq-entry'); // Use a specific class for styling if needed
+        newEntry.innerHTML = `
+            <div class="form-field">
+                <label for="faq-question-${faqIndex}">Question:</label>
+                <input type="text" id="faq-question-${faqIndex}" name="faqs[${faqIndex}][question]" placeholder="e.g., How does this work?">
+            </div>
+            <div class="form-field">
+                <label for="faq-answer-${faqIndex}">Answer:</label>
+                <textarea id="faq-answer-${faqIndex}" name="faqs[${faqIndex}][answer]" placeholder="e.g., It works by..." rows="2"></textarea>
+            </div>
+            <button type="button" class="btn btn-remove-item" aria-label="Remove this FAQ entry">
+                <i class="fas fa-trash-alt"></i> Remove
+            </button>
+        `;
+
+        faqDynamicContainer.appendChild(newEntry);
+
+        const removeBtn = newEntry.querySelector('.btn-remove-item');
+        removeBtn.addEventListener('click', () => {
+            newEntry.remove();
+        });
+
+        faqIndex++;
+    }
+
     function formatCTAAction(value) {
         const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         const phonePattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
@@ -410,58 +506,218 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function simulateAICodeGeneration(formData) {
-        console.log("Form Data Entries:");
+        console.log("Form Data Entries for AI Generation:");
+        const data = {};
+        const sections = [];
+        const sellingPoints = [];
+        const socials = {};
+        const testimonials = [];
+        const pricingPlans = [];
+        const faqs = [];
+
         for (const [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
+            if (key.startsWith('sections[')) {
+                sections.push(value);
+            } else if (key.startsWith('sellingPoints[')) {
+                sellingPoints.push(value);
+            } else if (key.startsWith('socials[')) {
+                const platform = key.match(/socials\[(.*?)\]/)[1];
+                if (value) socials[platform] = value;
+            } else if (key.startsWith('testimonials[')) {
+                const match = key.match(/testimonials\[(\d+)\]\[(.*?)\]/);
+                if (match) {
+                    const index = parseInt(match[1]);
+                    const field = match[2];
+                    if (!testimonials[index]) testimonials[index] = {};
+                    if (value) testimonials[index][field] = value;
+                }
+            } else if (key.startsWith('pricingPlans[')) {
+                const match = key.match(/pricingPlans\[(\d+)\]\[(.*?)\]/);
+                if (match) {
+                    const index = parseInt(match[1]);
+                    const field = match[2];
+                    if (!pricingPlans[index]) pricingPlans[index] = {};
+                    if (value) pricingPlans[index][field] = value;
+                }
+            } else if (key.startsWith('faqs[')) {
+                const match = key.match(/faqs\[(\d+)\]\[(.*?)\]/);
+                if (match) {
+                    const index = parseInt(match[1]);
+                    const field = match[2];
+                    if (!faqs[index]) faqs[index] = {};
+                    if (value) faqs[index][field] = value;
+                }
+            } else {
+                data[key] = value;
+            }
         }
+        data.sections = sections;
+        data.sellingPoints = sellingPoints;
+        data.socials = socials;
+        data.testimonials = testimonials.filter(t => t && (t.text || t.author)); // Filter out empty/partially empty testimonials
+        data.pricingPlans = pricingPlans.filter(p => p && (p.name || p.price || p.features)); // Filter out empty pricing plans
+        data.faqs = faqs.filter(f => f && (f.question || f.answer)); // Filter out empty FAQs
 
-        let generatedHTML = '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">';
-        const projectName = formData.get('businessName') || 'My Awesome Project';
+        console.log("Processed Data for AI:", data);
+
+        const projectName = data.businessName || 'My Awesome Project';
         lastProjectName = projectName.toLowerCase().replace(/\s+/g, '-') || 'ai-generated-page';
 
+        let generatedHTML = `<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n`;
+        if (data.metaDescription) {
+            generatedHTML += `    <meta name="description" content="${data.metaDescription}">\n`;
+        }
+        if (data.metaKeywords) {
+            generatedHTML += `    <meta name="keywords" content="${data.metaKeywords}">\n`;
+        }
         generatedHTML += `    <title>${projectName}</title>\n    <link rel="stylesheet" href="${lastProjectName}.css">\n</head>\n<body>\n`;
         
         let generatedCSS = `/* CSS for ${projectName} */\n`;
-        generatedCSS += 'body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f8ff; }\n';
-        generatedCSS += '.ai-generated-content { padding: 20px; border: 2px dashed #4361ee; background-color: #fff; margin: 20px; border-radius: 8px; }\n';
+        generatedCSS += 'body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; line-height: 1.6; }\n';
+        generatedCSS += '.container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 20px; }\n';
+        generatedCSS += 'header, section, footer { margin-bottom: 30px; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }\n';
         
-        const primaryColor = formData.get('primary-color') || '#4361ee';
-        const secondaryColor = formData.get('secondary-color') || '#3a86ff';
+        const primaryColor = data.primaryColorHex || '#4361EE';
+        const secondaryColor = data.secondaryColorHex || '#4CC9F0';
+        const fontStyle = data.fontStyle || 'Arial, sans-serif'; // Basic default
 
-        generatedCSS += `h1 { color: ${primaryColor}; }\n`;
-        generatedCSS += `p { color: #333; }\n`;
-        generatedCSS += `button { background-color: ${primaryColor}; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; }\n`;
-        generatedCSS += `button:hover { background-color: ${secondaryColor}; }\n`;
+        generatedCSS += `body { font-family: '${fontStyle}', sans-serif; }\n`;
+        generatedCSS += `h1, h2, h3 { color: ${primaryColor}; }\n`;
+        generatedCSS += `.btn { background-color: ${primaryColor}; color: white; padding: 12px 20px; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; display: inline-block; font-size: 1rem; }\n`;
+        generatedCSS += `.btn:hover { background-color: ${secondaryColor}; }\n`;
+        generatedCSS += '.social-links a { margin-right: 10px; color: ' + primaryColor + '; text-decoration: none; font-size: 1.5rem; }\n';
+        generatedCSS += '.social-links a:hover { color: ' + secondaryColor + '; }\n';
+        generatedCSS += '.testimonial, .pricing-plan, .faq-item { margin-bottom: 15px; padding: 15px; border-left: 4px solid ' + primaryColor + '; background-color: #f9f9f9; }\n';
+        generatedCSS += '.pricing-plan h4 { margin-top: 0; color: ${secondaryColor}; }\n';
 
-        let previewHTML = '<style>\n';
-        previewHTML += 'body { --ai-primary-color: ' + primaryColor + '; --ai-secondary-color: ' + secondaryColor + '; }\n';
-        previewHTML += '.ai-generated-content { padding: 20px; border: 2px dashed var(--ai-primary-color); background-color: #f0f8ff; font-family: Arial, sans-serif; }\n';
-        previewHTML += '.ai-generated-content h1 { color: var(--ai-primary-color); }\n';
-        previewHTML += '.ai-generated-content p { color: #333; }\n';
-        previewHTML += '.ai-generated-content button { background-color: var(--ai-primary-color); color: white; padding: 10px 15px; border: none; border-radius: 5px; }\n';
-        previewHTML += '.ai-generated-content button:hover { background-color: var(--ai-secondary-color); }\n';
-        previewHTML += '</style>\n';
+        // Inline styles for preview - simplified version of generatedCSS
+        let previewStyle = '<style>\n';
+        previewStyle += `body { font-family: '${fontStyle}', sans-serif; margin: 10px; background-color: #f4f7f6; color: #333; line-height: 1.6; --ai-primary-color: ${primaryColor}; --ai-secondary-color: ${secondaryColor}; }\n`;
+        previewStyle += '.ai-preview-container { padding: 20px; border: 1px solid #ddd; background-color: #fff; border-radius: 8px; }\n';
+        previewStyle += 'h1, h2, h3 { color: var(--ai-primary-color); }\n';
+        previewStyle += '.btn { background-color: var(--ai-primary-color); color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; }\n';
+        previewStyle += '.btn:hover { background-color: var(--ai-secondary-color); }\n';
+        previewStyle += '.section-preview { margin-bottom: 20px; padding: 15px; border: 1px dashed #ccc; border-radius: 5px; }\n';
+        previewStyle += '.section-preview h3 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; }\n';
+        previewStyle += '.social-links-preview a { margin-right: 8px; color: var(--ai-primary-color); text-decoration: none; }\n';
+        previewStyle += '.testimonial-preview, .pricing-plan-preview, .faq-item-preview { margin-bottom: 10px; padding: 10px; border-left: 3px solid var(--ai-primary-color); background-color: #f9f9f9; font-size: 0.9em; }\n';
+        previewStyle += '.pricing-plan-preview h4 { margin-top: 0; color: var(--ai-secondary-color); }\n';
+        previewStyle += '</style>\n';
+
+        let previewHTML = previewStyle + '<div class="ai-preview-container">\n';
+        previewHTML += `<h1>${projectName} (Preview)</h1>\n`;
+        previewHTML += `<p><em>Tone: ${data.tone || 'Default'}</em></p>\n`;
+        previewHTML += `<p><strong>Business Description:</strong> ${data.businessDescription || 'N/A'}</p>\n`;
+        previewHTML += `<p><strong>Primary Goal:</strong> ${data.primaryGoal || 'N/A'}</p>\n`;
+        previewHTML += `<p><strong>Target Audience:</strong> ${data.targetAudience || 'N/A'}</p>\n`;
+
+        if (data.sellingPoints && data.sellingPoints.length > 0) {
+            previewHTML += '<div class="section-preview"><h3>Key Selling Points:</h3><ul>';
+            data.sellingPoints.forEach(point => { if(point) previewHTML += `<li>${point}</li>`; });
+            previewHTML += '</ul></div>\n';
+        }
+
+        // --- Constructing the full generatedHTML based on selected sections ---
+        generatedHTML += '<header class="container"><h1>' + projectName + '</h1></header>\n';
+
+        if (data.sections.includes('hero')) {
+            generatedHTML += '<section class="hero-section container"><h2>Welcome!</h2><p>' + (data.businessDescription || 'Achieve your goals with us.') + '</p>';
+            if (data.ctaText && data.ctaAction && data.sections.includes('cta')) {
+                 generatedHTML += `<p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p>`;
+            }
+            generatedHTML += '</section>\n';
+            previewHTML += '<div class="section-preview"><h3>Hero Section (Simplified)</h3><p>' + (data.businessDescription || 'Achieve your goals with us.') + '</p>';
+            if (data.ctaText && data.ctaAction && data.sections.includes('cta')) {
+                 previewHTML += `<p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p>`;
+            }
+             previewHTML += '</div>\n';
+        }
+
+        if (data.sections.includes('about') && data.aboutUsSnippet) {
+            generatedHTML += `<section class="about-section container"><h2>About Us</h2><p>${data.aboutUsSnippet}</p></section>\n`;
+            previewHTML += `<div class="section-preview"><h3>About Us</h3><p>${data.aboutUsSnippet}</p></div>\n`;
+        }
+
+        if (data.sections.includes('features') && data.sellingPoints && data.sellingPoints.length > 0) {
+            generatedHTML += '<section class="features-section container"><h2>Features/Benefits</h2><ul>';
+            data.sellingPoints.forEach(point => { if(point) generatedHTML += `<li>${point}</li>`; });
+            generatedHTML += '</ul></section>\n';
+            // Preview for selling points already added above
+        }
+
+        if (data.sections.includes('testimonials') && data.testimonials.length > 0) {
+            generatedHTML += '<section class="testimonials-section container"><h2>Testimonials</h2>';
+            previewHTML += '<div class="section-preview"><h3>Testimonials</h3>';
+            data.testimonials.forEach(t => {
+                if (t.text && t.author) {
+                    generatedHTML += `<div class="testimonial"><p>"${t.text}"</p><footer>- ${t.author}${t.title ? ', ' + t.title : ''}</footer></div>`;
+                    previewHTML += `<div class="testimonial-preview"><p>"${t.text}"</p><footer>- ${t.author}${t.title ? ', ' + t.title : ''}</footer></div>`;
+                }
+            });
+            generatedHTML += '</section>\n';
+            previewHTML += '</div>\n';
+        }
+
+        if (data.sections.includes('pricing') && data.pricingPlans.length > 0) {
+            generatedHTML += '<section class="pricing-section container"><h2>Our Plans</h2>';
+            previewHTML += '<div class="section-preview"><h3>Pricing Plans</h3>';
+            data.pricingPlans.forEach(p => {
+                if (p.name && p.price) {
+                    generatedHTML += `<div class="pricing-plan"><h4>${p.name}</h4><p><strong>Price:</strong> ${p.price}</p>${p.features ? '<p>Features: ' + p.features + '</p>' : ''}</div>`;
+                    previewHTML += `<div class="pricing-plan-preview"><h4>${p.name}</h4><p><strong>Price:</strong> ${p.price}</p>${p.features ? '<p>Features: ' + p.features + '</p>' : ''}</div>`;
+                }
+            });
+            generatedHTML += '</section>\n';
+            previewHTML += '</div>\n';
+        }
+
+        if (data.sections.includes('faq') && data.faqs.length > 0) {
+            generatedHTML += '<section class="faq-section container"><h2>FAQs</h2>';
+            previewHTML += '<div class="section-preview"><h3>FAQs</h3>';
+            data.faqs.forEach(f => {
+                if (f.question && f.answer) {
+                    generatedHTML += `<div class="faq-item"><h4>${f.question}</h4><p>${f.answer}</p></div>`;
+                    previewHTML += `<div class="faq-item-preview"><h4>${f.question}</h4><p>${f.answer}</p></div>`;
+                }
+            });
+            generatedHTML += '</section>\n';
+            previewHTML += '</div>\n';
+        }
         
-        previewHTML += '<div class="ai-generated-content">\n';
-        const businessDesc = formData.get('businessDescription') || 'A fantastic new landing page.';
-        const primaryGoal = formData.get('primaryGoal') || 'Achieve great things.';
-        
-        previewHTML += `    <h1>${projectName}</h1>\n`;
-        previewHTML += `    <p>${businessDesc}</p>\n`;
-        previewHTML += `    <p><strong>Main Goal:</strong> ${primaryGoal}</p>\n`;
-        previewHTML += '    <p>This is a basic structure generated by the AI based on your inputs.</p>\n';
-        previewHTML += '    <button>Call to Action</button>\n';
-        previewHTML += '</div>';
+        // CTA section (if not part of hero and cta checkbox is checked)
+        // The CTA button might already be in the hero. This is a standalone CTA section if selected.
+        if (data.sections.includes('cta') && data.ctaText && data.ctaAction && !data.sections.includes('hero')) {
+            generatedHTML += `<section class="cta-section container"><h2>Ready to Start?</h2><p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p></section>\n`;
+            previewHTML += `<div class="section-preview"><h3>Call to Action</h3><p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p></div>\n`;
+        } else if (data.sections.includes('cta') && data.ctaText && data.ctaAction && ctaFieldsContainer.style.display !== 'none' && !data.sections.includes('hero')) {
+            // If CTA section is checked AND its fields are visible (even if hero is also checked, but we want a separate CTA section)
+            generatedHTML += `<section class="cta-section container"><h2>Ready to Start?</h2><p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p></section>\n`;
+            previewHTML += `<div class="section-preview"><h3>Call to Action</h3><p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p></div>\n`;
+        }
 
-        generatedHTML += previewHTML;
-        generatedHTML += '\n</body>\n</html>';
+        if (Object.keys(data.socials).length > 0) {
+            generatedHTML += '<footer class="container social-links"><h3>Follow Us</h3>';
+            previewHTML += '<div class="section-preview social-links-preview"><h3>Social Links</h3>';
+            for (const [platform, url] of Object.entries(data.socials)) {
+                if (url) { // Ensure URL is not empty
+                    generatedHTML += `<a href="${url}" target="_blank" aria-label="${platform}"><i class="fab fa-${platform.toLowerCase()}"></i> ${platform}</a> `;
+                    previewHTML += `<a href="${url}" target="_blank">${platform}</a> `;
+                }
+            }
+            generatedHTML += '</footer>\n';
+            previewHTML += '</div>\n';
+        }
+        
+        generatedHTML += '</body>\n</html>';
+        previewHTML += '</div>'; // Close ai-preview-container
         
         lastGeneratedHTML = generatedHTML;
         lastGeneratedCSS = generatedCSS;
 
         return {
-            html: previewHTML,
-            css: generatedCSS
+            html: previewHTML, // This is what's shown in the iframe
+            // css: generatedCSS // This is for the downloadable CSS file
         };
     }
 

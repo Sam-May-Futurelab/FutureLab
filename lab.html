@@ -298,20 +298,27 @@
 
                             <!-- Conditional "Testimonials" Fields -->
                             <div id="testimonials-fields-container" class="conditional-fields-container" style="display: none;">
-                                <h4 class="conditional-section-title"><i class="fas fa-quote-right"></i> Add a Testimonial</h4>
-                                <div class="form-field">
-                                    <label for="testimonial-text-1">Testimonial Text:</label>
-                                    <textarea id="testimonial-text-1" name="testimonials[0][text]" placeholder="e.g., This service is amazing! It helped my business grow." rows="3"></textarea>
+                                <h4 class="conditional-section-title"><i class="fas fa-quote-right"></i> Testimonials</h4>
+                                <div id="testimonials-dynamic-container">
+                                    <div class="testimonial-entry"> <!-- Entry 0 -->
+                                        <div class="form-field">
+                                            <label for="testimonial-text-0">Testimonial Text:</label>
+                                            <textarea id="testimonial-text-0" name="testimonials[0][text]" placeholder="e.g., This service is amazing! It helped my business grow." rows="3"></textarea>
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="testimonial-author-0">Author Name:</label>
+                                            <input type="text" id="testimonial-author-0" name="testimonials[0][author]" placeholder="e.g., Jane Doe">
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="testimonial-title-0">Author Title/Company (Optional):</label>
+                                            <input type="text" id="testimonial-title-0" name="testimonials[0][title]" placeholder="e.g., CEO, Awesome Inc.">
+                                        </div>
+                                        <!-- No remove button for the first testimonial by default, or handled by JS to not remove if only one -->
+                                    </div>
                                 </div>
-                                <div class="form-field">
-                                    <label for="testimonial-author-1">Author Name:</label>
-                                    <input type="text" id="testimonial-author-1" name="testimonials[0][author]" placeholder="e.g., Jane Doe">
-                                </div>
-                                <div class="form-field">
-                                    <label for="testimonial-title-1">Author Title/Company (Optional):</label>
-                                    <input type="text" id="testimonial-title-1" name="testimonials[0][title]" placeholder="e.g., CEO, Awesome Inc.">
-                                </div>
-                                <!-- Add button for more testimonials can be added here later -->
+                                <button type="button" id="add-testimonial-btn" class="btn btn-outline btn-add-more" aria-label="Add another testimonial entry">
+                                    <i class="fas fa-plus"></i> Add Another Testimonial
+                                </button>
                             </div>
 
                             <!-- Conditional "Pricing Table" Fields -->
@@ -341,16 +348,23 @@
 
                             <!-- Conditional "FAQ" Fields -->
                             <div id="faq-fields-container" class="conditional-fields-container" style="display: none;">
-                                <h4 class="conditional-section-title"><i class="fas fa-question-circle"></i> Add an FAQ</h4>
-                                <div class="form-field">
-                                    <label for="faq-question-1">Question:</label>
-                                    <input type="text" id="faq-question-1" name="faqs[0][question]" placeholder="e.g., What is your return policy?">
+                                <h4 class="conditional-section-title"><i class="fas fa-question-circle"></i> FAQs</h4>
+                                <div id="faq-dynamic-container">
+                                    <div class="faq-entry"> <!-- Entry 0 -->
+                                        <div class="form-field">
+                                            <label for="faq-question-0">Question:</label>
+                                            <input type="text" id="faq-question-0" name="faqs[0][question]" placeholder="e.g., What is your return policy?">
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="faq-answer-0">Answer:</label>
+                                            <textarea id="faq-answer-0" name="faqs[0][answer]" placeholder="e.g., We offer a 30-day return policy..." rows="2"></textarea>
+                                        </div>
+                                        <!-- No remove button for the first FAQ by default, or handled by JS to not remove if only one -->
+                                    </div>
                                 </div>
-                                <div class="form-field">
-                                    <label for="faq-answer-1">Answer:</label>
-                                    <textarea id="faq-answer-1" name="faqs[0][answer]" placeholder="e.g., We offer a 30-day return policy..." rows="2"></textarea>
-                                </div>
-                                <!-- Add button for more FAQs can be added here later -->
+                                <button type="button" id="add-faq-btn" class="btn btn-outline btn-add-more" aria-label="Add another FAQ entry">
+                                    <i class="fas fa-plus"></i> Add Another FAQ
+                                </button>
                             </div>
 
                             <!-- CTA fields moved here, initially hidden -->

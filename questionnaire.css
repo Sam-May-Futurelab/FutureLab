@@ -265,16 +265,17 @@
 }
 
 /* Dark theme adjustments for select */
-[data-theme="dark"] .form-field select {
-    background-color: var(--dark-input-bg, #2d3748);
-    border-color: var(--dark-input-border, #4a5568);
+.dark-theme .form-field select {
+    background-color: var(--dark-card-bg, #2d3748); /* Updated to use a more standard dark theme variable */
+    border-color: var(--dark-border-color, #4a5568); /* Updated to use a more standard dark theme variable */
     color: var(--dark-text-color, #f7fafc);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23f7fafc' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E"); /* Custom arrow for dark theme */
 }
 
-[data-theme="dark"] .form-field select:focus {
+.dark-theme .form-field select:focus {
     border-color: var(--primary-color, #4361EE);
     box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.35);
+    background-color: var(--dark-bg-color); /* Added to ensure focus matches other inputs */
 }
 
 /* Styling for social media input fields */
@@ -331,6 +332,12 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
 }
 
+.dark-theme .conditional-fields-container {
+    background-color: #1e293b; /* Darker background for container */
+    border-color: #334155; /* Darker border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* Adjusted shadow for dark theme */
+}
+
 .conditional-section-title {
     font-size: 1.1rem; /* Slightly larger than standard labels */
     font-weight: 600; /* Bolder text */
@@ -342,9 +349,18 @@
     align-items: center; /* Center items vertically */
 }
 
+.dark-theme .conditional-section-title {
+    color: #cbd5e1; /* Lighter text color for title */
+    border-bottom-color: #334155; /* Darker separator line */
+}
+
 .conditional-section-title i {
     margin-right: 8px; /* Space between icon and text */
     color: var(--primary-color, #4361EE); /* Use primary color for icon */
+}
+
+.dark-theme .conditional-section-title i {
+    color: var(--secondary-color, #4CC9F0); /* Ensure icon color is visible, perhaps use secondary or a lighter primary variant */
 }
 
 /* Styling for the remove button in dynamic entries */
@@ -383,7 +399,9 @@
 }
 
 /* Adjust spacing for pricing plan entries for better visual separation */
-.pricing-plan-entry {
+.pricing-plan-entry,
+.testimonial-entry,
+.faq-entry {
     padding: 15px;
     border: 1px dashed #ccc;
     border-radius: 6px;
@@ -391,7 +409,16 @@
     background-color: #fff; /* White background for each entry */
 }
 
-.pricing-plan-entry:last-child {
+.dark-theme .pricing-plan-entry,
+.dark-theme .testimonial-entry,
+.dark-theme .faq-entry {
+    background-color: #161e2b; /* Slightly different background for entries in dark mode */
+    border-color: #2c3a4f; /* Darker dashed border for entries */
+}
+
+.pricing-plan-entry:last-child,
+.testimonial-entry:last-child,
+.faq-entry:last-child {
     margin-bottom: 0; /* No bottom margin for the last entry before the "Add Another" button */
 }
 
@@ -861,6 +888,10 @@
 }
 
 @media (max-width: 480px) {
+    .questionnaire-container { /* Added rule for mobile width */
+        margin: 0 5px; /* Reduced side margins for more width */
+    }
+
     .progress-steps {
         margin: 0 2%;
     }
