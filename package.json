@@ -1,0 +1,15 @@
+{
+  "name": "future-me",
+  "version": "1.0.0",
+  "description": "**FutureLab is a UK-based creative development studio specialising in custom websites, app MVPs, and clean digital experiences for startups, small businesses, and creators.**",
+  "main": "analytics-integration.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "openai": "^4.98.0"
+  }
+}
