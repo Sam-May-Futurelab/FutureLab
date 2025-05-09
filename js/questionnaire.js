@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoUploadInput = document.getElementById('logo-upload'); 
     const logoUploadLabel = document.querySelector('label[for="logo-upload"]'); // Corrected selector
     const logoFileNameDisplay = document.getElementById('logo-file-name');
+    const removeLogoBtn = document.getElementById('remove-logo-btn'); // Added this line
 
     let currentStep = 1;
     const totalSteps = formSteps.length;
@@ -199,10 +200,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (logoFileNameDisplay) {
                     if (logoUploadInput.files && logoUploadInput.files.length > 0) {
                         logoFileNameDisplay.textContent = logoUploadInput.files[0].name;
+                        if (removeLogoBtn) removeLogoBtn.style.display = 'inline-block'; // Show remove button
                     } else {
                         logoFileNameDisplay.textContent = 'No file chosen';
+                        if (removeLogoBtn) removeLogoBtn.style.display = 'none'; // Hide remove button
                     }
                 }
+            });
+        }
+
+        // Added: Event listener for remove logo button
+        if (removeLogoBtn) {
+            removeLogoBtn.addEventListener('click', () => {
+                if (logoUploadInput) {
+                    logoUploadInput.value = ''; // Clear the file input
+                }
+                if (logoFileNameDisplay) {
+                    logoFileNameDisplay.textContent = 'No file chosen'; // Reset file name display
+                }
+                removeLogoBtn.style.display = 'none'; // Hide the remove button itself
             });
         }
     }
@@ -594,9 +610,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             } catch (error) {
                 console.error('Error reading logo file:', error);
-                // Optionally, inform the user or proceed without logo
                 generationStep.textContent = 'Error processing logo. Continuing without it.';
-                // alert('Could not process the logo file. Please try a different file or continue without a logo.');
             }
         }
         data.logoData = logoData; // Add logoData (Base64 string or null)
@@ -621,18 +635,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         for (const [key, value] of formData.entries()) {
-            if (key === 'logoUpload') { // Skip file input from FormData iteration
-                continue;
-            }
-            if (key === 'logoPosition'){ // Already handled
+            if (key === 'logoUpload' || key === 'logoPosition') { 
                 continue;
             }
             if (key === 'business-type' && value === 'other') {
-                // Skip, as we'll get it from 'other-business-type'
                 continue;
             }
             if (key === 'other-business-type' && formData.get('business-type') === 'other') {
-                data['businessType'] = value.trim(); // Use this value as the businessType
+                data['businessType'] = value.trim();
             } else if (key.startsWith('sections[')) {
                 sections.push(value);
             } else if (key.startsWith('sellingPoints[')) {
@@ -690,20 +700,35 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             generationStep.textContent = 'Waiting for AI response...';
+
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                let errorData;
+                try {
+                    errorData = await response.json();
+                } catch (e) {
+                    // If parsing errorData fails, create a generic one
+                    errorData = { message: `Server returned status ${response.status} but failed to parse the error response body.` };
+                }
+
+                if (response.status === 429) {
+                    handleRateLimitError(errorData.message || "Too many requests. Please wait a minute and try again.");
+                } else {
+                    const errorMessage = errorData.message || `HTTP error! status: ${response.status}`;
+                    console.error('Server error:', errorMessage);
+                    generationStep.textContent = `Error: ${errorMessage}. Please try again.`;
+                    displayErrorInPreview(errorMessage); // Use helper
+                    setTimeout(() => { generationOverlay.classList.remove('active'); }, 3000);
+                }
+                return; // Stop further processing
             }
 
             const aiOutput = await response.json();
             
             generationStep.textContent = 'Finalizing your page...';
             
-            // Store for download
             lastGeneratedHTML = aiOutput.html || '<!-- No HTML generated -->';
             lastGeneratedCSS = aiOutput.css || '/* No CSS generated */';
 
-            // Create preview HTML for the iframe
             let previewDocContent = `
                 <!DOCTYPE html>
                 <html lang="en">
@@ -714,12 +739,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     <style>
                         body { 
                             margin: 0; 
-                            padding: 15px; /* Add some padding inside the iframe */
-                            background-color: #f0f0f0; /* Default light gray background */
-                            color: #333; /* Default dark text color */
-                            font-family: sans-serif; /* Basic font stack */
+                            padding: 15px; 
+                            background-color: #f0f0f0; 
+                            color: #333; 
+                            font-family: sans-serif; 
                         }
-                        /* Embed AI-generated CSS */
                         ${aiOutput.css || '/* No CSS from AI */'}
                     </style>
                 </head>
@@ -729,30 +753,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 </html>
             `;
 
-
-            setTimeout(() => { // Simulate finalization
+            setTimeout(() => { 
                 generationOverlay.classList.remove('active');
                 
                 if (previewPlaceholderContainer) {
-                    previewPlaceholderContainer.style.display = 'none'; // Hide placeholder container
+                    previewPlaceholderContainer.style.display = 'none'; 
                 }
 
                 if (pagePreview) {
-                    pagePreview.style.display = 'block'; // Show iframe
+                    pagePreview.style.display = 'block'; 
                     const iframeDoc = pagePreview.contentDocument || pagePreview.contentWindow.document;
                     iframeDoc.open();
                     iframeDoc.write(previewDocContent);
                     iframeDoc.close();
-                    // pagePreview.srcdoc = previewDocContent; // Alternative way to set content, might be better for some browsers
                 } else {
                     console.error('pagePreview (iframe) element not found for content injection!');
-                    if (previewPlaceholderContainer) {
-                        const placeholderTextElement = previewPlaceholderContainer.querySelector('.preview-placeholder-text');
-                        if (placeholderTextElement) {
-                            placeholderTextElement.innerHTML = '<p style="color: red; text-align: center;">Error: Preview iframe not found.</p>';
-                        }
-                        previewPlaceholderContainer.style.display = 'block'; // Ensure placeholder is visible with error
-                    }
+                    displayErrorInPreview('Preview iframe not found.'); // Use helper
                 }
                 
                 if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'block';
@@ -763,26 +779,72 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }, 1000);
 
-        } catch (error) {
-            console.error('Error fetching AI code:', error);
+        } catch (error) { // Catches network errors or errors in the success processing path
+            console.error('Error in getAICodeGeneration:', error);
             generationStep.textContent = `Error: ${error.message}. Please try again.`;
-            
-            if (previewPlaceholderContainer) { // Show placeholder container with error
-                const placeholderTextElement = previewPlaceholderContainer.querySelector('.preview-placeholder-text');
-                if (placeholderTextElement) {
-                    placeholderTextElement.innerHTML = `<p style="color: red; text-align: center;">Failed to generate page. ${error.message}</p>`;
-                }
-                previewPlaceholderContainer.style.display = 'block';
-            }
-            if (pagePreview) { // Hide iframe on error
-                pagePreview.style.display = 'none';
-                pagePreview.removeAttribute('srcdoc');
-            }
-
+            displayErrorInPreview(error.message); // Use helper
             setTimeout(() => {
                  generationOverlay.classList.remove('active');
-            }, 3000); // Keep error message for a bit
+            }, 3000); 
         }
+    }
+
+    // Helper function to display error messages in the preview area
+    function displayErrorInPreview(errorMessage) {
+        if (previewPlaceholderContainer) {
+            const placeholderTextElement = previewPlaceholderContainer.querySelector('.preview-placeholder-text');
+            if (placeholderTextElement) {
+                placeholderTextElement.innerHTML = `<p style="color: red; text-align: center; font-weight: bold;">Failed to generate page: ${errorMessage}</p>`;
+            }
+            previewPlaceholderContainer.style.display = 'block';
+        }
+        if (pagePreview) { // Hide iframe on error
+            pagePreview.style.display = 'none';
+            pagePreview.removeAttribute('srcdoc');
+        }
+    }
+
+    // New function to handle rate limit errors (429)
+    function handleRateLimitError(apiErrorMessage) {
+        const userFriendlyMessage = "Hold on! We're making a lot of requests to the AI right now. Please wait about a minute before trying again. If this continues, you might need to check your OpenAI plan and billing details.";
+        
+        generationStep.textContent = userFriendlyMessage;
+        // Display a more specific error in the preview area, including API message if available
+        displayErrorInPreview(userFriendlyMessage + (apiErrorMessage && apiErrorMessage !== "Too many requests. Please wait a minute and try again." ? ` (Details: ${apiErrorMessage})` : ""));
+
+        if (generateBtn) {
+            generateBtn.disabled = true;
+            const btnTextElement = generateBtn.querySelector('.btn-text');
+            const originalBtnText = btnTextElement.textContent; // Store original text for restoration
+            
+            let countdown = 60; // 60 seconds cooldown
+            btnTextElement.textContent = `Wait ${countdown}s`;
+
+            const intervalId = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    btnTextElement.textContent = `Wait ${countdown}s`;
+                } else {
+                    clearInterval(intervalId);
+                    generateBtn.disabled = false;
+                    btnTextElement.textContent = originalBtnText; // Restore original button text
+                    generationStep.textContent = 'You can try generating again now.'; 
+                    
+                    // Optionally reset the placeholder text if it's still showing the rate limit message
+                    if (previewPlaceholderContainer) {
+                        const placeholderTextElement = previewPlaceholderContainer.querySelector('.preview-placeholder-text');
+                        if (placeholderTextElement && placeholderTextElement.innerHTML.includes("Hold on!")) {
+                             placeholderTextElement.textContent = 'Your generated page will appear here once you complete the questionnaire.';
+                        }
+                    }
+                }
+            }, 1000);
+        }
+        
+        // Remove overlay after a short delay to show the message and disabled button clearly.
+        setTimeout(() => {
+            generationOverlay.classList.remove('active');
+        }, 1500); 
     }
 
     function downloadFile(filename, content, mimeType) {

@@ -254,93 +254,12 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     prompt += `- Overall Tone/Style: "${data.tone || 'Modern and professional'}" (This is paramount. Let it dictate typography, color depth, imagery style, spacing, and even the feel of any (CSS-based) micro-interactions. E.g., 'playful' might use brighter colors and rounded shapes; 'sophisticated' might use elegant fonts and a more reserved palette with impactful imagery.)\n`;
     prompt += `--- End Core Creative Synthesis ---\n`;
 
-    prompt += `\nRequested Page Sections (include all that are listed; if none, create a standard layout with hero, about, features, and contact/footer):\r\n`;
-    if (data.sections && data.sections.length > 0) {
-        data.sections.forEach(section => {
-            prompt += `- ${section.charAt(0).toUpperCase() + section.slice(1)}\n`;
-        });
-    } else {
-        prompt += `- Hero Section\n- About Us Section\n- Features/Services Section\n- Contact/Footer Section\n`; // Default sections
-    }
-
-    if (data.sellingPoints && data.sellingPoints.length > 0) {
-        prompt += `\nKey Selling Points/Features (for hero or features section):\r\n`;
-        prompt += `   - Instruction: Don't just list these. Integrate them creatively. Make them visually distinct, compelling, and a focal point of the relevant section. Use design to emphasize their importance.\n`;
-        data.sellingPoints.forEach(point => prompt += `- ${point}\n`);
-    }
-
-    if (data.aboutUsSnippet && (data.sections?.includes('about') || (data.sections && data.sections.length === 0) )) {
-        prompt += `\nAbout Us Snippet: ${data.aboutUsSnippet}\n`;
-    }
-
-    if (data.ctaSectionCheckbox === 'on' && data.ctaText && data.ctaAction) {
-        prompt += `\nCall to Action (CTA):
-`;
-        prompt += `  - Text: ${data.ctaText}\n`;
-        prompt += `  - Action (URL/Link): ${data.ctaAction}\n`;
-        prompt += `  - This CTA should be prominent. If a hero section is included, it can be part of the hero. If a dedicated CTA section is requested, place it there or as a standalone prominent element.\n`;
-    }
-
-    if (data.testimonials && data.testimonials.length > 0 && (data.sections?.includes('testimonials') || (data.sections && data.sections.length === 0))) {
-        prompt += `\nTestimonials:
-`;
-        data.testimonials.forEach((t, i) => {
-            if (t.text && t.author) { // Ensure testimonial has content
-                prompt += `  Testimonial ${i + 1}:
-`;
-                prompt += `    - Text: "${t.text}"\n`;
-                prompt += `    - Author: ${t.author}${t.title ? ', ' + t.title : ''}\n`;
-            }
-        });
-    }
-
-    if (data.pricingPlans && data.pricingPlans.length > 0 && (data.sections?.includes('pricing') || (data.sections && data.sections.length === 0))) {
-        prompt += `\nPricing Plans/Products:
-`;
-        data.pricingPlans.forEach((p, i) => {
-            if (p.name && p.price) { // Ensure plan has content
-                prompt += `  Plan/Product ${i + 1}:
-`;
-                prompt += `    - Name: ${p.name}\n`;
-                prompt += `    - Price: ${p.price}\n`;
-                if (p.features) prompt += `    - Features: ${p.features}\n`;
-            }
-        });
-    }
-
-    if (data.faqs && data.faqs.length > 0 && (data.sections?.includes('faq') || (data.sections && data.sections.length === 0))) {
-        prompt += `\nFrequently Asked Questions (FAQs):
-`;
-        data.faqs.forEach((f, i) => {
-            if (f.question && f.answer) { // Ensure FAQ has content
-                prompt += `  FAQ ${i + 1}:
-`;
-                prompt += `    - Question: ${f.question}\n`;
-                prompt += `    - Answer: ${f.answer}\n`;
-            }
-        });
-    }
-
-    if (data.socials && Object.keys(data.socials).length > 0) {
-        prompt += `\nSocial Media Links (include in footer or a dedicated contact section):
-`;
-        for (const [platform, url] of Object.entries(data.socials)) {
-            if (url) prompt += `  - ${platform}: ${url}\n`;
-        }
-    }
-
-    if (data.metaDescription) {
-        prompt += `\nSEO Meta Description: ${data.metaDescription}\n`;
-    }
-    if (data.metaKeywords) {
-        prompt += `\nSEO Meta Keywords: ${data.metaKeywords}\n`;
-    }
-
     prompt += `\n--- Further Guidance for Maximum Creativity & Tailoring ---\n`;
     prompt += `- Creative Interpretation: You are an expert creative designer. Interpret the user's requests not as rigid constraints but as ingredients for a unique recipe. Where there's ambiguity, lean towards a more creative and modern solution.\n`;
     prompt += `- Beyond the Literal: Think about the *implied* needs. If the business is "eco-friendly handmade soaps," the design should *feel* natural, artisanal, and trustworthy, even if the user didn't explicitly list those adjectives in the 'tone'.\n`;
     prompt += `- Visual Hierarchy & Flow: Craft a clear visual journey for the user. Guide their eye intentionally through the content, leading them towards the primary goal.\n`;
     prompt += `- Uniqueness: Strive for a design that doesn't look like a common template. What can you do with layout, typography, color, or imagery to make this page memorable and stand out, while still being highly usable and professional?\n`;
+    prompt += `- Subtle Animations: Where appropriate for interactive elements (buttons, links, cards on hover, etc.), incorporate subtle and tasteful CSS-based hover effects or micro-animations. These should enhance the user experience, not distract or overwhelm. Avoid excessive or jarring animations.\n`;
 
     prompt += `\nImportant Instructions for AI:\r\n`;
     prompt += `- Generate complete HTML for a single page and all necessary CSS.\r\n`;
