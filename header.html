@@ -45,14 +45,21 @@
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--dark-color);
             text-decoration: none;
             transition: color 0.3s ease;
             position: relative;
+            background: linear-gradient(45deg, #4cc9f0, #4361ee, #3a0ca3, #7209b7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
         }
         
         .dark-theme .logo {
-            color: #f8fafc;
+            background: linear-gradient(45deg, #4cc9f0, #56cfe1, #64dfdf, #72efdd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
         .logo-link {
