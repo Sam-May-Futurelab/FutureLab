@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <script src="js/dotlottie.min.js" defer></script> <!-- Added Lottie player script -->
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> <!-- Changed to CDN and type="module" -->
 
     <!-- Favicon Links -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
@@ -434,9 +434,9 @@
         <section class="preview-section section-transition">
             <div class="container">
                 <h2 class="section-title">Page Preview</h2>
-                <div class="preview-placeholder-content">
-                    <dotlottie-player src="https://lottie.host/embed/6c9e0b9d-9b69-4b28-8a89-40171559f07e/LzYf5gQ2qA.json" background="transparent" speed="1" style="width: 200px; height: 200px; margin: 0 auto 15px auto;" loop autoplay></dotlottie-player>
-                    <p class="preview-placeholder-text">Your generated page will appear here once you complete the questionnaire.</p>
+                <div id="preview-placeholder-container" class="preview-placeholder-content">
+                    <dotlottie-player src="assets/animations/lab-animation.json" background="transparent" speed="1" loop autoplay></dotlottie-player>
+                    <p class="preview-placeholder-text">Your AI-generated landing page will appear here once you complete the questionnaire.</p>
                 </div>
                 <iframe id="page-preview" title="AI Generated Page Preview"></iframe>
                 <div class="download-buttons">

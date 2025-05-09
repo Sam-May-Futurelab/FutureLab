@@ -1,1 +1,8 @@
-{}
+{
+  "rewrites": [
+    {
+      "source": "/api/generate-page",
+      "destination": "/api/generate-page.js"
+    }
+  ]
+}

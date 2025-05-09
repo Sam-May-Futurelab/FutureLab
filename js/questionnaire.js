@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const generationOverlay = document.querySelector('.generation-overlay');
     const generationStep = document.querySelector('.generation-step');
     const pagePreview = document.getElementById('page-preview');
+    const previewPlaceholderContainer = document.getElementById('preview-placeholder-container'); // Changed to target the container
     const downloadButtonsContainer = document.querySelector('.download-buttons');
     const downloadHtmlBtn = document.getElementById('download-html-btn');
     const downloadCssBtn = document.getElementById('download-css-btn');
@@ -508,9 +509,20 @@ document.addEventListener('DOMContentLoaded', function() {
     async function getAICodeGeneration(formData) {
         generationOverlay.classList.add('active');
         generationStep.textContent = 'Connecting to AI assistant...';
-        if(pagePreview.firstChild && pagePreview.firstChild.nodeType === Node.TEXT_NODE) {
-            pagePreview.removeChild(pagePreview.firstChild);
+
+        // Ensure placeholder is visible and iframe is hidden initially for this process
+        if (previewPlaceholderContainer) {
+            previewPlaceholderContainer.style.display = 'block';
+            const placeholderTextElement = previewPlaceholderContainer.querySelector('.preview-placeholder-text');
+            if (placeholderTextElement) {
+                placeholderTextElement.textContent = 'Your generated page will appear here once you complete the questionnaire.'; // Reset placeholder text
+            }
         }
+        if (pagePreview) {
+            pagePreview.style.display = 'none';
+            pagePreview.removeAttribute('srcdoc'); // Clear iframe content
+        }
+
         if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'none';
 
         const data = {};
@@ -622,12 +634,27 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => { // Simulate finalization
                 generationOverlay.classList.remove('active');
                 
-                const iframe = pagePreview; // pagePreview is the iframe element
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                
-                iframeDoc.open();
-                iframeDoc.write(previewDocContent);
-                iframeDoc.close();
+                if (previewPlaceholderContainer) {
+                    previewPlaceholderContainer.style.display = 'none'; // Hide placeholder container
+                }
+
+                if (pagePreview) {
+                    pagePreview.style.display = 'block'; // Show iframe
+                    const iframeDoc = pagePreview.contentDocument || pagePreview.contentWindow.document;
+                    iframeDoc.open();
+                    iframeDoc.write(previewDocContent);
+                    iframeDoc.close();
+                    // pagePreview.srcdoc = previewDocContent; // Alternative way to set content, might be better for some browsers
+                } else {
+                    console.error('pagePreview (iframe) element not found for content injection!');
+                    if (previewPlaceholderContainer) {
+                        const placeholderTextElement = previewPlaceholderContainer.querySelector('.preview-placeholder-text');
+                        if (placeholderTextElement) {
+                            placeholderTextElement.innerHTML = '<p style="color: red; text-align: center;">Error: Preview iframe not found.</p>';
+                        }
+                        previewPlaceholderContainer.style.display = 'block'; // Ensure placeholder is visible with error
+                    }
+                }
                 
                 if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'block';
                 
@@ -640,10 +667,21 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Error fetching AI code:', error);
             generationStep.textContent = `Error: ${error.message}. Please try again.`;
-            // Keep overlay active or show an error message
+            
+            if (previewPlaceholderContainer) { // Show placeholder container with error
+                const placeholderTextElement = previewPlaceholderContainer.querySelector('.preview-placeholder-text');
+                if (placeholderTextElement) {
+                    placeholderTextElement.innerHTML = `<p style="color: red; text-align: center;">Failed to generate page. ${error.message}</p>`;
+                }
+                previewPlaceholderContainer.style.display = 'block';
+            }
+            if (pagePreview) { // Hide iframe on error
+                pagePreview.style.display = 'none';
+                pagePreview.removeAttribute('srcdoc');
+            }
+
             setTimeout(() => {
                  generationOverlay.classList.remove('active');
-                 pagePreview.innerHTML = `<p style="color: red; text-align: center;">Failed to generate page. ${error.message}</p>`;
             }, 3000); // Keep error message for a bit
         }
     }

@@ -883,6 +883,13 @@
     color: #94a3b8;
 }
 
+/* Style for the Lottie animation player */
+.preview-placeholder-content dotlottie-player {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 20px; /* Center it and add some margin below */
+}
+
 #page-preview {
     width: 100%;
     min-height: 500px; /* Ensure it has some height when content loads */
