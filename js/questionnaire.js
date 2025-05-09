@@ -499,14 +499,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const formData = new FormData(form);
             
-            showPagePreview(formData);
+            getAICodeGeneration(formData); // New call to fetch from backend
         } else {
             console.log("Final step validation failed.");
         }
     }
     
-    function simulateAICodeGeneration(formData) {
-        console.log("Form Data Entries for AI Generation:");
+    async function getAICodeGeneration(formData) {
+        generationOverlay.classList.add('active');
+        generationStep.textContent = 'Connecting to AI assistant...';
+        if(pagePreview.firstChild && pagePreview.firstChild.nodeType === Node.TEXT_NODE) {
+            pagePreview.removeChild(pagePreview.firstChild);
+        }
+        if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'none';
+
         const data = {};
         const sections = [];
         const sellingPoints = [];
@@ -516,21 +522,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const faqs = [];
 
         for (const [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
             if (key.startsWith('sections[')) {
                 sections.push(value);
             } else if (key.startsWith('sellingPoints[')) {
-                sellingPoints.push(value);
+                if (value.trim()) sellingPoints.push(value.trim());
             } else if (key.startsWith('socials[')) {
                 const platform = key.match(/socials\[(.*?)\]/)[1];
-                if (value) socials[platform] = value;
+                if (value.trim()) socials[platform] = value.trim();
             } else if (key.startsWith('testimonials[')) {
                 const match = key.match(/testimonials\[(\d+)\]\[(.*?)\]/);
                 if (match) {
                     const index = parseInt(match[1]);
                     const field = match[2];
                     if (!testimonials[index]) testimonials[index] = {};
-                    if (value) testimonials[index][field] = value;
+                    if (value.trim()) testimonials[index][field] = value.trim();
                 }
             } else if (key.startsWith('pricingPlans[')) {
                 const match = key.match(/pricingPlans\[(\d+)\]\[(.*?)\]/);
@@ -538,7 +543,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const index = parseInt(match[1]);
                     const field = match[2];
                     if (!pricingPlans[index]) pricingPlans[index] = {};
-                    if (value) pricingPlans[index][field] = value;
+                    if (value.trim()) pricingPlans[index][field] = value.trim();
                 }
             } else if (key.startsWith('faqs[')) {
                 const match = key.match(/faqs\[(\d+)\]\[(.*?)\]/);
@@ -546,208 +551,75 @@ document.addEventListener('DOMContentLoaded', function() {
                     const index = parseInt(match[1]);
                     const field = match[2];
                     if (!faqs[index]) faqs[index] = {};
-                    if (value) faqs[index][field] = value;
+                    if (value.trim()) faqs[index][field] = value.trim();
                 }
             } else {
-                data[key] = value;
+                if (value.trim()) data[key] = value.trim();
             }
         }
         data.sections = sections;
         data.sellingPoints = sellingPoints;
         data.socials = socials;
-        data.testimonials = testimonials.filter(t => t && (t.text || t.author)); // Filter out empty/partially empty testimonials
-        data.pricingPlans = pricingPlans.filter(p => p && (p.name || p.price || p.features)); // Filter out empty pricing plans
-        data.faqs = faqs.filter(f => f && (f.question || f.answer)); // Filter out empty FAQs
-
-        console.log("Processed Data for AI:", data);
-
-        const projectName = data.businessName || 'My Awesome Project';
-        lastProjectName = projectName.toLowerCase().replace(/\s+/g, '-') || 'ai-generated-page';
-
-        let generatedHTML = `<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n`;
-        if (data.metaDescription) {
-            generatedHTML += `    <meta name="description" content="${data.metaDescription}">\n`;
-        }
-        if (data.metaKeywords) {
-            generatedHTML += `    <meta name="keywords" content="${data.metaKeywords}">\n`;
-        }
-        generatedHTML += `    <title>${projectName}</title>\n    <link rel="stylesheet" href="${lastProjectName}.css">\n</head>\n<body>\n`;
+        data.testimonials = testimonials.filter(t => t && (t.text || t.author));
+        data.pricingPlans = pricingPlans.filter(p => p && (p.name || p.price || p.features));
+        data.faqs = faqs.filter(f => f && (f.question || f.answer));
         
-        let generatedCSS = `/* CSS for ${projectName} */\n`;
-        generatedCSS += 'body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; line-height: 1.6; }\n';
-        generatedCSS += '.container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 20px; }\n';
-        generatedCSS += 'header, section, footer { margin-bottom: 30px; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }\n';
-        
-        const primaryColor = data.primaryColorHex || '#4361EE';
-        const secondaryColor = data.secondaryColorHex || '#4CC9F0';
-        const fontStyle = data.fontStyle || 'Arial, sans-serif'; // Basic default
+        // Update project name for downloads
+        const projectNameFromForm = data.businessName || 'My Awesome Project';
+        lastProjectName = projectNameFromForm.toLowerCase().replace(/\s+/g, '-') || 'ai-generated-page';
 
-        generatedCSS += `body { font-family: '${fontStyle}', sans-serif; }\n`;
-        generatedCSS += `h1, h2, h3 { color: ${primaryColor}; }\n`;
-        generatedCSS += `.btn { background-color: ${primaryColor}; color: white; padding: 12px 20px; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; display: inline-block; font-size: 1rem; }\n`;
-        generatedCSS += `.btn:hover { background-color: ${secondaryColor}; }\n`;
-        generatedCSS += '.social-links a { margin-right: 10px; color: ' + primaryColor + '; text-decoration: none; font-size: 1.5rem; }\n';
-        generatedCSS += '.social-links a:hover { color: ' + secondaryColor + '; }\n';
-        generatedCSS += '.testimonial, .pricing-plan, .faq-item { margin-bottom: 15px; padding: 15px; border-left: 4px solid ' + primaryColor + '; background-color: #f9f9f9; }\n';
-        generatedCSS += '.pricing-plan h4 { margin-top: 0; color: ${secondaryColor}; }\n';
-
-        // Inline styles for preview - simplified version of generatedCSS
-        let previewStyle = '<style>\n';
-        previewStyle += `body { font-family: '${fontStyle}', sans-serif; margin: 10px; background-color: #f4f7f6; color: #333; line-height: 1.6; --ai-primary-color: ${primaryColor}; --ai-secondary-color: ${secondaryColor}; }\n`;
-        previewStyle += '.ai-preview-container { padding: 20px; border: 1px solid #ddd; background-color: #fff; border-radius: 8px; }\n';
-        previewStyle += 'h1, h2, h3 { color: var(--ai-primary-color); }\n';
-        previewStyle += '.btn { background-color: var(--ai-primary-color); color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; }\n';
-        previewStyle += '.btn:hover { background-color: var(--ai-secondary-color); }\n';
-        previewStyle += '.section-preview { margin-bottom: 20px; padding: 15px; border: 1px dashed #ccc; border-radius: 5px; }\n';
-        previewStyle += '.section-preview h3 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; }\n';
-        previewStyle += '.social-links-preview a { margin-right: 8px; color: var(--ai-primary-color); text-decoration: none; }\n';
-        previewStyle += '.testimonial-preview, .pricing-plan-preview, .faq-item-preview { margin-bottom: 10px; padding: 10px; border-left: 3px solid var(--ai-primary-color); background-color: #f9f9f9; font-size: 0.9em; }\n';
-        previewStyle += '.pricing-plan-preview h4 { margin-top: 0; color: var(--ai-secondary-color); }\n';
-        previewStyle += '</style>\n';
-
-        let previewHTML = previewStyle + '<div class="ai-preview-container">\n';
-        previewHTML += `<h1>${projectName} (Preview)</h1>\n`;
-        previewHTML += `<p><em>Tone: ${data.tone || 'Default'}</em></p>\n`;
-        previewHTML += `<p><strong>Business Description:</strong> ${data.businessDescription || 'N/A'}</p>\n`;
-        previewHTML += `<p><strong>Primary Goal:</strong> ${data.primaryGoal || 'N/A'}</p>\n`;
-        previewHTML += `<p><strong>Target Audience:</strong> ${data.targetAudience || 'N/A'}</p>\n`;
-
-        if (data.sellingPoints && data.sellingPoints.length > 0) {
-            previewHTML += '<div class="section-preview"><h3>Key Selling Points:</h3><ul>';
-            data.sellingPoints.forEach(point => { if(point) previewHTML += `<li>${point}</li>`; });
-            previewHTML += '</ul></div>\n';
-        }
-
-        // --- Constructing the full generatedHTML based on selected sections ---
-        generatedHTML += '<header class="container"><h1>' + projectName + '</h1></header>\n';
-
-        if (data.sections.includes('hero')) {
-            generatedHTML += '<section class="hero-section container"><h2>Welcome!</h2><p>' + (data.businessDescription || 'Achieve your goals with us.') + '</p>';
-            if (data.ctaText && data.ctaAction && data.sections.includes('cta')) {
-                 generatedHTML += `<p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p>`;
-            }
-            generatedHTML += '</section>\n';
-            previewHTML += '<div class="section-preview"><h3>Hero Section (Simplified)</h3><p>' + (data.businessDescription || 'Achieve your goals with us.') + '</p>';
-            if (data.ctaText && data.ctaAction && data.sections.includes('cta')) {
-                 previewHTML += `<p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p>`;
-            }
-             previewHTML += '</div>\n';
-        }
-
-        if (data.sections.includes('about') && data.aboutUsSnippet) {
-            generatedHTML += `<section class="about-section container"><h2>About Us</h2><p>${data.aboutUsSnippet}</p></section>\n`;
-            previewHTML += `<div class="section-preview"><h3>About Us</h3><p>${data.aboutUsSnippet}</p></div>\n`;
-        }
-
-        if (data.sections.includes('features') && data.sellingPoints && data.sellingPoints.length > 0) {
-            generatedHTML += '<section class="features-section container"><h2>Features/Benefits</h2><ul>';
-            data.sellingPoints.forEach(point => { if(point) generatedHTML += `<li>${point}</li>`; });
-            generatedHTML += '</ul></section>\n';
-            // Preview for selling points already added above
-        }
-
-        if (data.sections.includes('testimonials') && data.testimonials.length > 0) {
-            generatedHTML += '<section class="testimonials-section container"><h2>Testimonials</h2>';
-            previewHTML += '<div class="section-preview"><h3>Testimonials</h3>';
-            data.testimonials.forEach(t => {
-                if (t.text && t.author) {
-                    generatedHTML += `<div class="testimonial"><p>"${t.text}"</p><footer>- ${t.author}${t.title ? ', ' + t.title : ''}</footer></div>`;
-                    previewHTML += `<div class="testimonial-preview"><p>"${t.text}"</p><footer>- ${t.author}${t.title ? ', ' + t.title : ''}</footer></div>`;
-                }
+        try {
+            generationStep.textContent = 'Sending data to AI assistant...';
+            const response = await fetch('/api/generate-page', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
             });
-            generatedHTML += '</section>\n';
-            previewHTML += '</div>\n';
-        }
 
-        if (data.sections.includes('pricing') && data.pricingPlans.length > 0) {
-            generatedHTML += '<section class="pricing-section container"><h2>Our Plans</h2>';
-            previewHTML += '<div class="section-preview"><h3>Pricing Plans</h3>';
-            data.pricingPlans.forEach(p => {
-                if (p.name && p.price) {
-                    generatedHTML += `<div class="pricing-plan"><h4>${p.name}</h4><p><strong>Price:</strong> ${p.price}</p>${p.features ? '<p>Features: ' + p.features + '</p>' : ''}</div>`;
-                    previewHTML += `<div class="pricing-plan-preview"><h4>${p.name}</h4><p><strong>Price:</strong> ${p.price}</p>${p.features ? '<p>Features: ' + p.features + '</p>' : ''}</div>`;
-                }
-            });
-            generatedHTML += '</section>\n';
-            previewHTML += '</div>\n';
-        }
-
-        if (data.sections.includes('faq') && data.faqs.length > 0) {
-            generatedHTML += '<section class="faq-section container"><h2>FAQs</h2>';
-            previewHTML += '<div class="section-preview"><h3>FAQs</h3>';
-            data.faqs.forEach(f => {
-                if (f.question && f.answer) {
-                    generatedHTML += `<div class="faq-item"><h4>${f.question}</h4><p>${f.answer}</p></div>`;
-                    previewHTML += `<div class="faq-item-preview"><h4>${f.question}</h4><p>${f.answer}</p></div>`;
-                }
-            });
-            generatedHTML += '</section>\n';
-            previewHTML += '</div>\n';
-        }
-        
-        // CTA section (if not part of hero and cta checkbox is checked)
-        // The CTA button might already be in the hero. This is a standalone CTA section if selected.
-        if (data.sections.includes('cta') && data.ctaText && data.ctaAction && !data.sections.includes('hero')) {
-            generatedHTML += `<section class="cta-section container"><h2>Ready to Start?</h2><p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p></section>\n`;
-            previewHTML += `<div class="section-preview"><h3>Call to Action</h3><p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p></div>\n`;
-        } else if (data.sections.includes('cta') && data.ctaText && data.ctaAction && ctaFieldsContainer.style.display !== 'none' && !data.sections.includes('hero')) {
-            // If CTA section is checked AND its fields are visible (even if hero is also checked, but we want a separate CTA section)
-            generatedHTML += `<section class="cta-section container"><h2>Ready to Start?</h2><p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p></section>\n`;
-            previewHTML += `<div class="section-preview"><h3>Call to Action</h3><p><a href="${data.ctaAction}" class="btn">${data.ctaText}</a></p></div>\n`;
-        }
-
-        if (Object.keys(data.socials).length > 0) {
-            generatedHTML += '<footer class="container social-links"><h3>Follow Us</h3>';
-            previewHTML += '<div class="section-preview social-links-preview"><h3>Social Links</h3>';
-            for (const [platform, url] of Object.entries(data.socials)) {
-                if (url) { // Ensure URL is not empty
-                    generatedHTML += `<a href="${url}" target="_blank" aria-label="${platform}"><i class="fab fa-${platform.toLowerCase()}"></i> ${platform}</a> `;
-                    previewHTML += `<a href="${url}" target="_blank">${platform}</a> `;
-                }
+            generationStep.textContent = 'Waiting for AI response...';
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
-            generatedHTML += '</footer>\n';
-            previewHTML += '</div>\n';
-        }
-        
-        generatedHTML += '</body>\n</html>';
-        previewHTML += '</div>'; // Close ai-preview-container
-        
-        lastGeneratedHTML = generatedHTML;
-        lastGeneratedCSS = generatedCSS;
 
-        return {
-            html: previewHTML, // This is what's shown in the iframe
-            // css: generatedCSS // This is for the downloadable CSS file
-        };
-    }
-
-    function showPagePreview(formData) {
-        generationOverlay.classList.add('active');
-        generationStep.textContent = 'Analyzing your inputs...';
-        if(pagePreview.firstChild && pagePreview.firstChild.nodeType === Node.TEXT_NODE) {
-            pagePreview.removeChild(pagePreview.firstChild);
-        }
-        if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'none';
-        
-        setTimeout(() => {
-            generationStep.textContent = 'Generating HTML & CSS...';
+            const aiOutput = await response.json();
             
-            const aiOutput = simulateAICodeGeneration(formData);
+            generationStep.textContent = 'Finalizing your page...';
+            
+            // Store for download
+            lastGeneratedHTML = aiOutput.html || '<!-- No HTML generated -->';
+            lastGeneratedCSS = aiOutput.css || '/* No CSS generated */';
 
+            // Create preview HTML with inline styles for the iframe
+            let previewHTML = '<style>\n';
+            previewHTML += 'body { margin: 0; padding: 0; }\n'; // Basic reset for iframe
+            previewHTML += aiOutput.css || ''; // Embed the CSS directly for preview
+            previewHTML += '</style>\n';
+            previewHTML += aiOutput.html || '<!-- No HTML content to display -->';
+
+
+            setTimeout(() => { // Simulate finalization
+                generationOverlay.classList.remove('active');
+                pagePreview.innerHTML = previewHTML; // Display HTML with its own CSS in the iframe
+                if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'block';
+                
+                const previewSection = document.querySelector('.preview-section');
+                if (previewSection) {
+                    previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 1000);
+
+        } catch (error) {
+            console.error('Error fetching AI code:', error);
+            generationStep.textContent = `Error: ${error.message}. Please try again.`;
+            // Keep overlay active or show an error message
             setTimeout(() => {
-                generationStep.textContent = 'Finalizing your page...';
-                setTimeout(() => {
-                    generationOverlay.classList.remove('active');
-                    pagePreview.innerHTML = aiOutput.html;
-                    if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'block';
-                    
-                    const previewSection = document.querySelector('.preview-section');
-                    if (previewSection) {
-                        previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }, 1000);
-            }, 1500);
-        }, 1000);
+                 generationOverlay.classList.remove('active');
+                 pagePreview.innerHTML = `<p style="color: red; text-align: center;">Failed to generate page. ${error.message}</p>`;
+            }, 3000); // Keep error message for a bit
+        }
     }
 
     function downloadFile(filename, content, mimeType) {
