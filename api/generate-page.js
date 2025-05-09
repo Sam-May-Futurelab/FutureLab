@@ -46,8 +46,7 @@ Your response MUST be only the JSON object, with no other text before or after i
                     role: "user",
                     content: prompt
                 }
-            ],
-            response_format: { type: "json_object" }, // Enforce JSON output
+            ]
         });
 
         // console.log("OpenAI API Raw Response:", JSON.stringify(aiResponse, null, 2));
@@ -74,8 +73,18 @@ Your response MUST be only the JSON object, with no other text before or after i
 
     } catch (error) {
         console.error('Error in generate-page API:', error);
+        // Check if the error is an OpenAI APIError and has a status property
+        // or if it's a generic error with a status that indicates a rate limit issue.
+        if ((error instanceof OpenAI.APIError && error.status === 429) || error.status === 429) {
+            return res.status(429).json({
+                message: "Too many requests or quota exceeded with OpenAI. Please check your OpenAI plan and billing details, or wait a few minutes and try again.",
+                errorType: "OPENAI_RATE_LIMIT_OR_QUOTA"
+            });
+        }
+        // Generic error response
         res.status(500).json({ 
-            message: error.message || 'Failed to generate page.'
+            message: error.message || 'Failed to generate page.',
+            errorType: error.constructor.name // Send back the type of error
         });
     }
 }
