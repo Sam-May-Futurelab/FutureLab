@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         // console.log("Constructed Prompt for OpenAI:", prompt);
 
         const aiResponse = await openai.chat.completions.create({
-            model: "gpt-4", // Using a specific version, you can use "gpt-3.5-turbo" or "gpt-4"
+            model: "gpt-4o", // Using a specific version, you can use "gpt-3.5-turbo" or "gpt-4"
             messages: [
                 {
                     role: "system",
@@ -97,6 +97,21 @@ function constructPrompt(data) {
     prompt += `Business Description: ${data.businessDescription || 'N/A'}\n`;
     prompt += `Primary Goal of the Page: ${data.primaryGoal || 'N/A'}\n`;
     prompt += `Target Audience: ${data.targetAudience || 'N/A'}\n`;
+
+    // Add business type specific creative prompts
+    if (data.businessType) {
+        const businessTypeLower = data.businessType.toLowerCase();
+        if (businessTypeLower.includes("bakery")) {
+            prompt += `\nThis is a bakery. Emphasize a warm, inviting, and artisanal feel. Include references to fresh, handcrafted goods (breads, pastries, cakes), quality ingredients (perhaps local or organic), and the delightful sensory experience (smell of baking, cozy atmosphere). Suggest creative names for featured products (e.g., "Sunrise Sourdough Loaf," "Velvet Chocolate Croissant," "Homestyle Apple Crumble Pie"). Use imagery and language that evokes comfort, tradition, and deliciousness.\n`;
+        } else if (businessTypeLower.includes("tech") || businessTypeLower.includes("saas") || businessTypeLower.includes("software")) {
+            prompt += `\nThis is a tech/SaaS business. Focus on innovation, efficiency, and cutting-edge solutions. Highlight how the product/service solves a specific problem or improves the user's life/work. Use sleek, modern, and professional design elements. Incorporate strong calls to action for demos, free trials, or learning more. Use language that conveys expertise, forward-thinking, and reliability. Consider visuals that represent technology, data, or connectivity in an abstract or clean way.\n`;
+        } else if (businessTypeLower.includes("fitness") || businessTypeLower.includes("wellness") || businessTypeLower.includes("gym")) {
+            prompt += `\nThis is a fitness/wellness business. Inspire action and motivation. Focus on health benefits, transformation, and community. Use dynamic and energetic visuals. Highlight programs, classes, or unique selling propositions. Include testimonials or success stories if appropriate. Language should be empowering, supportive, and positive. Consider a design that feels clean, vibrant, and motivating.\n`;
+        } else if (businessTypeLower.includes("cafe") || businessTypeLower.includes("coffee shop")) {
+            prompt += `\nThis is a cafe/coffee shop. Create a cozy, welcoming, and community-focused atmosphere. Highlight the quality of coffee/tea, artisanal beverages, and food offerings (e.g., pastries, light meals). Mention the ambiance (e.g., good for working, meeting friends). Use warm and inviting visuals. Language should be friendly and relaxed. Consider featuring daily specials or loyalty programs.\n`;
+        }
+        // Add more else-if blocks for other business types here
+    }
 
     if (data.aiColors === 'on') { // Frontend sends 'on' for checkbox
         prompt += `Color Scheme: AI-selected complementary color palette. Choose professional and appealing colors.\n`;

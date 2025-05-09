@@ -38,6 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const pricingFieldsContainer = document.getElementById('pricing-fields-container');
     const faqSectionCheckbox = document.getElementById('faq-section-checkbox');
     const faqFieldsContainer = document.getElementById('faq-fields-container');
+    const businessTypeDropdown = document.getElementById('business-type'); // Added
+    const otherBusinessTypeContainer = document.getElementById('other-business-type-container'); // Added
+    const otherBusinessTypeInput = document.getElementById('other-business-type'); // Added
     
     // Dynamic entry containers and buttons
     const addPricingPlanBtn = document.getElementById('add-pricing-plan-btn');
@@ -78,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleConditionalSectionDisplay(testimonialsSectionCheckbox, testimonialsFieldsContainer);
         toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer);
         toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer);
+        toggleOtherBusinessTypeVisibility(); // Added: Initial check for "Other" business type
     }
     
     function setupEventListeners() {
@@ -172,6 +176,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Event listener for adding FAQs
         if (addFaqBtn) {
             addFaqBtn.addEventListener('click', addFaqEntry);
+        }
+
+        // Added: Event listener for business type dropdown
+        if (businessTypeDropdown) {
+            businessTypeDropdown.addEventListener('change', toggleOtherBusinessTypeVisibility);
         }
     }
     
@@ -358,6 +367,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Added: Function to toggle visibility of "Other business type" input
+    function toggleOtherBusinessTypeVisibility() {
+        if (businessTypeDropdown && otherBusinessTypeContainer) {
+            if (businessTypeDropdown.value === 'other') {
+                otherBusinessTypeContainer.style.display = 'block';
+                if(otherBusinessTypeInput) otherBusinessTypeInput.required = true;
+            } else {
+                otherBusinessTypeContainer.style.display = 'none';
+                if(otherBusinessTypeInput) {
+                    otherBusinessTypeInput.required = false;
+                    otherBusinessTypeInput.value = ''; // Clear the value if hidden
+                }
+            }
+        }
+    }
+
     function addPricingPlanEntry() {
         if (!pricingPlansDynamicContainer) return;
 
@@ -534,7 +559,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const faqs = [];
 
         for (const [key, value] of formData.entries()) {
-            if (key.startsWith('sections[')) {
+            if (key === 'business-type' && value === 'other') {
+                // Skip, as we'll get it from 'other-business-type'
+                continue;
+            }
+            if (key === 'other-business-type' && formData.get('business-type') === 'other') {
+                data['businessType'] = value.trim(); // Use this value as the businessType
+            } else if (key.startsWith('sections[')) {
                 sections.push(value);
             } else if (key.startsWith('sellingPoints[')) {
                 if (value.trim()) sellingPoints.push(value.trim());

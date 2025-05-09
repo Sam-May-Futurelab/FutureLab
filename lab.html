@@ -90,8 +90,35 @@
                             
                             <div class="form-field">
                                 <label for="business-type">What industry are you in?</label>
-                                <input type="text" id="business-type" name="businessType" placeholder="e.g., Bakery, Tech Startup, SaaS" required>
+                                <select id="business-type" name="businessType" required>
+                                    <option value="" disabled selected>Select your industry</option>
+                                    <option value="bakery_cafe_coffee">Bakery / Cafe / Coffee Shop</option>
+                                    <option value="restaurant_food_truck">Restaurant / Food Truck</option>
+                                    <option value="saas_software_tech">SaaS / Software / Tech</option>
+                                    <option value="gym_fitness_wellness">Gym / Fitness Studio / Wellness</option>
+                                    <option value="ecommerce_clothing">E-commerce / Clothing Brand</option>
+                                    <option value="freelancer_portfolio">Freelancer / Creative Portfolio</option>
+                                    <option value="photographer">Photographer</option>
+                                    <option value="digital_agency_web_design">Digital Agency / Web Design</option>
+                                    <option value="event_planning_wedding">Event Planning / Wedding Planner</option>
+                                    <option value="real_estate_property">Real Estate / Property</option>
+                                    <option value="non_profit_charity">Non-profit / Charity</option>
+                                    <option value="education_tutoring">Education / Tutoring</option>
+                                    <option value="health_skincare_cosmetics">Health / Skincare / Cosmetics</option>
+                                    <option value="coach_consultant">Coach / Consultant</option>
+                                    <option value="pet_services_grooming">Pet Services / Grooming</option>
+                                    <option value="auto_repair_detailing">Auto Repair / Detailing</option>
+                                    <option value="construction_tradesperson">Construction / Tradesperson</option>
+                                    <option value="finance_accountant_advisor">Finance / Accountant / Advisor</option>
+                                    <option value="legal_solicitor_law_firm">Legal / Solicitor / Law Firm</option>
+                                    <option value="other">Other (Describe Below)</option>
+                                </select>
                                 <span class="field-note">This helps our AI understand your market context.</span>
+                            </div>
+                            
+                            <div class="form-field" id="other-business-type-container" style="display: none;">
+                                <label for="other-business-type">Please specify your industry:</label>
+                                <input type="text" id="other-business-type" name="otherBusinessType" placeholder="e.g., Artisanal Dog Toy Maker">
                             </div>
                             
                             <div class="form-navigation">
