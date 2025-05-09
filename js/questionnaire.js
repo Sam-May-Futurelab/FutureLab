@@ -55,6 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const faqDynamicContainer = document.getElementById('faq-dynamic-container');
     let faqIndex = 1; // Start index for dynamically added FAQs
     
+    const logoUploadInput = document.getElementById('logo-upload'); 
+    const logoUploadLabel = document.querySelector('label[for="logo-upload"]'); // Corrected selector
+    const logoFileNameDisplay = document.getElementById('logo-file-name');
+
     let currentStep = 1;
     const totalSteps = formSteps.length;
     let lastGeneratedHTML = '';
@@ -181,6 +185,25 @@ document.addEventListener('DOMContentLoaded', function() {
         // Added: Event listener for business type dropdown
         if (businessTypeDropdown) {
             businessTypeDropdown.addEventListener('change', toggleOtherBusinessTypeVisibility);
+        }
+
+        // Event listener for custom file upload
+        if (logoUploadLabel && logoUploadInput) {
+            logoUploadLabel.addEventListener('click', (e) => {
+                // If the label is not directly associated with input via `for` attribute matching input's ID,
+                // or to ensure click even if it is, explicitly trigger input click.
+                // e.preventDefault(); // Prevent default if label's `for` is set to input's ID, to avoid double trigger.
+                logoUploadInput.click();
+            });
+            logoUploadInput.addEventListener('change', () => {
+                if (logoFileNameDisplay) {
+                    if (logoUploadInput.files && logoUploadInput.files.length > 0) {
+                        logoFileNameDisplay.textContent = logoUploadInput.files[0].name;
+                    } else {
+                        logoFileNameDisplay.textContent = 'No file chosen';
+                    }
+                }
+            });
         }
     }
     
@@ -558,7 +581,52 @@ document.addEventListener('DOMContentLoaded', function() {
         const pricingPlans = [];
         const faqs = [];
 
+        // Handle logo upload first
+        let logoData = null;
+        if (logoUploadInput && logoUploadInput.files && logoUploadInput.files[0]) {
+            try {
+                generationStep.textContent = 'Processing logo...';
+                logoData = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(logoUploadInput.files[0]);
+                });
+            } catch (error) {
+                console.error('Error reading logo file:', error);
+                // Optionally, inform the user or proceed without logo
+                generationStep.textContent = 'Error processing logo. Continuing without it.';
+                // alert('Could not process the logo file. Please try a different file or continue without a logo.');
+            }
+        }
+        data.logoData = logoData; // Add logoData (Base64 string or null)
+
+        // Collect logo position
+        const logoPositionInput = document.querySelector('input[name="logoPosition"]:checked');
+        data.logoPosition = logoPositionInput ? logoPositionInput.value : 'left'; // Default to 'left' if not found
+
+        // Collect new creativity inputs
+        const inspirationWebsites = document.getElementById('inspiration-websites');
+        const mustHaveElements = document.getElementById('must-have-elements');
+        const thingsToAvoid = document.getElementById('things-to-avoid');
+
+        if (inspirationWebsites && inspirationWebsites.value.trim()) {
+            data.inspirationWebsites = inspirationWebsites.value.trim();
+        }
+        if (mustHaveElements && mustHaveElements.value.trim()) {
+            data.mustHaveElements = mustHaveElements.value.trim();
+        }
+        if (thingsToAvoid && thingsToAvoid.value.trim()) {
+            data.thingsToAvoid = thingsToAvoid.value.trim();
+        }
+
         for (const [key, value] of formData.entries()) {
+            if (key === 'logoUpload') { // Skip file input from FormData iteration
+                continue;
+            }
+            if (key === 'logoPosition'){ // Already handled
+                continue;
+            }
             if (key === 'business-type' && value === 'other') {
                 // Skip, as we'll get it from 'other-business-type'
                 continue;

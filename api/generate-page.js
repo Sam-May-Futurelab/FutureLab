@@ -94,6 +94,25 @@ function constructPrompt(data) {
     prompt += `Project Name/Business Name: ${data.businessName || 'My Awesome Page'}\n`; // Ensure a default for filename
     const safeProjectName = (data.businessName || 'ai-generated-page').toLowerCase().replace(/[^a-z0-9-_]/g, '-').replace(/--+/g, '-');
 
+    // Logo and Header Instructions
+    prompt += `\n--- Header Configuration ---\n`;
+    if (data.logoData) {
+        prompt += `Logo: An image is provided (Base64 encoded). Include this as an <img> tag in the header.
+`;
+        prompt += `   - Image Data (for src attribute): "${data.logoData}" (This is a Base64 string, use it directly in the src attribute like src="data:image/png;base64,...")
+`;
+        prompt += `   - Logo Alt Text: "${data.businessName || 'Logo'}"
+`;
+    } else {
+        prompt += `Logo: No image provided. Display the Business Name ("${data.businessName || 'My Brand'}") as text in the header.
+`;
+        prompt += `   - Style the business name text appropriately as a header logo (e.g., distinct font, size).
+`;
+    }
+    prompt += `Header/Logo Position: ${data.logoPosition || 'left'}. Position the logo image (if provided) or the business name text (if no logo) accordingly in the header (e.g., align left, center, or right).
+`;
+    prompt += `--- End Header Configuration ---\n`;
+
     prompt += `Business Description: ${data.businessDescription || 'N/A'}\n`;
     prompt += `Primary Goal of the Page: ${data.primaryGoal || 'N/A'}\n`;
     prompt += `Target Audience: ${data.targetAudience || 'N/A'}\n`;
@@ -213,16 +232,10 @@ Design Elements: Clear course catalogs, instructor bios, student testimonials, e
 Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll Now."\n`;
                 break;
             default: // This will apply to "other" or any type not specifically listed
-                prompt += `Industry: ${businessType}.
-Creative Direction: User has specified this as the industry. Adapt the design to be highly creative, modern, and relevant to this specific field.
-Visuals & Imagery: Choose visuals that strongly resonate with the core themes of this industry.
-Key Themes: Focus on the unique selling propositions and target audience needs for this industry.
-Language Style: Tailor the language to the typical communication style of this industry.
-Design Elements: Select design elements (colors, fonts, layout styles) that are considered contemporary and appealing within this industry.
-Example Elements: Ensure standard sections like Hero, About, Services/Products, and Contact are considered, adapted to the industry.
-If the user provided a custom business type for "Other", be very specific and creative for that custom type. For example, if they entered "Artisanal Spacecraft Miniatures", the design should be whimsical, detailed, and perhaps a bit retro-futuristic. If they entered "Sustainable Alpaca Wool Socks", it should be earthy, cozy, and eco-conscious.\n`;
+                prompt += `Industry: ${businessType}.\n`;
         }
         prompt += `--- End Creative Brief ---\n`;
+        prompt += `Remember, the above industry brief is a guideline. Innovate within this context, using all other user inputs (like tone, target audience, and selling points) to create something truly unique and tailored, not just a generic template for that industry.\n`;
     }
 
     if (data.aiColors === 'on') { // Frontend sends 'on' for checkbox
@@ -232,10 +245,16 @@ If the user provided a custom business type for "Other", be very specific and cr
         prompt += `Secondary Color: ${data.secondaryColorHex || '#4CC9F0'}\n`;
     }
     prompt += `Font Style: ${data.fontStyle || 'Arial, sans-serif'}\n`;
-    prompt += `Overall Tone/Style: ${data.tone || 'Modern and professional'}\n`;
 
-    prompt += `\nRequested Page Sections (include all that are listed; if none, create a standard layout with hero, about, features, and contact/footer):
-`;
+    prompt += `\n--- Core Creative Synthesis ---\n`;
+    prompt += `Holistically synthesize the following aspects to inform ALL design decisions. The aim is a cohesive, persuasive, and highly creative vision that deeply reflects the user's intent, not just a list of features:\n`;
+    prompt += `- Business Description: "${data.businessDescription || 'N/A'}" (Extract keywords, implied feelings, and unique aspects to inspire the design's personality.)\n`;
+    prompt += `- Primary Goal: "${data.primaryGoal || 'N/A'}" (The entire design should strategically guide the user towards this goal. For instance, if it's 'sales', CTAs and product showcases must be compelling and prominent. If 'brand awareness', the visual identity and storytelling should be memorable.)\n`;
+    prompt += `- Target Audience: "${data.targetAudience || 'N/A'}" (Design for THEM. Consider their likely aesthetic preferences, technical savviness, and what would resonate most strongly. A site for 'young gamers' will differ vastly from one for 'corporate executives'.)\n`;
+    prompt += `- Overall Tone/Style: "${data.tone || 'Modern and professional'}" (This is paramount. Let it dictate typography, color depth, imagery style, spacing, and even the feel of any (CSS-based) micro-interactions. E.g., 'playful' might use brighter colors and rounded shapes; 'sophisticated' might use elegant fonts and a more reserved palette with impactful imagery.)\n`;
+    prompt += `--- End Core Creative Synthesis ---\n`;
+
+    prompt += `\nRequested Page Sections (include all that are listed; if none, create a standard layout with hero, about, features, and contact/footer):\r\n`;
     if (data.sections && data.sections.length > 0) {
         data.sections.forEach(section => {
             prompt += `- ${section.charAt(0).toUpperCase() + section.slice(1)}\n`;
@@ -245,8 +264,8 @@ If the user provided a custom business type for "Other", be very specific and cr
     }
 
     if (data.sellingPoints && data.sellingPoints.length > 0) {
-        prompt += `\nKey Selling Points/Features (for hero or features section):
-`;
+        prompt += `\nKey Selling Points/Features (for hero or features section):\r\n`;
+        prompt += `   - Instruction: Don't just list these. Integrate them creatively. Make them visually distinct, compelling, and a focal point of the relevant section. Use design to emphasize their importance.\n`;
         data.sellingPoints.forEach(point => prompt += `- ${point}\n`);
     }
 
@@ -317,24 +336,21 @@ If the user provided a custom business type for "Other", be very specific and cr
         prompt += `\nSEO Meta Keywords: ${data.metaKeywords}\n`;
     }
 
-    prompt += `\nImportant Instructions for AI:
-`;
-    prompt += `- Generate complete HTML for a single page and all necessary CSS.
-`;
-    prompt += `- Provide your response as a single, valid JSON object with two keys: "html" and "css". The value for "html" should be the full HTML code as a string. The value for "css" should be the full CSS code as a string. No other text or formatting outside this JSON object.
-`;
-    prompt += `- The CSS MUST be self-contained within the "css" string. Do NOT include any <link rel="stylesheet" href="..."> tags in the HTML.
-`;
-    prompt += `- Aim for a MODERN, CREATIVE, and VISUALLY APPEALING design. Incorporate contemporary design trends and avoid generic templates. Consider unique layouts, bold typography, and engaging visual elements.
-`;
-    prompt += `- Ensure the CSS makes the page responsive across common device sizes (desktop, tablet, mobile). Use flexbox or grid for layout where appropriate.
-`;
-    prompt += `- For social media links, try to use common font icon classes (like Font Awesome, e.g., <i class="fab fa-twitter"></i>) or use text links if icons are not feasible. If using font icons, ensure the CSS includes the necessary @import or font-face rules if they are not commonly available by default. However, prefer inline SVGs or simple text links if complex icon font setup is too much for a single CSS string.
-`;
-    prompt += `- Make the landing page visually appealing and user-friendly. Ensure good contrast for accessibility.
-`;
-    prompt += `- Double-check that the output is ONLY the JSON object as specified.
-`;
+    prompt += `\n--- Further Guidance for Maximum Creativity & Tailoring ---\n`;
+    prompt += `- Creative Interpretation: You are an expert creative designer. Interpret the user's requests not as rigid constraints but as ingredients for a unique recipe. Where there's ambiguity, lean towards a more creative and modern solution.\n`;
+    prompt += `- Beyond the Literal: Think about the *implied* needs. If the business is "eco-friendly handmade soaps," the design should *feel* natural, artisanal, and trustworthy, even if the user didn't explicitly list those adjectives in the 'tone'.\n`;
+    prompt += `- Visual Hierarchy & Flow: Craft a clear visual journey for the user. Guide their eye intentionally through the content, leading them towards the primary goal.\n`;
+    prompt += `- Uniqueness: Strive for a design that doesn't look like a common template. What can you do with layout, typography, color, or imagery to make this page memorable and stand out, while still being highly usable and professional?\n`;
+
+    prompt += `\nImportant Instructions for AI:\r\n`;
+    prompt += `- Generate complete HTML for a single page and all necessary CSS.\r\n`;
+    prompt += `- Provide your response as a single, valid JSON object with two keys: "html" and "css". The value for "html" should be the full HTML code as a string. The value for "css" should be the full CSS code as a string. No other text or formatting outside this JSON object.\n`;
+    prompt += `- The CSS MUST be self-contained within the "css" string. Do NOT include any <link rel="stylesheet" href="..."> tags in the HTML.\n`;
+    prompt += `- Aim for a MODERN, CREATIVE, and VISUALLY APPEALING design. Incorporate contemporary design trends and avoid generic templates. Consider unique layouts, bold typography, and engaging visual elements.\n`;
+    prompt += `- Ensure the CSS makes the page responsive across common device sizes (desktop, tablet, mobile). Use flexbox or grid for layout where appropriate.\n`;
+    prompt += `- For social media links, try to use common font icon classes (like Font Awesome, e.g., <i class="fab fa-twitter"></i>) or use text links if icons are not feasible. If using font icons, ensure the CSS includes the necessary @import or font-face rules if they are not commonly available by default. However, prefer inline SVGs or simple text links if complex icon font setup is too much for a single CSS string.\n`;
+    prompt += `- Make the landing page visually appealing and user-friendly. Ensure good contrast for accessibility.\n`;
+    prompt += `- Double-check that the output is ONLY the JSON object as specified.\n`;
 
     return prompt;
 }

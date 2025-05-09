@@ -658,6 +658,60 @@
     margin-top: 15px;
 }
 
+/* Custom File Upload Button */
+.file-upload-input {
+    display: none; /* Hide the actual file input */
+}
+
+.file-upload-label {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid var(--border-color, #ced4da);
+    border-radius: var(--border-radius-md, 0.375rem);
+    background-color: var(--input-bg, #fff);
+    color: var(--text-color, #333);
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.file-upload-label:hover {
+    background-color: var(--input-hover-bg, #f8f9fa);
+    border-color: var(--input-focus-border, #86b7fe);
+}
+
+.file-upload-label i {
+    margin-right: 8px;
+}
+
+.file-name-display {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.875rem;
+    color: var(--text-muted, #6c757d);
+}
+
+/* Ensure dark theme compatibility for file upload label */
+body.dark-theme .file-upload-label {
+    background-color: var(--dark-input-bg, #2b3035);
+    border-color: var(--dark-border-color, #444c56);
+    color: var(--dark-text-color, #c9d1d9);
+}
+
+body.dark-theme .file-upload-label:hover {
+    background-color: var(--dark-input-hover-bg, #32383e);
+    border-color: var(--dark-input-focus-border, #58a6ff);
+}
+
+body.dark-theme .file-name-display {
+    color: var(--dark-text-muted, #8b949e);
+}
+
 /* Sections grid styling */
 .sections-grid {
     display: grid;
