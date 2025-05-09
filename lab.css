@@ -233,4 +233,8 @@
     .cta-futurelab-lab .ai-pricing-statement {
         font-size: 1.15rem;
     }
+
+    header nav.container > .theme-toggle {
+        margin-top: 0px !important; /* Counteract the 25px margin from header.html */
+    }
 }

@@ -274,13 +274,38 @@
             header nav.container {
                 display: flex;
                 align-items: center;
-                justify-content: center; /* Center the logo */
-                padding: 0 15px; /* Keep existing padding */
-                position: relative; /* Ensures absolute children are positioned relative to this */
-                height: 70px; /* Explicit mobile height */
+                justify-content: center; /* Ensure logo is centered horizontally */
+                padding: 0 15px;
+                position: relative;
+                height: 70px;
             }
 
-            .hamburger {
+            .logo-link {
+                display: inline-block; /* Treat as a simple block for centering */
+                position: static !important; /* Override other positioning */
+                margin: 0 !important; /* Reset margins */
+                padding: 0 !important; /* Reset paddings */
+                line-height: 1; /* Adjust if necessary for vertical alignment */
+                /* transform/transition/animation none !important are already applied below */
+            }
+            
+            .logo {
+                font-size: 1.6rem; /* Slightly smaller logo on mobile */
+                position: static !important; /* Override base relative positioning */
+                margin: 0 !important; /* Reset margins */
+                padding: 0 !important; /* Reset paddings */
+                display: inline; /* Behave like simple text content */
+                vertical-align: middle; /* Helps with inline vertical alignment */
+            }
+
+            /* Prevent logo animation on mobile - this block should be reviewed to ensure it's not redundant */
+            .logo-link, .logo {
+                transform: none !important;
+                transition: none !important;
+                animation: none !important;
+            }
+            
+            header nav.container > .hamburger { /* Increased specificity */
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -291,73 +316,115 @@
                 z-index: 1001;
             }
             
-            .theme-toggle { /* Added mobile-specific positioning */
+            header nav.container > .theme-toggle { /* Increased specificity */
                 position: absolute;
                 top: 50%;
                 right: 15px; /* Position theme toggle on the right */
                 transform: translateY(-50%);
                 margin-left: 0; /* Override desktop margin-left */
-                /* Width, height, and other base styles are inherited from the general .theme-toggle style */
+                margin-top: 25px; /* Nudge down slightly */
                 z-index: 1001; /* Ensure it's on top */
+                /* Base styles for theme-toggle (width, height, display:inline-flex etc.) should ensure icon is centered */
             }
             
-            .nav-links {
+            .nav-links { /* This is the main ul for desktop nav links */
+                display: none !important; /* Hide on mobile, !important to override potential specificity issues */
+            }
+
+            .nav-links-mobile { /* Styles for the separate mobile menu list */
+                display: none; /* Initially hidden */
+                list-style: none; margin: 0; padding: 0; /* Base reset */
                 position: fixed;
-                top: 70px;
+                top: 70px; /* Below the header */
                 left: 0;
-                right: 0;
                 width: 100%;
-                margin: 0 auto;
-                background: white;
+                background-color: rgba(255, 255, 255, 0.98); /* Light theme mobile menu background */
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                padding: 20px 0;
                 flex-direction: column;
                 align-items: center;
-                justify-content: flex-start;
-                padding: 20px 0;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-                transform: translateY(-150%);
-                transition: transform 0.3s ease;
-                z-index: 999;
-                text-align: center;
+                gap: 15px; /* Adjusted gap */
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                z-index: 999; /* Below hamburger/theme-toggle but above content */
                 max-height: calc(100vh - 70px);
                 overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
             }
-            
-            .dark-theme .nav-links {
-                background: #1e293b;
+
+            .dark-theme .nav-links-mobile {
+                background-color: rgba(15, 23, 42, 0.98); /* Dark theme mobile menu background */
             }
-            
-            .nav-links.active {
-                transform: translateY(0);
+
+            .nav-links-mobile.active { /* When mobile menu is open */
+                display: flex; /* Show it */
             }
-            
-            .nav-links li {
-                margin: 10px 0;
+
+            .nav-links-mobile li a {
+                font-size: 1.1rem;
+                padding: 10px 20px;
                 width: 100%;
                 text-align: center;
+                color: var(--dark-color); 
+                text-decoration: none;
+                transition: background-color 0.2s ease, color 0.2s ease;
             }
-            
-            .nav-links li a {
-                display: block;
-                padding: 10px 0;
-                width: 100%;
-                text-align: center;
+            .dark-theme .nav-links-mobile li a {
+                color: #e2e8f0; 
             }
-            
-            body.menu-open {
-                overflow: hidden;
+            .nav-links-mobile li a:hover {
+                background-color: rgba(0,0,0,0.05);
             }
-            
-            .nav-links li a.btn {
-                margin: 10px auto !important;
-                padding: 10px 20px !important;
-                width: 160px;
-                max-width: 80%;
-                display: block !important;
+            .dark-theme .nav-links-mobile li a:hover {
+                background-color: rgba(255,255,255,0.05);
+            }
+            .nav-links-mobile li a.active {
+                color: var(--primary-color);
+                font-weight: 600;
+            }
+            .dark-theme .nav-links-mobile li a.active {
+                 color: var(--secondary-color); /* Or your preferred dark theme active color */
+            }
+
+
+            .nav-links-mobile li a.btn-outline {
+                 color: var(--primary-color);
+                 background: transparent;
+                 border: 2px solid var(--primary-color);
+                 padding: 10px 20px;
+                 border-radius: var(--border-radius-sm);
+                 margin: 5px auto; 
+                 display: inline-block; 
+                 width: auto; /* Override 100% width for button */
+            }
+            .dark-theme .nav-links-mobile li a.btn-outline {
+                color: var(--secondary-color);
+                border-color: var(--secondary-color);
+            }
+             .nav-links-mobile li a.btn-outline:hover {
+                background: var(--primary-color);
+                color: white;
+            }
+            .dark-theme .nav-links-mobile li a.btn-outline:hover {
+                background: var(--secondary-color);
+                color: var(--dark-color);
+            }
+
+            .logo {
+                font-size: 1.6rem; /* Slightly smaller logo on mobile */
+            }
+
+            /* Prevent logo animation on mobile */
+            .logo-link, .logo {
+                transform: none !important;
+                transition: none !important;
+                animation: none !important;
             }
         }
         
         @media (min-width: 769px) {
+            .nav-links-mobile {
+                display: none !important; /* Hide mobile nav on desktop */
+            }
         }
         
         @media (max-width: 400px) {
@@ -370,6 +437,7 @@
             <a href="index.html" class="logo-link">
                 <div class="logo">Futurelab</div>
             </a>
+            <!-- Desktop Nav -->
             <ul class="nav-links">
                 <li><a href="index.html" id="nav-home">Home</a></li>
                 <li><a href="ecommerce.html" id="nav-ecommerce">E-Commerce</a></li>
@@ -378,6 +446,16 @@
                 <li><a href="lab.html" id="nav-lab">Lab</a></li>
                 <li><a href="faq.html" id="nav-faq">FAQ</a></li>
                 <li><a href="contact.html" class="btn btn-outline" id="nav-contact">Contact</a></li>
+            </ul>
+            <!-- Mobile Nav (new) -->
+            <ul class="nav-links-mobile">
+                <li><a href="index.html" id="nav-mobile-home">Home</a></li>
+                <li><a href="ecommerce.html" id="nav-mobile-ecommerce">E-Commerce</a></li>
+                <li><a href="web-design.html" id="nav-mobile-webdesign">Web Design</a></li>
+                <li><a href="showcase.html" id="nav-mobile-showcase">Showcase</a></li>
+                <li><a href="lab.html" id="nav-mobile-lab">Lab</a></li>
+                <li><a href="faq.html" id="nav-mobile-faq">FAQ</a></li>
+                <li><a href="contact.html" class="btn btn-outline" id="nav-mobile-contact">Contact</a></li>
             </ul>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
                 <i class="fas fa-moon"></i> <!-- Default to moon, js will update -->
@@ -398,64 +476,75 @@
         // Set active navigation link based on current page
         function setActiveNavLink() {
             const currentPath = window.location.pathname;
-            const pageName = currentPath.split('/').pop();
+            // Ensure pageName defaults to 'index.html' if currentPath is just '/' or empty
+            const pageName = currentPath.split('/').pop() || 'index.html'; 
             
-            document.querySelectorAll('.nav-links a').forEach(link => {
+            document.querySelectorAll('.nav-links a, .nav-links-mobile a').forEach(link => {
                 link.classList.remove('active');
             });
             
-            if (pageName === '' || pageName === 'index.html') {
-                document.getElementById('nav-home')?.classList.add('active');
-            } else if (pageName === 'ecommerce.html') {
-                document.getElementById('nav-ecommerce')?.classList.add('active');
-            } else if (pageName === 'web-design.html') {
-                document.getElementById('nav-webdesign')?.classList.add('active');
-            } else if (pageName === 'showcase.html') {
-                document.getElementById('nav-showcase')?.classList.add('active');
-            } else if (pageName === 'lab.html') {
-                document.getElementById('nav-lab')?.classList.add('active');
-            } else if (pageName === 'faq.html') {
-                document.getElementById('nav-faq')?.classList.add('active');
-            } else if (pageName === 'contact.html') {
-                document.getElementById('nav-contact')?.classList.add('active');
+            let idSuffix = '';
+            if (pageName === 'index.html') idSuffix = 'home';
+            else if (pageName === 'ecommerce.html') idSuffix = 'ecommerce';
+            else if (pageName === 'web-design.html') idSuffix = 'webdesign';
+            else if (pageName === 'showcase.html') idSuffix = 'showcase';
+            else if (pageName === 'lab.html') idSuffix = 'lab';
+            else if (pageName === 'faq.html') idSuffix = 'faq';
+            // Contact button typically doesn't use the same 'active' link styling
+
+            if (idSuffix) {
+                const desktopLink = document.getElementById(`nav-${idSuffix}`);
+                if (desktopLink) desktopLink.classList.add('active');
+                
+                const mobileLink = document.getElementById(`nav-mobile-${idSuffix}`);
+                if (mobileLink) mobileLink.classList.add('active');
             }
+            
+            // If on contact.html, you might want to style the contact button differently,
+            // but it usually doesn't get the 'active' class meant for text links.
+            // Example:
+            // if (pageName === 'contact.html') {
+            //     document.getElementById('nav-contact')?.classList.add('current-page-button');
+            //     document.getElementById('nav-mobile-contact')?.classList.add('current-page-button');
+            // }
         }
         
         // Mobile menu functionality
         const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
+        const mobileNavLinks = document.querySelector('.nav-links-mobile'); // Target the new mobile nav list
         const mobileOverlay = document.querySelector('.mobile-menu-overlay');
         const body = document.body;
 
-        if (hamburger && navLinks) {
+        if (hamburger && mobileNavLinks) { // Check for mobileNavLinks
             function toggleMenu(event) {
                 if (event) {
-                     event.preventDefault(); // Prevent default action, especially for touch
+                     event.preventDefault(); 
                 }
                 hamburger.classList.toggle('active');
-                navLinks.classList.toggle('active');
+                mobileNavLinks.classList.toggle('active'); // Toggle active on mobileNavLinks
                 
                 if (mobileOverlay) {
                     mobileOverlay.classList.toggle('active');
                 }
                 
-                body.classList.toggle('menu-open', navLinks.classList.contains('active'));
+                body.classList.toggle('menu-open', mobileNavLinks.classList.contains('active')); // Check mobileNavLinks for menu-open
             }
             
             hamburger.addEventListener('click', toggleMenu);
             
-            navLinks.querySelectorAll('a').forEach(link => {
+            // Add event listeners to each link in the mobile menu to close the menu on click
+            mobileNavLinks.querySelectorAll('a').forEach(link => { 
                 link.addEventListener('click', function() {
-                    if (navLinks.classList.contains('active')) {
-                        toggleMenu(); // Close menu
+                    if (mobileNavLinks.classList.contains('active')) { 
+                        toggleMenu(); 
                     }
                 });
             });
             
             if (mobileOverlay) {
                 mobileOverlay.addEventListener('click', function() {
-                     if (navLinks.classList.contains('active')) {
-                        toggleMenu(); // Close menu
+                     if (mobileNavLinks.classList.contains('active')) { 
+                        toggleMenu(); 
                     }
                 });
             }
@@ -463,9 +552,8 @@
         
         setActiveNavLink();
 
-        // Theme toggle JS is removed from here.
-        // It will be handled by initializeThemeToggle from the main page,
-        // called by headerInclude.js.
+        // Theme toggle JS is handled by initializeThemeToggle from js/theme-toggle.js,
+        // called by headerInclude.js after this header is injected.
     </script>
 </body>
 </html>

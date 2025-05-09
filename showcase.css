@@ -89,7 +89,7 @@
     background-color: rgba(15, 23, 42, 0.7);
 }
 
-.dark-theme .product-shape {
+.dark-theme .product-sphere {
     color: #3a86ff; /* Slightly brighter blue in dark mode */
 }
 
@@ -983,6 +983,13 @@ img[src*="pokespud-mockup.png"],
     overflow: visible !important;
     height: auto !important;
   }
+}
+
+/* Override for theme toggle position on mobile for showcase.html */
+@media (max-width: 768px) {
+    header nav.container > .theme-toggle {
+        margin-top: 0px !important; /* Counteract the 25px margin from header.html */
+    }
 }
 
 /* 3D Product Viewer */
