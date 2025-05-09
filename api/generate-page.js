@@ -1,11 +1,7 @@
 // Filepath: c:\Users\Sam\Desktop\Future Me\api\generate-page.js
 const { OpenAI } = require('openai');
 
-// Initialize OpenAI client with API key from environment variables
 // Ensure OPENAI_API_KEY is set in your Vercel project settings
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -14,6 +10,12 @@ export default async function handler(req, res) {
     }
 
     try {
+        // Initialize OpenAI client with API key from environment variables
+        // Moved inside the try block for better error handling during initialization
+        const openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+        });
+
         const formData = req.body;
         // console.log("Received form data on backend:", JSON.stringify(formData, null, 2));
 
