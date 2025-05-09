@@ -13,6 +13,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <script src="js/dotlottie.min.js" defer></script> <!-- Added Lottie player script -->
+
     <!-- Favicon Links -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
@@ -27,7 +29,7 @@
     <script src="js/theme-toggle.js" defer></script>
     <script src="js/lab.js" defer></script>
     <script src="js/questionnaire.js" defer></script>
-    <script src="js/simple-menu.js" defer></script>
+    <!-- <script src="js/simple-menu.js" defer></script> --> <!-- Commented out as file seems to be missing -->
 </head>
 <body>
     <!-- The header will be injected here by headerInclude.js -->
@@ -431,14 +433,15 @@
 
         <section class="preview-section section-transition">
             <div class="container">
-                <h2 class="section-title">Preview Your AI-Generated Page</h2>
-                <div id="page-preview" class="preview-container" style="background: #f0f2f5; border: 1px solid #e0e4e8; border-radius: var(--border-radius); padding: 30px; margin-top: 40px; min-height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                    <!-- AI Generated Content will appear here -->
-                    <p style="color: #6c757d; font-size: 1.1rem;">Your generated page will appear here once you complete the questionnaire.</p>
+                <h2 class="section-title">Page Preview</h2>
+                <div class="preview-placeholder-content">
+                    <dotlottie-player src="https://lottie.host/embed/6c9e0b9d-9b69-4b28-8a89-40171559f07e/LzYf5gQ2qA.json" background="transparent" speed="1" style="width: 200px; height: 200px; margin: 0 auto 15px auto;" loop autoplay></dotlottie-player>
+                    <p class="preview-placeholder-text">Your generated page will appear here once you complete the questionnaire.</p>
                 </div>
-                <div class="download-buttons" style="text-align: center; margin-top: 30px; display: none;">
-                    <button id="download-html-btn" class="btn btn-primary" style="margin-right: 10px;"><i class="fas fa-download"></i> Download HTML</button>
-                    <button id="download-css-btn" class="btn btn-secondary"><i class="fas fa-download"></i> Download CSS</button>
+                <iframe id="page-preview" title="AI Generated Page Preview"></iframe>
+                <div class="download-buttons">
+                    <button id="download-html-btn" class="btn btn-secondary"><i class="fas fa-file-code"></i> Download HTML</button>
+                    <button id="download-css-btn" class="btn btn-secondary"><i class="fas fa-file-alt"></i> Download CSS</button>
                 </div>
             </div>
         </section>

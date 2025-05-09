@@ -853,6 +853,63 @@
     }
 }
 
+/* Preview Section Placeholder Styling */
+.preview-section .section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.preview-placeholder-content {
+    text-align: center;
+    padding: 40px 20px;
+    border: 2px dashed #e2e8f0; /* Light border for the placeholder area */
+    border-radius: 8px;
+    margin-bottom: 30px;
+    background-color: #f8fafc; /* Light background for placeholder */
+}
+
+.dark-theme .preview-placeholder-content {
+    border-color: #334155;
+    background-color: #1e293b; /* Dark background for placeholder */
+}
+
+.preview-placeholder-text {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-top: 0; /* Lottie player has bottom margin */
+}
+
+.dark-theme .preview-placeholder-text {
+    color: #94a3b8;
+}
+
+#page-preview {
+    width: 100%;
+    min-height: 500px; /* Ensure it has some height when content loads */
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    /* Initially hidden by JS or by not having content */
+}
+
+.dark-theme #page-preview {
+    border-color: #334155;
+}
+
+.download-buttons {
+    text-align: center;
+    margin-top: 20px;
+    /* display: none; Initially hidden, shown by JS */
+}
+
+.download-buttons .btn {
+    margin: 0 10px;
+}
+
+/* Ensure iframe is hidden when it has no src or content yet, and placeholder is visible */
+#page-preview:not([srcdoc]) {
+    display: none; /* Hide iframe if it has no content yet */
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .questionnaire-container {
