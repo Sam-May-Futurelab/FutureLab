@@ -15,10 +15,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const generationOverlay = document.querySelector('.generation-overlay');
     const generationStep = document.querySelector('.generation-step');
     const pagePreview = document.getElementById('page-preview');
+    const downloadButtonsContainer = document.querySelector('.download-buttons');
+    const downloadHtmlBtn = document.getElementById('download-html-btn');
+    const downloadCssBtn = document.getElementById('download-css-btn');
+    const ctaSectionCheckbox = document.getElementById('cta-section-checkbox');
+    const ctaFieldsContainer = document.getElementById('cta-fields-container');
+    const socialLinksToggleHeader = document.getElementById('social-links-toggle-header'); 
+    const socialInputsContainer = document.getElementById('social-inputs-actual-container'); 
+    const socialLinksToggleIcon = socialLinksToggleHeader ? socialLinksToggleHeader.querySelector('.toggle-icon') : null; 
+    const seoFieldsToggleHeader = document.getElementById('seo-fields-toggle-header');
+    const seoFieldsContainer = document.getElementById('seo-fields-actual-container');
+    const seoFieldsToggleIcon = seoFieldsToggleHeader ? seoFieldsToggleHeader.querySelector('.toggle-icon') : null;
+
+    // Conditional Page Section Fields
+    const aboutSectionCheckbox = document.getElementById('about-section-checkbox');
+    const aboutUsFieldsContainer = document.getElementById('about-us-fields-container');
+    const testimonialsSectionCheckbox = document.getElementById('testimonials-section-checkbox');
+    const testimonialsFieldsContainer = document.getElementById('testimonials-fields-container');
+    const pricingSectionCheckbox = document.getElementById('pricing-section-checkbox');
+    const pricingFieldsContainer = document.getElementById('pricing-fields-container');
+    const faqSectionCheckbox = document.getElementById('faq-section-checkbox');
+    const faqFieldsContainer = document.getElementById('faq-fields-container');
+    const addPricingPlanBtn = document.getElementById('add-pricing-plan-btn');
+    const pricingPlansDynamicContainer = document.getElementById('pricing-plans-dynamic-container');
+    let pricingPlanIndex = 1; // Start index for dynamically added plans
     
     let currentStep = 1;
     const totalSteps = formSteps.length;
-    
+    let lastGeneratedHTML = '';
+    let lastGeneratedCSS = '';
+    let lastProjectName = 'ai-generated-page';
+
     // Initialize form
     initializeForm();
     
@@ -26,6 +53,19 @@ document.addEventListener('DOMContentLoaded', function() {
         updateProgressBar();
         setupColorPickers();
         setupEventListeners();
+        toggleCTAFieldsVisibility(); // Initial check for CTA fields
+        // Initialize SEO fields as collapsed
+        if (seoFieldsContainer && seoFieldsToggleHeader && seoFieldsToggleIcon) {
+            seoFieldsToggleHeader.setAttribute('aria-expanded', 'false');
+            seoFieldsContainer.style.display = 'none';
+            seoFieldsToggleIcon.classList.remove('fa-chevron-up');
+            seoFieldsToggleIcon.classList.add('fa-chevron-down');
+        }
+        // Initialize conditional section fields visibility
+        toggleConditionalSectionDisplay(aboutSectionCheckbox, aboutUsFieldsContainer);
+        toggleConditionalSectionDisplay(testimonialsSectionCheckbox, testimonialsFieldsContainer);
+        toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer);
+        toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer);
     }
     
     function setupEventListeners() {
@@ -53,11 +93,64 @@ document.addEventListener('DOMContentLoaded', function() {
         progressSteps.forEach(step => {
             step.addEventListener('click', () => {
                 const stepNumber = parseInt(step.dataset.step);
-                if (stepNumber < currentStep) {
+                if (stepNumber < currentStep || validateCurrentStep() || stepNumber === currentStep) { 
                     goToStep(stepNumber);
                 }
             });
         });
+
+        // Add event listeners for download buttons
+        if (downloadHtmlBtn) {
+            downloadHtmlBtn.addEventListener('click', downloadHTML);
+        }
+        if (downloadCssBtn) {
+            downloadCssBtn.addEventListener('click', downloadCSS);
+        }
+
+        if (ctaSectionCheckbox) {
+            ctaSectionCheckbox.addEventListener('change', toggleCTAFieldsVisibility);
+        }
+
+        // Event listener for social media links toggle
+        if (socialLinksToggleHeader) {
+            socialLinksToggleHeader.addEventListener('click', toggleSocialLinksVisibility);
+            socialLinksToggleHeader.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault(); 
+                    toggleSocialLinksVisibility();
+                }
+            });
+        }
+
+        // Event listener for SEO meta fields toggle
+        if (seoFieldsToggleHeader) {
+            seoFieldsToggleHeader.addEventListener('click', toggleSEOFieldsVisibility);
+            seoFieldsToggleHeader.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleSEOFieldsVisibility();
+                }
+            });
+        }
+
+        // Event listeners for conditional page section checkboxes
+        if (aboutSectionCheckbox) {
+            aboutSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(aboutSectionCheckbox, aboutUsFieldsContainer));
+        }
+        if (testimonialsSectionCheckbox) {
+            testimonialsSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(testimonialsSectionCheckbox, testimonialsFieldsContainer));
+        }
+        if (pricingSectionCheckbox) {
+            pricingSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer));
+        }
+        if (faqSectionCheckbox) {
+            faqSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer));
+        }
+
+        // Event listener for adding pricing plans
+        if (addPricingPlanBtn) {
+            addPricingPlanBtn.addEventListener('click', addPricingPlanEntry);
+        }
     }
     
     function goToNextStep() {
@@ -197,6 +290,98 @@ document.addEventListener('DOMContentLoaded', function() {
     function isValidHex(hex) {
         return /^#?([0-9A-F]{3}){1,2}$/i.test(hex);
     }
+
+    function toggleCTAFieldsVisibility() {
+        if (ctaSectionCheckbox && ctaFieldsContainer) {
+            ctaFieldsContainer.style.display = ctaSectionCheckbox.checked ? 'block' : 'none';
+        }
+    }
+
+    function toggleSocialLinksVisibility() {
+        if (socialInputsContainer && socialLinksToggleHeader && socialLinksToggleIcon) {
+            const isExpanded = socialLinksToggleHeader.getAttribute('aria-expanded') === 'true';
+            socialLinksToggleHeader.setAttribute('aria-expanded', String(!isExpanded));
+            socialInputsContainer.style.display = isExpanded ? 'none' : 'block';
+            socialLinksToggleIcon.classList.toggle('fa-chevron-down', isExpanded);
+            socialLinksToggleIcon.classList.toggle('fa-chevron-up', !isExpanded);
+        }
+    }
+
+    function toggleSEOFieldsVisibility() {
+        if (seoFieldsContainer && seoFieldsToggleHeader && seoFieldsToggleIcon) {
+            const isExpanded = seoFieldsToggleHeader.getAttribute('aria-expanded') === 'true';
+            seoFieldsToggleHeader.setAttribute('aria-expanded', String(!isExpanded));
+            seoFieldsContainer.style.display = isExpanded ? 'none' : 'block';
+            seoFieldsToggleIcon.classList.toggle('fa-chevron-down', isExpanded);
+            seoFieldsToggleIcon.classList.toggle('fa-chevron-up', !isExpanded);
+        }
+    }
+
+    function toggleConditionalSectionDisplay(checkbox, container) {
+        if (checkbox && container) {
+            container.style.display = checkbox.checked ? 'block' : 'none';
+        }
+    }
+
+    function addPricingPlanEntry() {
+        if (!pricingPlansDynamicContainer) return;
+
+        const newEntry = document.createElement('div');
+        newEntry.classList.add('pricing-plan-entry');
+        newEntry.innerHTML = `
+            <div class="form-field">
+                <label for="pricing-plan-name-${pricingPlanIndex}">Plan/Product Name:</label>
+                <input type="text" id="pricing-plan-name-${pricingPlanIndex}" name="pricingPlans[${pricingPlanIndex}][name]" placeholder="e.g., Standard Plan, Premium Product">
+            </div>
+            <div class="form-field">
+                <label for="pricing-plan-price-${pricingPlanIndex}">Price:</label>
+                <input type="text" id="pricing-plan-price-${pricingPlanIndex}" name="pricingPlans[${pricingPlanIndex}][price]" placeholder="e.g., $49/month, $199">
+            </div>
+            <div class="form-field">
+                <label for="pricing-plan-features-${pricingPlanIndex}">Key Features (1-3, comma-separated):</label>
+                <input type="text" id="pricing-plan-features-${pricingPlanIndex}" name="pricingPlans[${pricingPlanIndex}][features]" placeholder="e.g., Feature A, Feature B, Feature C">
+            </div>
+            <button type="button" class="btn btn-remove-item" aria-label="Remove this pricing entry">
+                <i class="fas fa-trash-alt"></i> Remove
+            </button>
+        `;
+
+        pricingPlansDynamicContainer.appendChild(newEntry);
+
+        // Add event listener to the new remove button
+        const removeBtn = newEntry.querySelector('.btn-remove-item');
+        removeBtn.addEventListener('click', () => {
+            newEntry.remove();
+            // Optionally, re-index remaining items if necessary, though form submission will handle array notation correctly.
+        });
+
+        pricingPlanIndex++;
+    }
+
+    function formatCTAAction(value) {
+        const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        const phonePattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+        const urlPattern = /^(https?:\/\/|www\.)|[\w-]+\.[a-z]{2,}(\/\S*)?$/i;
+        const mailtoTelPattern = /^(mailto:|tel:)/i;
+
+        value = value.trim();
+
+        if (mailtoTelPattern.test(value)) {
+            return value;
+        }
+
+        if (emailPattern.test(value)) {
+            return `mailto:${value}`;
+        } else if (phonePattern.test(value)) {
+            return `tel:${value.replace(/[^0-9+]/g, '')}`;
+        } else if (urlPattern.test(value) && !value.startsWith('http://') && !value.startsWith('https://')) {
+            return `https://${value}`;
+        } else if (value.includes('.') && !value.includes(' ') && !value.startsWith('http')) {
+             return `https://${value}`;
+        }
+
+        return value;
+    }
     
     function toggleColorInputs() {
         const colorInputs = document.querySelectorAll('.color-inputs input');
@@ -210,146 +395,126 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function handleFormSubmit(e) {
         e.preventDefault();
-        
-        // Show generation overlay
-        generationOverlay.classList.add('active');
-        
-        // Simulate AI processing with step messages
-        const steps = [
-            'Analyzing your inputs...',
-            'Generating design concepts...',
-            'Creating page structure...',
-            'Optimizing content layout...',
-            'Finalizing your landing page...'
-        ];
-        
-        let currentStepIndex = 0;
-        
-        const stepInterval = setInterval(() => {
-            if (currentStepIndex < steps.length) {
-                generationStep.textContent = steps[currentStepIndex];
-                currentStepIndex++;
-            } else {
-                clearInterval(stepInterval);
-                
-                // Hide overlay after "generation" is complete
-                setTimeout(() => {
-                    generationOverlay.classList.remove('active');
-                    showPagePreview();
-                }, 800);
+        if (validateCurrentStep()) {
+            const ctaActionInput = document.getElementById('cta-action');
+            if (ctaActionInput) {
+                ctaActionInput.value = formatCTAAction(ctaActionInput.value);
             }
-        }, 1200);
+
+            const formData = new FormData(form);
+            
+            showPagePreview(formData);
+        } else {
+            console.log("Final step validation failed.");
+        }
     }
     
-    function showPagePreview() {
-        // Collect form data
-        const formData = new FormData(form);
-        const businessName = formData.get('businessName');
-        const businessType = formData.get('businessType');
-        const primaryColor = formData.get('primaryColorHex');
-        const secondaryColor = formData.get('secondaryColorHex');
+    function simulateAICodeGeneration(formData) {
+        console.log("Form Data Entries:");
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        let generatedHTML = '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">';
+        const projectName = formData.get('businessName') || 'My Awesome Project';
+        lastProjectName = projectName.toLowerCase().replace(/\s+/g, '-') || 'ai-generated-page';
+
+        generatedHTML += `    <title>${projectName}</title>\n    <link rel="stylesheet" href="${lastProjectName}.css">\n</head>\n<body>\n`;
         
-        // Create a simple preview HTML
-        const previewHTML = `
-            <style>
-                .preview-page {
-                    font-family: 'Inter', sans-serif;
-                    color: #333;
-                }
-                .preview-header {
-                    background-color: ${primaryColor};
-                    padding: 20px;
-                    color: white;
-                    text-align: center;
-                }
-                .preview-hero {
-                    background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor});
-                    color: white;
-                    padding: 60px 20px;
-                    text-align: center;
-                }
-                .preview-hero h1 {
-                    font-size: 2.5rem;
-                    margin-bottom: 20px;
-                }
-                .preview-features {
-                    padding: 50px 20px;
-                    text-align: center;
-                    background-color: #f8fafc;
-                }
-                .preview-features-grid {
-                    display: flex;
-                    justify-content: center;
-                    gap: 30px;
-                    margin-top: 40px;
-                }
-                .preview-feature {
-                    background: white;
-                    padding: 30px;
-                    border-radius: 10px;
-                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-                    max-width: 300px;
-                }
-                .preview-feature i {
-                    font-size: 2.5rem;
-                    color: ${primaryColor};
-                    margin-bottom: 15px;
-                }
-                .preview-button {
-                    display: inline-block;
-                    background: ${primaryColor};
-                    color: white;
-                    padding: 15px 30px;
-                    border-radius: 30px;
-                    text-decoration: none;
-                    font-weight: 600;
-                    margin-top: 25px;
-                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-                }
-                .preview-footer {
-                    background-color: #1e293b;
-                    color: white;
-                    text-align: center;
-                    padding: 30px 20px;
-                }
-            </style>
-            <div class="preview-page">
-                <div class="preview-header">
-                    <h2>${businessName}</h2>
-                </div>
-                <div class="preview-hero">
-                    <h1>Welcome to ${businessName}</h1>
-                    <p>The premier ${businessType.toLowerCase()} solution for your needs</p>
-                    <a href="#" class="preview-button">Get Started Now</a>
-                </div>
-                <div class="preview-features">
-                    <h2>Our Key Features</h2>
-                    <div class="preview-features-grid">
-                        <div class="preview-feature">
-                            <i class="fas fa-star"></i>
-                            <h3>Feature 1</h3>
-                            <p>A powerful benefit that helps your customers achieve their goals.</p>
-                        </div>
-                        <div class="preview-feature">
-                            <i class="fas fa-bolt"></i>
-                            <h3>Feature 2</h3>
-                            <p>Another important capability that sets your business apart.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="preview-footer">
-                    <p>© 2023 ${businessName}. All rights reserved.</p>
-                </div>
-            </div>
-        `;
+        let generatedCSS = `/* CSS for ${projectName} */\n`;
+        generatedCSS += 'body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f8ff; }\n';
+        generatedCSS += '.ai-generated-content { padding: 20px; border: 2px dashed #4361ee; background-color: #fff; margin: 20px; border-radius: 8px; }\n';
         
-        // Update preview container with the generated content
-        pagePreview.innerHTML = previewHTML;
+        const primaryColor = formData.get('primary-color') || '#4361ee';
+        const secondaryColor = formData.get('secondary-color') || '#3a86ff';
+
+        generatedCSS += `h1 { color: ${primaryColor}; }\n`;
+        generatedCSS += `p { color: #333; }\n`;
+        generatedCSS += `button { background-color: ${primaryColor}; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; }\n`;
+        generatedCSS += `button:hover { background-color: ${secondaryColor}; }\n`;
+
+        let previewHTML = '<style>\n';
+        previewHTML += 'body { --ai-primary-color: ' + primaryColor + '; --ai-secondary-color: ' + secondaryColor + '; }\n';
+        previewHTML += '.ai-generated-content { padding: 20px; border: 2px dashed var(--ai-primary-color); background-color: #f0f8ff; font-family: Arial, sans-serif; }\n';
+        previewHTML += '.ai-generated-content h1 { color: var(--ai-primary-color); }\n';
+        previewHTML += '.ai-generated-content p { color: #333; }\n';
+        previewHTML += '.ai-generated-content button { background-color: var(--ai-primary-color); color: white; padding: 10px 15px; border: none; border-radius: 5px; }\n';
+        previewHTML += '.ai-generated-content button:hover { background-color: var(--ai-secondary-color); }\n';
+        previewHTML += '</style>\n';
         
-        // Scroll to preview section
-        document.querySelector('.preview-section').scrollIntoView({
-            behavior: 'smooth'
-        });
+        previewHTML += '<div class="ai-generated-content">\n';
+        const businessDesc = formData.get('businessDescription') || 'A fantastic new landing page.';
+        const primaryGoal = formData.get('primaryGoal') || 'Achieve great things.';
+        
+        previewHTML += `    <h1>${projectName}</h1>\n`;
+        previewHTML += `    <p>${businessDesc}</p>\n`;
+        previewHTML += `    <p><strong>Main Goal:</strong> ${primaryGoal}</p>\n`;
+        previewHTML += '    <p>This is a basic structure generated by the AI based on your inputs.</p>\n';
+        previewHTML += '    <button>Call to Action</button>\n';
+        previewHTML += '</div>';
+
+        generatedHTML += previewHTML;
+        generatedHTML += '\n</body>\n</html>';
+        
+        lastGeneratedHTML = generatedHTML;
+        lastGeneratedCSS = generatedCSS;
+
+        return {
+            html: previewHTML,
+            css: generatedCSS
+        };
+    }
+
+    function showPagePreview(formData) {
+        generationOverlay.classList.add('active');
+        generationStep.textContent = 'Analyzing your inputs...';
+        if(pagePreview.firstChild && pagePreview.firstChild.nodeType === Node.TEXT_NODE) {
+            pagePreview.removeChild(pagePreview.firstChild);
+        }
+        if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'none';
+        
+        setTimeout(() => {
+            generationStep.textContent = 'Generating HTML & CSS...';
+            
+            const aiOutput = simulateAICodeGeneration(formData);
+
+            setTimeout(() => {
+                generationStep.textContent = 'Finalizing your page...';
+                setTimeout(() => {
+                    generationOverlay.classList.remove('active');
+                    pagePreview.innerHTML = aiOutput.html;
+                    if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'block';
+                    
+                    const previewSection = document.querySelector('.preview-section');
+                    if (previewSection) {
+                        previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 1000);
+            }, 1500);
+        }, 1000);
+    }
+
+    function downloadFile(filename, content, mimeType) {
+        const blob = new Blob([content], { type: mimeType });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+    }
+
+    function downloadHTML() {
+        if (lastGeneratedHTML) {
+            downloadFile(`${lastProjectName}.html`, lastGeneratedHTML, 'text/html');
+        }
+    }
+
+    function downloadCSS() {
+        if (lastGeneratedCSS) {
+            downloadFile(`${lastProjectName}.css`, lastGeneratedCSS, 'text/css');
+        }
     }
     
     // Add CSS animation for invalid inputs

@@ -102,6 +102,12 @@
                             <h3 class="step-title"><i class="fas fa-bullseye"></i> Goals & Audience</h3>
                             
                             <div class="form-field">
+                                <label for="business-description">Briefly describe your business (one sentence):</label>
+                                <textarea id="business-description" name="businessDescription" placeholder="e.g., We sell high-quality handmade crafts and offer personalization." rows="2" required></textarea>
+                                <span class="field-note">This helps the AI understand your core business.</span>
+                            </div>
+
+                            <div class="form-field">
                                 <label for="primary-goal">What's the main goal for your landing page?</label>
                                 <input type="text" id="primary-goal" name="primaryGoal" placeholder="e.g., Get sign-ups, Book appointments, Sell products" required>
                                 <span class="field-note">This will be your primary call-to-action (CTA).</span>
@@ -111,6 +117,19 @@
                                 <label for="target-audience">Who's your target audience?</label>
                                 <input type="text" id="target-audience" name="targetAudience" placeholder="e.g., Young Professionals, Families, Developers" required>
                                 <span class="field-note">Knowing your audience helps create targeted messaging.</span>
+                            </div>
+                            
+                            <div class="form-field">
+                                <label for="tone">Preferred Page Tone:</label>
+                                <select name="tone" id="tone">
+                                  <option value="friendly" selected>Friendly</option>
+                                  <option value="professional">Professional</option>
+                                  <option value="quirky">Quirky</option>
+                                  <option value="bold">Bold</option>
+                                  <option value="informative">Informative</option>
+                                  <option value="playful">Playful</option>
+                                </select>
+                                <span class="field-note">This helps the AI set the right copywriting style.</span>
                             </div>
                             
                             <div class="form-field">
@@ -146,6 +165,19 @@
                                 <label for="design-preferences">How would you describe your preferred design style?</label>
                                 <textarea id="design-preferences" name="designPreferences" placeholder="e.g., Modern, Minimalist, Vibrant, Playful, Professional, Techy" required></textarea>
                                 <span class="field-note">Use descriptive keywords to guide the AI's design choices.</span>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="font-style">Font Style Preference (Optional):</label>
+                                <select name="fontStyle" id="font-style">
+                                  <option value="">Let AI Choose / Default</option>
+                                  <option value="inter">Modern Sans (Inter)</option>
+                                  <option value="poppins">Minimalist (Poppins)</option>
+                                  <option value="playfair">Elegant Serif (Playfair Display)</option>
+                                  <option value="roboto">Classic Sans (Roboto)</option>
+                                  <option value="lato">Friendly Sans (Lato)</option>
+                                </select>
+                                <span class="field-note">Select a font style or let the AI decide.</span>
                             </div>
                             
                             <div class="form-field color-selection">
@@ -189,7 +221,7 @@
                         
                         <!-- Step 4: Content Sections -->
                         <div class="form-step" data-step="4">
-                            <h3 class="step-title"><i class="fas fa-layer-group"></i> Page Sections</h3>
+                            <h3 class="step-title"><i class="fas fa-layer-group"></i> Page Sections & Extras</h3>
                             
                             <div class="form-field">
                                 <label>Which sections would you like to include?</label>
@@ -210,28 +242,28 @@
                                     </div>
                                     <div class="section-option">
                                         <label class="checkbox-container">
-                                            <input type="checkbox" name="sections[]" value="about">
+                                            <input type="checkbox" name="sections[]" value="about" id="about-section-checkbox">
                                             <span class="checkmark"></span>
                                             <span class="section-name"><i class="fas fa-info-circle"></i> About Us</span>
                                         </label>
                                     </div>
                                     <div class="section-option">
                                         <label class="checkbox-container">
-                                            <input type="checkbox" name="sections[]" value="testimonials">
+                                            <input type="checkbox" name="sections[]" value="testimonials" id="testimonials-section-checkbox">
                                             <span class="checkmark"></span>
                                             <span class="section-name"><i class="fas fa-quote-right"></i> Testimonials</span>
                                         </label>
                                     </div>
                                     <div class="section-option">
                                         <label class="checkbox-container">
-                                            <input type="checkbox" name="sections[]" value="pricing">
+                                            <input type="checkbox" name="sections[]" value="pricing" id="pricing-section-checkbox">
                                             <span class="checkmark"></span>
                                             <span class="section-name"><i class="fas fa-tag"></i> Pricing Table</span>
                                         </label>
                                     </div>
                                     <div class="section-option">
                                         <label class="checkbox-container">
-                                            <input type="checkbox" name="sections[]" value="faq">
+                                            <input type="checkbox" name="sections[]" value="faq" id="faq-section-checkbox">
                                             <span class="checkmark"></span>
                                             <span class="section-name"><i class="fas fa-question-circle"></i> FAQ</span>
                                         </label>
@@ -245,13 +277,129 @@
                                     </div>
                                     <div class="section-option">
                                         <label class="checkbox-container">
-                                            <input type="checkbox" name="sections[]" value="cta" checked>
+                                            <input type="checkbox" name="sections[]" value="cta" id="cta-section-checkbox">
                                             <span class="checkmark"></span>
                                             <span class="section-name"><i class="fas fa-bullhorn"></i> Call to Action</span>
                                         </label>
                                     </div>
                                 </div>
                                 <span class="field-note">Select the sections you want to include, or let AI suggest based on your goals.</span>
+                            </div>
+
+                            <!-- Conditional "About Us" Fields -->
+                            <div id="about-us-fields-container" class="conditional-fields-container" style="display: none;">
+                                <h4 class="conditional-section-title"><i class="fas fa-info-circle"></i> About Us Content</h4>
+                                <div class="form-field">
+                                    <label for="about-us-snippet">Brief "About Us" Snippet (1-2 sentences):</label>
+                                    <textarea id="about-us-snippet" name="aboutUsSnippet" placeholder="e.g., Founded in 2024, we're passionate about..." rows="2"></textarea>
+                                    <span class="field-note">This will appear in your 'About Us' section. You can also use the main business description.</span>
+                                </div>
+                            </div>
+
+                            <!-- Conditional "Testimonials" Fields -->
+                            <div id="testimonials-fields-container" class="conditional-fields-container" style="display: none;">
+                                <h4 class="conditional-section-title"><i class="fas fa-quote-right"></i> Add a Testimonial</h4>
+                                <div class="form-field">
+                                    <label for="testimonial-text-1">Testimonial Text:</label>
+                                    <textarea id="testimonial-text-1" name="testimonials[0][text]" placeholder="e.g., This service is amazing! It helped my business grow." rows="3"></textarea>
+                                </div>
+                                <div class="form-field">
+                                    <label for="testimonial-author-1">Author Name:</label>
+                                    <input type="text" id="testimonial-author-1" name="testimonials[0][author]" placeholder="e.g., Jane Doe">
+                                </div>
+                                <div class="form-field">
+                                    <label for="testimonial-title-1">Author Title/Company (Optional):</label>
+                                    <input type="text" id="testimonial-title-1" name="testimonials[0][title]" placeholder="e.g., CEO, Awesome Inc.">
+                                </div>
+                                <!-- Add button for more testimonials can be added here later -->
+                            </div>
+
+                            <!-- Conditional "Pricing Table" Fields -->
+                            <div id="pricing-fields-container" class="conditional-fields-container" style="display: none;">
+                                <h4 class="conditional-section-title"><i class="fas fa-tag"></i> Pricing Plan Details</h4>
+                                <div id="pricing-plans-dynamic-container">
+                                    <div class="pricing-plan-entry"> <!-- Entry 0 -->
+                                        <div class="form-field">
+                                            <label for="pricing-plan-name-0">Plan/Product Name:</label>
+                                            <input type="text" id="pricing-plan-name-0" name="pricingPlans[0][name]" placeholder="e.g., Basic Plan, Pro Product">
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="pricing-plan-price-0">Price:</label>
+                                            <input type="text" id="pricing-plan-price-0" name="pricingPlans[0][price]" placeholder="e.g., $19/month, $99">
+                                        </div>
+                                        <div class="form-field">
+                                            <label for="pricing-plan-features-0">Key Features (1-3, comma-separated):</label>
+                                            <input type="text" id="pricing-plan-features-0" name="pricingPlans[0][features]" placeholder="e.g., Feature 1, Feature 2, Feature 3">
+                                        </div>
+                                        <!-- No remove button for the first plan by default -->
+                                    </div>
+                                </div>
+                                <button type="button" id="add-pricing-plan-btn" class="btn btn-outline btn-add-more" aria-label="Add another pricing entry">
+                                    <i class="fas fa-plus"></i> Add Another
+                                </button>
+                            </div>
+
+                            <!-- Conditional "FAQ" Fields -->
+                            <div id="faq-fields-container" class="conditional-fields-container" style="display: none;">
+                                <h4 class="conditional-section-title"><i class="fas fa-question-circle"></i> Add an FAQ</h4>
+                                <div class="form-field">
+                                    <label for="faq-question-1">Question:</label>
+                                    <input type="text" id="faq-question-1" name="faqs[0][question]" placeholder="e.g., What is your return policy?">
+                                </div>
+                                <div class="form-field">
+                                    <label for="faq-answer-1">Answer:</label>
+                                    <textarea id="faq-answer-1" name="faqs[0][answer]" placeholder="e.g., We offer a 30-day return policy..." rows="2"></textarea>
+                                </div>
+                                <!-- Add button for more FAQs can be added here later -->
+                            </div>
+
+                            <!-- CTA fields moved here, initially hidden -->
+                            <div id="cta-fields-container" style="display: none;">
+                                <div class="form-field">
+                                    <label for="cta-text">Primary Call-to-Action (CTA) Button Text:</label>
+                                    <input type="text" id="cta-text" name="ctaText" placeholder="e.g., Book Now, Start Free Trial">
+                                    <span class="field-note">Text for your main CTA button.</span>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="cta-action">What should the Call-to-Action button do?</label>
+                                    <input type="text" id="cta-action" name="ctaAction" placeholder="e.g., your@email.com, https://yourlink.com, or 1234567890">
+                                    <span class="field-note">Enter an email, a web address (URL), or a phone number. We'll format it correctly.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <div class="toggle-header" id="social-links-toggle-header" role="button" tabindex="0" aria-expanded="false" aria-controls="social-inputs-actual-container">
+                                    <label class="toggle-label" id="social-links-toggle-label">Social Media Links (Optional)</label>
+                                    <i class="fas fa-chevron-down toggle-icon"></i>
+                                </div>
+                                <div class="social-inputs-container" id="social-inputs-actual-container" style="display: none;">
+                                    <input type="url" name="socials[instagram]" placeholder="Instagram URL (e.g., https://instagram.com/yourprofile)">
+                                    <input type="url" name="socials[linkedin]" placeholder="LinkedIn URL (e.g., https://linkedin.com/in/yourprofile)">
+                                    <input type="url" name="socials[twitter]" placeholder="X / Twitter URL (e.g., https://x.com/yourprofile)">
+                                    <input type="url" name="socials[facebook]" placeholder="Facebook URL (e.g., https://facebook.com/yourpage)">
+                                </div>
+                                <span class="field-note">Provide links to display social icons on your page.</span>
+                            </div>
+
+                            <div class="form-field">
+                                <div class="toggle-header" id="seo-fields-toggle-header" role="button" tabindex="0" aria-expanded="false" aria-controls="seo-fields-actual-container">
+                                    <label class="toggle-label" id="seo-fields-toggle-label">SEO Meta Tags (Optional)</label>
+                                    <i class="fas fa-chevron-down toggle-icon"></i>
+                                </div>
+                                <div id="seo-fields-actual-container" style="display: none;">
+                                    <div class="form-field">
+                                        <label for="meta-description">SEO Meta Description:</label>
+                                        <textarea id="meta-description" name="metaDescription" placeholder="Short description for search engines (approx. 155-160 characters)" rows="2"></textarea>
+                                        <span class="field-note">This helps search engines understand your page content.</span>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label for="meta-keywords">SEO Meta Keywords:</label>
+                                        <input type="text" id="meta-keywords" name="metaKeywords" placeholder="Comma-separated SEO keywords (e.g., landing page, ai builder, web design)">
+                                        <span class="field-note">Keywords help search engines categorize your page.</span>
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="form-navigation">
@@ -269,9 +417,14 @@
 
         <section class="preview-section section-transition">
             <div class="container">
-                <h2 class="section-title">Preview</h2>
-                <div id="page-preview" class="preview-container" style="background: #f0f2f5; border: 1px solid #e0e4e8; border-radius: var(--border-radius); padding: 30px; margin-top: 40px; min-height: 300px; display: flex; align-items: center; justify-content: center;">
-                    <p style="color: var(--gray-color); font-style: italic;">Your generated landing page will appear here.</p>
+                <h2 class="section-title">Preview Your AI-Generated Page</h2>
+                <div id="page-preview" class="preview-container" style="background: #f0f2f5; border: 1px solid #e0e4e8; border-radius: var(--border-radius); padding: 30px; margin-top: 40px; min-height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                    <!-- AI Generated Content will appear here -->
+                    <p style="color: #6c757d; font-size: 1.1rem;">Your generated page will appear here once you complete the questionnaire.</p>
+                </div>
+                <div class="download-buttons" style="text-align: center; margin-top: 30px; display: none;">
+                    <button id="download-html-btn" class="btn btn-primary" style="margin-right: 10px;"><i class="fas fa-download"></i> Download HTML</button>
+                    <button id="download-css-btn" class="btn btn-secondary"><i class="fas fa-download"></i> Download CSS</button>
                 </div>
             </div>
         </section>

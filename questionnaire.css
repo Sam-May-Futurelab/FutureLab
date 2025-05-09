@@ -233,6 +233,218 @@
     background-color: #1e293b;
 }
 
+/* Styling for select dropdowns to match other form fields */
+.form-field select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--input-border-color, #ced4da);
+    border-radius: var(--border-radius-sm, 4px);
+    background-color: var(--input-bg-color, #fff);
+    color: var(--text-color, #333);
+    font-size: 1rem;
+    line-height: 1.5;
+    appearance: none; /* Remove default arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E"); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 1em;
+    cursor: pointer;
+}
+
+.form-field select:focus {
+    border-color: var(--primary-color, #4361EE);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25); /* Focus glow similar to inputs */
+}
+
+/* Adjust icon position if there's an icon in the label */
+.form-field label i + select {
+    padding-left: 35px; /* If you plan to add icons next to select labels like text inputs */
+}
+
+/* Dark theme adjustments for select */
+[data-theme="dark"] .form-field select {
+    background-color: var(--dark-input-bg, #2d3748);
+    border-color: var(--dark-input-border, #4a5568);
+    color: var(--dark-text-color, #f7fafc);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23f7fafc' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E"); /* Custom arrow for dark theme */
+}
+
+[data-theme="dark"] .form-field select:focus {
+    border-color: var(--primary-color, #4361EE);
+    box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.35);
+}
+
+/* Styling for social media input fields */
+.social-inputs-container {
+    padding-top: 15px; /* Add some space when revealed */
+}
+
+.social-inputs-container input[type="url"] {
+    margin-bottom: 10px; /* Add space between social input fields */
+}
+
+.social-inputs-container input[type="url"]:last-child {
+    margin-bottom: 0; /* No margin for the last input in the container */
+}
+
+/* Ensure social inputs also get the standard input styling if not already covered */
+.form-field .social-inputs-container input[type="url"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--input-border-color, #ced4da);
+    border-radius: var(--border-radius-sm, 4px);
+    background-color: var(--input-bg-color, #fff);
+    color: var(--text-color, #333);
+    font-size: 1rem;
+    line-height: 1.5;
+    box-sizing: border-box; /* Ensure padding and border don't increase width */
+}
+
+.form-field .social-inputs-container input[type="url"]:focus {
+    border-color: var(--primary-color, #4361EE);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+}
+
+[data-theme="dark"] .form-field .social-inputs-container input[type="url"] {
+    background-color: var(--dark-input-bg, #2d3748);
+    border-color: var(--dark-input-border, #4a5568);
+    color: var(--dark-text-color, #f7fafc);
+}
+
+[data-theme="dark"] .form-field .social-inputs-container input[type="url"]:focus {
+    border-color: var(--primary-color, #4361EE);
+    box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.35);
+}
+
+/* Styles for conditional input sections */
+.conditional-fields-container {
+    background-color: #f8f9fa; /* Light background to differentiate */
+    border: 1px solid #e0e0e0; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Inner spacing */
+    margin-top: 15px; /* Space above the container */
+    margin-bottom: 20px; /* Space below the container */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
+}
+
+.conditional-section-title {
+    font-size: 1.1rem; /* Slightly larger than standard labels */
+    font-weight: 600; /* Bolder text */
+    color: #343a40; /* Darker color for the title */
+    margin-bottom: 15px; /* Space below the title */
+    padding-bottom: 10px; /* Space below the text, before the border */
+    border-bottom: 1px solid #ced4da; /* Separator line */
+    display: flex; /* Align icon and text */
+    align-items: center; /* Center items vertically */
+}
+
+.conditional-section-title i {
+    margin-right: 8px; /* Space between icon and text */
+    color: var(--primary-color, #4361EE); /* Use primary color for icon */
+}
+
+/* Styling for the remove button in dynamic entries */
+.btn-remove-item {
+    background-color: #dc3545; /* Red color for removal */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    margin-top: 10px; /* Space above the button */
+}
+
+.btn-remove-item i {
+    margin-right: 5px;
+}
+
+.btn-remove-item:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Styling for the add more button */
+.btn-add-more {
+    margin-top: 10px; /* Space above the button */
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    padding: 8px 15px; /* Adjust padding */
+    font-size: 0.95rem; /* Adjust font size */
+}
+
+.btn-add-more i {
+    margin-right: 6px; /* Space between icon and text */
+}
+
+/* Adjust spacing for pricing plan entries for better visual separation */
+.pricing-plan-entry {
+    padding: 15px;
+    border: 1px dashed #ccc;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    background-color: #fff; /* White background for each entry */
+}
+
+.pricing-plan-entry:last-child {
+    margin-bottom: 0; /* No bottom margin for the last entry before the "Add Another" button */
+}
+
+/* Styling for the toggle header */
+.toggle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0; /* Reduced padding as it's not a full input */
+    cursor: pointer;
+    border-bottom: 1px solid var(--input-border-color, #e2e8f0); /* Subtle separator */
+    margin-bottom: 0; /* Remove default form-field margin */
+}
+
+.dark-theme .toggle-header {
+    border-bottom-color: var(--dark-input-border, #334155);
+}
+
+.toggle-header:hover,
+.toggle-header:focus {
+    background-color: rgba(0,0,0,0.02); /* Slight hover/focus feedback */
+}
+
+.dark-theme .toggle-header:hover,
+.dark-theme .toggle-header:focus {
+    background-color: rgba(255,255,255,0.03);
+}
+
+.toggle-label {
+    font-weight: 600;
+    color: var(--dark-color);
+    font-size: 1.05rem;
+    /* No margin-bottom needed as it's part of flex */
+}
+
+.dark-theme .toggle-label {
+    color: #e2e8f0;
+}
+
+.toggle-icon {
+    font-size: 0.9em;
+    color: var(--gray-color);
+    transition: transform 0.3s ease;
+}
+
+.dark-theme .toggle-icon {
+    color: #94a3b8;
+}
+
+.toggle-header[aria-expanded="true"] .toggle-icon {
+    transform: rotate(180deg);
+}
+
 .field-note {
     display: block;
     margin-top: 8px;

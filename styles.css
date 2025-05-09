@@ -1252,7 +1252,7 @@ body:not(.dark-theme) .cookie-banner {
 
 /* Hero Section */
 .hero {
-    padding: 180px 0 120px;
+    padding: 150px 0 120px;
     background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%);
     position: relative;
     overflow: hidden;
@@ -1627,8 +1627,8 @@ body:not(.dark-theme) .cookie-banner {
 /* Mobile adjustments for hero section */
 @media (max-width: 768px) {
     .hero {
-        padding-top: 60px;    /* Reduced top padding */
-        padding-bottom: 40px; /* Reduced bottom padding */
+        padding-top: 30px;    /* Reduced top padding from previous value */
+        padding-bottom: 40px; /* Kept bottom padding or adjust as needed */
     }
 
     .hero .container {
@@ -1638,14 +1638,10 @@ body:not(.dark-theme) .cookie-banner {
 
     .hero-content {
         text-align: center; /* Center text when stacked */
-        /* Consider order if text should be above/below orb */
     }
 
     #hero-orb-container {
         margin: 20px auto 0 auto; /* Adjust top margin and center orb */
-        /* If the orb is too large on mobile, you might want to reduce its size here too: */
-        /* width: 300px; */
-        /* height: 300px; */
     }
 
     .hero h1 {
