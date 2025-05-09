@@ -40,7 +40,7 @@ Example of expected JSON output:
   "html": "<!DOCTYPE html><html><head><title>My Creative Page</title></head><body><div class=\\\"hero\\\"><h1 class=\\\"main-title\\\">Welcome</h1></div></body></html>",
   "css": "body { font-family: 'Poppins', sans-serif; background-color: #1a1a1a; color: #f0f0f0; } .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; } .main-title { font-size: 5rem; font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }"
 }
-Your response MUST be only the JSON object, with no other text before or after it. Ensure the CSS is self-contained and does not rely on external files.`
+Your response MUST be ONLY the JSON object itself, without any surrounding text, comments, or markdown formatting such as \`\`\`json ... \`\`\`. Ensure the CSS is self-contained and does not rely on external files.`
                 },
                 {
                     role: "user",
@@ -100,17 +100,129 @@ function constructPrompt(data) {
 
     // Add business type specific creative prompts
     if (data.businessType) {
-        const businessTypeLower = data.businessType.toLowerCase();
-        if (businessTypeLower.includes("bakery")) {
-            prompt += `\nThis is a bakery. Emphasize a warm, inviting, and artisanal feel. Include references to fresh, handcrafted goods (breads, pastries, cakes), quality ingredients (perhaps local or organic), and the delightful sensory experience (smell of baking, cozy atmosphere). Suggest creative names for featured products (e.g., "Sunrise Sourdough Loaf," "Velvet Chocolate Croissant," "Homestyle Apple Crumble Pie"). Use imagery and language that evokes comfort, tradition, and deliciousness.\n`;
-        } else if (businessTypeLower.includes("tech") || businessTypeLower.includes("saas") || businessTypeLower.includes("software")) {
-            prompt += `\nThis is a tech/SaaS business. Focus on innovation, efficiency, and cutting-edge solutions. Highlight how the product/service solves a specific problem or improves the user's life/work. Use sleek, modern, and professional design elements. Incorporate strong calls to action for demos, free trials, or learning more. Use language that conveys expertise, forward-thinking, and reliability. Consider visuals that represent technology, data, or connectivity in an abstract or clean way.\n`;
-        } else if (businessTypeLower.includes("fitness") || businessTypeLower.includes("wellness") || businessTypeLower.includes("gym")) {
-            prompt += `\nThis is a fitness/wellness business. Inspire action and motivation. Focus on health benefits, transformation, and community. Use dynamic and energetic visuals. Highlight programs, classes, or unique selling propositions. Include testimonials or success stories if appropriate. Language should be empowering, supportive, and positive. Consider a design that feels clean, vibrant, and motivating.\n`;
-        } else if (businessTypeLower.includes("cafe") || businessTypeLower.includes("coffee shop")) {
-            prompt += `\nThis is a cafe/coffee shop. Create a cozy, welcoming, and community-focused atmosphere. Highlight the quality of coffee/tea, artisanal beverages, and food offerings (e.g., pastries, light meals). Mention the ambiance (e.g., good for working, meeting friends). Use warm and inviting visuals. Language should be friendly and relaxed. Consider featuring daily specials or loyalty programs.\n`;
+        const businessType = data.businessType; // No toLowerCase() here, use the direct value for switch
+        prompt += `\n--- Creative Brief for Industry: ${businessType} ---\n`;
+
+        switch (businessType) {
+            case 'bakery_cafe_coffee':
+                prompt += `Industry: Bakery/Cafe/Coffee Shop.
+Creative Direction: Emphasize a warm, inviting, and artisanal feel. Think cozy, handcrafted, and delicious.
+Visuals & Imagery: Suggest imagery of freshly baked goods (breads, pastries, cakes), steaming coffee, latte art, comfortable seating areas, rustic or charming decor.
+Key Themes: Freshness, quality ingredients (local/organic if applicable), sensory experience (smell of baking, taste of coffee), community hub, a place to relax or work.
+Language Style: Friendly, welcoming, descriptive (e.g., "Velvet Chocolate Croissant," "Sunrise Sourdough").
+Design Elements: Consider handwritten-style fonts, warm color palettes (browns, creams, oranges, muted greens), textures like wood or brick. Maybe a chalkboard menu style element.
+Example Elements: "Our Story," "Daily Specials," "Featured Brews/Bakes," "Visit Us."\n`;
+                break;
+            case 'saas_software_tech':
+                prompt += `Industry: SaaS/Software/Tech.
+Creative Direction: Focus on innovation, efficiency, and cutting-edge solutions. Think sleek, modern, and intelligent.
+Visuals & Imagery: Abstract representations of data, networks, code; clean product mockups (desktop/mobile); icons representing features; user interface snippets.
+Key Themes: Problem-solving, automation, productivity, data insights, security, scalability, future-forward.
+Language Style: Professional, clear, concise, benefit-driven (e.g., "Streamline Your Workflow," "Unlock Potential").
+Design Elements: Clean lines, sans-serif fonts, cool or vibrant tech color palettes (blues, purples, greens, often with a bright accent), subtle animations or micro-interactions, clear iconography. Glassmorphism or neumorphism could be very effective here.
+Example Elements: "Features," "How it Works," "Pricing," "Request a Demo," "Integrations."\n`;
+                break;
+            case 'fitness_wellness_gym':
+                prompt += `Industry: Fitness/Wellness/Gym.
+Creative Direction: Inspire action, motivation, and transformation. Think energetic, healthy, and supportive.
+Visuals & Imagery: People actively working out (diverse representation), healthy food, serene wellness scenes, fitness equipment, progress charts (abstractly).
+Key Themes: Health benefits, personal growth, strength, endurance, community, achieving goals, mind-body balance.
+Language Style: Empowering, motivational, positive, active verbs (e.g., "Unleash Your Strength," "Transform Your Life").
+Design Elements: Dynamic layouts, bold typography, vibrant and energetic color palettes (or calming for wellness), high-quality photography/videography.
+Example Elements: "Our Programs," "Class Schedule," "Trainer Profiles," "Success Stories," "Join Now."\n`;
+                break;
+            case 'ecommerce_retail':
+                prompt += `Industry: E-commerce/Retail.
+Creative Direction: Showcase products attractively and make the shopping experience seamless and enjoyable. Think stylish, user-friendly, and desirable.
+Visuals & Imagery: High-quality product photos (multiple angles, lifestyle shots), collections, special offers, customer reviews with photos.
+Key Themes: Product appeal, quality, exclusivity (if applicable), ease of purchase, customer satisfaction, latest trends/arrivals.
+Language Style: Persuasive, descriptive, benefit-oriented, clear calls to action (e.g., "Shop Now," "Add to Cart," "Limited Stock").
+Design Elements: Grid layouts for products, clear navigation, prominent search bar, trust signals (payment icons, security badges), appealing color schemes that match the brand/product type.
+Example Elements: "New Arrivals," "Best Sellers," "Shop by Category," "Sale," "Customer Reviews."\n`;
+                break;
+            case 'consulting_agency':
+                prompt += `Industry: Consulting/Agency (e.g., Marketing, Business, Design).
+Creative Direction: Convey expertise, professionalism, and results-driven solutions. Think authoritative, strategic, and trustworthy.
+Visuals & Imagery: Professional team photos, case study highlights (graphs, results), abstract representations of strategy or growth, client logos (if permissible).
+Key Themes: Expertise, problem-solving, achieving client goals, partnership, innovation, tailored solutions.
+Language Style: Confident, authoritative, clear, value-focused (e.g., "Drive Growth," "Expert Solutions," "Our Process").
+Design Elements: Clean and structured layouts, professional fonts, sophisticated color palettes (blues, grays, often with a strong accent color), clear calls to action for consultation or quotes.
+Example Elements: "Services," "Case Studies," "Our Team," "Client Testimonials," "Contact Us for a Quote."\n`;
+                break;
+            case 'restaurant_food_service':
+                prompt += `Industry: Restaurant/Food Service (distinct from cafe, could be fine dining, casual, etc.).
+Creative Direction: Make the food irresistible and the dining experience appealing. Think delicious, atmospheric, and memorable.
+Visuals & Imagery: Mouth-watering photos of dishes, ambiance shots of the restaurant interior/exterior, happy diners, chefs in action.
+Key Themes: Culinary excellence, fresh ingredients, unique flavors, dining experience, ambiance, special occasions.
+Language Style: Evocative, descriptive, appetizing (e.g., "Savor the Flavor," "An Unforgettable Meal").
+Design Elements: High-quality imagery is key. Font choices and colors should match the restaurant's style (e.g., elegant for fine dining, rustic for a gastropub). Online reservation or ordering CTAs should be prominent.
+Example Elements: "Our Menu," "Reservations," "Gallery," "Events," "Chef's Specials."\n`;
+                break;
+            case 'real_estate':
+                prompt += `Industry: Real Estate.
+Creative Direction: Showcase properties effectively and build trust with potential buyers/sellers. Think professional, aspirational, and informative.
+Visuals & Imagery: High-quality photos and videos of properties (interior, exterior, aerial), neighborhood shots, agent photos. Interactive maps can be a plus.
+Key Themes: Dream homes, investment opportunities, neighborhood expertise, seamless transactions, finding the perfect place.
+Language Style: Professional, inviting, descriptive, trustworthy (e.g., "Find Your Dream Home," "Expert Real Estate Services").
+Design Elements: Clean layouts, easy-to-use property search filters, prominent agent contact information, map integrations.
+Example Elements: "Featured Listings," "Search Properties," "Agent Profiles," "Selling Guides," "Neighborhood Info."\n`;
+                break;
+            case 'non_profit_charity':
+                prompt += `Industry: Non-Profit/Charity.
+Creative Direction: Evoke empathy, inspire action, and clearly communicate the mission and impact. Think compassionate, urgent, and hopeful.
+Visuals & Imagery: Powerful images showing the cause, beneficiaries, volunteers in action. Impact statistics visualized.
+Key Themes: Mission-driven, making a difference, community impact, transparency, hope, call for support.
+Language Style: Emotive, sincere, urgent, hopeful (e.g., "Join Us to Make a Difference," "Your Support Matters").
+Design Elements: Clear calls to donate or get involved, storytelling through visuals and text, impact numbers highlighted. Colors can vary based on the cause but often aim for trust and positivity.
+Example Elements: "Our Mission," "How We Help," "Get Involved," "Donate," "Success Stories/Impact."\n`;
+                break;
+            case 'personal_portfolio_cv':
+                prompt += `Industry: Personal Portfolio/CV/Resume.
+Creative Direction: Showcase skills, experience, and personality in a professional and engaging way. Think unique, skilled, and hireable.
+Visuals & Imagery: Professional headshot, examples of work (screenshots, links, embedded content), icons representing skills.
+Key Themes: Personal brand, expertise, accomplishments, creativity, career journey, availability for hire/collaboration.
+Language Style: Confident, professional, concise, authentic voice.
+Design Elements: Can range from minimalist to highly creative depending on the profession. Clear navigation to sections like "About Me," "Portfolio/Work," "Skills," "Contact."
+Example Elements: "My Work," "Skills," "Experience," "Testimonials (from clients/colleagues)," "Contact Me."\n`;
+                break;
+            case 'event_conference':
+                prompt += `Industry: Event/Conference.
+Creative Direction: Generate excitement, provide key information, and drive registrations or attendance. Think engaging, informative, and urgent.
+Visuals & Imagery: Photos/videos from past events, speaker headshots, venue shots, branding elements of the event.
+Key Themes: Learning, networking, excitement, key speakers/topics, schedule, location, value proposition of attending.
+Language Style: Enthusiastic, informative, clear calls to action (e.g., "Register Now," "View Schedule," "Become a Speaker").
+Design Elements: Countdown timers, speaker showcases, schedule layouts, sponsor logos, clear registration buttons. Branding should be prominent.
+Example Elements: "About the Event," "Speakers," "Schedule," "Venue," "Sponsors," "Register/Tickets."\n`;
+                break;
+            case 'travel_tourism':
+                prompt += `Industry: Travel/Tourism.
+Creative Direction: Inspire wanderlust and make booking or planning easy. Think adventurous, beautiful, and enticing.
+Visuals & Imagery: Stunning destination photos/videos, happy travelers, maps, unique experiences.
+Key Themes: Adventure, relaxation, discovery, dream destinations, cultural experiences, ease of booking.
+Language Style: Evocative, inspiring, descriptive (e.g., "Discover Paradise," "Your Next Adventure Awaits").
+Design Elements: Visually rich, high-quality imagery is paramount. Easy search for destinations/packages, special offers, testimonials.
+Example Elements: "Destinations," "Packages," "Travel Guides," "Special Offers," "Book Now."\n`;
+                break;
+            case 'education_courses':
+                prompt += `Industry: Education/Online Courses.
+Creative Direction: Highlight learning opportunities, expertise of instructors, and benefits of enrollment. Think knowledgeable, accessible, and empowering.
+Visuals & Imagery: Instructors, students learning, course materials (abstractly), certificates of completion.
+Key Themes: Knowledge acquisition, skill development, career advancement, expert instruction, flexible learning.
+Language Style: Informative, encouraging, clear, benefit-oriented (e.g., "Master New Skills," "Learn from Experts").
+Design Elements: Clear course catalogs, instructor bios, student testimonials, enrollment CTAs. Structured layout for information.
+Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll Now."\n`;
+                break;
+            default: // This will apply to "other" or any type not specifically listed
+                prompt += `Industry: ${businessType}.
+Creative Direction: User has specified this as the industry. Adapt the design to be highly creative, modern, and relevant to this specific field.
+Visuals & Imagery: Choose visuals that strongly resonate with the core themes of this industry.
+Key Themes: Focus on the unique selling propositions and target audience needs for this industry.
+Language Style: Tailor the language to the typical communication style of this industry.
+Design Elements: Select design elements (colors, fonts, layout styles) that are considered contemporary and appealing within this industry.
+Example Elements: Ensure standard sections like Hero, About, Services/Products, and Contact are considered, adapted to the industry.
+If the user provided a custom business type for "Other", be very specific and creative for that custom type. For example, if they entered "Artisanal Spacecraft Miniatures", the design should be whimsical, detailed, and perhaps a bit retro-futuristic. If they entered "Sustainable Alpaca Wool Socks", it should be earthy, cozy, and eco-conscious.\n`;
         }
-        // Add more else-if blocks for other business types here
+        prompt += `--- End Creative Brief ---\n`;
     }
 
     if (data.aiColors === 'on') { // Frontend sends 'on' for checkbox
