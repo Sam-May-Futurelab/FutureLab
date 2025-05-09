@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/generate-page.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
+}
