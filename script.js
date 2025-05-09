@@ -257,3 +257,50 @@ if (document.readyState === 'loading') {
 } else {
     initializePageScripts();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const particleContainer = document.querySelector('.hero-orb-particles');
+    if (particleContainer) {
+        createDynamicOrbParticles(particleContainer, 35); // Generate 35 particles
+    }
+});
+
+function createDynamicOrbParticles(container, count = 75) { // Increased count
+    if (!container) return;
+    container.innerHTML = ''; // Clear any existing particles
+
+    const radius = 14; // vmin, for particle starting position on the orb surface
+
+    for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('orb-particle');
+
+        const size = Math.random() * 4 + 2; // Particle size 2px to 6px
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        const animationDuration = Math.random() * 3 + 2.5; // Duration between 2.5s and 5.5s
+        const animationDelay = Math.random() * 4.5;    // Delay up to 4.5s
+        
+        particle.style.animationDuration = `${animationDuration}s`;
+        particle.style.animationDelay = `-${animationDelay}s`; // Negative delay for staggered start
+        particle.style.animationIterationCount = 'infinite';
+        particle.style.animationTimingFunction = 'linear';
+        // animation-name is set by the .orb-particle class in CSS to 'particlePath'
+
+        // Calculate spherical coordinates for a point on the orb's surface
+        const theta = Math.random() * 2 * Math.PI; // Angle around Z-axis (0 to 2PI)
+        const phi = Math.acos((2 * Math.random()) - 1); // Angle from Z-axis (0 to PI) - for uniform distribution
+
+        // Convert spherical to Cartesian coordinates for CSS offsets
+        const offsetX = radius * Math.sin(phi) * Math.cos(theta);
+        const offsetY = radius * Math.sin(phi) * Math.sin(theta);
+        const offsetZ = radius * Math.cos(phi);
+
+        particle.style.setProperty('--offset-x', `${offsetX}vmin`);
+        particle.style.setProperty('--offset-y', `${offsetY}vmin`);
+        particle.style.setProperty('--offset-z', `${offsetZ}vmin`);
+
+        container.appendChild(particle);
+    }
+}

@@ -181,7 +181,7 @@
   .hero .clients {
     opacity: 0;
     animation: mobile-fade-in 1s ease forwards 2s;
-    margin-bottom: 100px; /* Add space below client logos for floating icons */
+    margin-bottom: -140px; /* MODIFIED: Was 100px - Add space below client logos for floating icons */
     position: relative; /* Create positioning context for icons */
   }
   
@@ -241,28 +241,28 @@
   
   /* Reposition icons to the space below client logos */
   .mobile-icon-code {
-    bottom: -80px; /* Position below the client logos */
+    bottom: -20px; /* MODIFIED: Was -80px - Position below the client logos */
     right: 25%;
     animation-delay: 0s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(220,240,255,0.95));
   }
   
   .mobile-icon-mobile {
-    bottom: -60px;
+    bottom: 0px; /* MODIFIED: Was -60px */
     left: 20%;
     animation-delay: 1s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(220,255,240,0.95));
   }
   
   .mobile-icon-design {
-    bottom: -90px;
+    bottom: -30px; /* MODIFIED: Was -90px */
     left: 55%;
     animation-delay: 2s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,220,255,0.95));
   }
   
   .mobile-icon-web {
-    bottom: -70px;
+    bottom: -10px; /* MODIFIED: Was -70px */
     right: 15%;
     animation-delay: 3s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,240,220,0.95));
