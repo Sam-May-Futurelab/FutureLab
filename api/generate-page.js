@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         // console.log("Constructed Prompt for OpenAI:", prompt);
 
         const aiResponse = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo", // Using a specific version, you can use "gpt-3.5-turbo" or "gpt-4"
+            model: "gpt-4", // Using a specific version, you can use "gpt-3.5-turbo" or "gpt-4"
             messages: [
                 {
                     role: "system",
