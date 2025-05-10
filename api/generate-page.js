@@ -39,8 +39,9 @@ Key Design Principles to Adhere To:\r
 4.  **Compelling CTAs:** Call to Action (CTA) buttons and links must be visually distinct, compelling, and strategically placed. Use contrasting colors, clear button-like styling, and action-oriented text.\r
 5.  **Typography Excellence:** Pay close attention to typographic details: ensure appropriate line height for readability, good contrast between text and background, and a consistent typographic scale (e.g., clear differentiation between H1, H2, H3, and body text).\r
 6.  **Iconography as Placeholders:** If the design would benefit from illustrative visuals in sections (e.g., for features, services, or informational blurbs) and the user has not provided specific images for these, use thematic placeholder icons. Prefer a consistent icon style (e.g., line icons, filled icons). You can use Font Awesome classes (e.g., <i class="fas fa-star"></i>) or simple, inline SVGs if they are not too complex. If using Font Awesome, assume it's available or provide necessary CSS imports for it (e.g., @import url(...); within the CSS). Clearly indicate if an icon is a placeholder that the user might want to replace with a custom image.\r
-7.  **Professional Footer:** If a simple footer is included (e.g., for copyright, minimal links, typically below the 'Contact Us' section), ensure it is unobtrusive but professionally styled and complements the overall design.\r
+7.  **Mandatory Professional Footer:** A footer section MUST always be included at the very end of the page. It should contain copyright information (dynamically using the business name and current year: © YYYY Business Name), and integrate social media links (using placeholders if none are provided by the user, as per social media link instructions). The footer should be unobtrusive but professionally styled and complement the overall design. It should appear after all other content sections, including the Contact Us section if present.\r
 8.  **'Wow Factor':** Aim to incorporate at least one unique design element or 'wow factor' that makes the page memorable and delightful, while remaining functional and aligned with the brand's identity.\r
+9.  **Support for In-Page Editing:** To facilitate client-side text editing, for all user-facing text content (headings, paragraphs, list items, button text, link text, labels, etc.), assign a unique \`data-editable-id\` attribute (e.g., \`data-editable-id="hero-title"\`, \`data-editable-id="feature-1-text"\`, \`data-editable-id="contact-submit-button"\`) to the innermost HTML element that directly wraps the text. Ensure these IDs are unique across the page and semantically named if possible (e.g., sectionName-elementType-instanceNumber).\r
 \r
 If the user provides specific colors, use them. If they ask for AI-selected colors, choose a complementary and modern palette that enhances the creative direction.\r
 If a font style is specified, use it. Otherwise, select a font that aligns with a modern and creative aesthetic. Import web fonts if necessary (e.g., from Google Fonts) directly within the CSS.\r
@@ -444,6 +445,14 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
         prompt += `The "Features/Benefits" section was not explicitly requested. Only include it if the "Must-Have Elements/Keywords" (if provided and relevant) strongly suggest a standalone features list and it aligns with the overall creative direction. If so, follow the guidelines above for content and styling.\n`;
     }
     prompt += `--- End Features/Benefits Section ---\n`;
+
+    prompt += `\n--- Footer Section ---\n`;
+    prompt += `A footer section MUST be generated at the very end of the HTML body, after all other content including the Contact Us section (if present).\n`;
+    prompt += `The footer must include:\n`;
+    prompt += `  - Copyright Information: Display a copyright notice, e.g., "© ${new Date().getFullYear()} ${data.businessName || 'Your Business Name'}". Use the actual current year and the provided business name.\n`;
+    prompt += `  - Social Media Links: Integrate social media links based on the earlier "Social Media Links" section instructions. If no specific links are provided by the user, include placeholders for common platforms or a message indicating where to add them, ensuring the footer still allocates space for them or notes their absence gracefully.\n`;
+    prompt += `Style the footer to be professional, unobtrusive, and consistent with the overall page design. It should clearly delineate the end of the page content.\n`;
+    prompt += `--- End Footer Section ---\n`;
 
     prompt += `\n--- Core Creative Synthesis ---\n`;
     prompt += `Holistically synthesize the following aspects to inform ALL design decisions. The aim is a cohesive, persuasive, and highly creative vision that deeply reflects the user's intent, not just a list of features:\n`;
