@@ -97,14 +97,12 @@ function constructPrompt(data) {
     // Logo and Header Instructions
     prompt += `\n--- Header Configuration ---\n`;
     if (data.logoData) {
-        prompt += `Logo: An image is provided (Base64 encoded). Include this as an <img> tag in the header. The logo image MUST be clickable and link to the homepage (e.g., wrap the <img> tag with <a href="/"> or <a href="index.html">).\n`;
-        prompt += `   - Image Data (for src attribute): "${data.logoData}" (This is a Base64 string, use it directly in the src attribute like src="data:image/png;base64,...")\n`;
-        prompt += `   - Logo Alt Text: "${data.businessName || 'Logo'}"\n`;
+        prompt += `Logo: An image is provided (Base64 encoded). Include this as an <img> tag in the header. The logo image MUST be clickable and link to the homepage (e.g., wrap the <img> tag with <a href="/"> or <a href="index.html">). Apply a subtle and clean CSS hover animation to the logo image (e.g., slight scale up, subtle shadow, or opacity change) for a polished feel.\n`;
     } else {
-        prompt += `Logo: No image provided. Display the Business Name ("${data.businessName || 'My Brand'}") as text in the header. This business name text MUST be clickable and link to the homepage (e.g., wrap the text with <a href="/"> or <a href="index.html">).\n`;
-        prompt += `   - Style the business name text appropriately as a header logo (e.g., distinct font, size).\n`;
+        prompt += `Logo: No image provided. Display the Business Name ("${data.businessName || 'My Brand'}") as text in the header. This business name text MUST be clickable and link to the homepage (e.g., wrap the text with <a href="/"> or <a href="index.html">). Style the business name text appropriately as a header logo (e.g., distinct font, size). Apply a subtle and clean CSS hover animation to this text-based logo (e.g., slight text shadow change, underline effect, or color brightness change) for a polished feel.\n`;
     }
     prompt += `Header/Logo Position: ${data.logoPosition || 'left'}. Position the logo image (if provided) or the business name text (if no logo) accordingly in the header (e.g., align left, center, or right).\n`;
+
     prompt += `--- End Header Configuration ---\n`;
 
     prompt += `Business Description: ${data.businessDescription || 'N/A'}\n`;
@@ -294,7 +292,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     // FAQs Section
     prompt += `\n--- FAQs Section ---\n`;
     if (data.faqs && Array.isArray(data.faqs) && data.faqs.some(f => f.question && f.question.trim() !== '' && f.answer && f.answer.trim() !== '')) {
-        prompt += `The user has provided FAQs. Include a dedicated "Frequently Asked Questions" (or similar) section. For each FAQ, display the question and its corresponding answer. This section MUST be styled using an accordion/dropdown pattern where the answer is hidden by default and REVEALS SMOOTHLY ON CLICK (not on hover). Include ALL provided FAQs:\n`;
+        prompt += `The user has provided FAQs. Include a dedicated "Frequently Asked Questions" (or similar) section. For each FAQ, display the question directly above its corresponding answer, making both visible by default. Style each Q&A pair as a distinct visual block (e.g., like a list item or a card). Apply a subtle and clean CSS hover animation to each FAQ item (e.g., slight lift, shadow change, or border highlight) to enhance interactivity. Include ALL provided FAQs:\n`;
         data.faqs.forEach((faq, index) => {
             if (faq.question && faq.question.trim() !== '' && faq.answer && faq.answer.trim() !== '') {
                 prompt += `  FAQ ${index + 1}:\n`;
@@ -354,8 +352,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
 
     // Contact Section
     prompt += `\n--- Contact Section ---\n`;
-    // Check if 'contact' is in data.sections OR if a contactFormEmail was provided (as the field only shows if contact is implicitly desired)
-    const includeContactSection = (data.sections && data.sections.includes('contact')) || (data.contactFormEmail && data.contactFormEmail.trim() !== '');
+    const includeContactSection = data.sections && data.sections.includes('contact'); // NEW LOGIC - section checkbox is the source of truth
 
     if (includeContactSection) {
         prompt += `The user has requested a "Contact Us" section. This section MUST feature a functional contact form.\n`;
@@ -364,13 +361,32 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
         if (data.contactFormEmail && data.contactFormEmail.trim() !== '') {
             prompt += `Use the following email address for the 'mailto:' link: ${data.contactFormEmail.trim()}\n`;
         } else {
-            prompt += `The user did not provide a specific email for the contact form, but requested the section. Use a placeholder email like 'your.email@example.com' for the 'mailto:' link AND include a visible note in the HTML (e.g., as a comment or small text near the form) instructing the user: "Remember to update the placeholder email address in this contact form.".\n`;
+            // This 'else' block should ideally not be reached if the client-side validation (making email required) works correctly.
+            // However, as a fallback, instruct AI to use a clear placeholder and a very visible warning for the user to replace it.
+            prompt += `CRITICAL FALLBACK: The user requested a contact form but NO email was provided (this indicates a potential issue with form submission or data collection). Use a VERY OBVIOUS placeholder like 'REPLACE-WITH-YOUR-EMAIL@example.com' for the 'mailto:' link AND include a prominent, visible warning message directly above or within the contact form in the HTML stating: "IMPORTANT: Contact form is not fully configured. Please provide your email address in the questionnaire to activate this form." This warning should be styled to be highly noticeable (e.g., red text, warning icon).\n`;
         }
         prompt += `Style the contact form to be user-friendly and visually consistent with the rest of the page design.\n`;
     } else {
         prompt += `The user has NOT explicitly requested a "Contact Us" section with a form. Omit this section.\n`;
     }
     prompt += `--- End Contact Section ---\n`;
+
+    prompt += `\n--- Features/Benefits Section ---\n`;
+    if (data.sections && data.sections.includes('features')) {
+        prompt += `The user has requested a "Features/Benefits" section. This section should highlight key advantages, services, or product features.\n`;
+        if (data.mustHaveElements && data.mustHaveElements.trim() !== '') {
+            prompt += `   - Primary Content Source: Use the user-provided "Must-Have Elements/Keywords": "${data.mustHaveElements.trim()}". Interpret these as the core features/benefits to showcase.\n`;
+            prompt += `   - Presentation: Present these as a list, a series of cards, or iconic blurbs. Each item should be distinct and easy to read.\n`;
+            prompt += `   - Animation: If presented as multiple items (cards, list items), apply a subtle CSS hover animation to each item (e.g., slight lift, shadow change, border highlight) for interactivity.\n`;
+        } else {
+            prompt += `   - Content Generation: The user did not provide specific "Must-Have Elements/Keywords" for this section. Generate 3-5 compelling placeholder features/benefits that are highly relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}". Clearly mark this content as placeholder text (e.g., "[Placeholder: Describe a key feature/benefit here.]").\n`;
+            prompt += `   - Animation: If presented as multiple items, apply a subtle CSS hover animation as described above.\n`;
+        }
+        prompt += `Style this section to be persuasive and visually engaging, reinforcing the value proposition of the business/product.\n`;
+    } else {
+        prompt += `The "Features/Benefits" section was not explicitly requested. Only include it if the "Must-Have Elements/Keywords" (if provided and relevant) strongly suggest a standalone features list and it aligns with the overall creative direction. If so, follow the guidelines above for content and styling.\n`;
+    }
+    prompt += `--- End Features/Benefits Section ---\n`;
 
     prompt += `\n--- Core Creative Synthesis ---\n`;
     prompt += `Holistically synthesize the following aspects to inform ALL design decisions. The aim is a cohesive, persuasive, and highly creative vision that deeply reflects the user's intent, not just a list of features:\n`;
@@ -380,20 +396,13 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     prompt += `- Overall Tone/Style: "${data.tone || 'Modern and professional'}" (This is paramount. Let it dictate typography, color depth, imagery style, spacing, and even the feel of any (CSS-based) micro-interactions. E.g., 'playful' might use brighter colors and rounded shapes; 'sophisticated' might use elegant fonts and a more reserved palette with impactful imagery.)\n`;
     prompt += `--- End Core Creative Synthesis ---\n`;
 
-    prompt += `\n--- Further Guidance for Maximum Creativity & Tailoring ---\n`;
-    prompt += `- Creative Interpretation: You are an expert creative designer. Interpret the user's requests not as rigid constraints but as ingredients for a unique recipe. Where there's ambiguity, lean towards a more creative and modern solution.\n`;
-    prompt += `- Beyond the Literal: Think about the *implied* needs. If the business is "eco-friendly handmade soaps," the design should *feel* natural, artisanal, and trustworthy, even if the user didn't explicitly list those adjectives in the 'tone'.\n`;
-    prompt += `- Visual Hierarchy & Flow: Craft a clear visual journey for the user. Guide their eye intentionally through the content, leading them towards the primary goal.\n`;
-    prompt += `- Uniqueness: Strive for a design that doesn't look like a common template. What can you do with layout, typography, color, or imagery to make this page memorable and stand out, while still being highly usable and professional?\n`;
-    prompt += `- Achieve a "Wow Factor": Combine all elements – layout, typography, color, imagery, and animations – creatively to produce a landing page that is not just functional but also impressive, memorable, and leaves a strong positive impression on the target audience.\n`;
-    prompt += `- Dynamic & Engaging Animations: Incorporate meaningful, CSS-based animations to create a "wow factor" and enhance user engagement. This includes: (1) On-scroll reveal effects for sections or elements to make the page feel dynamic as the user explores. (2) Engaging hero section animations (e.g., subtle text effects, background movements, animated graphics if appropriate). (3) Interactive animations for buttons, cards, and other key elements on hover or click, providing clear feedback and a polished feel. Animations should be smooth, modern, relevant to the brand/industry/target audience, and contribute positively to the user experience without being overwhelming or harming performance. Avoid generic or jarring animations; aim for sophistication and purpose.\n`;
-
     // Add Advanced Design Customizations if provided
     if (data.inspirationWebsites) {
         prompt += `- Inspiration Websites: ${data.inspirationWebsites}\n`;
     }
-    if (data.mustHaveElements) {
-        prompt += `- Must-Have Elements/Keywords: ${data.mustHaveElements}\n`;
+    if (data.mustHaveElements && data.mustHaveElements.trim() !== '') {
+        prompt += `- Must-Have Elements/Keywords: "${data.mustHaveElements.trim()}"\n`;
+        prompt += `  Incorporate these elements/keywords strategically throughout the page content and design. If the "Features/Benefits" section is NOT enabled (as per the logic above), but these keywords strongly suggest a list of features that would benefit the page, you can still consider creating such a section using them. Otherwise, weave them into other relevant sections (hero, about, etc.) to reinforce key messages.\n`;
     }
     if (data.thingsToAvoid) {
         prompt += `- Things to Avoid: ${data.thingsToAvoid}\n`;

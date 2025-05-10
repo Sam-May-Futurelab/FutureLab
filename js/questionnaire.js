@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const otherBusinessTypeInput = document.getElementById('other-business-type'); // Added
     const contactSectionCheckbox = document.getElementById('contact-section-checkbox'); // Added for contact form email
     const contactEmailFieldsContainer = document.getElementById('contact-email-fields-container'); // Added for contact form email
+    const contactFormEmailInput = document.getElementById('contact-form-email'); // Added for the actual email input
     
     // Dynamic entry containers and buttons
     const addPricingPlanBtn = document.getElementById('add-pricing-plan-btn');
@@ -64,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoUploadLabel = document.querySelector('label[for="logo-upload"]'); // Corrected selector
     const logoFileNameDisplay = document.getElementById('logo-file-name');
     const removeLogoBtn = document.getElementById('remove-logo-btn'); // Added this line
+
+    // Get all section options
+    const sectionOptions = document.querySelectorAll('.sections-grid .section-option'); // Added
 
     let currentStep = 1;
     const totalSteps = formSteps.length;
@@ -91,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleConditionalSectionDisplay(testimonialsSectionCheckbox, testimonialsFieldsContainer);
         toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer);
         toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer);
-        toggleConditionalSectionDisplay(contactSectionCheckbox, contactEmailFieldsContainer); // Added for contact form email
+        toggleContactEmailFields(); // MODIFIED: Use specific function for contact email fields
         toggleOtherBusinessTypeVisibility(); // Added: Initial check for "Other" business type
 
         // Added: Initialize Advanced Design Customizations toggle as collapsed
@@ -193,7 +197,26 @@ document.addEventListener('DOMContentLoaded', function() {
             faqSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer));
         }
         if (contactSectionCheckbox) { // Added for contact form email
-            contactSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(contactSectionCheckbox, contactEmailFieldsContainer));
+            contactSectionCheckbox.addEventListener('change', toggleContactEmailFields);
+        }
+
+        // Added: Make entire section-option tile clickable
+        if (sectionOptions) {
+            sectionOptions.forEach(option => {
+                option.addEventListener('click', (event) => {
+                    // Prevent clicks on the checkbox or label from triggering this twice
+                    if (event.target.type === 'checkbox' || event.target.tagName === 'LABEL' || event.target.classList.contains('checkmark') || event.target.classList.contains('section-name')) {
+                        return;
+                    }
+                    const checkbox = option.querySelector('input[type="checkbox"]');
+                    if (checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                        // Manually trigger change event for conditional logic
+                        const changeEvent = new Event('change', { bubbles: true });
+                        checkbox.dispatchEvent(changeEvent);
+                    }
+                });
+            });
         }
 
         // Event listener for adding pricing plans
@@ -258,8 +281,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const activeStep = formSteps[currentStep - 1];
             activeStep.classList.add('active');
             updateProgressBar();
-            if (activeStep) {
-                activeStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // MODIFIED SCROLL TARGET
+            if (progressSteps.length > 0) {
+                progressSteps[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (questionnaireContainer) { // Fallback
+                questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
     }
@@ -271,8 +297,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const activeStep = formSteps[currentStep - 1];
             activeStep.classList.add('active');
             updateProgressBar();
-            if (activeStep) {
-                activeStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // MODIFIED SCROLL TARGET
+            if (progressSteps.length > 0) {
+                progressSteps[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (questionnaireContainer) { // Fallback
+                questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
     }
@@ -283,8 +312,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const activeStep = formSteps[currentStep - 1];
         activeStep.classList.add('active');
         updateProgressBar();
-        if (activeStep) {
-            activeStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // MODIFIED SCROLL TARGET
+        if (progressSteps.length > 0) {
+            progressSteps[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (questionnaireContainer) { // Fallback
+            questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
     
@@ -475,6 +507,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 if(otherBusinessTypeInput) {
                     otherBusinessTypeInput.required = false;
                     otherBusinessTypeInput.value = ''; // Clear the value if hidden
+                }
+            }
+        }
+    }
+
+    // Added: Function to toggle visibility and validation of contact email fields
+    function toggleContactEmailFields() {
+        if (contactSectionCheckbox && contactEmailFieldsContainer && contactFormEmailInput) {
+            const isChecked = contactSectionCheckbox.checked;
+            contactEmailFieldsContainer.style.display = isChecked ? 'block' : 'none';
+            contactFormEmailInput.required = isChecked;
+            if (!isChecked) {
+                contactFormEmailInput.value = ''; // Clear value if hidden
+                if (contactFormEmailInput.classList.contains('invalid')) { 
+                     removeInvalidHighlight(contactFormEmailInput); // Clear validation styling if it was marked invalid
                 }
             }
         }
@@ -826,14 +873,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     iframeDoc.close();
                 } else {
                     console.error('pagePreview (iframe) element not found for content injection!');
-                    displayErrorInPreview('Preview iframe not found.'); // Use helper
+                    displayErrorInPreview('Preview iframe not found.'); 
                 }
                 
                 if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'block';
                 
-                const previewSection = document.querySelector('.preview-section');
-                if (previewSection) {
-                    previewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // MODIFIED SCROLL LOGIC for successful generation
+                if (questionnaireContainer) {
+                    questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             }, 1000);
 
@@ -841,6 +888,10 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error in getAICodeGeneration:', error);
             generationStep.textContent = `Error: ${error.message}. Please try again.`;
             displayErrorInPreview(error.message); // Use helper
+            // MODIFIED SCROLL for catch block errors
+            if (questionnaireContainer) {
+                questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
             setTimeout(() => {
                  generationOverlay.classList.remove('active');
             }, 3000); 
@@ -855,6 +906,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 placeholderTextElement.innerHTML = `<p style="color: red; text-align: center; font-weight: bold;">Failed to generate page: ${errorMessage}</p>`;
             }
             previewPlaceholderContainer.style.display = 'block';
+            // MODIFIED SCROLL for displayErrorInPreview
+            if (questionnaireContainer) {
+                questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
         if (pagePreview) { // Hide iframe on error
             pagePreview.style.display = 'none';
@@ -869,6 +924,10 @@ document.addEventListener('DOMContentLoaded', function() {
         generationStep.textContent = userFriendlyMessage;
         // Display a more specific error in the preview area, including API message if available
         displayErrorInPreview(userFriendlyMessage + (apiErrorMessage && apiErrorMessage !== "Too many requests. Please wait a minute and try again." ? ` (Details: ${apiErrorMessage})` : ""));
+        // MODIFIED SCROLL for handleRateLimitError
+        if (questionnaireContainer) {
+            questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
         if (generateBtn) {
             generateBtn.disabled = true;

@@ -233,6 +233,45 @@
     background-color: #1e293b;
 }
 
+/* Add styles for email inputs to match text inputs */
+.form-field input[type="email"] {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+    color: var(--dark-color);
+}
+
+.dark-theme .form-field input[type="email"] {
+    background-color: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.form-field input[type="email"]:hover {
+    border-color: #cbd5e1;
+}
+
+.dark-theme .form-field input[type="email"]:hover {
+    border-color: #475569;
+}
+
+.form-field input[type="email"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    background-color: #fff;
+}
+
+.dark-theme .form-field input[type="email"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3);
+    background-color: #1e293b;
+}
+
 /* Styling for select dropdowns to match other form fields */
 .form-field select {
     width: 100%;
