@@ -97,20 +97,14 @@ function constructPrompt(data) {
     // Logo and Header Instructions
     prompt += `\n--- Header Configuration ---\n`;
     if (data.logoData) {
-        prompt += `Logo: An image is provided (Base64 encoded). Include this as an <img> tag in the header.
-`;
-        prompt += `   - Image Data (for src attribute): "${data.logoData}" (This is a Base64 string, use it directly in the src attribute like src="data:image/png;base64,...")
-`;
-        prompt += `   - Logo Alt Text: "${data.businessName || 'Logo'}"
-`;
+        prompt += `Logo: An image is provided (Base64 encoded). Include this as an <img> tag in the header. The logo image MUST be clickable and link to the homepage (e.g., wrap the <img> tag with <a href="/"> or <a href="index.html">).\n`;
+        prompt += `   - Image Data (for src attribute): "${data.logoData}" (This is a Base64 string, use it directly in the src attribute like src="data:image/png;base64,...")\n`;
+        prompt += `   - Logo Alt Text: "${data.businessName || 'Logo'}"\n`;
     } else {
-        prompt += `Logo: No image provided. Display the Business Name ("${data.businessName || 'My Brand'}") as text in the header.
-`;
-        prompt += `   - Style the business name text appropriately as a header logo (e.g., distinct font, size).
-`;
+        prompt += `Logo: No image provided. Display the Business Name ("${data.businessName || 'My Brand'}") as text in the header. This business name text MUST be clickable and link to the homepage (e.g., wrap the text with <a href="/"> or <a href="index.html">).\n`;
+        prompt += `   - Style the business name text appropriately as a header logo (e.g., distinct font, size).\n`;
     }
-    prompt += `Header/Logo Position: ${data.logoPosition || 'left'}. Position the logo image (if provided) or the business name text (if no logo) accordingly in the header (e.g., align left, center, or right).
-`;
+    prompt += `Header/Logo Position: ${data.logoPosition || 'left'}. Position the logo image (if provided) or the business name text (if no logo) accordingly in the header (e.g., align left, center, or right).\n`;
     prompt += `--- End Header Configuration ---\n`;
 
     prompt += `Business Description: ${data.businessDescription || 'N/A'}\n`;
@@ -265,7 +259,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     // Testimonials
     prompt += `\n--- Testimonials Section ---\n`;
     if (data.testimonials && Array.isArray(data.testimonials) && data.testimonials.some(t => t.text && t.text.trim() !== '')) {
-        prompt += `The user has provided testimonials. Include a dedicated "Testimonials" or "What Our Clients Say" section. For each testimonial, display the testimonial text, author, and author's title/company (if provided). Style this section to be engaging and build trust. Include ALL provided testimonials:\n`;
+        prompt += `The user has provided testimonials. Include a dedicated "Testimonials" or "What Our Clients Say" section. For each testimonial, display the testimonial text, author, and author's title/company (if provided). Style this section to be engaging and build trust. Individual testimonial items (e.g., cards or blocks) should have a subtle and clean CSS hover animation (e.g., slight lift, shadow change, or border highlight) to enhance interactivity. Include ALL provided testimonials:\n`;
         data.testimonials.forEach((testimonial, index) => {
             if (testimonial.text && testimonial.text.trim() !== '') {
                 prompt += `  Testimonial ${index + 1}:\n`;
@@ -282,6 +276,22 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
         prompt += `No testimonials provided by the user. Do not include a testimonials section unless it's a generic placeholder clearly marked as such and suggested by the AI based on the business type (e.g., for a consulting business where testimonials are typical). If you add a placeholder, clearly state "Placeholder for testimonials - user should add actual client feedback here."\n`;
     }
     prompt += `--- End Testimonials Section ---\n`;
+
+    // FAQs Section
+    prompt += `\n--- FAQs Section ---\n`;
+    if (data.faqs && Array.isArray(data.faqs) && data.faqs.some(f => f.question && f.question.trim() !== '' && f.answer && f.answer.trim() !== '')) {
+        prompt += `The user has provided FAQs. Include a dedicated "Frequently Asked Questions" (or similar) section. For each FAQ, display the question and its corresponding answer. This section should be clear, readable, and potentially use accordions or expandable elements for a good user experience if there are multiple FAQs. Include ALL provided FAQs:\n`;
+        data.faqs.forEach((faq, index) => {
+            if (faq.question && faq.question.trim() !== '' && faq.answer && faq.answer.trim() !== '') {
+                prompt += `  FAQ ${index + 1}:\n`;
+                prompt += `    - Question: "${faq.question.trim()}"\n`;
+                prompt += `    - Answer: "${faq.answer.trim()}"\n`;
+            }
+        });
+    } else {
+        prompt += `No FAQs provided by the user. Do not include an FAQ section unless it's a generic placeholder clearly marked as such and suggested by the AI based on the business type. If you add a placeholder, clearly state "Placeholder for FAQs - user should add actual questions and answers here."\n`;
+    }
+    prompt += `--- End FAQs Section ---\n`;
 
     prompt += `\n--- Core Creative Synthesis ---\n`;
     prompt += `Holistically synthesize the following aspects to inform ALL design decisions. The aim is a cohesive, persuasive, and highly creative vision that deeply reflects the user's intent, not just a list of features:\n`;
@@ -312,7 +322,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
 
     prompt += `\nImportant Instructions for AI:\r\n`;
     prompt += `- Generate complete HTML for a single page and all necessary CSS.\r\n`;
-    prompt += `- CRITICAL: If the user provides specific optional content (e.g., social media URLs in the 'Social Media Links' section, testimonials in the 'Testimonials Section', 'About Us' snippets, 'FAQ' entries, 'Pricing Plan' details), YOU MUST include this content in the generated page. Do not omit user-provided data for these optional sections. If a section is toggled on or has data, it should appear.\n`;
+    prompt += `- CRITICAL: If the user provides specific optional content (e.g., social media URLs in the 'Social Media Links' section, testimonials in the 'Testimonials Section', FAQs in the 'FAQs Section', 'About Us' snippets, 'Pricing Plan' details), YOU MUST include this content in the generated page. Do not omit user-provided data for these optional sections. If a section is toggled on or has data, it should appear.\n`;
     prompt += `- Provide your response as a single, valid JSON object with two keys: "html" and "css". The value for "html" should be the full HTML code as a string. The value for "css" should be the full CSS code as a string. No other text or formatting outside this JSON object.\n`;
     prompt += `- The CSS MUST be self-contained within the "css" string. Do NOT include any <link rel="stylesheet" href="..."> tags in the HTML.\n`;
     prompt += `- Aim for a MODERN, CREATIVE, and VISUALLY APPEALING design. Incorporate contemporary design trends and avoid generic templates. Consider unique layouts, bold typography, and engaging visual elements.\n`;
