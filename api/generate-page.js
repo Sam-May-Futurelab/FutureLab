@@ -408,6 +408,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
         prompt += `The user has requested a "Contact Us" section. This section MUST feature a functional contact form.\n`;
         prompt += `CRITICAL PLACEMENT: This "Contact Us" section, if generated, MUST be the VERY LAST section in the HTML body, appearing after all other content sections (e.g., About Us, Features, Pricing, Testimonials, FAQs, Social Media links if they are in a footer-like area but before a final small print footer if any). It should effectively be the footer or immediately precede a minimal site-info footer.\n`;
         prompt += `The contact form should collect at least the sender's name, email, and a message.\n`;
+        prompt += `  - Introductory Text: After the main heading of the 'Contact Us' section (e.g., <h2>Contact Us</h2>), and *before* the contact form itself, insert a brief, welcoming introductory sentence. For example: '<p>Want to get in touch? We\'d love to hear from you! Simply fill out the form below and we\'ll get back to you as soon as possible.</p>' or a similar friendly message. This text should be styled to match the section's overall design and be centered if the form is centered.\n`;
         if (data.contactFormEmail && data.contactFormEmail.trim() !== '') {
             prompt += `Use the following email address for the 'mailto:' link: ${data.contactFormEmail.trim()}\n`;
         } else {

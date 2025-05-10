@@ -689,19 +689,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const labMessages = [
             "Initializing the flux capacitor...",
             "Reticulating splines...",
-            "Aligning the quantum harmonizers...",
-            "Charging the AI synthesizers...",
-            "Calibrating the digital dream weaver...",
-            "Warming up the idea engines...",
             "Polishing the pixels...",
-            "Untangling the neural networks...",
-            "Brewing a fresh pot of digital coffee...",
-            "Teaching the AI to fetch... your website!",
-            "Counting to infinity (almost there)...",
-            "Assembling the digital LEGOs...",
-            "Don't worry, the hamsters powering the server are well-fed!",
-            "Generating awesomeness, please wait...",
-            "The AI is thinking very hard (you can almost hear the gears turning)..."
+            "Charging the creativity circuits...",
+            "Aligning the design constellations...",
+            "Brewing a fresh batch of code...",
+            "Giving the pixels their sparkle...",
+            "Untangling the digital spaghetti...",
+            "Warming up the innovation engines...",
+            "Making sure all the 1s and 0s are in a happy relationship...",
+            "Consulting the digital crystal ball for your design...",
+            "Our AI is in its digital zen garden, contemplating your perfect page...",
+            "Shaking the magic 8-ball for design inspiration...",
+            "Teaching the AI to fetch... your amazing new website!",
+            "Assembling the digital building blocks... carefully!",
+            "Don't worry, the tiny robots building your page are on a coffee break (a very short one!).",
+            "Generating pure web magic, please hold...",
+            "The AI is currently performing a digital interpretive dance to design your page."
         ];
         let messageIndex = 0;
         generationStep.textContent = labMessages[messageIndex];
