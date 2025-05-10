@@ -265,14 +265,22 @@
 
 /* Save Notification Popup */
 #save-notification-popup {
-    background-color: var(--popup-bg-color, #e9f7ef); /* Light mode default */
-    color: var(--popup-text-color, #155724); /* Light mode default */
+    background-color: #e9f7ef; /* Light mode default (greenish) */
+    color: #155724; /* Light mode default */
+    border: 1px solid #155724;
 }
 
 [data-theme="dark"] #save-notification-popup {
-    background-color: var(--popup-bg-color-dark, #2a3b2a); /* Dark green, better contrast */
-    color: var(--popup-text-color-dark, #c8e6c9); /* Light green text */
-    border: 1px solid var(--popup-border-color-dark, #385038);
+    background-color: #2a3b2a; /* Dark green */
+    color: #c8e6c9; /* Light green text */
+    border: 1px solid #c8e6c9;
+}
+
+/* Ensure consistent green background for the specific success message */
+#save-notification-popup.success-message {
+    background-color: #28a745 !important; /* Bootstrap success green */
+    color: white !important;
+    border-color: #1e7e34 !important;
 }
 
 /* Color Picker Panel */

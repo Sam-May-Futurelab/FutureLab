@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveNotificationPopup = document.getElementById('save-notification-popup');
     const saveNotificationMessage = document.getElementById('save-notification-message');
     const closeSaveNotificationBtn = document.getElementById('close-save-notification');
+    const pagePreviewIframe = document.getElementById('page-preview'); // Defined earlier for broader scope
 
     let editorActive = false;
     let hasUnsavedChanges = false;
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function hideSaveNotification() {
         if (saveNotificationPopup) {
             saveNotificationPopup.classList.remove('show');
+            saveNotificationPopup.classList.remove('success-message'); // Remove the success class
             // Wait for animation to complete before setting display to none
             setTimeout(() => {
                 saveNotificationPopup.style.display = 'none';
@@ -84,11 +86,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // Function to initialize or re-initialize in-page editor event handlers
+    function setupInPageEditorForIframe() {
+        if (editorActive && pagePreviewIframe && pagePreviewIframe.contentDocument) {
+            if (typeof window.setInPageEditMode === 'function') {
+                console.log("Lab.js: Setting up in-page editor for iframe content.");
+                window.setInPageEditMode(true, pagePreviewIframe.contentDocument);
+            } else {
+                console.warn("Lab.js: window.setInPageEditMode is not defined.");
+            }
+        } else if (editorActive) {
+            console.warn("Lab.js: Edit mode is active, but iframe or its document is not ready for setup.");
+        }
+    }
+
+    // Listen for iframe load event to setup editor if active
+    if (pagePreviewIframe) {
+        pagePreviewIframe.addEventListener('load', () => {
+            console.log("Lab.js: Iframe loaded.");
+            setupInPageEditorForIframe();
+        });
+    }
+
     if (toggleEditModeBtn) {
         toggleEditModeBtn.addEventListener('click', () => {
             editorActive = !editorActive;
             if (typeof window.setInPageEditMode === 'function') {
-                window.setInPageEditMode(editorActive);
+                if (pagePreviewIframe && pagePreviewIframe.contentDocument) {
+                    window.setInPageEditMode(editorActive, pagePreviewIframe.contentDocument);
+                } else {
+                    window.setInPageEditMode(editorActive, null);
+                    if (editorActive) {
+                        console.warn("Lab.js: Tried to toggle edit mode, but iframe contentDocument is not available yet.");
+                    }
+                }
             }
             toggleEditModeBtn.classList.toggle('active', editorActive);
             toggleEditModeBtn.innerHTML = editorActive ? '<i class="fas fa-times-circle"></i> Disable Edit Mode' : '<i class="fas fa-pencil-alt"></i> Toggle Edit Mode';
@@ -129,13 +160,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Buttons are hidden by display:none, but ensure their logical disabled state is correct if they were to be shown.
                 if (downloadEditedPageBtn) downloadEditedPageBtn.disabled = !hasEverBeenSaved;
                 if (downloadEditedCssBtn) downloadEditedCssBtn.disabled = !hasEverBeenSaved;
+            } else {
+                setupInPageEditorForIframe();
             }
         });
     }
 
     if (saveEditedPageBtn) {
         saveEditedPageBtn.addEventListener('click', () => {
-            const pagePreviewIframe = document.getElementById('page-preview');
             if (pagePreviewIframe && pagePreviewIframe.contentDocument && pagePreviewIframe.contentDocument.body) {
                 lastSavedEditedHtml = pagePreviewIframe.contentDocument.body.innerHTML;
                 
@@ -152,6 +184,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 saveEditedPageBtn.classList.remove('btn-warning');
                 saveEditedPageBtn.classList.add('btn-success');
+                
+                if (saveNotificationPopup) {
+                    saveNotificationPopup.classList.add('success-message'); // Add class for specific styling
+                }
                 showSaveNotification("Your edits have been saved! You can now download the page or continue editing.");
                 console.log("Saved HTML content and custom CSS prepared.");
 

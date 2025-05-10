@@ -77,6 +77,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastGeneratedCSS = '';
     let lastProjectName = 'ai-generated-page';
 
+    // Change button text
+    if (downloadHtmlBtn) {
+        downloadHtmlBtn.textContent = 'Download Original HTML';
+    }
+    if (downloadCssBtn) {
+        downloadCssBtn.textContent = 'Download Original CSS';
+    }
+
     // Expose a function to download the edited page with embedded CSS
     window.downloadEditedPageAsHTML = function(editedBodyHtml) {
         if (!lastGeneratedCSS && !editedBodyHtml) {
