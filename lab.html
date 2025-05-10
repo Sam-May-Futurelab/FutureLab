@@ -148,38 +148,6 @@
                                 <span class="field-note">Knowing your audience helps create targeted messaging.</span>
                             </div>
                             
-                            <div class="form-field">
-                                <label for="tone">Preferred Page Tone:</label>
-                                <select name="tone" id="tone">
-                                  <option value="friendly" selected>Friendly</option>
-                                  <option value="professional">Professional</option>
-                                  <option value="quirky">Quirky</option>
-                                  <option value="bold">Bold</option>
-                                  <option value="informative">Informative</option>
-                                  <option value="playful">Playful</option>
-                                </select>
-                                <span class="field-note">This helps the AI set the right copywriting style.</span>
-                            </div>
-                            
-                            <div class="form-field">
-                                <label>What are your key selling points? (1-3)</label>
-                                <div class="selling-points-container">
-                                    <div class="selling-point">
-                                        <span class="point-number">1</span>
-                                        <input type="text" name="sellingPoints[]" placeholder="e.g., Freshly baked goods daily" required>
-                                    </div>
-                                    <div class="selling-point">
-                                        <span class="point-number">2</span>
-                                        <input type="text" name="sellingPoints[]" placeholder="e.g., Cozy atmosphere">
-                                    </div>
-                                    <div class="selling-point">
-                                        <span class="point-number">3</span>
-                                        <input type="text" name="sellingPoints[]" placeholder="e.g., Locally sourced ingredients">
-                                    </div>
-                                </div>
-                                <span class="field-note">These will be highlighted features on your page.</span>
-                            </div>
-                            
                             <div class="form-navigation">
                                 <button type="button" class="btn btn-prev"><i class="fas fa-arrow-left"></i> Back</button>
                                 <button type="button" class="btn btn-next">Continue <i class="fas fa-arrow-right"></i></button>
@@ -191,9 +159,22 @@
                             <h3 class="step-title"><i class="fas fa-paint-brush"></i> Design Preferences</h3>
                             
                             <div class="form-field">
-                                <label for="design-preferences">How would you describe your preferred design style?</label>
-                                <textarea id="design-preferences" name="designPreferences" placeholder="e.g., Modern, Minimalist, Vibrant, Playful, Professional, Techy" required></textarea>
-                                <span class="field-note">Use descriptive keywords to guide the AI's design choices.</span>
+                                <label for="tone">Preferred Page Tone:</label>
+                                <select name="tone" id="tone">
+                                  <option value="friendly" selected>Friendly</option>
+                                  <option value="professional">Professional</option>
+                                  <option value="quirky">Quirky</option>
+                                  <option value="bold">Bold</option>
+                                  <option value="informative">Informative</option>
+                                  <option value="playful">Playful</option>
+                                  <option value="modern">Modern</option>
+                                  <option value="minimalist">Minimalist</option>
+                                  <option value="vibrant">Vibrant</option>
+                                  <option value="techy">Techy</option>
+                                  <option value="elegant">Elegant</option>
+                                  <option value="rustic">Rustic</option>
+                                </select>
+                                <span class="field-note">This helps the AI set the right copywriting style and visual mood.</span>
                             </div>
 
                             <div class="form-field">
@@ -236,22 +217,31 @@
                                 </div>
                             </div>
 
+                            <!-- Toggle for Advanced Design Customizations -->
                             <div class="form-field">
-                                <label for="inspiration-websites">Inspiration Websites (Optional):</label>
-                                <textarea id="inspiration-websites" name="inspirationWebsites" placeholder="e.g., https://www.example.com, https://www.another-example.com" rows="3"></textarea>
-                                <span class="field-note">Provide 1-3 URLs of websites whose design you admire.</span>
-                            </div>
+                                <div class="toggle-header" id="advanced-design-toggle-header" role="button" tabindex="0" aria-expanded="false" aria-controls="advanced-design-fields-container">
+                                    <label class="toggle-label" id="advanced-design-toggle-label">Advanced Design Customizations (Optional)</label>
+                                    <i class="fas fa-chevron-down toggle-icon"></i>
+                                </div>
+                                <div id="advanced-design-fields-container" style="display: none;">
+                                    <div class="form-field">
+                                        <label for="inspiration-websites">Inspiration Websites (Optional):</label>
+                                        <textarea id="inspiration-websites" name="inspirationWebsites" placeholder="e.g., https://www.example.com, https://www.another-example.com" rows="3"></textarea>
+                                        <span class="field-note">Provide 1-3 URLs of websites whose design you admire.</span>
+                                    </div>
 
-                            <div class="form-field">
-                                <label for="must-have-elements">Must-Have Elements/Keywords (Optional):</label>
-                                <textarea id="must-have-elements" name="mustHaveElements" placeholder="e.g., Parallax scrolling, animated hero, testimonial slider, 'eco-friendly', 'innovative'" rows="3"></textarea>
-                                <span class="field-note">List any specific features, sections, or keywords you definitely want.</span>
-                            </div>
+                                    <div class="form-field">
+                                        <label for="must-have-elements">Must-Have Elements/Keywords (Optional):</label>
+                                        <textarea id="must-have-elements" name="mustHaveElements" placeholder="e.g., Parallax scrolling, animated hero, testimonial slider, 'eco-friendly', 'innovative'" rows="3"></textarea>
+                                        <span class="field-note">List any specific features, sections, or keywords you definitely want.</span>
+                                    </div>
 
-                            <div class="form-field">
-                                <label for="things-to-avoid">Things to Avoid (Optional):</label>
-                                <textarea id="things-to-avoid" name="thingsToAvoid" placeholder="e.g., Dark themes, too much animation, cluttered layout, 'corporate'" rows="3"></textarea>
-                                <span class="field-note">Mention any design styles, elements, or colors you dislike.</span>
+                                    <div class="form-field">
+                                        <label for="things-to-avoid">Things to Avoid (Optional):</label>
+                                        <textarea id="things-to-avoid" name="thingsToAvoid" placeholder="e.g., Dark themes, too much animation, cluttered layout, 'corporate'" rows="3"></textarea>
+                                        <span class="field-note">Mention any design styles, elements, or colors you dislike.</span>
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="form-field">
@@ -266,18 +256,21 @@
 
                             <div class="form-field">
                                 <label>Logo Position (if no logo provided, we'll use your business name)</label>
-                                <div class="radio-group" id="logo-position-group">
-                                    <label class="radio-label">
+                                <div class="icon-radio-group" id="logo-position-group">
+                                    <label class="icon-radio-label">
                                         <input type="radio" name="logoPosition" value="left" checked>
-                                        <span class="radio-custom"></span> Left
+                                        <span class="icon-radio-custom"><i class="fas fa-align-left"></i></span>
+                                        <span class="icon-radio-text">Left</span>
                                     </label>
-                                    <label class="radio-label">
+                                    <label class="icon-radio-label">
                                         <input type="radio" name="logoPosition" value="center">
-                                        <span class="radio-custom"></span> Center
+                                        <span class="icon-radio-custom"><i class="fas fa-align-center"></i></span>
+                                        <span class="icon-radio-text">Center</span>
                                     </label>
-                                    <label class="radio-label">
+                                    <label class="icon-radio-label">
                                         <input type="radio" name="logoPosition" value="right">
-                                        <span class="radio-custom"></span> Right
+                                        <span class="icon-radio-custom"><i class="fas fa-align-right"></i></span>
+                                        <span class="icon-radio-text">Right</span>
                                     </label>
                                 </div>
                                 <span class="field-note">Applies to uploaded logo or business name if no logo.</span>
@@ -606,3 +599,4 @@
 
 </body>
 </html>
+`

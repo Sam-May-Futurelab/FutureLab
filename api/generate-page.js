@@ -261,6 +261,17 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     prompt += `- Uniqueness: Strive for a design that doesn't look like a common template. What can you do with layout, typography, color, or imagery to make this page memorable and stand out, while still being highly usable and professional?\n`;
     prompt += `- Subtle Animations: Where appropriate for interactive elements (buttons, links, cards on hover, etc.), incorporate subtle and tasteful CSS-based hover effects or micro-animations. These should enhance the user experience, not distract or overwhelm. Avoid excessive or jarring animations.\n`;
 
+    // Add Advanced Design Customizations if provided
+    if (data.inspirationWebsites) {
+        prompt += `- Inspiration Websites: ${data.inspirationWebsites}\n`;
+    }
+    if (data.mustHaveElements) {
+        prompt += `- Must-Have Elements/Keywords: ${data.mustHaveElements}\n`;
+    }
+    if (data.thingsToAvoid) {
+        prompt += `- Things to Avoid: ${data.thingsToAvoid}\n`;
+    }
+
     prompt += `\nImportant Instructions for AI:\r\n`;
     prompt += `- Generate complete HTML for a single page and all necessary CSS.\r\n`;
     prompt += `- Provide your response as a single, valid JSON object with two keys: "html" and "css". The value for "html" should be the full HTML code as a string. The value for "css" should be the full CSS code as a string. No other text or formatting outside this JSON object.\n`;

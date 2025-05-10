@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const seoFieldsToggleHeader = document.getElementById('seo-fields-toggle-header');
     const seoFieldsContainer = document.getElementById('seo-fields-actual-container');
     const seoFieldsToggleIcon = seoFieldsToggleHeader ? seoFieldsToggleHeader.querySelector('.toggle-icon') : null;
+    const advancedDesignToggleHeader = document.getElementById('advanced-design-toggle-header'); // Added
+    const advancedDesignFieldsContainer = document.getElementById('advanced-design-fields-container'); // Added
+    const advancedDesignToggleIcon = advancedDesignToggleHeader ? advancedDesignToggleHeader.querySelector('.toggle-icon') : null; // Added
 
     // Conditional Page Section Fields
     const aboutSectionCheckbox = document.getElementById('about-section-checkbox');
@@ -87,6 +90,14 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer);
         toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer);
         toggleOtherBusinessTypeVisibility(); // Added: Initial check for "Other" business type
+
+        // Added: Initialize Advanced Design Customizations toggle as collapsed
+        if (advancedDesignFieldsContainer && advancedDesignToggleHeader && advancedDesignToggleIcon) {
+            advancedDesignToggleHeader.setAttribute('aria-expanded', 'false');
+            advancedDesignFieldsContainer.style.display = 'none';
+            advancedDesignToggleIcon.classList.remove('fa-chevron-up');
+            advancedDesignToggleIcon.classList.add('fa-chevron-down');
+        }
     }
     
     function setupEventListeners() {
@@ -150,6 +161,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
                     toggleSEOFieldsVisibility();
+                }
+            });
+        }
+
+        // Added: Event listener for Advanced Design Customizations toggle
+        if (advancedDesignToggleHeader) {
+            advancedDesignToggleHeader.addEventListener('click', toggleAdvancedDesignVisibility);
+            advancedDesignToggleHeader.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleAdvancedDesignVisibility();
                 }
             });
         }
@@ -291,6 +313,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        // Specific validation for business type dropdown in its relevant step
+        // Assuming businessTypeDropdown is in the first step (currentStep === 1)
+        // Adjust the step number if it's located in a different step.
+        if (currentStep === 1) { // IMPORTANT: Confirm this is the correct step for the business type dropdown
+            const businessTypeDropdown = document.getElementById('business-type');
+            if (businessTypeDropdown && businessTypeDropdown.value === '') {
+                isValid = false;
+                highlightInvalidInput(businessTypeDropdown);
+            } else if (businessTypeDropdown) {
+                removeInvalidHighlight(businessTypeDropdown);
+            }
+        }
+
         if (!isValid && questionnaireContainer) {
             questionnaireContainer.scrollIntoView({ behavior: 'auto', block: 'start' }); // Changed to 'auto' for potentially better mobile compatibility
         }
@@ -397,6 +432,17 @@ document.addEventListener('DOMContentLoaded', function() {
             seoFieldsContainer.style.display = isExpanded ? 'none' : 'block';
             seoFieldsToggleIcon.classList.toggle('fa-chevron-down', isExpanded);
             seoFieldsToggleIcon.classList.toggle('fa-chevron-up', !isExpanded);
+        }
+    }
+
+    // Added: Function to toggle visibility of Advanced Design Customizations
+    function toggleAdvancedDesignVisibility() {
+        if (advancedDesignFieldsContainer && advancedDesignToggleHeader && advancedDesignToggleIcon) {
+            const isExpanded = advancedDesignToggleHeader.getAttribute('aria-expanded') === 'true';
+            advancedDesignToggleHeader.setAttribute('aria-expanded', String(!isExpanded));
+            advancedDesignFieldsContainer.style.display = isExpanded ? 'none' : 'block';
+            advancedDesignToggleIcon.classList.toggle('fa-chevron-down', isExpanded);
+            advancedDesignToggleIcon.classList.toggle('fa-chevron-up', !isExpanded);
         }
     }
 

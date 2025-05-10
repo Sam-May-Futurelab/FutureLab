@@ -427,24 +427,46 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0; /* Reduced padding as it's not a full input */
+    padding: 12px 15px; /* Increased padding */
     cursor: pointer;
-    border-bottom: 1px solid var(--input-border-color, #e2e8f0); /* Subtle separator */
-    margin-bottom: 0; /* Remove default form-field margin */
+    border: 1px solid #e2e8f0; /* Full border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f8fafc; /* Slightly distinct background */
+    box-shadow: 0 2px 4px rgba(0, 20, 60, 0.05), 0 1px 2px rgba(0, 20, 60, 0.04); /* Modern shadow */
+    margin-bottom: 0; /* Keep default form-field margin from parent */
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .dark-theme .toggle-header {
-    border-bottom-color: var(--dark-input-border, #334155);
+    background-color: #252e3e; /* Adjusted for dark theme */
+    border-color: #334155;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .toggle-header:hover,
-.toggle-header:focus {
-    background-color: rgba(0,0,0,0.02); /* Slight hover/focus feedback */
+.toggle-header:focus-visible { /* Using focus-visible */
+    border-color: var(--primary-color);
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgba(0, 20, 60, 0.07), 0 1px 3px rgba(0, 20, 60, 0.06), 0 0 0 1px var(--primary-color); /* Enhanced shadow and ring */
 }
 
 .dark-theme .toggle-header:hover,
-.dark-theme .toggle-header:focus {
-    background-color: rgba(255,255,255,0.03);
+.dark-theme .toggle-header:focus-visible {
+    border-color: var(--primary-color);
+    background-color: #2a3647;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15), 0 0 0 1px var(--primary-color);
+}
+
+.toggle-header[aria-expanded="true"] {
+    background-color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 1px 2px rgba(0, 20, 60, 0.05) inset, 0 0 0 1px var(--primary-color); /* Inset shadow and border emphasis */
+}
+
+.dark-theme .toggle-header[aria-expanded="true"] {
+    background-color: #2a3647;
+    border-color: var(--primary-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) inset, 0 0 0 1px var(--primary-color);
 }
 
 .toggle-label {
@@ -969,6 +991,108 @@ body.dark-theme .file-name-display {
 /* Ensure iframe is hidden when it has no src or content yet, and placeholder is visible */
 #page-preview:not([srcdoc]) {
     display: none; /* Hide iframe if it has no content yet */
+}
+
+/* Icon-based Radio Button Styling */
+.icon-radio-group {
+    display: flex;
+    gap: 10px; /* Space between radio options */
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens if needed */
+}
+
+.icon-radio-label {
+    display: inline-flex; /* Align icon and text within the label */
+    align-items: center; /* Vertically center icon and text */
+    padding: 10px 15px;
+    border: 2px solid #e2e8f0; /* Default border */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    background-color: #f8fafc;
+    color: var(--dark-color); /* Default text color for the label */
+    position: relative; /* For focus styling */
+}
+
+.dark-theme .icon-radio-label {
+    background-color: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.icon-radio-label:hover {
+    border-color: var(--primary-color);
+    background-color: #eff3fe; /* Lighter primary shade for hover */
+}
+
+.dark-theme .icon-radio-label:hover {
+    border-color: var(--primary-color);
+    background-color: #1c2744; /* Darker shade for hover in dark mode */
+}
+
+.icon-radio-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.icon-radio-custom {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px; /* Space between icon and text */
+    font-size: 1.1rem; /* Icon size */
+    transition: color 0.3s ease;
+}
+
+.icon-radio-text {
+    font-size: 0.95rem;
+    line-height: 1.2; /* Adjust for vertical alignment with icon */
+    transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+/* Checked State Styling */
+.icon-radio-label input[type="radio"]:checked + .icon-radio-custom {
+    color: var(--primary-color);
+}
+
+.dark-theme .icon-radio-label input[type="radio"]:checked + .icon-radio-custom {
+    color: var(--secondary-color); /* Ensure visibility in dark mode */
+}
+
+.icon-radio-label input[type="radio"]:checked + .icon-radio-custom + .icon-radio-text {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.dark-theme .icon-radio-label input[type="radio"]:checked + .icon-radio-custom + .icon-radio-text {
+    color: var(--secondary-color); /* Ensure visibility */
+    font-weight: 600;
+}
+
+/* Focus state for accessibility */
+.icon-radio-label:focus-within {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    border-color: var(--primary-color); /* Reinforce border color on focus */
+}
+
+.dark-theme .icon-radio-label:focus-within {
+    outline-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* Responsive adjustments for icon radio buttons if needed */
+@media (max-width: 480px) {
+    .icon-radio-group {
+        flex-direction: column; /* Stack them on very small screens */
+        align-items: stretch; /* Make them full width in column */
+    }
+
+    .icon-radio-label {
+        justify-content: center; /* Center content if they become full width */
+    }
 }
 
 /* Responsive adjustments */
