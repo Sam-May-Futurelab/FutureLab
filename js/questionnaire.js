@@ -679,6 +679,32 @@ document.addEventListener('DOMContentLoaded', function() {
         generationOverlay.classList.add('active');
         generationStep.textContent = 'Connecting to AI assistant...';
 
+        // --- START: Lab-themed loading messages ---
+        const labMessages = [
+            "Initializing the flux capacitor...",
+            "Reticulating splines...",
+            "Aligning the quantum harmonizers...",
+            "Charging the AI synthesizers...",
+            "Calibrating the digital dream weaver...",
+            "Warming up the idea engines...",
+            "Polishing the pixels...",
+            "Untangling the neural networks...",
+            "Brewing a fresh pot of digital coffee...",
+            "Teaching the AI to fetch... your website!",
+            "Counting to infinity (almost there)...",
+            "Assembling the digital LEGOs...",
+            "Don't worry, the hamsters powering the server are well-fed!",
+            "Generating awesomeness, please wait...",
+            "The AI is thinking very hard (you can almost hear the gears turning)..."
+        ];
+        let messageIndex = 0;
+        generationStep.textContent = labMessages[messageIndex];
+        const messageInterval = setInterval(() => {
+            messageIndex = (messageIndex + 1) % labMessages.length;
+            generationStep.textContent = labMessages[messageIndex];
+        }, 2500); // Change message every 2.5 seconds
+        // --- END: Lab-themed loading messages ---
+
         // Ensure placeholder is visible and iframe is hidden initially for this process
         if (previewPlaceholderContainer) {
             previewPlaceholderContainer.style.display = 'block';
@@ -795,7 +821,6 @@ document.addEventListener('DOMContentLoaded', function() {
         lastProjectName = projectNameFromForm.toLowerCase().replace(/\s+/g, '-') || 'ai-generated-page';
 
         try {
-            generationStep.textContent = 'Sending data to AI assistant...';
             const response = await fetch('/api/generate-page', {
                 method: 'POST',
                 headers: {
@@ -803,8 +828,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify(data),
             });
-
-            generationStep.textContent = 'Waiting for AI response...';
 
             if (!response.ok) {
                 let errorData;
@@ -814,6 +837,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     // If parsing errorData fails, create a generic one
                     errorData = { message: `Server returned status ${response.status} but failed to parse the error response body.` };
                 }
+
+                // --- START: Clear interval on error ---
+                clearInterval(messageInterval);
+                // --- END: Clear interval on error ---
 
                 if (response.status === 429) {
                     handleRateLimitError(errorData.message || "Too many requests. Please wait a minute and try again.");
@@ -829,6 +856,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const aiOutput = await response.json();
             
+            // --- START: Clear interval on success ---
+            clearInterval(messageInterval);
+            // --- END: Clear interval on success ---
             generationStep.textContent = 'Finalizing your page...';
             
             lastGeneratedHTML = aiOutput.html || '<!-- No HTML generated -->';
@@ -892,6 +922,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (questionnaireContainer) {
                 questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
+            // --- START: Clear interval on catch ---
+            clearInterval(messageInterval);
+            // --- END: Clear interval on catch ---
             setTimeout(() => {
                  generationOverlay.classList.remove('active');
             }, 3000); 
