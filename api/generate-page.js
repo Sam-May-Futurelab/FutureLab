@@ -235,7 +235,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
                 prompt += `Industry: ${businessType}.\n`;
         }
         prompt += `--- End Creative Brief ---\n`;
-        prompt += `Remember, the above industry brief is a guideline. Innovate within this context, using all other user inputs (like tone, target audience, and selling points) to create something truly unique and tailored, not just a generic template for that industry.\n`;
+        prompt += `Remember, the above industry brief is a guideline. Innovate within this context. CRITICAL: Use the industry specifics AND the target audience profile to generate *highly relevant and tailored sections and content*, not just a generic template or stylistic adjustments for that industry. The combination of industry and audience should dictate the actual substance and structure of the page.\n`;
     }
 
     if (data.aiColors === 'on') { // Frontend sends 'on' for checkbox
@@ -246,11 +246,25 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     }
     prompt += `Font Style: ${data.fontStyle || 'Arial, sans-serif'}\n`;
 
+    // Social Media Links
+    prompt += `\n--- Social Media Links ---\n`;
+    if (data.socialLinks && Object.keys(data.socialLinks).length > 0) {
+        prompt += `Include the following social media links. Use the exact URLs provided. If using icons (e.g., Font Awesome), ensure the href attributes correctly point to these URLs:\n`;
+        for (const [platform, url] of Object.entries(data.socialLinks)) {
+            if (url) { // Ensure URL is not empty
+                prompt += `- ${platform.charAt(0).toUpperCase() + platform.slice(1)}: ${url}\n`;
+            }
+        }
+    } else {
+        prompt += `No specific social media links provided. You can omit a social media section or, if essential to the design, use placeholder links or icons for common platforms like Twitter, Facebook, Instagram, LinkedIn. If using placeholders, make it clear they are placeholders (e.g., link to # or use generic platform URLs like https://twitter.com/yourprofile).\n`;
+    }
+    prompt += `--- End Social Media Links ---\n`;
+
     prompt += `\n--- Core Creative Synthesis ---\n`;
     prompt += `Holistically synthesize the following aspects to inform ALL design decisions. The aim is a cohesive, persuasive, and highly creative vision that deeply reflects the user's intent, not just a list of features:\n`;
     prompt += `- Business Description: "${data.businessDescription || 'N/A'}" (Extract keywords, implied feelings, and unique aspects to inspire the design's personality.)\n`;
     prompt += `- Primary Goal: "${data.primaryGoal || 'N/A'}" (The entire design should strategically guide the user towards this goal. For instance, if it's 'sales', CTAs and product showcases must be compelling and prominent. If 'brand awareness', the visual identity and storytelling should be memorable.)\n`;
-    prompt += `- Target Audience: "${data.targetAudience || 'N/A'}" (Design for THEM. Consider their likely aesthetic preferences, technical savviness, and what would resonate most strongly. A site for 'young gamers' will differ vastly from one for 'corporate executives'.)\n`;
+    prompt += `- Target Audience: "${data.targetAudience || 'N/A'}" (CRITICAL: Design for THEM. This should heavily influence not only aesthetics but also the *type of content, specific sections generated, imagery choices, and overall communication style*. Consider their likely aesthetic preferences, technical savviness, and what would resonate most strongly. A site for 'young gamers' will require different sections, content, and interactivity than one for 'corporate executives'.)\n`;
     prompt += `- Overall Tone/Style: "${data.tone || 'Modern and professional'}" (This is paramount. Let it dictate typography, color depth, imagery style, spacing, and even the feel of any (CSS-based) micro-interactions. E.g., 'playful' might use brighter colors and rounded shapes; 'sophisticated' might use elegant fonts and a more reserved palette with impactful imagery.)\n`;
     prompt += `--- End Core Creative Synthesis ---\n`;
 
@@ -259,7 +273,8 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     prompt += `- Beyond the Literal: Think about the *implied* needs. If the business is "eco-friendly handmade soaps," the design should *feel* natural, artisanal, and trustworthy, even if the user didn't explicitly list those adjectives in the 'tone'.\n`;
     prompt += `- Visual Hierarchy & Flow: Craft a clear visual journey for the user. Guide their eye intentionally through the content, leading them towards the primary goal.\n`;
     prompt += `- Uniqueness: Strive for a design that doesn't look like a common template. What can you do with layout, typography, color, or imagery to make this page memorable and stand out, while still being highly usable and professional?\n`;
-    prompt += `- Subtle Animations: Where appropriate for interactive elements (buttons, links, cards on hover, etc.), incorporate subtle and tasteful CSS-based hover effects or micro-animations. These should enhance the user experience, not distract or overwhelm. Avoid excessive or jarring animations.\n`;
+    prompt += `- Achieve a "Wow Factor": Combine all elements – layout, typography, color, imagery, and animations – creatively to produce a landing page that is not just functional but also impressive, memorable, and leaves a strong positive impression on the target audience.\n`;
+    prompt += `- Dynamic & Engaging Animations: Incorporate meaningful, CSS-based animations to create a "wow factor" and enhance user engagement. This includes: (1) On-scroll reveal effects for sections or elements to make the page feel dynamic as the user explores. (2) Engaging hero section animations (e.g., subtle text effects, background movements, animated graphics if appropriate). (3) Interactive animations for buttons, cards, and other key elements on hover or click, providing clear feedback and a polished feel. Animations should be smooth, modern, relevant to the brand/industry/target audience, and contribute positively to the user experience without being overwhelming or harming performance. Avoid generic or jarring animations; aim for sophistication and purpose.\n`;
 
     // Add Advanced Design Customizations if provided
     if (data.inspirationWebsites) {
@@ -278,9 +293,8 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     prompt += `- The CSS MUST be self-contained within the "css" string. Do NOT include any <link rel="stylesheet" href="..."> tags in the HTML.\n`;
     prompt += `- Aim for a MODERN, CREATIVE, and VISUALLY APPEALING design. Incorporate contemporary design trends and avoid generic templates. Consider unique layouts, bold typography, and engaging visual elements.\n`;
     prompt += `- Ensure the CSS makes the page responsive across common device sizes (desktop, tablet, mobile). Use flexbox or grid for layout where appropriate.\n`;
-    prompt += `- For social media links, try to use common font icon classes (like Font Awesome, e.g., <i class="fab fa-twitter"></i>) or use text links if icons are not feasible. If using font icons, ensure the CSS includes the necessary @import or font-face rules if they are not commonly available by default. However, prefer inline SVGs or simple text links if complex icon font setup is too much for a single CSS string.\n`;
+    prompt += `- For social media links, if specific URLs are provided (see Social Media Links section above), YOU MUST USE THOSE EXACT URLs. For icons, try to use common font icon classes (like Font Awesome, e.g., <i class="fab fa-instagram"></i> for Instagram) or use text links if icons are not feasible. If using font icons, ensure the CSS includes the necessary @import or font-face rules if they are not commonly available by default. However, prefer inline SVGs or simple text links if complex icon font setup is too much for a single CSS string. The key is that the links MUST point to the user-provided URLs.\n`;
     prompt += `- Make the landing page visually appealing and user-friendly. Ensure good contrast for accessibility.\n`;
-    prompt += `- Double-check that the output is ONLY the JSON object as specified.\n`;
 
     return prompt;
 }

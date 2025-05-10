@@ -249,10 +249,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentStep < totalSteps) {
             formSteps[currentStep - 1].classList.remove('active');
             currentStep++;
-            formSteps[currentStep - 1].classList.add('active');
+            const activeStep = formSteps[currentStep - 1];
+            activeStep.classList.add('active');
             updateProgressBar();
-            if (questionnaireContainer) {
-                questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (activeStep) {
+                activeStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
     }
@@ -261,10 +262,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentStep > 1) {
             formSteps[currentStep - 1].classList.remove('active');
             currentStep--;
-            formSteps[currentStep - 1].classList.add('active');
+            const activeStep = formSteps[currentStep - 1];
+            activeStep.classList.add('active');
             updateProgressBar();
-            if (questionnaireContainer) {
-                questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (activeStep) {
+                activeStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
     }
@@ -272,10 +274,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function goToStep(stepNumber) {
         formSteps[currentStep - 1].classList.remove('active');
         currentStep = stepNumber;
-        formSteps[currentStep - 1].classList.add('active');
+        const activeStep = formSteps[currentStep - 1];
+        activeStep.classList.add('active');
         updateProgressBar();
-        if (questionnaireContainer) {
-            questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (activeStep) {
+            activeStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
     
@@ -326,8 +329,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (!isValid && questionnaireContainer) {
-            questionnaireContainer.scrollIntoView({ behavior: 'auto', block: 'start' }); // Changed to 'auto' for potentially better mobile compatibility
+        if (!isValid) {
+            const activeStep = formSteps[currentStep - 1];
+            if (activeStep) {
+                activeStep.scrollIntoView({ behavior: 'auto', block: 'start' }); 
+            }
         }
         
         return isValid;
