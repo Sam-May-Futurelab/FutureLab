@@ -105,6 +105,37 @@ function constructPrompt(data) {
 
     prompt += `--- End Header Configuration ---\n`;
 
+    // NEW: Header Navigation Menu Instructions
+    prompt += `\n--- Header Navigation Menu ---\n`;
+    prompt += `In addition to the logo/business name, the header should include a navigation menu if relevant sections are present on the page. This menu should contain links to the main sections of the page that are being generated.\n`;
+    prompt += `For each of the following sections, if it is included on the page (check the 'data.sections' array which includes values like 'about', 'features', 'pricing', 'testimonials', 'faqs', 'contact'), add a corresponding link in the header navigation menu:\n`;
+
+    const availableSectionsForNav = [
+        { key: 'about', name: 'About Us', id: 'about-us' },
+        { key: 'features', name: 'Features', id: 'features' },
+        { key: 'pricing', name: 'Pricing', id: 'pricing' },
+        { key: 'testimonials', name: 'Testimonials', id: 'testimonials' },
+        { key: 'faqs', name: 'FAQs', id: 'faqs' },
+        { key: 'contact', name: 'Contact', id: 'contact' }
+    ];
+
+    let navLinksInstructionAdded = false;
+    availableSectionsForNav.forEach(section => {
+        // Check if data.sections exists and includes the section key
+        if (data.sections && data.sections.includes(section.key)) {
+            prompt += `  - A link to the "${section.name}" section. The link text should be "${section.name}" and it MUST navigate to an anchor on the page (e.g., <a href="#${section.id}">${section.name}</a>). CRITICAL: Ensure the corresponding generated section on the page has the exact id="${section.id}" for the link to work.\n`;
+            navLinksInstructionAdded = true;
+        }
+    });
+
+    if (navLinksInstructionAdded) {
+        prompt += `Style these navigation links clearly. They should be easily distinguishable from the logo/business name and typically appear alongside or opposite the logo, depending on the chosen header layout (e.g., logo left, nav links right). The navigation links should be arranged horizontally on larger screens.\n`;
+        prompt += `The navigation menu MUST be responsive. For smaller screens (e.g., mobile, tablets), it should collapse into a hamburger menu icon that, when clicked, reveals the navigation links vertically or in an overlay. Ensure the JavaScript/CSS for this toggle functionality is included if you implement a hamburger menu.\n`;
+    } else {
+        prompt += `No specific page sections were selected that typically appear in a primary navigation menu, or no such sections were selected at all. In this case, the header can consist of just the logo/business name. Ensure the header still looks balanced.\n`;
+    }
+    prompt += `--- End Header Navigation Menu ---\n`;
+
     prompt += `Business Description: ${data.businessDescription || 'N/A'}\n`;
     prompt += `Primary Goal of the Page: ${data.primaryGoal || 'N/A'}\n`;
     prompt += `Target Audience: ${data.targetAudience || 'N/A'}\n`;
@@ -379,7 +410,16 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
             prompt += `   - Presentation: Present these as a list, a series of cards, or iconic blurbs. Each item should be distinct and easy to read.\n`;
             prompt += `   - Animation: If presented as multiple items (cards, list items), apply a subtle CSS hover animation to each item (e.g., slight lift, shadow change, border highlight) for interactivity.\n`;
         } else {
-            prompt += `   - Content Generation: The user did not provide specific "Must-Have Elements/Keywords" for this section. Generate 3-5 compelling placeholder features/benefits that are highly relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}". Clearly mark this content as placeholder text (e.g., "[Placeholder: Describe a key feature/benefit here.]").\n`;
+            prompt += `   - Content Generation: The user did not provide specific "Must-Have Elements/Keywords" for this section. \n`;
+            prompt += `     Attempt to intelligently derive 3-5 compelling features/benefits by analyzing the following user inputs (if available):\n`;
+            prompt += `       1. Business Description: "${data.businessDescription || 'N/A'}"\n`;
+            prompt += `       2. Primary Goal of the Page: "${data.primaryGoal || 'N/A'}"\n`;
+            if (data.pricingPlans && Array.isArray(data.pricingPlans) && data.pricingPlans.length > 0 && data.pricingPlans.some(p => p.name && p.price)) {
+                prompt += `       3. Pricing Plan Details: Review names, prices, and features listed in the pricing plans to extract key service highlights.\n`;
+            }
+            prompt += `       4. About Us Snippet: "${data.aboutUsSnippet || 'N/A'}"\n`;
+            prompt += `     Synthesize these details to create features that are highly relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}".\n`;
+            prompt += `     If sufficient detail cannot be derived, then as a last resort, use generic placeholders like "[Placeholder: Describe a key feature/benefit here.]".\n`;
             prompt += `   - Animation: If presented as multiple items, apply a subtle CSS hover animation as described above.\n`;
         }
         prompt += `Style this section to be persuasive and visually engaging, reinforcing the value proposition of the business/product.\n`;

@@ -827,74 +827,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 return; // Stop further processing
             }
 
-            const aiOutput = await response.json();
-            
-            generationStep.textContent = 'Finalizing your page...';
-            
-            lastGeneratedHTML = aiOutput.html || '<!-- No HTML generated -->';
-            lastGeneratedCSS = aiOutput.css || '/* No CSS generated */';
+            const parsedCode = await response.json();
+            generationStep.textContent = 'Building your page preview...';
 
-            let previewDocContent = `
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>AI Generated Preview</title>
-                    <style>
-                        body { 
-                            margin: 0; 
-                            padding: 15px; 
-                            background-color: #f0f0f0; 
-                            color: #333; 
-                            font-family: sans-serif; 
-                        }
-                        ${aiOutput.css || '/* No CSS from AI */'}
-                    </style>
-                </head>
-                <body>
-                    ${aiOutput.html || '<!-- No HTML content to display -->'}
-                </body>
-                </html>
-            `;
-
-            setTimeout(() => { 
-                generationOverlay.classList.remove('active');
-                
-                if (previewPlaceholderContainer) {
-                    previewPlaceholderContainer.style.display = 'none'; 
-                }
+            if (parsedCode.html && parsedCode.css) {
+                lastGeneratedHTML = parsedCode.html;
+                lastGeneratedCSS = parsedCode.css;
 
                 if (pagePreview) {
-                    pagePreview.style.display = 'block'; 
-                    const iframeDoc = pagePreview.contentDocument || pagePreview.contentWindow.document;
-                    iframeDoc.open();
-                    iframeDoc.write(previewDocContent);
-                    iframeDoc.close();
-                } else {
-                    console.error('pagePreview (iframe) element not found for content injection!');
-                    displayErrorInPreview('Preview iframe not found.'); 
+                    pagePreview.srcdoc = `<html><head><style>${parsedCode.css}</style></head><body>${parsedCode.html}</body></html>`;
+                    pagePreview.style.display = 'block';
                 }
-                
-                if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'block';
-                
-                // MODIFIED SCROLL LOGIC for successful generation
-                if (questionnaireContainer) {
-                    questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (previewPlaceholderContainer) {
+                    previewPlaceholderContainer.style.display = 'none';
                 }
-            }, 1000);
+                if (downloadButtonsContainer) {
+                    downloadButtonsContainer.style.display = 'flex';
+                }
+                generationStep.textContent = 'Your page is ready!';
+                
+                // MODIFIED: Scroll to the page preview on successful generation
+                if (pagePreview) {
+                    pagePreview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
 
-        } catch (error) { // Catches network errors or errors in the success processing path
-            console.error('Error in getAICodeGeneration:', error);
-            generationStep.textContent = `Error: ${error.message}. Please try again.`;
-            displayErrorInPreview(error.message); // Use helper
-            // MODIFIED SCROLL for catch block errors
-            if (questionnaireContainer) {
-                questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                console.error("AI response JSON does not contain html and css strings:", parsedCode);
+                displayErrorInPreview('AI response was not in the expected format. HTML or CSS missing.');
+                // displayErrorInPreview handles scrolling to questionnaireContainer
             }
-            setTimeout(() => {
-                 generationOverlay.classList.remove('active');
-            }, 3000); 
+
+        } catch (error) {
+            console.error('Error fetching AI code:', error);
+            displayErrorInPreview(`Failed to generate page: ${error.message}. Check console for more details.`);
+            // displayErrorInPreview handles scrolling to questionnaireContainer
+        } finally {
+            generationOverlay.classList.remove('active');
         }
     }
 
