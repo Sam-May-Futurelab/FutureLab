@@ -71,15 +71,14 @@ document.addEventListener('DOMContentLoaded', function() {
             unsavedChangesIndicator.style.display = 'block';
         }
         if (saveEditedPageBtn) {
-            saveEditedPageBtn.classList.remove('btn-success'); // Default style
-            saveEditedPageBtn.classList.add('btn-warning'); // Indicate action needed
+            saveEditedPageBtn.classList.remove('btn-success'); 
+            saveEditedPageBtn.classList.add('btn-warning'); 
         }
-        // Disable download button if there are unsaved changes
         if (downloadEditedPageBtn) {
             downloadEditedPageBtn.disabled = true;
-            downloadEditedPageBtn.title = "Save your changes before downloading.";
+            downloadEditedPageBtn.title = "Save your changes before downloading the page."; // Changed title for consistency
         }
-        if (downloadEditedCssBtn) { // New
+        if (downloadEditedCssBtn) { 
             downloadEditedCssBtn.disabled = true;
             downloadEditedCssBtn.title = "Save your changes before downloading CSS.";
         }
@@ -94,46 +93,42 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleEditModeBtn.classList.toggle('active', editorActive);
             toggleEditModeBtn.innerHTML = editorActive ? '<i class="fas fa-times-circle"></i> Disable Edit Mode' : '<i class="fas fa-pencil-alt"></i> Toggle Edit Mode';
             
-            // Visual cue for edit mode active on the container
             if (previewControlsContainer) {
-                if (editorActive) {
-                    previewControlsContainer.style.backgroundColor = 'var(--light-blue-bg)'; // Or a more prominent color
-                } else {
-                    previewControlsContainer.style.backgroundColor = 'transparent';
-                }
+                previewControlsContainer.style.backgroundColor = editorActive ? 'var(--light-blue-bg)' : 'transparent';
             }
 
             if (saveEditedPageBtn) {
                 saveEditedPageBtn.style.display = editorActive ? 'inline-block' : 'none';
             }
+            
+            const hasEverBeenSaved = lastSavedEditedHtml !== '';
+
             if (downloadEditedPageBtn) {
                 downloadEditedPageBtn.style.display = editorActive ? 'inline-block' : 'none';
-                downloadEditedPageBtn.disabled = !lastSavedEditedHtml; // Disable if no saved content yet
-                downloadEditedPageBtn.title = !lastSavedEditedHtml ? "Save your edits first to enable page download." : "Download the last saved version of your edited page (HTML with embedded CSS).";
+                downloadEditedPageBtn.disabled = !hasEverBeenSaved;
+                downloadEditedPageBtn.title = hasEverBeenSaved ? "Download the last saved version of your edited page (HTML with embedded CSS)." : "Save your edits first to enable page download.";
             }
-            if (downloadEditedCssBtn) { // New
+            if (downloadEditedCssBtn) { 
                 downloadEditedCssBtn.style.display = editorActive ? 'inline-block' : 'none';
-                downloadEditedCssBtn.disabled = !lastSavedCustomCSS; // Disable if no custom CSS was saved
-                downloadEditedCssBtn.title = !lastSavedCustomCSS ? "Save your edits first to enable CSS download." : "Download the custom CSS for your edits.";
+                downloadEditedCssBtn.disabled = !hasEverBeenSaved;
+                downloadEditedCssBtn.title = hasEverBeenSaved 
+                                                ? (lastSavedCustomCSS ? "Download the custom CSS for your edits." : "Download custom CSS (no color styles were saved).") 
+                                                : "Save your edits first to enable CSS download.";
             }
             if (editModeInstructions) {
                 editModeInstructions.style.display = editorActive ? 'block' : 'none';
             }
-            // If turning off edit mode, hide unsaved changes indicator and reset its state
-            if (!editorActive && unsavedChangesIndicator) {
-                unsavedChangesIndicator.style.display = 'none';
+            
+            if (!editorActive) { // When turning OFF edit mode
+                if (unsavedChangesIndicator) unsavedChangesIndicator.style.display = 'none';
                 hasUnsavedChanges = false;
                 if (saveEditedPageBtn) {
                     saveEditedPageBtn.classList.remove('btn-warning');
                     saveEditedPageBtn.classList.add('btn-success');
                 }
-                // If disabling edit mode, ensure download buttons reflect last saved state
-                if (downloadEditedPageBtn) {
-                    downloadEditedPageBtn.disabled = !lastSavedEditedHtml;
-                }
-                if (downloadEditedCssBtn) { // New
-                    downloadEditedCssBtn.disabled = !lastSavedCustomCSS;
-                }
+                // Buttons are hidden by display:none, but ensure their logical disabled state is correct if they were to be shown.
+                if (downloadEditedPageBtn) downloadEditedPageBtn.disabled = !hasEverBeenSaved;
+                if (downloadEditedCssBtn) downloadEditedCssBtn.disabled = !hasEverBeenSaved;
             }
         });
     }
@@ -144,11 +139,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (pagePreviewIframe && pagePreviewIframe.contentDocument && pagePreviewIframe.contentDocument.body) {
                 lastSavedEditedHtml = pagePreviewIframe.contentDocument.body.innerHTML;
                 
-                // Get custom CSS from in-page-editor.js
                 if (typeof window.getCustomCss === 'function') {
                     lastSavedCustomCSS = window.getCustomCss();
                 } else {
-                    lastSavedCustomCSS = ''; // Fallback
+                    lastSavedCustomCSS = ''; 
                     console.warn("window.getCustomCss function not found. Custom CSS will not be available for download separately.");
                 }
 
@@ -161,10 +155,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 showSaveNotification("Your edits have been saved! You can now download the page or continue editing.");
                 console.log("Saved HTML content and custom CSS prepared.");
 
-                // Enable download button after saving
+                // Enable download buttons after saving, based on content availability
                 if (downloadEditedPageBtn) {
-                    downloadEditedPageBtn.disabled = false;
-                    downloadEditedPageBtn.title = "Download the last saved version of your edited page (HTML with embedded CSS).";
+                    downloadEditedPageBtn.disabled = !lastSavedEditedHtml; // Uniformly check content
+                    downloadEditedPageBtn.title = lastSavedEditedHtml ? 
+                        "Download the last saved version of your edited page (HTML with embedded CSS)." : 
+                        "No HTML content was saved to download.";
                 }
                 if (downloadEditedCssBtn) { // New
                     downloadEditedCssBtn.disabled = !lastSavedCustomCSS; // Enable only if there's custom CSS

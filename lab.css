@@ -263,6 +263,18 @@
     color: var(--dark-theme-text-color);
 }
 
+/* Save Notification Popup */
+#save-notification-popup {
+    background-color: var(--popup-bg-color, #e9f7ef); /* Light mode default */
+    color: var(--popup-text-color, #155724); /* Light mode default */
+}
+
+[data-theme="dark"] #save-notification-popup {
+    background-color: var(--popup-bg-color-dark, #2a3b2a); /* Dark green, better contrast */
+    color: var(--popup-text-color-dark, #c8e6c9); /* Light green text */
+    border: 1px solid var(--popup-border-color-dark, #385038);
+}
+
 /* Color Picker Panel */
 .color-picker-panel {
     position: fixed;
@@ -331,6 +343,84 @@
 .color-picker-panel .btn-sm {
     padding: 6px 10px;
     font-size: 0.85rem;
+}
+
+#color-picker-panel {
+    background-color: var(--color-picker-bg, #fff); /* Default light mode */
+    color: var(--color-picker-text, #333); /* Default light mode */
+    border: 1px solid var(--color-picker-border, #ccc);
+}
+
+#color-picker-panel h4 {
+    color: var(--color-picker-header-text, #333); /* Default light mode */
+}
+
+#color-picker-panel label {
+    color: var(--color-picker-label-text, #555); /* Default light mode */
+}
+
+#color-picker-panel .color-input-group input[type="color"] {
+    border: 1px solid var(--color-picker-input-border, #ddd);
+}
+
+#color-picker-panel button {
+    background-color: var(--color-picker-button-bg, #007bff);
+    color: var(--color-picker-button-text, white);
+}
+
+#color-picker-panel button.secondary {
+    background-color: var(--color-picker-button-secondary-bg, #6c757d);
+}
+
+#color-picker-panel #closeColorPickerBtn {
+    background-color: transparent;
+    color: var(--color-picker-close-btn-text, #555);
+}
+
+[data-theme="dark"] #color-picker-panel {
+    background-color: var(--color-picker-bg-dark, #282c34); /* Darker background for the panel */
+    color: var(--color-picker-text-dark, #abb2bf); /* Lighter text for readability */
+    border: 1px solid var(--color-picker-border-dark, #3a3f4b);
+}
+
+[data-theme="dark"] #color-picker-panel h4 {
+    color: var(--color-picker-header-text-dark, #e2e8f0); /* Light text for header */
+}
+
+[data-theme="dark"] #color-picker-panel label {
+    color: var(--color-picker-label-text-dark, #c5c8c6); /* Light grey for labels */
+}
+
+[data-theme="dark"] #color-picker-panel .color-input-group input[type="color"] {
+    border: 1px solid var(--color-picker-input-border-dark, #4a4e58);
+}
+
+[data-theme="dark"] #color-picker-panel button {
+    background-color: var(--color-picker-button-bg-dark, #0056b3); /* Darker blue for buttons */
+    color: var(--color-picker-button-text-dark, #e2e8f0); /* Light text on buttons */
+    border: 1px solid var(--color-picker-button-border-dark, #004085);
+}
+[data-theme="dark"] #color-picker-panel button:hover {
+    background-color: var(--color-picker-button-hover-bg-dark, #004085);
+}
+
+[data-theme="dark"] #color-picker-panel button.secondary {
+    background-color: var(--color-picker-button-secondary-bg-dark, #5a6268); /* Darker grey for secondary buttons */
+    border: 1px solid var(--color-picker-button-secondary-border-dark, #494e53);
+}
+[data-theme="dark"] #color-picker-panel button.secondary:hover {
+    background-color: var(--color-picker-button-secondary-hover-bg-dark, #494e53);
+}
+
+[data-theme="dark"] #color-picker-panel #closeColorPickerBtn {
+    color: var(--color-picker-close-btn-text-dark, #abb2bf); /* Lighter text for close button */
+}
+[data-theme="dark"] #color-picker-panel #closeColorPickerBtn:hover {
+    color: var(--color-picker-close-btn-hover-text-dark, #ffffff);
+}
+
+[data-theme="dark"] #color-picker-target-info {
+    color: var(--color-picker-label-text-dark, #c5c8c6); /* Ensure this is also themed */
 }
 
 @media (max-width: 768px) {

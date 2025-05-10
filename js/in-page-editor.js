@@ -4,6 +4,7 @@ console.log("In-page editor script loaded.");
 let isEditModeActive = false;
 let currentIframeDocument = null; 
 let currentEditingElementForColor = null;
+let colorPickerTargetInfo = null; // Reference to the color picker target info div
 const customCssRules = {}; // Stores element.id -> { background: '...', text: '...' }
 
 // Color Picker Panel elements (to be initialized in initInPageEditor if they are in the main document)
@@ -34,6 +35,23 @@ function openColorPicker(element) {
         return;
     }
     currentEditingElementForColor = element;
+    ensureId(currentEditingElementForColor); // Ensure the element has an ID
+
+    // Populate target info
+    if (colorPickerTargetInfo) {
+        let targetName = currentEditingElementForColor.tagName.toLowerCase();
+        if (currentEditingElementForColor.id) {
+            targetName += `#${currentEditingElementForColor.id}`;
+        } else if (currentEditingElementForColor.classList.length > 0) {
+            targetName += `.${Array.from(currentEditingElementForColor.classList).join('.')}`;
+        } else {
+            // Fallback: first few words of text content
+            const text = currentEditingElementForColor.textContent.trim().split(/\s+/).slice(0, 3).join(" ");
+            if (text) targetName += ` ("${text}...")`;
+        }
+        colorPickerTargetInfo.querySelector('span').textContent = targetName;
+    }
+
     const computedStyle = window.getComputedStyle(element);
 
     // Attempt to get existing inline style first, then computed, then default
@@ -58,6 +76,9 @@ function closeColorPicker() {
         colorPickerPanel.style.display = 'none';
     }
     currentEditingElementForColor = null;
+    if (colorPickerTargetInfo) { // Clear target info
+        colorPickerTargetInfo.querySelector('span').textContent = 'N/A';
+    }
 }
 
 function applyColors() {
@@ -79,7 +100,7 @@ function applyColors() {
         window.notifyUnsavedChange();
     }
     console.log("Applied colors:", customCssRules);
-    // No need to close picker here, user might want to try other colors
+    // Keep picker open after applying, user might want to tweak.
 }
 
 function removeCustomColors() {
@@ -160,10 +181,32 @@ function initInPageEditor(iframeDocument) {
     applyColorsBtn = window.parent.document.getElementById('applyColorsBtn');
     removeColorsBtn = window.parent.document.getElementById('removeColorsBtn');
     closeColorPickerBtn = window.parent.document.getElementById('closeColorPickerBtn');
+    colorPickerTargetInfo = window.parent.document.getElementById('color-picker-target-info'); // Initialize here too
 
-    if (applyColorsBtn) applyColorsBtn.addEventListener('click', applyColors);
-    if (removeColorsBtn) removeColorsBtn.addEventListener('click', removeCustomColors);
-    if (closeColorPickerBtn) closeColorPickerBtn.addEventListener('click', closeColorPicker);
+    if (colorPickerPanel) {
+        // Prevent clicks inside the color picker from closing it if the iframe click listener would do so
+        colorPickerPanel.addEventListener('click', function(event) {
+            event.stopPropagation(); // Stop the click from bubbling up to the document/iframe listeners
+        });
+    }
+
+    if (applyColorsBtn) {
+        applyColorsBtn.addEventListener('click', () => {
+            applyColors();
+            // Keep picker open after applying
+        });
+    }
+
+    if (removeColorsBtn) {
+        removeColorsBtn.addEventListener('click', () => {
+            removeCustomColors();
+            // Keep picker open
+        });
+    }
+
+    if (closeColorPickerBtn) {
+        closeColorPickerBtn.addEventListener('click', closeColorPicker);
+    }
 
     const textEditableSelectors = 'h1, h2, h3, h4, h5, h6, p, a, span, li, button, label, th, td'; // Elements for direct text editing
     // General clickable selectors for color editing (broader)
@@ -232,9 +275,11 @@ function initInPageEditor(iframeDocument) {
         // If not a text edit, consider for color editing
         const colorTarget = target.closest(colorEditableSelectors);
         if (colorTarget && !colorTarget.closest('svg, canvas, img, video, input, textarea, select') && colorTarget.tagName !== 'BODY' && colorTarget.tagName !== 'HTML') {
-            console.log("InPageEditor: Opening color picker for element:", colorTarget);
-            openColorPicker(colorTarget);
-            event.stopPropagation(); // Prevent further bubbling if needed
+            if (event.altKey) { // Alt-click to open color picker
+                console.log("InPageEditor: Opening color picker for element:", colorTarget);
+                openColorPicker(colorTarget);
+                event.stopPropagation(); // Prevent further bubbling if needed
+            }
         }
     };
 
