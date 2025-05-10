@@ -214,6 +214,125 @@
     color: #94a3b8;
 }
 
+/* Save Notification Popup */
+.save-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--success-color);
+    color: white;
+    padding: 15px 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 1050; /* Ensure it's above other elements */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 90%;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, bottom 0.3s ease-in-out;
+    font-size: 1rem;
+}
+
+.save-notification.show {
+    opacity: 1;
+    bottom: 30px; /* Slide up a bit when shown */
+}
+
+.save-notification p {
+    margin: 0;
+    margin-right: 20px;
+    line-height: 1.4;
+}
+
+.save-notification .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+}
+.dark-theme .save-notification {
+    background-color: var(--success-color-dark); /* Or a specific dark theme success color */
+    color: var(--dark-theme-text-color); /* Ensure text is readable */
+}
+.dark-theme .save-notification .close-btn {
+    color: var(--dark-theme-text-color);
+}
+
+/* Color Picker Panel */
+.color-picker-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--light-color);
+    padding: 20px;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--box-shadow-lg);
+    z-index: 1100; /* Above save notification */
+    border: 1px solid var(--border-color);
+    width: 280px;
+}
+
+.dark-theme .color-picker-panel {
+    background-color: var(--dark-bg-secondary);
+    border-color: var(--dark-border-color);
+}
+
+.color-picker-panel h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: var(--dark-color);
+    text-align: center;
+}
+
+.dark-theme .color-picker-panel h4 {
+    color: var(--light-color);
+}
+
+.color-picker-panel .color-input-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.color-picker-panel label {
+    margin-right: 10px;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+.dark-theme .color-picker-panel label {
+    color: var(--dark-theme-text-color);
+}
+
+.color-picker-panel input[type="color"] {
+    width: 100px; /* Adjust as needed */
+    height: 35px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 2px;
+}
+.dark-theme .color-picker-panel input[type="color"] {
+    border-color: var(--dark-border-color);
+}
+
+.color-picker-panel .button-group {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.color-picker-panel .btn-sm {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+}
+
 @media (max-width: 768px) {
     .ai-features-section ul,
     .ai-customization-section ul {
