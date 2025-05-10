@@ -240,9 +240,16 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     }
     prompt += `Font Style: ${data.fontStyle || 'Arial, sans-serif'}\n`;
 
+    prompt += `\n--- Hero Section Styling ---\n`;
+    if (data.aiColors === 'on') {
+        prompt += `Hero Section Background: Use the AI-selected color palette to create a beautiful and modern gradient background for the hero section. Ensure it complements the overall design.\n`;
+    } else {
+        prompt += `Hero Section Background: Use the primary color (${data.primaryColorHex || '#4361EE'}) and secondary color (${data.secondaryColorHex || '#4CC9F0'}) to create a beautiful and modern gradient background for the hero section. The gradient should be visually appealing and harmonious.\n`;
+    }
+    prompt += `--- End Hero Section Styling ---\n`;
+
     // Social Media Links
     prompt += `\n--- Social Media Links ---\n`;
-    // Corrected to use data.socials based on HTML form structure
     if (data.socials && Object.keys(data.socials).length > 0) {
         prompt += `Include the following social media links. Use the exact URLs provided. For each, display the platform name or a standard icon, and link it to the given URL:\n`;
         for (const [platform, url] of Object.entries(data.socials)) {
@@ -280,7 +287,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     // FAQs Section
     prompt += `\n--- FAQs Section ---\n`;
     if (data.faqs && Array.isArray(data.faqs) && data.faqs.some(f => f.question && f.question.trim() !== '' && f.answer && f.answer.trim() !== '')) {
-        prompt += `The user has provided FAQs. Include a dedicated "Frequently Asked Questions" (or similar) section. For each FAQ, display the question and its corresponding answer. This section should be clear, readable, and potentially use accordions or expandable elements for a good user experience if there are multiple FAQs. Include ALL provided FAQs:\n`;
+        prompt += `The user has provided FAQs. Include a dedicated "Frequently Asked Questions" (or similar) section. For each FAQ, display the question and its corresponding answer. This section MUST be styled using an accordion/dropdown pattern where the answer is hidden by default and REVEALS SMOOTHLY ON CLICK (not on hover). Include ALL provided FAQs:\n`;
         data.faqs.forEach((faq, index) => {
             if (faq.question && faq.question.trim() !== '' && faq.answer && faq.answer.trim() !== '') {
                 prompt += `  FAQ ${index + 1}:\n`;
@@ -292,6 +299,39 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
         prompt += `No FAQs provided by the user. Do not include an FAQ section unless it's a generic placeholder clearly marked as such and suggested by the AI based on the business type. If you add a placeholder, clearly state "Placeholder for FAQs - user should add actual questions and answers here."\n`;
     }
     prompt += `--- End FAQs Section ---\n`;
+
+    // About Us Section
+    prompt += `\n--- About Us Section ---\n`;
+    if (data.aboutUsSnippet && data.aboutUsSnippet.trim() !== '') {
+        prompt += `The user has provided an "About Us" snippet. Include a dedicated "About Us" section on the page. Use the following content:\n`;
+        prompt += `  - Snippet: "${data.aboutUsSnippet.trim()}"\n`;
+        prompt += `Style this section appropriately to fit the overall design and effectively introduce the business/project.\n`;
+    } else if (data.sections && data.sections.includes('about')) { // If "About Us" was checked but no snippet provided
+        prompt += `The user selected to include an "About Us" section but did not provide a specific snippet. Generate a concise, well-written placeholder "About Us" section that is relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}". Clearly mark this content as placeholder text that the user should customize, for example, by starting with "[Placeholder: Tell your story here...]".\n`;
+    } else {
+        prompt += `No "About Us" snippet provided and the section was not explicitly requested to be generated with placeholder content. Omit the "About Us" section unless it is critically essential for the business type and AI suggests it (in which case, use a clearly marked placeholder as described above).\n`;
+    }
+    prompt += `--- End About Us Section ---\n`;
+    
+    // Contact Section
+    prompt += `\n--- Contact Section ---\n`;
+    // Check if 'contact' is in data.sections OR if a contactFormEmail was provided (as the field only shows if contact is implicitly desired)
+    const includeContactSection = (data.sections && data.sections.includes('contact')) || (data.contactFormEmail && data.contactFormEmail.trim() !== '');
+
+    if (includeContactSection) {
+        prompt += `The user has requested a "Contact Us" section. This section MUST feature a functional contact form.\n`;
+        prompt += `The contact form should collect at least the sender's name, email, and a message.\n`;
+        prompt += `The form's submission action MUST be a 'mailto:' link.\n`;
+        if (data.contactFormEmail && data.contactFormEmail.trim() !== '') {
+            prompt += `Use the following email address for the 'mailto:' link: ${data.contactFormEmail.trim()}\n`;
+        } else {
+            prompt += `The user did not provide a specific email for the contact form, but requested the section. Use a placeholder email like 'your.email@example.com' for the 'mailto:' link AND include a visible note in the HTML (e.g., as a comment or small text near the form) instructing the user: "Remember to update the placeholder email address in this contact form.".\n`;
+        }
+        prompt += `Style the contact form to be user-friendly and visually consistent with the rest of the page design.\n`;
+    } else {
+        prompt += `The user has NOT explicitly requested a "Contact Us" section with a form. Omit this section.\n`;
+    }
+    prompt += `--- End Contact Section ---\n`;
 
     prompt += `\n--- Core Creative Synthesis ---\n`;
     prompt += `Holistically synthesize the following aspects to inform ALL design decisions. The aim is a cohesive, persuasive, and highly creative vision that deeply reflects the user's intent, not just a list of features:\n`;
@@ -322,7 +362,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
 
     prompt += `\nImportant Instructions for AI:\r\n`;
     prompt += `- Generate complete HTML for a single page and all necessary CSS.\r\n`;
-    prompt += `- CRITICAL: If the user provides specific optional content (e.g., social media URLs in the 'Social Media Links' section, testimonials in the 'Testimonials Section', FAQs in the 'FAQs Section', 'About Us' snippets, 'Pricing Plan' details), YOU MUST include this content in the generated page. Do not omit user-provided data for these optional sections. If a section is toggled on or has data, it should appear.\n`;
+    prompt += `- CRITICAL: If the user provides specific optional content (e.g., social media URLs, testimonials, FAQs, 'About Us' snippet, 'Pricing Plan' details, contact form email), YOU MUST include this content in the generated page. If a section is toggled on or has data, it should appear. This includes the 'About Us' section if a snippet is provided (see 'About Us Section' details) and the contact form email (see 'Contact Section' details). Do not omit user-provided data for these sections.\n`;
     prompt += `- Provide your response as a single, valid JSON object with two keys: "html" and "css". The value for "html" should be the full HTML code as a string. The value for "css" should be the full CSS code as a string. No other text or formatting outside this JSON object.\n`;
     prompt += `- The CSS MUST be self-contained within the "css" string. Do NOT include any <link rel="stylesheet" href="..."> tags in the HTML.\n`;
     prompt += `- Aim for a MODERN, CREATIVE, and VISUALLY APPEALING design. Incorporate contemporary design trends and avoid generic templates. Consider unique layouts, bold typography, and engaging visual elements.\n`;

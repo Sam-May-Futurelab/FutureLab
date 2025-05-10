@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const businessTypeDropdown = document.getElementById('business-type'); // Added
     const otherBusinessTypeContainer = document.getElementById('other-business-type-container'); // Added
     const otherBusinessTypeInput = document.getElementById('other-business-type'); // Added
+    const contactSectionCheckbox = document.getElementById('contact-section-checkbox'); // Added for contact form email
+    const contactEmailFieldsContainer = document.getElementById('contact-email-fields-container'); // Added for contact form email
     
     // Dynamic entry containers and buttons
     const addPricingPlanBtn = document.getElementById('add-pricing-plan-btn');
@@ -89,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleConditionalSectionDisplay(testimonialsSectionCheckbox, testimonialsFieldsContainer);
         toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer);
         toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer);
+        toggleConditionalSectionDisplay(contactSectionCheckbox, contactEmailFieldsContainer); // Added for contact form email
         toggleOtherBusinessTypeVisibility(); // Added: Initial check for "Other" business type
 
         // Added: Initialize Advanced Design Customizations toggle as collapsed
@@ -188,6 +191,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (faqSectionCheckbox) {
             faqSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer));
+        }
+        if (contactSectionCheckbox) { // Added for contact form email
+            contactSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(contactSectionCheckbox, contactEmailFieldsContainer));
         }
 
         // Event listener for adding pricing plans
