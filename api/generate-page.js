@@ -248,17 +248,40 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
 
     // Social Media Links
     prompt += `\n--- Social Media Links ---\n`;
-    if (data.socialLinks && Object.keys(data.socialLinks).length > 0) {
-        prompt += `Include the following social media links. Use the exact URLs provided. If using icons (e.g., Font Awesome), ensure the href attributes correctly point to these URLs:\n`;
-        for (const [platform, url] of Object.entries(data.socialLinks)) {
-            if (url) { // Ensure URL is not empty
-                prompt += `- ${platform.charAt(0).toUpperCase() + platform.slice(1)}: ${url}\n`;
+    // Corrected to use data.socials based on HTML form structure
+    if (data.socials && Object.keys(data.socials).length > 0) {
+        prompt += `Include the following social media links. Use the exact URLs provided. For each, display the platform name or a standard icon, and link it to the given URL:\n`;
+        for (const [platform, url] of Object.entries(data.socials)) {
+            if (url && url.trim() !== '') { // Ensure URL is not empty or just whitespace
+                prompt += `- ${platform.charAt(0).toUpperCase() + platform.slice(1)}: ${url.trim()}\n`;
             }
         }
+        prompt += `Ensure these are present and correctly linked in a 'Stay Connected' or similar footer/contact section.\n`;
     } else {
-        prompt += `No specific social media links provided. You can omit a social media section or, if essential to the design, use placeholder links or icons for common platforms like Twitter, Facebook, Instagram, LinkedIn. If using placeholders, make it clear they are placeholders (e.g., link to # or use generic platform URLs like https://twitter.com/yourprofile).\n`;
+        prompt += `No specific social media links provided by the user. You can omit a social media section entirely, or if a social media presence is strongly implied by the business type or goals, use placeholder links or icons for common platforms (e.g., Twitter, Facebook, Instagram, LinkedIn). If using placeholders, make it clear they are placeholders (e.g., link to # or use generic platform URLs like https://twitter.com/yourprofile) AND state that the user should update these.\n`;
     }
     prompt += `--- End Social Media Links ---\n`;
+
+    // Testimonials
+    prompt += `\n--- Testimonials Section ---\n`;
+    if (data.testimonials && Array.isArray(data.testimonials) && data.testimonials.some(t => t.text && t.text.trim() !== '')) {
+        prompt += `The user has provided testimonials. Include a dedicated "Testimonials" or "What Our Clients Say" section. For each testimonial, display the testimonial text, author, and author's title/company (if provided). Style this section to be engaging and build trust. Include ALL provided testimonials:\n`;
+        data.testimonials.forEach((testimonial, index) => {
+            if (testimonial.text && testimonial.text.trim() !== '') {
+                prompt += `  Testimonial ${index + 1}:\n`;
+                prompt += `    - Text: "${testimonial.text.trim()}"\n`;
+                if (testimonial.author && testimonial.author.trim() !== '') {
+                    prompt += `    - Author: "${testimonial.author.trim()}"\n`;
+                }
+                if (testimonial.title && testimonial.title.trim() !== '') {
+                    prompt += `    - Author's Title/Company: "${testimonial.title.trim()}"\n`;
+                }
+            }
+        });
+    } else {
+        prompt += `No testimonials provided by the user. Do not include a testimonials section unless it's a generic placeholder clearly marked as such and suggested by the AI based on the business type (e.g., for a consulting business where testimonials are typical). If you add a placeholder, clearly state "Placeholder for testimonials - user should add actual client feedback here."\n`;
+    }
+    prompt += `--- End Testimonials Section ---\n`;
 
     prompt += `\n--- Core Creative Synthesis ---\n`;
     prompt += `Holistically synthesize the following aspects to inform ALL design decisions. The aim is a cohesive, persuasive, and highly creative vision that deeply reflects the user's intent, not just a list of features:\n`;
@@ -289,6 +312,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
 
     prompt += `\nImportant Instructions for AI:\r\n`;
     prompt += `- Generate complete HTML for a single page and all necessary CSS.\r\n`;
+    prompt += `- CRITICAL: If the user provides specific optional content (e.g., social media URLs in the 'Social Media Links' section, testimonials in the 'Testimonials Section', 'About Us' snippets, 'FAQ' entries, 'Pricing Plan' details), YOU MUST include this content in the generated page. Do not omit user-provided data for these optional sections. If a section is toggled on or has data, it should appear.\n`;
     prompt += `- Provide your response as a single, valid JSON object with two keys: "html" and "css". The value for "html" should be the full HTML code as a string. The value for "css" should be the full CSS code as a string. No other text or formatting outside this JSON object.\n`;
     prompt += `- The CSS MUST be self-contained within the "css" string. Do NOT include any <link rel="stylesheet" href="..."> tags in the HTML.\n`;
     prompt += `- Aim for a MODERN, CREATIVE, and VISUALLY APPEALING design. Incorporate contemporary design trends and avoid generic templates. Consider unique layouts, bold typography, and engaging visual elements.\n`;
