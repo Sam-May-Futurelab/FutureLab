@@ -266,7 +266,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     // Testimonials
     prompt += `\n--- Testimonials Section ---\n`;
     if (data.testimonials && Array.isArray(data.testimonials) && data.testimonials.some(t => t.text && t.text.trim() !== '')) {
-        prompt += `The user has provided testimonials. Include a dedicated "Testimonials" or "What Our Clients Say" section. For each testimonial, display the testimonial text, author, and author's title/company (if provided). Style this section to be engaging and build trust. Individual testimonial items (e.g., cards or blocks) should have a subtle and clean CSS hover animation (e.g., slight lift, shadow change, or border highlight) to enhance interactivity. Include ALL provided testimonials:\n`;
+        prompt += `The user has provided testimonials. Include a dedicated "Testimonials" or "What Our Clients Say" section. This section itself, or the content within it (like a container wrapping the testimonial cards), should be styled to ensure the testimonials are **centered on the page**. For each testimonial, display the testimonial text, author, and author's title/company (if provided). Style this section to be engaging and build trust. Individual testimonial items (e.g., cards or blocks) should have a subtle and clean CSS hover animation (e.g., slight lift, shadow change, or border highlight) to enhance interactivity. Include ALL provided testimonials:\n`;
         data.testimonials.forEach((testimonial, index) => {
             if (testimonial.text && testimonial.text.trim() !== '') {
                 prompt += `  Testimonial ${index + 1}:\n`;
@@ -313,6 +313,38 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     }
     prompt += `--- End About Us Section ---\n`;
     
+    // Pricing Section - NEW
+    prompt += `\n--- Pricing Section ---\n`;
+    if (data.pricingPlans && Array.isArray(data.pricingPlans) && data.pricingPlans.length > 0 && data.pricingPlans.some(p => p.name && p.price)) {
+        prompt += `The user has provided pricing plan information. Include a dedicated "Pricing" or "Our Plans" section. This section should clearly present the different plans. A table structure or a series of styled cards is often effective for comparing plans. Include ALL provided pricing plans and their details. For each plan, display its name, price, list of features, and a call to action button/link if provided.\n`;
+        data.pricingPlans.forEach((plan, index) => {
+            prompt += `  Plan ${index + 1}:\n`;
+            if (plan.name && plan.name.trim() !== '') {
+                prompt += `    - Name: "${plan.name.trim()}"\n`;
+            }
+            if (plan.price && plan.price.trim() !== '') {
+                prompt += `    - Price: "${plan.price.trim()}"\n`;
+            }
+            if (plan.features && Array.isArray(plan.features) && plan.features.length > 0) {
+                prompt += `    - Features: \n`;
+                plan.features.forEach(feature => {
+                    if (feature && feature.trim() !== '') {
+                        prompt += `      - "${feature.trim()}"\n`;
+                    }
+                });
+            }
+            if (plan.callToAction && plan.callToAction.trim() !== '') {
+                prompt += `    - Call to Action Text: "${plan.callToAction.trim()}" (This should be a clickable button/link for the plan)\n`;
+            }
+        });
+        prompt += `Style this section to be clear, easy to compare, and visually appealing, encouraging users to choose a plan.\n`;
+    } else if (data.sections && data.sections.includes('pricing')) { // If "Pricing" was checked but no data provided
+        prompt += `The user selected to include a "Pricing" section but did not provide specific plan data. Generate a placeholder "Pricing" section with 2-3 sample plans relevant to the business type: "${data.businessType || 'general business'}". Each placeholder plan should have a name, a sample price (e.g., "$X/month"), a few bullet points for features, and a call to action button. Clearly mark this content as placeholder text that the user should customize, for example, by starting plan descriptions with "[Placeholder: Customize this plan...]" or noting "Sample Plans - Update with your offerings."\n`;
+    } else {
+        prompt += `No pricing plans provided and the section was not explicitly requested to be generated with placeholder content. Omit the "Pricing" section unless it is critically essential for the business type and AI suggests it (in which case, use a clearly marked placeholder as described above).\n`;
+    }
+    prompt += `--- End Pricing Section ---\n`;
+
     // Contact Section
     prompt += `\n--- Contact Section ---\n`;
     // Check if 'contact' is in data.sections OR if a contactFormEmail was provided (as the field only shows if contact is implicitly desired)
@@ -362,7 +394,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
 
     prompt += `\nImportant Instructions for AI:\r\n`;
     prompt += `- Generate complete HTML for a single page and all necessary CSS.\r\n`;
-    prompt += `- CRITICAL: If the user provides specific optional content (e.g., social media URLs, testimonials, FAQs, 'About Us' snippet, 'Pricing Plan' details, contact form email), YOU MUST include this content in the generated page. If a section is toggled on or has data, it should appear. This includes the 'About Us' section if a snippet is provided (see 'About Us Section' details) and the contact form email (see 'Contact Section' details). Do not omit user-provided data for these sections.\n`;
+    prompt += `- CRITICAL: If the user provides specific optional content (e.g., social media URLs, testimonials, FAQs, 'About Us' snippet, 'Pricing Plan' details, contact form email), YOU MUST include this content in the generated page. If a section is toggled on or has data, it should appear. This includes the 'About Us' section if a snippet is provided (see 'About Us Section' details), the 'Pricing Plan' details if provided (see 'Pricing Section' details), and the contact form email (see 'Contact Section' details). Do not omit user-provided data for these sections.\n`;
     prompt += `- Provide your response as a single, valid JSON object with two keys: "html" and "css". The value for "html" should be the full HTML code as a string. The value for "css" should be the full CSS code as a string. No other text or formatting outside this JSON object.\n`;
     prompt += `- The CSS MUST be self-contained within the "css" string. Do NOT include any <link rel="stylesheet" href="..."> tags in the HTML.\n`;
     prompt += `- Aim for a MODERN, CREATIVE, and VISUALLY APPEALING design. Incorporate contemporary design trends and avoid generic templates. Consider unique layouts, bold typography, and engaging visual elements.\n`;
