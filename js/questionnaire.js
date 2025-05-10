@@ -77,6 +77,47 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastGeneratedCSS = '';
     let lastProjectName = 'ai-generated-page';
 
+    // Expose a function to download the edited page with embedded CSS
+    window.downloadEditedPageAsHTML = function(editedBodyHtml) {
+        if (!lastGeneratedCSS && !editedBodyHtml) {
+            alert("No content available to download.");
+            return;
+        }
+
+        const fullHtml = `
+<!DOCTYPE html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <title>${lastProjectName || 'Edited Page'}</title>
+    <style>
+        body { 
+            margin: 0; /* Basic reset */
+            padding: 0; /* Basic reset */
+            /* You might want to add more base styles here or ensure they are in the generated CSS */
+        }
+${lastGeneratedCSS || '/* No CSS available */'}
+    </style>
+</head>
+<body>
+${editedBodyHtml || '<!-- No HTML content available -->'}
+</body>
+</html>
+        `;
+
+        const blob = new Blob([fullHtml], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${lastProjectName || 'edited-page'}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        console.log("Edited page download initiated as:", `${lastProjectName || 'edited-page'}.html`);
+    };
+
     // Initialize form
     initializeForm();
     

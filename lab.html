@@ -521,13 +521,16 @@
                     <p class="preview-placeholder-text">Your AI-generated landing page will appear here once you complete the questionnaire.</p>
                 </div>
                 <iframe id="page-preview" title="AI Generated Page Preview"></iframe>
-                <div class="preview-controls" style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+                <div class="preview-controls" id="preview-controls-container" style="text-align: center; margin-top: 15px; margin-bottom: 15px; padding: 10px; border-radius: var(--border-radius-md); transition: background-color 0.3s ease;">
                     <button id="toggle-edit-mode-btn" class="btn btn-secondary"><i class="fas fa-pencil-alt"></i> Toggle Edit Mode</button>
-                    <button id="save-edited-page-btn" class="btn btn-primary" style="margin-left: 10px; display: none;"><i class="fas fa-save"></i> Save Edits</button> 
+                    <button id="save-edited-page-btn" class="btn btn-success" style="margin-left: 10px; display: none;"><i class="fas fa-save"></i> Save Edits</button> 
+                    <button id="download-edited-page-btn" class="btn btn-primary" style="margin-left: 10px; display: none;"><i class="fas fa-download"></i> Download Edited Page</button> 
+                    <p id="edit-mode-instructions" class="edit-instructions" style="display: none; margin-top: 10px; font-size: 0.9em; color: var(--text-muted);">Edit Mode ON: Click text to edit. Enter/click away to confirm, Esc to cancel. Save changes before downloading.</p>
+                    <p id="unsaved-changes-indicator" style="display: none; color: var(--warning-color); font-weight: bold; margin-top: 5px;"><i class="fas fa-exclamation-triangle"></i> You have unsaved changes!</p>
                 </div>
-                <div class="download-buttons">
-                    <button id="download-html-btn" class="btn btn-secondary"><i class="fas fa-file-code"></i> Download HTML</button>
-                    <button id="download-css-btn" class="btn btn-secondary"><i class="fas fa-file-alt"></i> Download CSS</button>
+                <div class="download-buttons"> <!-- These are for the ORIGINAL AI-generated files -->
+                    <button id="download-html-btn" class="btn btn-secondary"><i class="fas fa-file-code"></i> Download Original HTML</button>
+                    <button id="download-css-btn" class="btn btn-secondary"><i class="fas fa-file-alt"></i> Download Original CSS</button>
                 </div>
             </div>
         </section>
@@ -624,4 +627,4 @@
 
 </body>
 </html>
-`
+``` 

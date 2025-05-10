@@ -26,15 +26,24 @@ function initInPageEditor(iframeDocument) {
 
     // Define the event handler function so it can be potentially removed if we need to fully disable
     // For now, we just check isEditModeActive at the start.
-    const handleDblClick = function(event) {
+    const handleClickToEdit = function(event) { // Renamed from handleDblClick
         if (!isEditModeActive) {
-            // console.log("InPageEditor: Edit mode is disabled. Double-click ignored.");
             return; // Do nothing if edit mode is not active
         }
 
         const target = event.target.closest(editableSelectors);
 
-        if (target && !target.isContentEditable) {
+        // Prevent editing if the click is on an already contentEditable element or a button/link to allow normal interaction first
+        if (target && target.isContentEditable) {
+            return;
+        }
+        
+        // If the target is an interactive element like a link or button, 
+        // ensure we are not preventing its default action immediately.
+        // For simplicity, we allow editing, but this might need refinement if it interferes with navigation/actions.
+        // A common pattern is to require a modifier key (e.g., Ctrl+Click) for editing interactive elements.
+
+        if (target && !target.isContentEditable) { // Check !target.isContentEditable again to be sure
             if (target.closest('svg, canvas, img, video')) {
                 console.log("InPageEditor: Editing of this element type is not supported.");
                 return;
@@ -55,6 +64,9 @@ function initInPageEditor(iframeDocument) {
                 target.style.outline = 'none';
                 if (!escapePressed) {
                     console.log("InPageEditor: Changes saved for:", target);
+                    if (typeof window.notifyUnsavedChange === 'function') {
+                        window.notifyUnsavedChange(); // Notify lab.js of a change
+                    }
                 } else {
                     console.log("InPageEditor: Changes reverted for:", target);
                 }
@@ -80,10 +92,11 @@ function initInPageEditor(iframeDocument) {
         }
     };
 
-    iframeDocument.removeEventListener('dblclick', handleDblClick); // Remove existing listener first to prevent duplicates
-    iframeDocument.addEventListener('dblclick', handleDblClick);
+    iframeDocument.removeEventListener('dblclick', handleClickToEdit); // Remove old dblclick listener if any (though it was named handleDblClick before)
+    iframeDocument.removeEventListener('click', handleClickToEdit); // Remove existing click listener first to prevent duplicates
+    iframeDocument.addEventListener('click', handleClickToEdit); // Add the new single click listener
 
-    console.log("InPageEditor: Double-click event listener attached to iframe document.");
+    console.log("InPageEditor: Single-click event listener attached to iframe document.");
 }
 
 // The initInPageEditor function will be called from questionnaire.js
