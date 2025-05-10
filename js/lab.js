@@ -30,6 +30,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeSaveNotificationBtn = document.getElementById('close-save-notification');
     const pagePreviewIframe = document.getElementById('page-preview'); // Defined earlier for broader scope
 
+    // Initialize In-Page Editor Controls
+    const colorPickerPanel = document.getElementById('color-picker-panel');
+    const bgColorPicker = document.getElementById('bgColorPicker');
+    const textColorPicker = document.getElementById('textColorPicker');
+    const applyColorsBtn = document.getElementById('applyColorsBtn');
+    const removeColorsBtn = document.getElementById('removeColorsBtn');
+    const closeColorPickerBtn = document.getElementById('closeColorPickerBtn');
+    const colorPickerTargetInfo = document.getElementById('color-picker-target-info');
+
+    if (window.initInPageEditorControls) {
+        window.initInPageEditorControls(
+            colorPickerPanel,
+            bgColorPicker,
+            textColorPicker,
+            applyColorsBtn,
+            removeColorsBtn,
+            closeColorPickerBtn,
+            colorPickerTargetInfo
+        );
+    } else {
+        console.error("Lab.js: In-page editor control initialization function not found.");
+    }
+
     let editorActive = false;
     let hasUnsavedChanges = false;
     let lastSavedEditedHtml = '';
