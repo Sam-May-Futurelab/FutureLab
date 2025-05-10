@@ -194,6 +194,7 @@ function _buildHeaderNavPromptPart(data) {
 
     if (navLinksInstructionAdded) {
         part += `Ensure the navigation links are functional and scroll smoothly to the respective sections if they exist on the page.\n`;
+        part += `IMPORTANT STYLING FOR HEADER NAV: Ensure there is adequate padding on all sides of the header navigation, especially for the rightmost menu item on desktop views to prevent text from being cut off or appearing too close to the edge of the viewport. The navigation should look balanced and not cramped.\n`;
     } else {
         part += `--- Header Navigation Menu ---\n`;
         part += `No specific sections for navigation were auto-detected. If you generate common sections like Hero, About, Contact, consider adding them to a navigation menu. If a logo is generated, it should typically be on the left of the navigation and link to #hero or the top of the page.\n`;
