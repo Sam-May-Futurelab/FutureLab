@@ -659,25 +659,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    function handleFormSubmit(e) {
-        e.preventDefault();
-        if (validateCurrentStep()) {
-            const ctaActionInput = document.getElementById('cta-action');
-            if (ctaActionInput) {
-                ctaActionInput.value = formatCTAAction(ctaActionInput.value);
-            }
-
-            const formData = new FormData(form);
-            
-            getAICodeGeneration(formData); // New call to fetch from backend
-        } else {
-            console.log("Final step validation failed.");
-        }
-    }
-    
     async function getAICodeGeneration(formData) {
         generationOverlay.classList.add('active');
-        generationStep.textContent = 'Connecting to AI assistant...';
+        
+        const labThemedMessages = [
+            "Calibrating the flux capacitor...",
+            "Aligning the design particles...",
+            "Brewing up some pixel-perfect potions...",
+            "Sequencing the HTML genome...",
+            "Engaging the CSS synthesizers...",
+            "Reticulating splines... (don't ask!)",
+            "Polishing the user experience crystals...",
+            "Checking for rogue semi-colons...",
+            "Warming up the creativity engines...",
+            "Mixing the color chemicals...",
+            "Assembling the code-molecules...",
+            "Consulting the digital oracle for inspiration...",
+            "Tuning the aesthetic frequencies...",
+            "Compiling innovation... please wait."
+        ];
+        let messageIndex = 0;
+        let messageIntervalId = null;
+
+        const updateLoadingMessage = () => {
+            if (generationStep) {
+                generationStep.textContent = labThemedMessages[messageIndex];
+                messageIndex = (messageIndex + 1) % labThemedMessages.length;
+            }
+        };
+
+        updateLoadingMessage(); // Show first message immediately
+        messageIntervalId = setInterval(updateLoadingMessage, 2500); // Change message every 2.5 seconds
 
         // Ensure placeholder is visible and iframe is hidden initially for this process
         if (previewPlaceholderContainer) {
@@ -706,7 +718,6 @@ document.addEventListener('DOMContentLoaded', function() {
         let logoData = null;
         if (logoUploadInput && logoUploadInput.files && logoUploadInput.files[0]) {
             try {
-                generationStep.textContent = 'Processing logo...';
                 logoData = await new Promise((resolve, reject) => {
                     const reader = new FileReader();
                     reader.onloadend = () => resolve(reader.result);
@@ -795,7 +806,6 @@ document.addEventListener('DOMContentLoaded', function() {
         lastProjectName = projectNameFromForm.toLowerCase().replace(/\s+/g, '-') || 'ai-generated-page';
 
         try {
-            generationStep.textContent = 'Sending data to AI assistant...';
             const response = await fetch('/api/generate-page', {
                 method: 'POST',
                 headers: {
@@ -804,9 +814,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(data),
             });
 
-            generationStep.textContent = 'Waiting for AI response...';
-
             if (!response.ok) {
+                clearInterval(messageIntervalId); // Stop themed messages on error
                 let errorData;
                 try {
                     errorData = await response.json();
@@ -828,9 +837,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const parsedCode = await response.json();
-            generationStep.textContent = 'Building your page preview...';
 
             if (parsedCode.html && parsedCode.css) {
+                clearInterval(messageIntervalId); // Stop themed messages on success
                 lastGeneratedHTML = parsedCode.html;
                 lastGeneratedCSS = parsedCode.css;
 
@@ -844,7 +853,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (downloadButtonsContainer) {
                     downloadButtonsContainer.style.display = 'flex';
                 }
-                generationStep.textContent = 'Your page is ready!';
+                generationStep.textContent = 'Your page is ready!'; // Final success message
                 
                 // MODIFIED: Scroll to the page preview on successful generation
                 if (pagePreview) {
@@ -852,17 +861,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
             } else {
+                clearInterval(messageIntervalId); // Stop themed messages
                 console.error("AI response JSON does not contain html and css strings:", parsedCode);
                 displayErrorInPreview('AI response was not in the expected format. HTML or CSS missing.');
-                // displayErrorInPreview handles scrolling to questionnaireContainer
+                generationStep.textContent = 'Error: AI response incomplete.'; // Final error message
             }
 
         } catch (error) {
+            clearInterval(messageIntervalId); // Stop themed messages on major error
             console.error('Error fetching AI code:', error);
             displayErrorInPreview(`Failed to generate page: ${error.message}. Check console for more details.`);
-            // displayErrorInPreview handles scrolling to questionnaireContainer
+            generationStep.textContent = `Error: ${error.message}.`; // Final error message
         } finally {
-            generationOverlay.classList.remove('active');
+            // Ensure interval is always cleared if not already
+            if (messageIntervalId) {
+                clearInterval(messageIntervalId);
+            }
         }
     }
 
@@ -889,7 +903,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleRateLimitError(apiErrorMessage) {
         const userFriendlyMessage = "Hold on! We're making a lot of requests to the AI right now. Please wait about a minute before trying again. If this continues, you might need to check your OpenAI plan and billing details.";
         
-        generationStep.textContent = userFriendlyMessage;
+        generationStep.textContent = userFriendlyMessage; // Final error message for rate limit
         // Display a more specific error in the preview area, including API message if available
         displayErrorInPreview(userFriendlyMessage + (apiErrorMessage && apiErrorMessage !== "Too many requests. Please wait a minute and try again." ? ` (Details: ${apiErrorMessage})` : ""));
         // MODIFIED SCROLL for handleRateLimitError

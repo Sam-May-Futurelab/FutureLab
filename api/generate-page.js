@@ -97,11 +97,13 @@ function constructPrompt(data) {
     // Logo and Header Instructions
     prompt += `\n--- Header Configuration ---\n`;
     if (data.logoData) {
-        prompt += `Logo: An image is provided (Base64 encoded). Include this as an <img> tag in the header. The logo image MUST be clickable and link to the homepage (e.g., wrap the <img> tag with <a href="/"> or <a href="index.html">). Apply a subtle and clean CSS hover animation to the logo image (e.g., slight scale up, subtle shadow, or opacity change) for a polished feel.\n`;
+        prompt += `Logo: An image is provided (Base64 encoded). Include this as an <img> tag in the header. The logo image MUST be clickable and link to the homepage (e.g., wrap the <img> tag with <a href="#top"> or <a href="index.html">). Apply a subtle and clean CSS hover animation to the logo image (e.g., slight scale up, subtle shadow, or opacity change) for a polished feel.\n`;
     } else {
-        prompt += `Logo: No image provided. Display the Business Name ("${data.businessName || 'My Brand'}") as text in the header. This business name text MUST be clickable and link to the homepage (e.g., wrap the text with <a href="/"> or <a href="index.html">). Style the business name text appropriately as a header logo (e.g., distinct font, size). Apply a subtle and clean CSS hover animation to this text-based logo (e.g., slight text shadow change, underline effect, or color brightness change) for a polished feel.\n`;
+        prompt += `Logo: No image provided. Display the Business Name ("${data.businessName || 'My Brand'}") as text in the header. This business name text MUST be clickable and link to the homepage (e.g., wrap the text with <a href="#top"> or <a href="index.html">). Style the business name text appropriately as a header logo (e.g., distinct font, size). Apply a subtle and clean CSS hover animation to this text-based logo (e.g., slight text shadow change, underline effect, or color brightness change) for a polished feel.\n`;
     }
-    prompt += `Header/Logo Position: ${data.logoPosition || 'left'}. Position the logo image (if provided) or the business name text (if no logo) accordingly in the header (e.g., align left, center, or right).\n`;
+    prompt += `Header/Logo Position: ${data.logoPosition || 'left'}. Position the logo image (if provided) or the business name text (if no logo) accordingly in the header. \
+If 'center' is specified, ensure the logo (or its container) is truly centered using appropriate CSS (e.g., for a block element, use 'margin: 0 auto; text-align: center;' on the container, or if the header is a flex container, use 'justify-content: center;' on the header and ensure the logo is the primary centered item or within a centered flex item). \
+If 'left' or 'right', ensure it is aligned to that side, typically with navigation links (if any) on the opposite side or appropriately spaced.\n`;
 
     prompt += `--- End Header Configuration ---\n`;
 
@@ -123,7 +125,7 @@ function constructPrompt(data) {
     availableSectionsForNav.forEach(section => {
         // Check if data.sections exists and includes the section key
         if (data.sections && data.sections.includes(section.key)) {
-            prompt += `  - A link to the "${section.name}" section. The link text should be "${section.name}" and it MUST navigate to an anchor on the page (e.g., <a href="#${section.id}">${section.name}</a>). CRITICAL: Ensure the corresponding generated section on the page has the exact id="${section.id}" for the link to work.\n`;
+            prompt += `  - A link to the "${section.name}" section. The link text should be "${section.name}". CRITICAL: The href attribute for this link MUST be an anchor link relative to the current page, formatted ONLY as "#${section.id}" (e.g., <a href="#${section.id}">${section.name}</a>). Do NOT use absolute URLs or any other path. Ensure the corresponding generated section on the page has the exact id="${section.id}" for the link to work.\n`;
             navLinksInstructionAdded = true;
         }
     });
