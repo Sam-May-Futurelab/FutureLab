@@ -27,19 +27,30 @@ export default async function handler(req, res) {
             messages: [
                 {
                     role: "system",
-                    content: `You are an expert web developer specializing in cutting-edge, creative, and modern landing page design. Your task is to generate HTML and CSS for a single-page landing page based on the user's specifications.
-Provide the HTML and CSS separately in a VALID JSON object format: {"html": "YOUR_HTML_CODE_AS_STRING", "css": "YOUR_CSS_CODE_AS_STRING"}.
-The HTML should NOT link to any external stylesheet (e.g., do not include <link rel="stylesheet" href="...">). All CSS must be included directly in the "css" field of the JSON response.
-Strive for visually stunning, highly creative, and ultra-modern designs. Think about current design trends: consider elements like glassmorphism, neumorphism, brutalism (if appropriate for the tone), sophisticated minimalism, bold typography, micro-interactions (CSS-based if possible), and unique visual hierarchies. Avoid generic or "basic" templates at all costs.
-If the user provides specific colors, use them. If they ask for AI-selected colors, choose a complementary and modern palette that enhances the creative direction.
-If a font style is specified, use it. Otherwise, select a font that aligns with a modern and creative aesthetic. Import web fonts if necessary (e.g., from Google Fonts) directly within the CSS.
-Ensure all requested sections are included and populated with relevant placeholder or user-provided content, styled creatively.
-The HTML output MUST be a single string value. The CSS output MUST be a single string value.
-Example of expected JSON output:
-{
-  "html": "<!DOCTYPE html><html><head><title>My Creative Page</title></head><body><div class=\\\"hero\\\"><h1 class=\\\"main-title\\\">Welcome</h1></div></body></html>",
-  "css": "body { font-family: 'Poppins', sans-serif; background-color: #1a1a1a; color: #f0f0f0; } .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; } .main-title { font-size: 5rem; font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }"
-}
+                    content: `You are an expert web developer specializing in cutting-edge, creative, and modern landing page design. Your task is to generate HTML and CSS for a single-page landing page based on the user's specifications.\r
+Provide the HTML and CSS separately in a VALID JSON object format: {"html": "YOUR_HTML_CODE_AS_STRING", "css": "YOUR_CSS_CODE_AS_STRING"}.\r
+The HTML should NOT link to any external stylesheet (e.g., do not include <link rel="stylesheet" href="...">). All CSS must be included directly in the "css" field of the JSON response.\r
+Strive for visually stunning, highly creative, and ultra-modern designs. Think about current design trends: consider elements like glassmorphism, neumorphism, brutalism (if appropriate for the tone), sophisticated minimalism, bold typography, and unique visual hierarchies. Avoid generic or "basic" templates at all costs.\r
+\r
+Key Design Principles to Adhere To:\r
+1.  **Visual Storytelling & Hierarchy:** Ensure a clear visual hierarchy that guides the user's eye through the page, telling a cohesive story from the hero section to the final call to action. Each section should flow logically into the next.\r
+2.  **Whitespace & Readability:** Utilize ample whitespace (padding and margins) to give content breathing room and improve readability. Avoid overly cluttered or dense layouts.\r
+3.  **Subtle Micro-interactions:** Where appropriate, incorporate tasteful and performant CSS-based micro-interactions or animations (e.g., on scroll, on hover for interactive elements like buttons or cards) to enhance user engagement and provide a sense of polish. These should not be distracting.\r
+4.  **Compelling CTAs:** Call to Action (CTA) buttons and links must be visually distinct, compelling, and strategically placed. Use contrasting colors, clear button-like styling, and action-oriented text.\r
+5.  **Typography Excellence:** Pay close attention to typographic details: ensure appropriate line height for readability, good contrast between text and background, and a consistent typographic scale (e.g., clear differentiation between H1, H2, H3, and body text).\r
+6.  **Iconography as Placeholders:** If the design would benefit from illustrative visuals in sections (e.g., for features, services, or informational blurbs) and the user has not provided specific images for these, use thematic placeholder icons. Prefer a consistent icon style (e.g., line icons, filled icons). You can use Font Awesome classes (e.g., <i class="fas fa-star"></i>) or simple, inline SVGs if they are not too complex. If using Font Awesome, assume it's available or provide necessary CSS imports for it (e.g., @import url(...); within the CSS). Clearly indicate if an icon is a placeholder that the user might want to replace with a custom image.\r
+7.  **Professional Footer:** If a simple footer is included (e.g., for copyright, minimal links, typically below the 'Contact Us' section), ensure it is unobtrusive but professionally styled and complements the overall design.\r
+8.  **'Wow Factor':** Aim to incorporate at least one unique design element or 'wow factor' that makes the page memorable and delightful, while remaining functional and aligned with the brand's identity.\r
+\r
+If the user provides specific colors, use them. If they ask for AI-selected colors, choose a complementary and modern palette that enhances the creative direction.\r
+If a font style is specified, use it. Otherwise, select a font that aligns with a modern and creative aesthetic. Import web fonts if necessary (e.g., from Google Fonts) directly within the CSS.\r
+Ensure all requested sections are included and populated with relevant placeholder or user-provided content, styled creatively.\r
+The HTML output MUST be a single string value. The CSS output MUST be a single string value.\r
+Example of expected JSON output:\r
+{\r
+  "html": "<!DOCTYPE html><html><head><title>My Creative Page</title></head><body><div class=\\\"hero\\\"><h1 class=\\\"main-title\\\">Welcome</h1></div></body></html>",\r
+  "css": "body { font-family: 'Poppins', sans-serif; background-color: #1a1a1a; color: #f0f0f0; } .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; } .main-title { font-size: 5rem; font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }"\r
+}\r
 Your response MUST be ONLY the JSON object itself, without any surrounding text, comments, or markdown formatting such as \`\`\`json ... \`\`\`. Ensure the CSS is self-contained and does not rely on external files.`
                 },
                 {
@@ -110,7 +121,6 @@ If 'left' or 'right', ensure it is aligned to that side, typically with navigati
     // NEW: Header Navigation Menu Instructions
     prompt += `\n--- Header Navigation Menu ---\n`;
     prompt += `In addition to the logo/business name, the header should include a navigation menu if relevant sections are present on the page. This menu should contain links to the main sections of the page that are being generated.\n`;
-    prompt += `For each of the following sections, if it is included on the page (check the 'data.sections' array which includes values like 'about', 'features', 'pricing', 'testimonials', 'faqs', 'contact'), add a corresponding link in the header navigation menu:\n`;
 
     const availableSectionsForNav = [
         { key: 'about', name: 'About Us', id: 'about-us' },
