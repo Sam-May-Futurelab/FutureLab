@@ -97,13 +97,46 @@ function constructPrompt(data) {
     // Logo and Header Instructions
     prompt += `\n--- Header Configuration ---\n`;
     if (data.logoData) {
-        prompt += `Logo: An image is provided (Base64 encoded). Include this as an <img> tag in the header. The logo image MUST be clickable and link to the homepage (e.g., wrap the <img> tag with <a href="/"> or <a href="index.html">). Apply a subtle and clean CSS hover animation to the logo image (e.g., slight scale up, subtle shadow, or opacity change) for a polished feel.\n`;
+        prompt += `Logo: An image is provided (Base64 encoded). Include this as an <img> tag in the header. The logo image MUST be clickable and link to the homepage (e.g., wrap the <img> tag with <a href="#top"> or <a href="index.html">). Apply a subtle and clean CSS hover animation to the logo image (e.g., slight scale up, subtle shadow, or opacity change) for a polished feel.\n`;
     } else {
-        prompt += `Logo: No image provided. Display the Business Name ("${data.businessName || 'My Brand'}") as text in the header. This business name text MUST be clickable and link to the homepage (e.g., wrap the text with <a href="/"> or <a href="index.html">). Style the business name text appropriately as a header logo (e.g., distinct font, size). Apply a subtle and clean CSS hover animation to this text-based logo (e.g., slight text shadow change, underline effect, or color brightness change) for a polished feel.\n`;
+        prompt += `Logo: No image provided. Display the Business Name ("${data.businessName || 'My Brand'}") as text in the header. This business name text MUST be clickable and link to the homepage (e.g., wrap the text with <a href="#top"> or <a href="index.html">). Style the business name text appropriately as a header logo (e.g., distinct font, size). Apply a subtle and clean CSS hover animation to this text-based logo (e.g., slight text shadow change, underline effect, or color brightness change) for a polished feel.\n`;
     }
-    prompt += `Header/Logo Position: ${data.logoPosition || 'left'}. Position the logo image (if provided) or the business name text (if no logo) accordingly in the header (e.g., align left, center, or right).\n`;
+    prompt += `Header/Logo Position: ${data.logoPosition || 'left'}. Position the logo image (if provided) or the business name text (if no logo) accordingly in the header. \
+If 'center' is specified, ensure the logo (or its container) is truly centered using appropriate CSS (e.g., for a block element, use 'margin: 0 auto; text-align: center;' on the container, or if the header is a flex container, use 'justify-content: center;' on the header and ensure the logo is the primary centered item or within a centered flex item). \
+If 'left' or 'right', ensure it is aligned to that side, typically with navigation links (if any) on the opposite side or appropriately spaced.\n`;
 
     prompt += `--- End Header Configuration ---\n`;
+
+    // NEW: Header Navigation Menu Instructions
+    prompt += `\n--- Header Navigation Menu ---\n`;
+    prompt += `In addition to the logo/business name, the header should include a navigation menu if relevant sections are present on the page. This menu should contain links to the main sections of the page that are being generated.\n`;
+    prompt += `For each of the following sections, if it is included on the page (check the 'data.sections' array which includes values like 'about', 'features', 'pricing', 'testimonials', 'faqs', 'contact'), add a corresponding link in the header navigation menu:\n`;
+
+    const availableSectionsForNav = [
+        { key: 'about', name: 'About Us', id: 'about-us' },
+        { key: 'features', name: 'Features', id: 'features' },
+        { key: 'pricing', name: 'Pricing', id: 'pricing' },
+        { key: 'testimonials', name: 'Testimonials', id: 'testimonials' },
+        { key: 'faqs', name: 'FAQs', id: 'faqs' },
+        { key: 'contact', name: 'Contact', id: 'contact' }
+    ];
+
+    let navLinksInstructionAdded = false;
+    availableSectionsForNav.forEach(section => {
+        // Check if data.sections exists and includes the section key
+        if (data.sections && data.sections.includes(section.key)) {
+            prompt += `  - A link to the "${section.name}" section. The link text should be "${section.name}". CRITICAL: The href attribute for this link MUST be an anchor link relative to the current page, formatted ONLY as "#${section.id}" (e.g., <a href="#${section.id}">${section.name}</a>). Do NOT use absolute URLs or any other path. Ensure the corresponding generated section on the page has the exact id="${section.id}" for the link to work.\n`;
+            navLinksInstructionAdded = true;
+        }
+    });
+
+    if (navLinksInstructionAdded) {
+        prompt += `Style these navigation links clearly. They should be easily distinguishable from the logo/business name and typically appear alongside or opposite the logo, depending on the chosen header layout (e.g., logo left, nav links right). The navigation links should be arranged horizontally on larger screens.\n`;
+        prompt += `The navigation menu MUST be responsive. For smaller screens (e.g., mobile, tablets), it should collapse into a hamburger menu icon that, when clicked, reveals the navigation links vertically or in an overlay. Ensure the JavaScript/CSS for this toggle functionality is included if you implement a hamburger menu.\n`;
+    } else {
+        prompt += `No specific page sections were selected that typically appear in a primary navigation menu, or no such sections were selected at all. In this case, the header can consist of just the logo/business name. Ensure the header still looks balanced.\n`;
+    }
+    prompt += `--- End Header Navigation Menu ---\n`;
 
     prompt += `Business Description: ${data.businessDescription || 'N/A'}\n`;
     prompt += `Primary Goal of the Page: ${data.primaryGoal || 'N/A'}\n`;
@@ -379,7 +412,16 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
             prompt += `   - Presentation: Present these as a list, a series of cards, or iconic blurbs. Each item should be distinct and easy to read.\n`;
             prompt += `   - Animation: If presented as multiple items (cards, list items), apply a subtle CSS hover animation to each item (e.g., slight lift, shadow change, border highlight) for interactivity.\n`;
         } else {
-            prompt += `   - Content Generation: The user did not provide specific "Must-Have Elements/Keywords" for this section. Generate 3-5 compelling placeholder features/benefits that are highly relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}". Clearly mark this content as placeholder text (e.g., "[Placeholder: Describe a key feature/benefit here.]").\n`;
+            prompt += `   - Content Generation: The user did not provide specific "Must-Have Elements/Keywords" for this section. \n`;
+            prompt += `     Attempt to intelligently derive 3-5 compelling features/benefits by analyzing the following user inputs (if available):\n`;
+            prompt += `       1. Business Description: "${data.businessDescription || 'N/A'}"\n`;
+            prompt += `       2. Primary Goal of the Page: "${data.primaryGoal || 'N/A'}"\n`;
+            if (data.pricingPlans && Array.isArray(data.pricingPlans) && data.pricingPlans.length > 0 && data.pricingPlans.some(p => p.name && p.price)) {
+                prompt += `       3. Pricing Plan Details: Review names, prices, and features listed in the pricing plans to extract key service highlights.\n`;
+            }
+            prompt += `       4. About Us Snippet: "${data.aboutUsSnippet || 'N/A'}"\n`;
+            prompt += `     Synthesize these details to create features that are highly relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}".\n`;
+            prompt += `     If sufficient detail cannot be derived, then as a last resort, use generic placeholders like "[Placeholder: Describe a key feature/benefit here.]".\n`;
             prompt += `   - Animation: If presented as multiple items, apply a subtle CSS hover animation as described above.\n`;
         }
         prompt += `Style this section to be persuasive and visually engaging, reinforcing the value proposition of the business/product.\n`;
