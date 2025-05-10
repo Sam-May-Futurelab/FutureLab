@@ -906,10 +906,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (pagePreview) {
                     pagePreview.style.display = 'block'; 
-                    const iframeDoc = pagePreview.contentDocument || pagePreview.contentWindow.document;
-                    iframeDoc.open();
-                    iframeDoc.write(previewDocContent);
-                    iframeDoc.close();
+
+                    // Define the onload handler for the iframe
+                    pagePreview.onload = () => {
+                        try {
+                            const iframeDoc = pagePreview.contentDocument || pagePreview.contentWindow.document;
+                            if (typeof initInPageEditor === 'function') {
+                                initInPageEditor(iframeDoc); // Initialize the editor with the iframe's document
+                                console.log("In-page editor initialized for the generated preview.");
+                            } else {
+                                console.warn("initInPageEditor function not found. In-page editing will not be available.");
+                            }
+                        } catch (e) {
+                            console.error("Error accessing iframe content or initializing editor:", e);
+                            // This can happen due to cross-origin restrictions if srcdoc is not used or if there are other issues.
+                        }
+                        // It's good practice to clear the onload handler after it has run, 
+                        // especially if the iframe might be reloaded or its srcdoc changed again.
+                        pagePreview.onload = null; 
+                    };
+
+                    // Set the srcdoc to load the content. 
+                    // The onload event defined above will fire after the content is parsed and loaded.
+                    pagePreview.srcdoc = previewDocContent;
+
                 } else {
                     console.error('pagePreview (iframe) element not found for content injection!');
                     displayErrorInPreview('Preview iframe not found.'); 

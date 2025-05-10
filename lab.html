@@ -29,6 +29,7 @@
     <script src="js/theme-toggle.js" defer></script>
     <script src="js/lab.js" defer></script>
     <script src="js/questionnaire.js" defer></script>
+    <script src="js/in-page-editor.js" defer></script>
     <!-- <script src="js/simple-menu.js" defer></script> --> <!-- Commented out as file seems to be missing -->
 </head>
 <body>
@@ -520,6 +521,10 @@
                     <p class="preview-placeholder-text">Your AI-generated landing page will appear here once you complete the questionnaire.</p>
                 </div>
                 <iframe id="page-preview" title="AI Generated Page Preview"></iframe>
+                <div class="preview-controls" style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+                    <button id="toggle-edit-mode-btn" class="btn btn-secondary"><i class="fas fa-pencil-alt"></i> Toggle Edit Mode</button>
+                    <button id="save-edited-page-btn" class="btn btn-primary" style="margin-left: 10px; display: none;"><i class="fas fa-save"></i> Save Edits</button> 
+                </div>
                 <div class="download-buttons">
                     <button id="download-html-btn" class="btn btn-secondary"><i class="fas fa-file-code"></i> Download HTML</button>
                     <button id="download-css-btn" class="btn btn-secondary"><i class="fas fa-file-alt"></i> Download CSS</button>
@@ -619,3 +624,4 @@
 
 </body>
 </html>
+`

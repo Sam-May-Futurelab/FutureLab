@@ -3,10 +3,55 @@ const { OpenAI } = require('openai');
 
 // Ensure OPENAI_API_KEY is set in your Vercel project settings
 
+// Helper function to sanitize string inputs
+function sanitizeString(str) {
+    if (typeof str !== 'string') return ''; // Or handle as an error, depending on requirements
+    // Basic sanitization: remove characters that could break JSON or HTML structure.
+    // This is a basic example. For robust sanitization, consider a library like DOMPurify (if client-side)
+    // or a server-side equivalent. For prompt engineering, we mainly want to avoid breaking the prompt structure.
+    return str.replace(/[<>\"\'`&]/g, function (match) {
+        // Simple replacement for prompt safety, not full XSS protection.
+        // For HTML content generation, the AI should handle correct escaping.
+        // This focuses on preventing prompt injection or structural breaks.
+        switch (match) {
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '\"': return '\\\"'; // Escape for JSON string within prompt
+            case '\'': return '\\\''; // Escape for string within prompt
+            case '`': return '\\\\`'; // Escape backticks
+            case '&': return '&amp;';
+            default: return match;
+        }
+    });
+}
+
+// Recursive function to sanitize form data
+function sanitizeFormData(data) {
+    if (typeof data === 'string') {
+        return sanitizeString(data);
+    } else if (Array.isArray(data)) {
+        return data.map(item => sanitizeFormData(item));
+    } else if (typeof data === 'object' && data !== null) {
+        const sanitizedObject = {};
+        for (const key in data) {
+            if (Object.prototype.hasOwnProperty.call(data, key)) {
+                sanitizedObject[key] = sanitizeFormData(data[key]);
+            }
+        }
+        return sanitizedObject;
+    }
+    return data; // Return numbers, booleans, null as is
+}
+
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         res.setHeader('Allow', ['POST']);
         return res.status(405).end(`Method ${req.method} Not Allowed`);
+    }
+
+    // Suggestion 3: Validate user input server-side
+    if (!req.body || typeof req.body !== 'object' || Object.keys(req.body).length === 0) {
+        return res.status(400).json({ message: "Invalid or missing form data." });
     }
 
     try {
@@ -16,10 +61,11 @@ export default async function handler(req, res) {
             apiKey: process.env.OPENAI_API_KEY,
         });
 
-        const formData = req.body;
-        // console.log("Received form data on backend:", JSON.stringify(formData, null, 2));
+        // Suggestion 4: Sanitize form input (applied after validation)
+        const sanitizedFormData = sanitizeFormData(req.body);
+        // console.log("Sanitized form data on backend:", JSON.stringify(sanitizedFormData, null, 2));
 
-        const prompt = constructPrompt(formData);
+        const prompt = constructPrompt(sanitizedFormData); // Use sanitizedFormData
         // console.log("Constructed Prompt for OpenAI:", prompt);
 
         const aiResponse = await openai.chat.completions.create({
@@ -60,23 +106,34 @@ Your response MUST be ONLY the JSON object itself, without any surrounding text,
                     role: "user",
                     content: prompt
                 }
-            ]
+            ],
+            // Suggestions 1 & 2: Add max_tokens, temperature, and top_p
+            max_tokens: 4000, // Adjusted for potentially larger, well-structured responses
+            temperature: 0.7,
+            top_p: 0.9,
         });
 
         // console.log("OpenAI API Raw Response:", JSON.stringify(aiResponse, null, 2));
 
         let generatedCodeContent = aiResponse.choices[0]?.message?.content;
-        
-        if (!generatedCodeContent) {
-            throw new Error("AI did not return any content.");
-        }
 
         let parsedCode;
         try {
+            // Suggestion 5: Catch malformed AI responses more tightly
+            if (!generatedCodeContent || typeof generatedCodeContent !== 'string') {
+                throw new Error("AI response content is missing or not a string.");
+            }
             parsedCode = JSON.parse(generatedCodeContent);
-            if (typeof parsedCode.html !== 'string' || typeof parsedCode.css !== 'string') {
-                 console.error("AI response JSON does not contain html and css as strings:", parsedCode);
-                throw new Error("AI response JSON did not contain html and css keys as strings.");
+            if (!parsedCode || typeof parsedCode !== 'object') {
+                throw new Error("Parsed AI response is not a valid object.");
+            }
+            if (!('html' in parsedCode) || typeof parsedCode.html !== 'string') {
+                console.error("AI response JSON does not contain html as a string:", parsedCode);
+                throw new Error("AI response JSON must contain an 'html' key with a string value.");
+            }
+            if (!('css' in parsedCode) || typeof parsedCode.css !== 'string') {
+                console.error("AI response JSON does not contain css as a string:", parsedCode);
+                throw new Error("AI response JSON must contain a 'css' key with a string value.");
             }
         } catch (parseError) {
             console.error("Failed to parse AI response as JSON. Content was:", generatedCodeContent);
@@ -216,7 +273,7 @@ function _buildColorAndFontPromptPart(data) {
         fontToRequest = 'Poppins, sans-serif'; // Default to Poppins
         part += `Font Style: ${fontToRequest}. Ensure Google Fonts is imported for Poppins if used (e.g., @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');).\n`;
     } else {
-        part += `Font Style: ${data.fontStyle}. If this is a Google Font, ensure the necessary @import rule is included in the CSS (e.g., for 'Roboto', use @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');). If it's a standard web-safe font, no import is needed.\n`;
+        part += `Font Style: ${fontToRequest}.\n`;
     }
     part += '\n';
     return part;

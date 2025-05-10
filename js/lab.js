@@ -16,32 +16,41 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize theme toggle functionality if not already done
     // initializeThemeToggle(); // Removed: Rely on global js/theme-toggle.js
-    
-    // Function to initialize theme toggle
-    // function initializeThemeToggle() { // Removed: Rely on global js/theme-toggle.js
-    //     const themeToggle = document.getElementById('theme-toggle');
-        
-    //     if (!themeToggle) return;
-        
-    //     // Check for saved theme preference
-    //     const savedTheme = localStorage.getItem('theme') || 
-    //                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        
-    //     // Apply saved theme
-    //     if (savedTheme === 'dark') {
-    //         document.body.classList.add('dark-theme');
-    //         themeToggle.querySelector('i').className = 'fas fa-sun';
-    //     }
-        
-    //     // Add toggle functionality
-    //     themeToggle.addEventListener('click', () => {
-    //         document.body.classList.toggle('dark-theme');
+
+    // In-page editor toggle button logic
+    const toggleEditModeBtn = document.getElementById('toggle-edit-mode-btn');
+    const saveEditedPageBtn = document.getElementById('save-edited-page-btn'); // Get the save button
+    let editorActive = false;
+
+    if (toggleEditModeBtn) {
+        toggleEditModeBtn.addEventListener('click', () => {
+            editorActive = !editorActive;
+            if (typeof window.setInPageEditMode === 'function') {
+                window.setInPageEditMode(editorActive);
+            }
+            toggleEditModeBtn.classList.toggle('active', editorActive);
+            toggleEditModeBtn.innerHTML = editorActive ? '<i class="fas fa-times-circle"></i> Disable Edit Mode' : '<i class="fas fa-pencil-alt"></i> Toggle Edit Mode';
             
-    //         const isDark = document.body.classList.contains('dark-theme');
-    //         const iconElement = themeToggle.querySelector('i');
-            
-    //         iconElement.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-    //         localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    //     });
-    // }
+            // Show/hide the save button based on edit mode
+            if (saveEditedPageBtn) {
+                saveEditedPageBtn.style.display = editorActive ? 'inline-block' : 'none';
+            }
+        });
+    }
+
+    // Placeholder for Save Edits button functionality
+    if (saveEditedPageBtn) {
+        saveEditedPageBtn.addEventListener('click', () => {
+            // Logic to extract and save HTML will go here
+            const pagePreviewIframe = document.getElementById('page-preview');
+            if (pagePreviewIframe && pagePreviewIframe.contentDocument) {
+                const editedHtml = pagePreviewIframe.contentDocument.body.innerHTML;
+                console.log("Edited HTML content:", editedHtml);
+                alert("Edited HTML logged to console. Integration for saving this content is pending.");
+                // Further steps: send to server, offer as download, etc.
+            } else {
+                alert("Could not retrieve edited content from the preview.");
+            }
+        });
+    }
 });
