@@ -290,7 +290,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
 
     prompt += `\n--- Hero Section Styling ---\n`;
     if (data.aiColors === 'on') {
-        prompt += `Hero Section Background: Use the AI-selected color palette to create a beautiful and modern gradient background for the hero section. Ensure it complements the overall design.\n`;
+        prompt += `Hero Section Background: Use the AI-selected color palette to create a beautiful and modern **gradient** background for the hero section. Ensure it complements the overall design and the chosen colors work well together in a gradient format.\n`;
     } else {
         prompt += `Hero Section Background: Use the primary color (${data.primaryColorHex || '#4361EE'}) and secondary color (${data.secondaryColorHex || '#4CC9F0'}) to create a beautiful and modern gradient background for the hero section. The gradient should be visually appealing and harmonious.\n`;
     }
@@ -353,11 +353,11 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     if (data.aboutUsSnippet && data.aboutUsSnippet.trim() !== '') {
         prompt += `The user has provided an "About Us" snippet. Include a dedicated "About Us" section on the page. Use the following content:\n`;
         prompt += `  - Snippet: "${data.aboutUsSnippet.trim()}"\n`;
-        prompt += `Style this section appropriately to fit the overall design and effectively introduce the business/project.\n`;
+        prompt += `Style this section appropriately to fit the overall design and effectively introduce the business/project. The main content/text of this section should be **centered on the page** (e.g., within a container that has auto margins or uses flexbox for centering).\n`;
     } else if (data.sections && data.sections.includes('about')) { // If "About Us" was checked but no snippet provided
-        prompt += `The user selected to include an "About Us" section but did not provide a specific snippet. Generate a concise, well-written placeholder "About Us" section that is relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}". Clearly mark this content as placeholder text that the user should customize, for example, by starting with "[Placeholder: Tell your story here...]".\n`;
+        prompt += `The user selected to include an "About Us" section but did not provide a specific snippet. Generate a concise, well-written placeholder "About Us" section that is relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}". Clearly mark this content as placeholder text that the user should customize, for example, by starting with "[Placeholder: Tell your story here...]". The main content/text of this section should be **centered on the page**.\n`;
     } else {
-        prompt += `No "About Us" snippet provided and the section was not explicitly requested to be generated with placeholder content. Omit the "About Us" section unless it is critically essential for the business type and AI suggests it (in which case, use a clearly marked placeholder as described above).\n`;
+        prompt += `No "About Us" snippet provided and the section was not explicitly requested to be generated with placeholder content. Omit the "About Us" section unless it is critically essential for the business type and AI suggests it (in which case, use a clearly marked placeholder as described above, ensuring its content is centered).\n`;
     }
     prompt += `--- End About Us Section ---\n`;
     
@@ -407,7 +407,7 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
             // However, as a fallback, instruct AI to use a clear placeholder and a very visible warning for the user to replace it.
             prompt += `CRITICAL FALLBACK: The user requested a contact form but NO email was provided (this indicates a potential issue with form submission or data collection). Use a VERY OBVIOUS placeholder like 'REPLACE-WITH-YOUR-EMAIL@example.com' for the 'mailto:' link AND include a prominent, visible warning message directly above or within the contact form in the HTML stating: "IMPORTANT: Contact form is not fully configured. Please provide your email address in the questionnaire to activate this form." This warning should be styled to be highly noticeable (e.g., red text, warning icon).\n`;
         }
-        prompt += `Style the contact form to be user-friendly and visually consistent with the rest of the page design.\n`;
+        prompt += `Styling: Style the contact form to be user-friendly, visually appealing, and modern, consistent with the overall page design. Avoid a basic or unstyled appearance. The form itself (or its main container) should be **centered on the page**.\n`;
     } else {
         prompt += `The user has NOT explicitly requested a "Contact Us" section with a form. Omit this section.\n`;
     }

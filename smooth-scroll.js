@@ -17,6 +17,10 @@ function initSmoothScrolling() {
     // Apply smooth scrolling to each link
     scrollLinks.forEach(link => {
         link.addEventListener('click', function(e) {
+            // If the click is inside the iframe, do nothing and let the iframe handle it
+            if (e.target.closest('#page-preview')) {
+                return;
+            }
             e.preventDefault();
             
             // Get the target element
