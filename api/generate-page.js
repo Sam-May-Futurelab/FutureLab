@@ -383,14 +383,13 @@ Example Elements: "Courses," "About Us," "Instructors," "How it Works," "Enroll 
     }
     prompt += `--- End Pricing Section ---\n`;
 
-    // Contact Section
     prompt += `\n--- Contact Section ---\n`;
     const includeContactSection = data.sections && data.sections.includes('contact'); // NEW LOGIC - section checkbox is the source of truth
 
     if (includeContactSection) {
         prompt += `The user has requested a "Contact Us" section. This section MUST feature a functional contact form.\n`;
+        prompt += `CRITICAL PLACEMENT: This "Contact Us" section, if generated, MUST be the VERY LAST section in the HTML body, appearing after all other content sections (e.g., About Us, Features, Pricing, Testimonials, FAQs, Social Media links if they are in a footer-like area but before a final small print footer if any). It should effectively be the footer or immediately precede a minimal site-info footer.\n`;
         prompt += `The contact form should collect at least the sender's name, email, and a message.\n`;
-        prompt += `The form's submission action MUST be a 'mailto:' link.\n`;
         if (data.contactFormEmail && data.contactFormEmail.trim() !== '') {
             prompt += `Use the following email address for the 'mailto:' link: ${data.contactFormEmail.trim()}\n`;
         } else {

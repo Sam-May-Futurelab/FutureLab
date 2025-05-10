@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const pricingFieldsContainer = document.getElementById('pricing-fields-container');
     const faqSectionCheckbox = document.getElementById('faq-section-checkbox');
     const faqFieldsContainer = document.getElementById('faq-fields-container');
+    const featuresSectionCheckbox = document.getElementById('features-section-checkbox'); // Added
+    const featuresBenefitsFieldsContainer = document.getElementById('features-benefits-fields-container'); // Added
     const businessTypeDropdown = document.getElementById('business-type'); // Added
     const otherBusinessTypeContainer = document.getElementById('other-business-type-container'); // Added
     const otherBusinessTypeInput = document.getElementById('other-business-type'); // Added
@@ -95,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleConditionalSectionDisplay(testimonialsSectionCheckbox, testimonialsFieldsContainer);
         toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer);
         toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer);
+        toggleConditionalSectionDisplay(featuresSectionCheckbox, featuresBenefitsFieldsContainer); // Added
         toggleContactEmailFields(); // MODIFIED: Use specific function for contact email fields
         toggleOtherBusinessTypeVisibility(); // Added: Initial check for "Other" business type
 
@@ -196,6 +199,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (faqSectionCheckbox) {
             faqSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer));
         }
+        if (featuresSectionCheckbox) { // Added
+            featuresSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(featuresSectionCheckbox, featuresBenefitsFieldsContainer)); // Added
+        } // Added
         if (contactSectionCheckbox) { // Added for contact form email
             contactSectionCheckbox.addEventListener('change', toggleContactEmailFields);
         }
@@ -909,8 +915,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'block';
                 
                 // MODIFIED SCROLL LOGIC for successful generation
-                if (questionnaireContainer) {
-                    questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (pagePreview) { // Changed from questionnaireContainer to pagePreview
+                    pagePreview.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             }, 1000);
 
