@@ -268,9 +268,14 @@
     background-color: #e9f7ef; /* Light mode default (greenish) */
     color: #155724; /* Light mode default */
     border: 1px solid #155724;
+    position: fixed; /* Or absolute if container is relative and you want it contained */
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050; /* High z-index */
 }
 
-[data-theme="dark"] #save-notification-popup {
+.dark-theme #save-notification-popup {
     background-color: #2a3b2a; /* Dark green */
     color: #c8e6c9; /* Light green text */
     border: 1px solid #c8e6c9;
@@ -335,7 +340,7 @@
     gap: 12px; /* Space between checkbox and second color picker */
 }
 
-[data-theme="dark"] .color-picker-panel .gradient-section {
+.dark-theme .color-picker-panel .gradient-section {
     border-color: rgba(255, 255, 255, 0.12); /* Subtle border for dark mode */
 }
 
@@ -356,7 +361,7 @@
     align-self: center; 
 }
 
-[data-theme="dark"] .color-picker-panel .checkbox-container .checkbox-label-text {
+.dark-theme .color-picker-panel .checkbox-container .checkbox-label-text {
     color: var(--color-picker-label-text-dark, #c5c8c6);
 }
 
@@ -389,7 +394,7 @@
     padding-top: 15px;
 }
 
-[data-theme="dark"] .color-picker-panel .panel-buttons {
+.dark-theme #color-picker-panel .panel-buttons {
     border-top-color: var(--color-picker-border-dark, #3a3f4b);
 }
 
@@ -423,11 +428,11 @@
     vertical-align: middle;
 }
 
-[data-theme="dark"] .color-picker-panel .panel-buttons #closeColorPickerBtn {
+.dark-theme #color-picker-panel .panel-buttons #closeColorPickerBtn {
     color: var(--color-picker-close-btn-text-dark, #abb2bf);
 }
 
-[data-theme="dark"] .color-picker-panel .panel-buttons #closeColorPickerBtn:hover {
+.dark-theme #color-picker-panel .panel-buttons #closeColorPickerBtn:hover {
     background-color: rgba(255,255,255,0.1); /* Subtle hover for dark mode */
     color: var(--color-picker-close-btn-hover-text-dark, #ffffff);
 }
@@ -456,7 +461,7 @@
     color: var(--color-picker-header-text, #333); /* Default light mode */
 }
 
-[data-theme="dark"] #color-picker-panel h4 {
+.dark-theme #color-picker-panel h4 {
     color: var(--color-picker-header-text-dark, #e2e8f0); /* Light text for header */
     border-bottom-color: var(--color-picker-border-dark, #3a3f4b); /* Added dark mode border color */
 }
@@ -479,59 +484,34 @@
     color: var(--color-picker-close-btn-text, #555);
 }
 
-[data-theme="dark"] #color-picker-panel {
+.dark-theme #color-picker-panel {
     background-color: var(--color-picker-bg-dark, #282c34); /* Darker background for the panel */
     color: var(--color-picker-text-dark, #abb2bf); /* Lighter text for readability */
     border: 1px solid var(--color-picker-border-dark, #3a3f4b);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* Added consolidated box-shadow */
 }
 
-[data-theme="dark"] #color-picker-panel h4 {
+.dark-theme #color-picker-panel h4 {
     color: var(--color-picker-header-text-dark, #e2e8f0); /* Light text for header */
 }
 
-[data-theme="dark"] #color-picker-panel label {
+.dark-theme #color-picker-panel label {
     color: var(--color-picker-label-text-dark, #c5c8c6); /* Light grey for labels */
 }
 
-[data-theme="dark"] #color-picker-panel input[type="color"] {
+.dark-theme #color-picker-panel input[type="color"] {
     border: 1px solid var(--color-picker-input-border-dark, #4a4e58);
 }
 
-[data-theme="dark"] #color-picker-panel button {
-    background-color: var(--color-picker-button-bg-dark, #0056b3); /* Darker blue for buttons */
-    color: var(--color-picker-button-text-dark, #e2e8f0); /* Light text on buttons */
-    border: 1px solid var(--color-picker-button-border-dark, #004085);
-}
-[data-theme="dark"] #color-picker-panel button:hover {
-    background-color: var(--color-picker-button-hover-bg-dark, #004085);
-}
-
-[data-theme="dark"] #color-picker-panel button.secondary {
-    background-color: var(--color-picker-button-secondary-bg-dark, #5a6268); /* Darker grey for secondary buttons */
-    border: 1px solid var(--color-picker-button-secondary-border-dark, #494e53);
-}
-[data-theme="dark"] #color-picker-panel button.secondary:hover {
-    background-color: var(--color-picker-button-secondary-hover-bg-dark, #494e53);
-}
-
-[data-theme="dark"] #color-picker-panel #closeColorPickerBtn {
-    color: var(--color-picker-close-btn-text-dark, #abb2bf); /* Lighter text for close button */
-}
-[data-theme="dark"] #color-picker-panel #closeColorPickerBtn:hover {
-    color: var(--color-picker-close-btn-hover-text-dark, #ffffff);
-}
-
-[data-theme="dark"] #color-picker-target-info {
+.dark-theme #color-picker-target-info {
     color: var(--color-picker-label-text-dark, #dde1e4); /* Brighter for dark mode */
     opacity: 1; /* Ensure full opacity in dark mode */
     background-color: var(--dark-secondary-bg, #383838);
     border: 1px solid var(--color-picker-border-dark, #3a3f4b); /* Changed to use consistent panel border variable */
 }
 
-[data-theme="dark"] #color-picker-target-info span {
+.dark-theme #color-picker-target-info span {
     color: var(--primary-color-dark-theme, #58a6ff); /* Make the element name stand out */
-    font-weight: bold;
 }
 
 /* Styled Checkbox for 'Use Background Gradient' */
@@ -603,27 +583,27 @@
 }
 
 /* Dark theme for custom checkbox */
-[data-theme="dark"] .checkbox-container .checkmark {
+.dark-theme .checkbox-container .checkmark {
     background-color: var(--input-bg-color-dark, #3a3f4b);
     border: 1px solid var(--input-border-color-dark, #555);
 }
 
-[data-theme="dark"] .checkbox-container:hover input[type="checkbox"] ~ .checkmark {
+.dark-theme .checkbox-container:hover input[type="checkbox"] ~ .checkmark {
     border-color: var(--primary-color-dark-theme, #58a6ff);
 }
 
-[data-theme="dark"] .checkbox-container input[type="checkbox"]:checked ~ .checkmark {
+.dark-theme .checkbox-container input[type="checkbox"]:checked ~ .checkmark {
     background-color: var(--primary-color-dark-theme, #58a6ff);
     border-color: var(--primary-color-dark-theme, #58a6ff);
 }
 
 /* Ensure checkmark symbol is light in dark mode and contrasts with the checked background */
-[data-theme="dark"] .checkbox-container input[type="checkbox"]:checked ~ .checkmark:after {
+.dark-theme .checkbox-container input[type="checkbox"]:checked ~ .checkmark:after {
     border-color: var(--dark-text-color, #f1f1f1); /* Use a theme variable for light text in dark mode */
 }
 
 /* Ensure label text color is consistent */
-[data-theme="dark"] .checkbox-container {
+.dark-theme .checkbox-container {
     color: var(--color-picker-label-text-dark, #c5c8c6);
 }
 
@@ -758,6 +738,177 @@
 }
 .dark-theme .step-card p {
     color: var(--text-secondary-dark);
+}
+
+/* --- New Page Actions Panel Styles --- */
+#page-actions-panel {
+    background-color: var(--background-offset, #f8f9fa);
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: var(--border-radius-lg, 12px);
+    padding: 20px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    box-shadow: var(--box-shadow-sm, 0 2px 10px rgba(0,0,0,0.07));
+}
+
+.action-group {
+    margin-bottom: 25px;
+}
+.action-group:last-child {
+    margin-bottom: 0;
+}
+
+.action-group-title {
+    font-size: 1.3em;
+    color: var(--text-primary, #333);
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color, #e0e0e0);
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-flex {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+}
+
+.btn-flex .btn-text {
+    line-height: 1; /* Helps with vertical alignment */
+}
+
+.instructions-text {
+    font-size: 0.9em;
+    color: var(--text-muted, #555);
+    line-height: 1.5;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.instructions-text.small {
+    font-size: 0.85em;
+    margin-top: 5px;
+    margin-bottom: 8px;
+}
+
+.status-text.warning {
+    color: var(--warning-color, #dc3545);
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.download-subsection {
+    background-color: var(--background-color, #fff);
+    padding: 15px;
+    border-radius: var(--border-radius-md, 8px);
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color-light, #eee);
+}
+
+.download-subsection h5 {
+    font-size: 1.1em;
+    color: var(--text-primary, #333);
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+/* Dark Theme for Page Actions Panel */
+.dark-theme #page-actions-panel {
+    background-color: var(--background-offset-dark, #1a1d24);
+    border-color: var(--border-color-dark, #3a3f4b);
+    box-shadow: var(--box-shadow-sm-dark, 0 2px 10px rgba(0,0,0,0.2));
+}
+
+.dark-theme .action-group-title {
+    color: var(--text-primary-dark, #e2e8f0);
+    border-bottom-color: var(--border-color-dark, #3a3f4b);
+}
+
+.dark-theme .instructions-text {
+    color: var(--text-muted-dark, #abb2bf);
+}
+
+.dark-theme .status-text.warning {
+    color: var(--warning-color-dark, #f8d7da);
+}
+
+.dark-theme .download-subsection {
+    background-color: var(--background-dark, #212529);
+    border-color: var(--border-color-dark-light, #2c313a);
+}
+
+.dark-theme .download-subsection h5 {
+    color: var(--text-primary-dark, #e2e8f0);
+}
+
+.dark-theme #download-actions .btn.btn-outline {
+    color: var(--btn-outline-text-color-dark, #adb5bd);
+    border-color: var(--btn-outline-border-color-dark, #adb5bd);
+}
+
+.dark-theme #download-actions .btn.btn-outline:hover {
+    color: var(--btn-outline-hover-text-color-dark, #fff);
+    background-color: var(--btn-outline-hover-bg-color-dark, #343a40);
+    border-color: var(--btn-outline-hover-border-color-dark, #343a40);
+}
+
+/* General button dark theme overrides if not covered by specific panel styles */
+.dark-theme .btn-primary {
+    background-color: var(--primary-color-dark, #0056b3); /* Example */
+    border-color: var(--primary-color-dark, #0056b3);
+    color: var(--btn-text-color-dark, #fff);
+}
+.dark-theme .btn-primary:hover {
+    background-color: var(--primary-color-hover-dark, #004085);
+    border-color: var(--primary-color-hover-dark, #004085);
+}
+
+.dark-theme .btn-secondary {
+    background-color: var(--secondary-color-dark, #5a6268); /* Example */
+    border-color: var(--secondary-color-dark, #5a6268);
+    color: var(--btn-text-color-dark, #fff);
+}
+.dark-theme .btn-secondary:hover {
+    background-color: var(--secondary-color-hover-dark, #494e53);
+    border-color: var(--secondary-color-hover-dark, #494e53);
+}
+
+.dark-theme .btn-success {
+    background-color: var(--success-color-dark, #198754); /* Example */
+    border-color: var(--success-color-dark, #198754);
+    color: var(--btn-text-color-dark, #fff);
+}
+.dark-theme .btn-success:hover {
+    background-color: var(--success-color-hover-dark, #146c43);
+    border-color: var(--success-color-hover-dark, #146c43);
+}
+
+.dark-theme .btn-info {
+    background-color: var(--info-color-dark, #0dcaf0); /* Example */
+    border-color: var(--info-color-dark, #0dcaf0);
+    color: var(--btn-text-color-dark-on-light-bg, #000); /* Text might need to be dark on light blue */
+}
+.dark-theme .btn-info:hover {
+    background-color: var(--info-color-hover-dark, #0aa3c2);
+    border-color: var(--info-color-hover-dark, #0aa3c2);
+}
+
+.dark-theme .btn-warning {
+    background-color: var(--warning-color-dark-bg, #ffc107); /* Example */
+    border-color: var(--warning-color-dark-bg, #ffc107);
+    color: var(--btn-text-color-dark-on-light-bg, #000);
+}
+.dark-theme .btn-warning:hover {
+    background-color: var(--warning-color-hover-dark-bg, #e0a800);
+    border-color: var(--warning-color-hover-dark-bg, #e0a800);
 }
 
 /* Responsive adjustments */

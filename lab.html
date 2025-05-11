@@ -564,26 +564,67 @@
                     <p class="preview-placeholder-text">Your AI-generated landing page will appear here once you complete the questionnaire.</p>
                 </div>
                 <iframe id="page-preview" title="AI Generated Page Preview"></iframe>
-                <div class="preview-controls" id="preview-controls-container" style="text-align: center; margin-top: 15px; margin-bottom: 15px; padding: 10px; border-radius: var(--border-radius-md); transition: background-color 0.3s ease;">
-                    <button id="toggle-edit-mode-btn" class="btn btn-secondary"><i class="fas fa-pencil-alt"></i> Toggle Edit Mode</button>
-                    <button id="save-edited-page-btn" class="btn btn-success" style="display: none;"><i class="fas fa-save"></i> Save Edits</button> 
-                    <button id="download-edited-page-btn" class="btn btn-primary" style="margin-left: 10px; display: none;" title="Downloads the current saved state as a single HTML file with embedded CSS."><i class="fas fa-download"></i> Download Edited Page</button> 
-                    <button id="download-edited-css-btn" class="btn btn-info" style="margin-left: 10px; display: none;" title="Downloads the saved custom CSS file."><i class="fas fa-file-invoice"></i> Download Edited CSS</button> 
-                    <p id="edit-mode-instructions" class="edit-instructions" style="display: none; margin-top: 10px; font-size: 0.9em; color: var(--text-muted);">Edit Mode ON: Click text to edit. Click other elements to open color picker. Enter/click away to confirm, Esc to cancel. Save changes before downloading.</p>
-                    <p id="unsaved-changes-indicator" style="display: none; color: var(--warning-color); font-weight: bold; margin-top: 5px;"><i class="fas fa-exclamation-triangle"></i> You have unsaved changes!</p>
-                    
-                    <!-- On-screen Save Notification -->
-                    <div id="save-notification-popup" class="save-notification" style="display: none;">
-                        <p id="save-notification-message"></p>
-                        <button id="close-save-notification" class="close-btn">&times;</button>
+
+                <!-- New Page Actions Panel - Replaces preview-controls-container, download-options-info, and download-buttons -->
+                <div id="page-actions-panel">
+                    <div class="action-group" id="edit-mode-actions">
+                        <h4 class="action-group-title">Editor Controls</h4>
+                        <div class="button-row">
+                            <button id="toggle-edit-mode-btn" class="btn btn-secondary btn-flex">
+                                <i class="fas fa-pencil-alt"></i>
+                                <span class="btn-text">Toggle Edit Mode</span>
+                            </button>
+                            <button id="save-edited-page-btn" class="btn btn-success btn-flex" style="display: none;">
+                                <i class="fas fa-save"></i>
+                                <span class="btn-text">Save Edits</span>
+                            </button>
+                        </div>
+                        <p id="edit-mode-instructions" class="instructions-text" style="display: none;">
+                            <strong>Edit Mode ON:</strong> Click directly on text to edit. Click other elements (like sections or cards) to open the color picker. Press Enter or click away to confirm text changes. Remember to save your edits!
+                        </p>
+                        <p id="unsaved-changes-indicator" class="status-text warning" style="display: none;">
+                            <i class="fas fa-exclamation-triangle"></i> You have unsaved changes. Please save before downloading the edited version.
+                        </p>
+                    </div>
+
+                    <div class="action-group" id="download-actions">
+                        <h4 class="action-group-title">Download Your Page</h4>
+                        <div class="download-subsection">
+                            <h5>Edited Version</h5>
+                            <p class="instructions-text small">Download the page with your current saved customizations. Ensure you've saved recent changes.</p>
+                            <div class="button-row">
+                                <button id="download-edited-page-btn" class="btn btn-primary btn-flex" style="display: none;" title="Downloads the current saved state as a single HTML file with embedded CSS.">
+                                    <i class="fas fa-download"></i>
+                                    <span class="btn-text">Download Edited HTML</span>
+                                </button>
+                                <button id="download-edited-css-btn" class="btn btn-info btn-flex" style="display: none;" title="Downloads the saved custom CSS file.">
+                                    <i class="fas fa-file-invoice"></i>
+                                    <span class="btn-text">Download Edited CSS</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="download-subsection">
+                            <h5>Original AI-Generated Version</h5>
+                            <p class="instructions-text small">Download the initial page as first generated by the AI, without your edits.</p>
+                            <div class="button-row">
+                                <button id="download-html-btn" class="btn btn-outline btn-flex" title="Downloads the original HTML file as generated by the AI.">
+                                    <i class="fas fa-file-code"></i>
+                                    <span class="btn-text">Download AI HTML</span>
+                                </button>
+                                <button id="download-css-btn" class="btn btn-outline btn-flex" title="Downloads the original CSS file as generated by the AI.">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span class="btn-text">Download AI CSS</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="download-options-info" style="text-align: center; margin-bottom: 15px; font-size: 0.9em; color: var(--text-muted);">
-                    <p>You can download the original AI-generated HTML and CSS files separately. <br>To download your customized version, please use the 'Download Edited Page' button (available in Edit Mode after saving).</p>
-                </div>
-                <div class="download-buttons"> <!-- These are for the ORIGINAL AI-generated files -->
-                    <button id="download-html-btn" class="btn btn-secondary" title="Downloads the original HTML file as generated by the AI."><i class="fas fa-file-code"></i> Download AI HTML</button>
-                    <button id="download-css-btn" class="btn btn-secondary" title="Downloads the original CSS file as generated by the AI."><i class="fas fa-file-alt"></i> Download AI CSS</button>
+                <!-- End New Page Actions Panel -->
+                
+                <!-- On-screen Save Notification - Positioned for global fixed display via CSS -->
+                <div id="save-notification-popup" class="save-notification" style="display: none;">
+                    <p id="save-notification-message"></p>
+                    <button id="close-save-notification" class="close-btn">&times;</button>
                 </div>
             </div>
         </section>
@@ -706,7 +747,7 @@
     <!-- Loading overlay for generation process -->
     <div class="generation-overlay">
         <div class="generation-modal">
-            <div class="generation-spinner"></div>
+            <dotlottie-player src="assets/animations/loading.json" background="transparent" speed="1" style="width: 200px; height: 200px; margin: 0 auto;" loop autoplay></dotlottie-player>
             <h3>Generating Your Page</h3>
             <p class="generation-step">Analyzing your inputs...</p>
         </div>

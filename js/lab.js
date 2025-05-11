@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const downloadEditedCssBtn = document.getElementById('download-edited-css-btn'); // New
     const editModeInstructions = document.getElementById('edit-mode-instructions');
     const unsavedChangesIndicator = document.getElementById('unsaved-changes-indicator');
-    const previewControlsContainer = document.getElementById('preview-controls-container');
     const saveNotificationPopup = document.getElementById('save-notification-popup');
     const saveNotificationMessage = document.getElementById('save-notification-message');
     const closeSaveNotificationBtn = document.getElementById('close-save-notification');
@@ -146,11 +145,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             toggleEditModeBtn.classList.toggle('active', editorActive);
-            toggleEditModeBtn.innerHTML = editorActive ? '<i class="fas fa-times-circle"></i> Disable Edit Mode' : '<i class="fas fa-pencil-alt"></i> Toggle Edit Mode';
-            
-            if (previewControlsContainer) {
-                previewControlsContainer.style.backgroundColor = editorActive ? 'var(--light-blue-bg)' : 'transparent';
-            }
+            // Updated to match btn-flex structure
+            toggleEditModeBtn.innerHTML = editorActive 
+                ? '<i class="fas fa-times-circle"></i><span class="btn-text">Disable Edit Mode</span>' 
+                : '<i class="fas fa-pencil-alt"></i><span class="btn-text">Toggle Edit Mode</span>';
 
             if (saveEditedPageBtn) {
                 saveEditedPageBtn.style.display = editorActive ? 'inline-block' : 'none';
