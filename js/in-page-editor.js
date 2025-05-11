@@ -12,6 +12,9 @@ let customStyleTagId = 'in-page-editor-custom-styles'; // Added
 // Color Picker Panel elements
 let colorPickerPanel, bgColorPicker, textColorPicker, applyColorsBtn, removeCustomColorBtn, closeColorPickerBtn;
 let useBgGradientCheckbox, bgColorPicker2Group, bgColorPicker2; // Added for gradient
+let recentBgColors1 = [];
+let recentBgColors2 = [];
+const MAX_RECENT_COLORS = 5;
 
 // Initialize references to color picker panel elements from the main document
 function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATURE UPDATED
@@ -59,7 +62,24 @@ function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATUR
     if (useBgGradientCheckbox && bgColorPicker2Group) {
         useBgGradientCheckbox.addEventListener('change', () => {
             bgColorPicker2Group.style.display = useBgGradientCheckbox.checked ? 'flex' : 'none';
+            const bgLabel = colorPickerPanel.querySelector('#bgColorPickerLabel');
+            if (bgLabel) {
+                bgLabel.textContent = useBgGradientCheckbox.checked ? 'Background Color 1:' : 'Background Color:';
+            }
         });
+    }
+
+    // Load recent colors from localStorage
+    loadRecentColors();
+    updateRecentColorsDatalist('recentBgColorsList1', recentBgColors1);
+    updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
+
+    // Add event listeners to update recent colors when a color is chosen
+    if (bgColorPicker) {
+        bgColorPicker.addEventListener('change', () => addRecentColor(bgColorPicker.value, 'recentBgColors1'));
+    }
+    if (bgColorPicker2) {
+        bgColorPicker2.addEventListener('change', () => addRecentColor(bgColorPicker2.value, 'recentBgColors2'));
     }
 }
 window.initInPageEditorControls = initInPageEditorControls;
@@ -376,6 +396,20 @@ function openColorPicker(element) {
         bgColorPicker2.value = '#ffffff'; // Default or derive from bgColor1
     }
 
+    // Update datalists for recent colors every time picker is opened
+    updateRecentColorsDatalist('recentBgColorsList1', recentBgColors1);
+    updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
+    
+    // Associate datalists with inputs
+    if (bgColorPicker) bgColorPicker.setAttribute('list', 'recentBgColorsList1');
+    if (bgColorPicker2) bgColorPicker2.setAttribute('list', 'recentBgColorsList2');
+
+    // Update label for bgColorPicker based on checkbox state
+    const bgLabel = colorPickerPanel.querySelector('#bgColorPickerLabel');
+    if (bgLabel && useBgGradientCheckbox) {
+        bgLabel.textContent = useBgGradientCheckbox.checked ? 'Background Color 1:' : 'Background Color:';
+    }
+
     colorPickerPanel.style.display = 'flex'; // Ensure display is set to flex
 }
 
@@ -405,6 +439,7 @@ function handleFocusOutColorPicker(event) {
 
 function applyColors() {
     if (!currentEditingElementForColor || !bgColorPicker || !textColorPicker || !useBgGradientCheckbox || !bgColorPicker2) {
+        console.error("InPageEditor: Cannot apply colors, essential elements not found.");
         return;
     }
 
@@ -419,18 +454,20 @@ function applyColors() {
         const newBgColor1 = bgColorPicker.value;
         const newBgColor2 = bgColorPicker2.value;
         customCssRules[elementId].backgroundImage = `linear-gradient(to right, ${newBgColor1}, ${newBgColor2})`;
-        // It might be good to remove or ensure background-color is transparent if a gradient is applied
         customCssRules[elementId].backgroundColor = 'transparent'; 
+        addRecentColor(newBgColor1, 'recentBgColors1');
+        addRecentColor(newBgColor2, 'recentBgColors2');
     } else {
-        customCssRules[elementId].backgroundColor = bgColorPicker.value;
-        // Ensure any previous gradient is removed if now applying a solid color
+        const newBgColor = bgColorPicker.value;
+        customCssRules[elementId].backgroundColor = newBgColor;
         if (customCssRules[elementId].backgroundImage) {
             delete customCssRules[elementId].backgroundImage;
         }
+        addRecentColor(newBgColor, 'recentBgColors1'); // Also add to list1 if not gradient
     }
-    customCssRules[elementId].text = newTextColor; // 'text' was used before, ensure consistency or rename to 'color'
+    customCssRules[elementId].text = newTextColor;
 
-    applyCustomCssToIframe(); // Update the stylesheet in the iframe
+    applyCustomCssToIframe();
 
     if (typeof window.notifyUnsavedChange === 'function') {
         window.notifyUnsavedChange();
@@ -453,6 +490,72 @@ function removeCustomColors() {
         window.notifyUnsavedChange();
     }
     openColorPicker(currentEditingElementForColor);
+}
+
+// Functions for managing recent colors
+function addRecentColor(color, listKey) {
+    let recentColorsList = listKey === 'recentBgColors1' ? recentBgColors1 : recentBgColors2;
+    
+    // Remove the color if it already exists to move it to the front
+    const existingIndex = recentColorsList.indexOf(color);
+    if (existingIndex > -1) {
+        recentColorsList.splice(existingIndex, 1);
+    }
+
+    // Add to the beginning of the array
+    recentColorsList.unshift(color);
+
+    // Keep the list to a maximum size
+    if (recentColorsList.length > MAX_RECENT_COLORS) {
+        recentColorsList.pop();
+    }
+
+    if (listKey === 'recentBgColors1') {
+        recentBgColors1 = recentColorsList;
+        updateRecentColorsDatalist('recentBgColorsList1', recentBgColors1);
+    } else {
+        recentBgColors2 = recentColorsList;
+        updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
+    }
+    saveRecentColors();
+}
+
+function updateRecentColorsDatalist(datalistId, colorsArray) {
+    const datalist = colorPickerPanel.querySelector(`#${datalistId}`);
+    if (datalist) {
+        datalist.innerHTML = ''; // Clear existing options
+        colorsArray.forEach(color => {
+            const option = document.createElement('option');
+            option.value = color;
+            datalist.appendChild(option);
+        });
+    }
+}
+
+function saveRecentColors() {
+    try {
+        localStorage.setItem('recentBgColors1', JSON.stringify(recentBgColors1));
+        localStorage.setItem('recentBgColors2', JSON.stringify(recentBgColors2));
+    } catch (e) {
+        console.warn("InPageEditor: Could not save recent colors to localStorage.", e);
+    }
+}
+
+function loadRecentColors() {
+    try {
+        const storedColors1 = localStorage.getItem('recentBgColors1');
+        const storedColors2 = localStorage.getItem('recentBgColors2');
+        if (storedColors1) {
+            recentBgColors1 = JSON.parse(storedColors1);
+        }
+        if (storedColors2) {
+            recentBgColors2 = JSON.parse(storedColors2);
+        }
+    } catch (e) {
+        console.warn("InPageEditor: Could not load recent colors from localStorage.", e);
+        recentBgColors1 = [];
+        recentBgColors2 = [];
+    }
 }
 
 window.getCustomCss = function() {

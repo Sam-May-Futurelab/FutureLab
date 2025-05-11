@@ -474,7 +474,101 @@ body.dark-theme .color-picker-panel input[type="color"] {
 }
 
 [data-theme="dark"] #color-picker-target-info {
-    color: var(--color-picker-label-text-dark, #c5c8c6); /* Ensure this is also themed */
+    color: var(--color-picker-label-text-dark, #dde1e4); /* Brighter for dark mode */
+    opacity: 1; /* Ensure full opacity in dark mode */
+}
+
+[data-theme="dark"] #color-picker-target-info span {
+    color: var(--primary-color-dark-theme, #58a6ff); /* Make the element name stand out */
+    font-weight: bold;
+}
+
+/* Styled Checkbox for 'Use Background Gradient' */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: 0.9em;
+    user-select: none; /* Prevent text selection */
+    padding-left: 28px; /* Space for custom checkbox */
+    margin-bottom: 0; /* Reset margin if any from .form-field */
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkbox-container .checkmark {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+    background-color: var(--input-bg-color, #eee);
+    border: 1px solid var(--input-border-color, #ccc);
+    border-radius: 4px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.checkbox-container:hover input[type="checkbox"] ~ .checkmark {
+    border-color: var(--primary-color, #007bff);
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input[type="checkbox"]:checked ~ .checkmark {
+    background-color: var(--primary-color, #007bff);
+    border-color: var(--primary-color, #007bff);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkbox-container .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input[type="checkbox"]:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+/* Dark theme for custom checkbox */
+[data-theme="dark"] .checkbox-container .checkmark {
+    background-color: var(--input-bg-color-dark, #3a3f4b);
+    border: 1px solid var(--input-border-color-dark, #555);
+}
+
+[data-theme="dark"] .checkbox-container:hover input[type="checkbox"] ~ .checkmark {
+    border-color: var(--primary-color-dark-theme, #58a6ff);
+}
+
+[data-theme="dark"] .checkbox-container input[type="checkbox"]:checked ~ .checkmark {
+    background-color: var(--primary-color-dark-theme, #58a6ff);
+    border-color: var(--primary-color-dark-theme, #58a6ff);
+}
+
+/* Ensure label text color is consistent */
+[data-theme="dark"] .checkbox-container {
+    color: var(--color-picker-label-text-dark, #c5c8c6);
 }
 
 /* Hero Section Styles */
