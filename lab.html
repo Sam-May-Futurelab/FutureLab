@@ -682,11 +682,11 @@
 
         <!-- Gradient Section Start -->
         <div class="gradient-section">
-            <div class="checkbox-container">
-                <input type="checkbox" id="useBgGradient" name="useBgGradient">
-                <span class="checkmark"></span>
-                <label for="useBgGradient" class="checkbox-label-text">Use Background Gradient?</label>
-            </div>
+            <label class="checkbox-container" for="useBgGradient"> <!-- Changed div to label, added for attribute -->
+                <input type="checkbox" id="useBgGradient" name="useBgGradient"> <!-- Input remains the same -->
+                <span class="checkmark"></span> <!-- Visual checkmark remains the same -->
+                <span class="checkbox-label-text">Use Background Gradient?</span> <!-- Text is now a span inside the new label -->
+            </label>
 
             <div class="picker-group" id="bgColorPicker2-group" style="display: none;">
                 <label id="bgColorPicker2Label" for="bgColorPicker2">Gradient Color 2</label>

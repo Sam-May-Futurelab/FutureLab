@@ -59,11 +59,13 @@ function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATUR
     // Event listener for the gradient checkbox
     if (useBgGradientCheckbox && bgColorPicker2Group) {
         useBgGradientCheckbox.addEventListener('change', () => {
+            console.log('[InPageEditor] Gradient checkbox current checked state before change handler logic:', useBgGradientCheckbox.checked);
             bgColorPicker2Group.style.display = useBgGradientCheckbox.checked ? 'flex' : 'none';
             const bgLabel = colorPickerPanel.querySelector('#bgColorPickerLabel');
             if (bgLabel) {
                 bgLabel.textContent = useBgGradientCheckbox.checked ? 'Background Color 1:' : 'Background Color:';
             }
+            console.log('[InPageEditor] Gradient checkbox changed. New display for bgColorPicker2Group:', bgColorPicker2Group.style.display);
         });
     }
 
@@ -308,7 +310,7 @@ function ensureId(element) {
 
 function openColorPicker(element) {
     if (!colorPickerPanel || !bgColorPicker || !useBgGradientCheckbox || !bgColorPicker2 || !bgColorPicker2Group) {
-        console.error("InPageEditor: Color picker panel or essential color inputs (including gradient) not initialized.");
+        console.error("[InPageEditor] Color picker panel or essential color inputs (including gradient) not initialized.");
         return;
     }
     currentEditingElementForColor = element;
@@ -351,24 +353,33 @@ function openColorPicker(element) {
     // Reset gradient checkbox and hide second color picker initially
     useBgGradientCheckbox.checked = false;
     bgColorPicker2Group.style.display = 'none';
+    console.log('[InPageEditor] openColorPicker: Initialized useBgGradientCheckbox.checked to false.');
 
     let currentBgColor = '#ffffff'; // Default
+
+    console.log('[InPageEditor] openColorPicker: Computed backgroundImage for element:', computedStyle.backgroundImage);
 
     // Check for existing linear gradient on background-image
     const existingGradient = computedStyle.backgroundImage;
     if (existingGradient && existingGradient.startsWith('linear-gradient')) {
         const colors = parseGradientColors(existingGradient);
+        console.log('[InPageEditor] openColorPicker: Parsed gradient colors:', colors);
         if (colors.length >= 2) {
             currentBgColor = rgbToHex(colors[0]);
             bgColorPicker2.value = rgbToHex(colors[1]);
             useBgGradientCheckbox.checked = true;
             bgColorPicker2Group.style.display = 'flex';
+            console.log('[InPageEditor] openColorPicker: Gradient detected and applied. useBgGradientCheckbox.checked:', useBgGradientCheckbox.checked);
         } else if (colors.length === 1) { // Fallback if gradient parsing is weird
             currentBgColor = rgbToHex(colors[0]);
+            console.log('[InPageEditor] openColorPicker: Partial gradient (1 color) detected.');
         }
     } else if (computedStyle.backgroundColor) {
         currentBgColor = rgbToHex(computedStyle.backgroundColor);
     }
+
+    console.log('[InPageEditor] openColorPicker: State of useBgGradientCheckbox.checked before final UI update:', useBgGradientCheckbox.checked);
+    console.log('[InPageEditor] openColorPicker: bgColorPicker2Group display state:', bgColorPicker2Group.style.display);
 
     if (!isValidHex(currentBgColor) || currentBgColor === '#000000' && (computedStyle.backgroundColor === 'rgba(0, 0, 0, 0)' || computedStyle.backgroundColor === 'transparent')) {
         currentBgColor = '#ffffff'; 

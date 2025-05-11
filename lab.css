@@ -389,6 +389,10 @@
     padding-top: 15px;
 }
 
+[data-theme="dark"] .color-picker-panel .panel-buttons {
+    border-top-color: var(--color-picker-border-dark, #3a3f4b);
+}
+
 .color-picker-panel .panel-buttons .btn {
     flex-grow: 1; /* Allow buttons to share space */
     padding: 8px 12px;
@@ -442,32 +446,6 @@
     margin-left: 0; /* Removes margin from the first button */
 }
 
-/* Ensure dark mode compatibility if theme variables are used */
-body.dark-theme .color-picker-panel {
-    background-color: var(--dark-background, #2c2c2c);
-    border-color: var(--dark-border, #444);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-body.dark-theme .color-picker-panel h4,
-body.dark-theme .color-picker-panel label {
-    color: var(--dark-text-color, #f1f1f1);
-}
-
-body.dark-theme .color-picker-panel .target-info {
-    background-color: var(--dark-secondary-bg, #383838);
-    color: var(--dark-muted-text-color, #bbb);
-    border-color: var(--dark-border, #444);
-}
-
-body.dark-theme .color-picker-panel .target-info strong {
-    color: var(--primary-color-dark-theme, #58a6ff); /* Adjust if primary color needs dark theme variant */
-}
-
-body.dark-theme .color-picker-panel input[type="color"] {
-    border-color: var(--dark-border, #555);
-}
-
 #color-picker-panel {
     background-color: var(--color-picker-bg, #fff); /* Default light mode */
     color: var(--color-picker-text, #333); /* Default light mode */
@@ -478,12 +456,13 @@ body.dark-theme .color-picker-panel input[type="color"] {
     color: var(--color-picker-header-text, #333); /* Default light mode */
 }
 
-#color-picker-panel label {
-    color: var(--color-picker-label-text, #555); /* Default light mode */
+[data-theme="dark"] #color-picker-panel h4 {
+    color: var(--color-picker-header-text-dark, #e2e8f0); /* Light text for header */
+    border-bottom-color: var(--color-picker-border-dark, #3a3f4b); /* Added dark mode border color */
 }
 
-#color-picker-panel .color-input-group input[type="color"] {
-    border: 1px solid var(--color-picker-input-border, #ddd);
+#color-picker-panel label {
+    color: var(--color-picker-label-text, #555); /* Default light mode */
 }
 
 #color-picker-panel button {
@@ -504,6 +483,7 @@ body.dark-theme .color-picker-panel input[type="color"] {
     background-color: var(--color-picker-bg-dark, #282c34); /* Darker background for the panel */
     color: var(--color-picker-text-dark, #abb2bf); /* Lighter text for readability */
     border: 1px solid var(--color-picker-border-dark, #3a3f4b);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* Added consolidated box-shadow */
 }
 
 [data-theme="dark"] #color-picker-panel h4 {
@@ -514,7 +494,7 @@ body.dark-theme .color-picker-panel input[type="color"] {
     color: var(--color-picker-label-text-dark, #c5c8c6); /* Light grey for labels */
 }
 
-[data-theme="dark"] #color-picker-panel .color-input-group input[type="color"] {
+[data-theme="dark"] #color-picker-panel input[type="color"] {
     border: 1px solid var(--color-picker-input-border-dark, #4a4e58);
 }
 
@@ -545,6 +525,8 @@ body.dark-theme .color-picker-panel input[type="color"] {
 [data-theme="dark"] #color-picker-target-info {
     color: var(--color-picker-label-text-dark, #dde1e4); /* Brighter for dark mode */
     opacity: 1; /* Ensure full opacity in dark mode */
+    background-color: var(--dark-secondary-bg, #383838);
+    border: 1px solid var(--color-picker-border-dark, #3a3f4b); /* Changed to use consistent panel border variable */
 }
 
 [data-theme="dark"] #color-picker-target-info span {
