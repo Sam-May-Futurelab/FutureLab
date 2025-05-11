@@ -13,7 +13,7 @@ function downloadFile(filename, content, contentType) {
 
 // Make this function globally available for lab.js
 window.downloadHtmlContent = function(bodyHtml, cssContent, filename = 'index.html', isOriginal = true) {
-    const pageTitle = lastProjectName || (isOriginal ? 'Generated Page' : 'Edited Page');
+    const pageTitle = window.lastProjectName || (isOriginal ? 'Generated Page' : 'Edited Page');
     const fullHtml = `
 <!DOCTYPE html>
 <html lang="en">
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const totalSteps = formSteps.length;
     let lastGeneratedHTML = '';
     let lastGeneratedCSS = '';
-    let lastProjectName = 'ai-generated-page';
+    window.lastProjectName = 'ai-generated-page'; // Initialize on window object
 
     // Change button text
     if (downloadHtmlBtn) {
@@ -960,7 +960,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update project name for downloads
         const projectNameFromForm = data.businessName || 'My Awesome Project';
-        lastProjectName = projectNameFromForm.toLowerCase().replace(/\s+/g, '-') || 'ai-generated-page';
+        window.lastProjectName = projectNameFromForm.toLowerCase().replace(/\s+/g, '-') || 'ai-generated-page';
 
         try {
             const response = await fetch('/api/generate-page', {
@@ -984,14 +984,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 clearInterval(messageInterval);
                 // --- END: Clear interval on error ---
 
+                const userFriendlyErrorMessage = "Oops! Looks like there's an error, don't worry, we're working on it!!";
+
                 if (response.status === 429) {
                     handleRateLimitError(errorData.message || "Too many requests. Please wait a minute and try again.");
                 } else {
-                    const errorMessage = errorData.message || `HTTP error! status: ${response.status}`;
-                    console.error('Server error:', errorMessage);
-                    generationStep.textContent = `Error: ${errorMessage}. Please try again.`;
-                    displayErrorInPreview(errorMessage); // Use helper
-                    setTimeout(() => { generationOverlay.classList.remove('active'); }, 3000);
+                    const technicalErrorMessage = errorData.message || `HTTP error! status: ${response.status}`;
+                    console.error('Server error:', technicalErrorMessage);
+                    generationStep.textContent = userFriendlyErrorMessage; // Use user-friendly message
+                    displayErrorInPreview(userFriendlyErrorMessage); // Use user-friendly message
+                    setTimeout(() => { generationOverlay.classList.remove('active'); }, 5000); // Increased timeout for user to read
                 }
                 return; // Stop further processing
             }
@@ -1150,7 +1152,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function downloadHTML() {
         if (lastGeneratedHTML) {
             // Call the global download function with HTML body, CSS, filename, and 'original' flag
-            window.downloadHtmlContent(lastGeneratedHTML, lastGeneratedCSS, `${lastProjectName}-original.html`, true);
+            window.downloadHtmlContent(lastGeneratedHTML, lastGeneratedCSS, `${window.lastProjectName}-original.html`, true);
         } else {
             alert("No HTML content has been generated yet.");
         }
@@ -1158,7 +1160,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function downloadCSS() {
         if (lastGeneratedCSS) {
-            downloadFile(`${lastProjectName}-original.css`, lastGeneratedCSS, 'text/css');
+            downloadFile(`${window.lastProjectName}-original.css`, lastGeneratedCSS, 'text/css');
         } else {
             alert("No CSS content has been generated yet.");
         }

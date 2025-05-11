@@ -699,6 +699,31 @@
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
+.steps-container .step-card {
+    background-color: var(--card-bg-color, #ffffff);
+    border-radius: var(--border-radius-lg, 12px);
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 0 15px 0px rgba(var(--primary-color-rgb, 67, 97, 238), 0.3); /* Initial subtle glow */
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    border: 1px solid var(--border-color, #e0e0e0);
+}
+
+.steps-container .step-card:hover {
+    box-shadow: 0 0 25px 5px rgba(var(--primary-color-rgb, 67, 97, 238), 0.5); /* Enhanced glow on hover */
+    transform: translateY(-5px);
+}
+
+.dark-theme .steps-container .step-card {
+    background-color: var(--background-dark); /* Changed to main dark background */
+    border: 1px solid transparent; /* Border made transparent */
+    box-shadow: 0 0 15px 0px rgba(var(--primary-color-dark-rgb, 90, 120, 255), 0.4); /* Initial subtle glow for dark theme */
+}
+
+.dark-theme .steps-container .step-card:hover {
+    box-shadow: 0 0 25px 5px rgba(var(--primary-color-dark-rgb, 90, 120, 255), 0.6); /* Enhanced glow for dark theme on hover */
+}
+
 .step-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 32px rgba(0,0,0,0.12);
@@ -882,13 +907,13 @@
 }
 
 .dark-theme .btn-success {
-    background-color: var(--success-color-dark, #198754); /* Example */
-    border-color: var(--success-color-dark, #198754);
-    color: var(--btn-text-color-dark, #fff);
+    background-color: var(--success-color-dark, #1db954); /* Changed to a more vibrant green */
+    border-color: var(--success-color-dark, #1db954);
+    color: var(--btn-text-color-dark, #ffffff); /* Ensure text is white for contrast */
 }
 .dark-theme .btn-success:hover {
-    background-color: var(--success-color-hover-dark, #146c43);
-    border-color: var(--success-color-hover-dark, #146c43);
+    background-color: var(--success-color-hover-dark, #1aa34a); /* Darker shade for hover */
+    border-color: var(--success-color-hover-dark, #1aa34a);
 }
 
 .dark-theme .btn-info {
