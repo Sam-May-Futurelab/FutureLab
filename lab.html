@@ -673,12 +673,26 @@
     <div id="color-picker-panel" class="color-picker-panel" style="display: none;">
         <h4>Element Colors</h4>
         <div id="color-picker-target-info" style="margin-bottom: 10px; font-size: 0.9em; opacity: 0.8;">Editing: <span>N/A</span></div>
+        
         <div class="color-input-group">
-            <label for="bgColorPicker">Background:</label>
+            <label for="bgColorPicker" id="bgColorPickerLabel">Background Color 1:</label>
             <input type="color" id="bgColorPicker" value="#ffffff">
         </div>
+
+        <div class="form-field" style="margin-bottom: 10px;">
+            <label class="checkbox-container" for="useBgGradient" style="font-size: 0.9em; display: flex; align-items: center;">
+                <input type="checkbox" id="useBgGradient" style="margin-right: 8px;">
+                Use Background Gradient?
+            </label>
+        </div>
+
+        <div class="color-input-group" id="bgColorPicker2-group" style="display: none;">
+            <label for="bgColorPicker2">Background Color 2:</label>
+            <input type="color" id="bgColorPicker2" value="#ffffff">
+        </div>
+
         <div class="color-input-group">
-            <label for="textColorPicker">Text:</label>
+            <label for="textColorPicker">Text Color:</label>
             <input type="color" id="textColorPicker" value="#000000">
         </div>
         <div class="button-group">

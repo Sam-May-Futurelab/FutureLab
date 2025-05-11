@@ -11,6 +11,7 @@ let customStyleTagId = 'in-page-editor-custom-styles'; // Added
 
 // Color Picker Panel elements
 let colorPickerPanel, bgColorPicker, textColorPicker, applyColorsBtn, removeCustomColorBtn, closeColorPickerBtn;
+let useBgGradientCheckbox, bgColorPicker2Group, bgColorPicker2; // Added for gradient
 
 // Initialize references to color picker panel elements from the main document
 function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATURE UPDATED
@@ -33,17 +34,32 @@ function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATUR
     removeCustomColorBtn = colorPickerPanel.querySelector('#removeColorsBtn'); // Corrected ID
     closeColorPickerBtn = colorPickerPanel.querySelector('#closeColorPickerBtn'); // Corrected ID
 
+    // New gradient elements
+    useBgGradientCheckbox = colorPickerPanel.querySelector('#useBgGradient');
+    bgColorPicker2Group = colorPickerPanel.querySelector('#bgColorPicker2-group');
+    bgColorPicker2 = colorPickerPanel.querySelector('#bgColorPicker2');
+
     // Debugging logs to ensure elements are found (can be removed after verification)
     if (!bgColorPicker) console.error("InPageEditor: bgColorPicker (#bgColorPicker) not found in panel.");
     if (!textColorPicker) console.error("InPageEditor: textColorPicker (#textColorPicker) not found in panel.");
     if (!applyColorsBtn) console.error("InPageEditor: applyColorsBtn (#applyColorsBtn) not found in panel.");
     if (!removeCustomColorBtn) console.error("removeCustomColorBtn (#removeColorsBtn) not found in panel.");
     if (!closeColorPickerBtn) console.error("closeColorPickerBtn (#closeColorPickerBtn) not found in panel.");
+    if (!useBgGradientCheckbox) console.error("InPageEditor: useBgGradientCheckbox (#useBgGradient) not found in panel.");
+    if (!bgColorPicker2Group) console.error("InPageEditor: bgColorPicker2Group (#bgColorPicker2-group) not found in panel.");
+    if (!bgColorPicker2) console.error("InPageEditor: bgColorPicker2 (#bgColorPicker2) not found in panel.");
 
     if (applyColorsBtn) applyColorsBtn.addEventListener('click', applyColors);
     if (removeCustomColorBtn) removeCustomColorBtn.addEventListener('click', removeCustomColors);
     if (closeColorPickerBtn) {
         closeColorPickerBtn.addEventListener('click', closeColorPicker); // Corrected listener
+    }
+
+    // Event listener for the gradient checkbox
+    if (useBgGradientCheckbox && bgColorPicker2Group) {
+        useBgGradientCheckbox.addEventListener('change', () => {
+            bgColorPicker2Group.style.display = useBgGradientCheckbox.checked ? 'flex' : 'none';
+        });
     }
 }
 window.initInPageEditorControls = initInPageEditorControls;
@@ -59,8 +75,11 @@ function getCustomCss() {
             if (currentIframeDocument.getElementById(id)) {
                 const rules = customCssRules[id];
                 cssString += `#${id} {\n`;
-                if (rules.background) {
-                    cssString += `  background-color: ${rules.background} !important;\n`;
+                if (rules.backgroundImage) { // Check for gradient first
+                    cssString += `  background-image: ${rules.backgroundImage} !important;\n`;
+                    cssString += `  background-color: transparent !important;\n`; // Ensure solid bg doesn't interfere
+                } else if (rules.backgroundColor) {
+                    cssString += `  background-color: ${rules.backgroundColor} !important;\n`;
                 }
                 if (rules.text) {
                     cssString += `  color: ${rules.text} !important;\n`;
@@ -273,8 +292,8 @@ function ensureId(element) {
 }
 
 function openColorPicker(element) {
-    if (!colorPickerPanel || !bgColorPicker || !textColorPicker) { // Removed colorPickerTargetInfo from this initial check as it's for display only
-        console.error("InPageEditor: Color picker panel or essential color inputs not initialized.");
+    if (!colorPickerPanel || !bgColorPicker || !textColorPicker || !useBgGradientCheckbox || !bgColorPicker2 || !bgColorPicker2Group) {
+        console.error("InPageEditor: Color picker panel or essential color inputs (including gradient) not initialized.");
         return;
     }
     currentEditingElementForColor = element;
@@ -314,11 +333,30 @@ function openColorPicker(element) {
         return; 
     }
 
+    // Reset gradient checkbox and hide second color picker initially
+    useBgGradientCheckbox.checked = false;
+    bgColorPicker2Group.style.display = 'none';
+
     let currentBgColor = '#ffffff'; // Default
     let currentTextColor = '#000000'; // Default
 
-    try {
+    // Check for existing linear gradient on background-image
+    const existingGradient = computedStyle.backgroundImage;
+    if (existingGradient && existingGradient.startsWith('linear-gradient')) {
+        const colors = parseGradientColors(existingGradient);
+        if (colors.length >= 2) {
+            currentBgColor = rgbToHex(colors[0]);
+            bgColorPicker2.value = rgbToHex(colors[1]);
+            useBgGradientCheckbox.checked = true;
+            bgColorPicker2Group.style.display = 'flex';
+        } else if (colors.length === 1) { // Fallback if gradient parsing is weird
+            currentBgColor = rgbToHex(colors[0]);
+        }
+    } else if (computedStyle.backgroundColor) {
         currentBgColor = rgbToHex(computedStyle.backgroundColor);
+    }
+
+    try {
         currentTextColor = rgbToHex(computedStyle.color);
     } catch (e) {
     }
@@ -333,6 +371,11 @@ function openColorPicker(element) {
     bgColorPicker.value = currentBgColor;
     textColorPicker.value = currentTextColor;
     
+    // Ensure second picker has a valid default if not set by gradient
+    if (!useBgGradientCheckbox.checked) {
+        bgColorPicker2.value = '#ffffff'; // Default or derive from bgColor1
+    }
+
     colorPickerPanel.style.display = 'flex'; // Ensure display is set to flex
 }
 
@@ -361,18 +404,31 @@ function handleFocusOutColorPicker(event) {
 }
 
 function applyColors() {
-    if (!currentEditingElementForColor || !bgColorPicker || !textColorPicker) {
+    if (!currentEditingElementForColor || !bgColorPicker || !textColorPicker || !useBgGradientCheckbox || !bgColorPicker2) {
         return;
     }
 
-    const newBgColor = bgColorPicker.value;
     const newTextColor = textColorPicker.value;
-
     const elementId = ensureId(currentEditingElementForColor);
-    customCssRules[elementId] = {
-        background: newBgColor,
-        text: newTextColor
-    };
+
+    if (!customCssRules[elementId]) {
+        customCssRules[elementId] = {};
+    }
+
+    if (useBgGradientCheckbox.checked) {
+        const newBgColor1 = bgColorPicker.value;
+        const newBgColor2 = bgColorPicker2.value;
+        customCssRules[elementId].backgroundImage = `linear-gradient(to right, ${newBgColor1}, ${newBgColor2})`;
+        // It might be good to remove or ensure background-color is transparent if a gradient is applied
+        customCssRules[elementId].backgroundColor = 'transparent'; 
+    } else {
+        customCssRules[elementId].backgroundColor = bgColorPicker.value;
+        // Ensure any previous gradient is removed if now applying a solid color
+        if (customCssRules[elementId].backgroundImage) {
+            delete customCssRules[elementId].backgroundImage;
+        }
+    }
+    customCssRules[elementId].text = newTextColor; // 'text' was used before, ensure consistency or rename to 'color'
 
     applyCustomCssToIframe(); // Update the stylesheet in the iframe
 
@@ -389,8 +445,8 @@ function removeCustomColors() {
 
     const elementId = currentEditingElementForColor.id;
     if (elementId && customCssRules[elementId]) {
-        delete customCssRules[elementId];
-        applyCustomCssToIframe(); // Update the stylesheet to remove the rules
+        delete customCssRules[elementId]; // This will remove all keys: background, text, backgroundImage
+        applyCustomCssToIframe();
     }
 
     if (typeof window.notifyUnsavedChange === 'function') {
@@ -404,19 +460,40 @@ window.getCustomCss = function() {
     for (const id in customCssRules) {
         if (Object.hasOwnProperty.call(customCssRules, id)) {
             const rule = customCssRules[id];
-            if (currentIframeDocument && currentIframeDocument.getElementById(id)) {
-                cssString += `#${id} {\n`;
-                if (rule.background) {
-                    cssString += `  background-color: ${rule.background} !important;\n`;
-                }
-                if (rule.text) {
-                    cssString += `  color: ${rule.text} !important;\n`;
-                }
-                cssString += `}\n`;
+            cssString += `#${id} {\n`;
+            if (rule.backgroundImage) { // Check for gradient first
+                cssString += `  background-image: ${rule.backgroundImage} !important;\n`;
+                cssString += `  background-color: transparent !important;\n`; // Ensure solid bg doesn't interfere
+            } else if (rule.backgroundColor) {
+                cssString += `  background-color: ${rule.backgroundColor} !important;\n`;
             }
+            // Assuming 'text' key stores text color
+            if (rule.text) {
+                cssString += `  color: ${rule.text} !important;\n`;
+            }
+            cssString += `}\n`;
         }
     }
     return cssString;
+}
+
+// Helper to parse colors from a linear-gradient string (basic implementation)
+function parseGradientColors(gradientString) {
+    const colors = [];
+    // This regex is very basic and might need improvement for complex gradients
+    const colorRegex = /rgba?\([^)]+\)|#[0-9a-fA-F]{3,8}|(?:rgb|hsl)a?\([^)]+\)|[a-zA-Z]+(?![-\w])/g;
+    let match;
+    while ((match = colorRegex.exec(gradientString)) !== null) {
+        // Check if the found color is not part of a direction like 'to right'
+        // This is a heuristic and might not be perfectly robust for all CSS color names that might resemble directions.
+        const potentialColor = match[0].toLowerCase();
+        if (!['top', 'bottom', 'left', 'right', 'center'].some(dir => potentialColor.includes(dir))) {
+             if (!potentialColor.startsWith('to ') && !potentialColor.endsWith('deg')) { // Further check to avoid capturing angles or keywords
+                colors.push(potentialColor);
+            }
+        }
+    }
+    return colors;
 }
 
 function rgbToHex(rgbString) {
