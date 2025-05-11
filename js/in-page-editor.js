@@ -252,6 +252,8 @@ function openColorPicker(element) {
     }
     currentEditingElementForColor = element;
     ensureId(currentEditingElementForColor); 
+    console.log("[DEBUG] openColorPicker: currentEditingElementForColor:", currentEditingElementForColor); // DEBUG
+    console.log("[DEBUG] openColorPicker: colorPickerTargetInfo:", colorPickerTargetInfo); // DEBUG
 
     if (colorPickerTargetInfo) {
         let targetName = currentEditingElementForColor.tagName.toLowerCase();
@@ -263,7 +265,15 @@ function openColorPicker(element) {
             const text = currentEditingElementForColor.textContent.trim().split(/\s+/).slice(0, 3).join(" ");
             if (text) targetName += ` ("${text}...")`;
         }
-        colorPickerTargetInfo.querySelector('span').textContent = targetName;
+        console.log("[DEBUG] openColorPicker: targetName to be displayed:", targetName); // DEBUG
+        const spanElement = colorPickerTargetInfo.querySelector('span');
+        if (spanElement) {
+            spanElement.textContent = targetName;
+        } else {
+            console.error("[DEBUG] openColorPicker: Could not find span inside colorPickerTargetInfo:", colorPickerTargetInfo); // DEBUG
+        }
+    } else {
+        console.error("[DEBUG] openColorPicker: colorPickerTargetInfo is null or undefined."); // DEBUG
     }
 
     const iframeWindow = element.ownerDocument.defaultView;
