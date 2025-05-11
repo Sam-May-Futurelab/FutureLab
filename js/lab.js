@@ -46,22 +46,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize In-Page Editor Controls
     const colorPickerPanel = document.getElementById('color-picker-panel');
-    const bgColorPicker = document.getElementById('bgColorPicker');
-    const textColorPicker = document.getElementById('textColorPicker');
-    const applyColorsBtn = document.getElementById('applyColorsBtn');
-    const removeColorsBtn = document.getElementById('removeColorsBtn');
-    const closeColorPickerBtn = document.getElementById('closeColorPickerBtn');
-    const colorPickerTargetInfo = document.getElementById('color-picker-target-info');
+    const colorPickerTargetInfoDiv = document.getElementById('color-picker-target-info'); // Correctly get the div
 
     if (window.initInPageEditorControls) {
         window.initInPageEditorControls(
-            colorPickerPanel,
-            bgColorPicker,
-            textColorPicker,
-            applyColorsBtn,
-            removeColorsBtn,
-            closeColorPickerBtn,
-            colorPickerTargetInfo
+            colorPickerPanel, // Pass the main panel
+            colorPickerTargetInfoDiv // Pass the target info div
         );
     } else {
         console.error("Lab.js: In-page editor control initialization function not found.");
