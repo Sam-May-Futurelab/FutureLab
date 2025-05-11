@@ -37,20 +37,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const aboutUsFieldsContainer = document.getElementById('about-us-fields-container');
     const testimonialsSectionCheckbox = document.getElementById('testimonials-section-checkbox');
     const testimonialsFieldsContainer = document.getElementById('testimonials-fields-container');
-    const pricingSectionCheckbox = document.getElementById('pricing-section-checkbox');
-    const pricingFieldsContainer = document.getElementById('pricing-fields-container');
-    const featuresSectionCheckbox = document.getElementById('features-section-checkbox'); // Added
-    const featuresBenefitsFieldsContainer = document.getElementById('features-benefits-fields-container'); // Added
-    const businessTypeDropdown = document.getElementById('business-type'); // Added
-    const otherBusinessTypeContainer = document.getElementById('other-business-type-container'); // Added
+    
+    // Consolidated to a single pricing section
+    const pricingSectionCheckbox = document.getElementById('pricing-section-checkbox'); 
+    const pricingFieldsContainer = document.getElementById('pricing-fields-container'); 
+
+    const featuresSectionCheckbox = document.getElementById('features-section-checkbox'); 
+    const featuresBenefitsFieldsContainer = document.getElementById('features-benefits-fields-container'); 
+    
+    const faqSectionCheckbox = document.getElementById('faq-section-checkbox'); // Added definition
+    const faqFieldsContainer = document.getElementById('faq-fields-container'); // Added definition
+
+    const businessTypeDropdown = document.getElementById('business-type'); 
+    const otherBusinessTypeContainer = document.getElementById('other-business-type-container'); 
     const otherBusinessTypeInput = document.getElementById('other-business-type'); // Added
     const contactSectionCheckbox = document.getElementById('contact-section-checkbox'); // Added for contact form email
     const contactEmailFieldsContainer = document.getElementById('contact-email-fields-container'); // Added for contact form email
     const contactFormEmailInput = document.getElementById('contact-form-email'); // Added for the actual email input
     
     // Dynamic entry containers and buttons
-    const addPricingPlanBtn = document.querySelector('.add-pricing-plan-btn'); // Updated selector
-    const pricingPlansDynamicContainer = document.getElementById('pricing-plan-entries-container'); // Updated selector
+    const addPricingPlanBtn = document.getElementById('add-pricing-plan-btn'); // Corrected selector
+    const pricingPlansDynamicContainer = document.getElementById('pricing-plans-dynamic-container'); // Corrected selector
     let pricingPlanIndex = 0; // Start index for dynamically added plans
 
     const addTestimonialBtn = document.getElementById('add-testimonial-btn');
@@ -142,9 +149,9 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
         // Initialize conditional section fields visibility
         toggleConditionalSectionDisplay(aboutSectionCheckbox, aboutUsFieldsContainer);
         toggleConditionalSectionDisplay(testimonialsSectionCheckbox, testimonialsFieldsContainer);
-        toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer);
-        toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer);
-        toggleConditionalSectionDisplay(featuresSectionCheckbox, featuresBenefitsFieldsContainer); // Added
+        toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer); // Consolidated pricing section
+        toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer); 
+        toggleConditionalSectionDisplay(featuresSectionCheckbox, featuresBenefitsFieldsContainer); 
         toggleContactEmailFields(); // MODIFIED: Use specific function for contact email fields
         toggleOtherBusinessTypeVisibility(); // Added: Initial check for "Other" business type
 
@@ -240,20 +247,19 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
         if (testimonialsSectionCheckbox) {
             testimonialsSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(testimonialsSectionCheckbox, testimonialsFieldsContainer));
         }
+
+        // Listener for the consolidated "Products / Pricing Plans" section
         if (pricingSectionCheckbox) {
-            const actualPricingCheckbox = document.querySelector('input[name="sections[]"][value="pricing"]');
-            if (actualPricingCheckbox) {
-                actualPricingCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(actualPricingCheckbox, document.getElementById('pricing-plans-fields-container')));
-            } else {
-                console.warn("Pricing section checkbox for conditional display not found with specific query.");
-            }
+            pricingSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer));
         }
-        if (faqSectionCheckbox) {
+        
+        if (faqSectionCheckbox) { // Corrected: was using undefined variable
             faqSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer));
         }
-        if (featuresSectionCheckbox) { // Added
-            featuresSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(featuresSectionCheckbox, featuresBenefitsFieldsContainer)); // Added
-        } // Added
+        if (featuresSectionCheckbox) { 
+            featuresSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(featuresSectionCheckbox, featuresBenefitsFieldsContainer)); 
+        } 
+
         if (contactSectionCheckbox) { // Added for contact form email
             contactSectionCheckbox.addEventListener('change', toggleContactEmailFields);
         }
@@ -569,8 +575,8 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
     function toggleConditionalSectionDisplay(checkbox, container) {
         if (checkbox && container) {
             container.style.display = checkbox.checked ? 'block' : 'none';
-            if (checkbox.checked && checkbox.value === 'pricing' && pricingPlansDynamicContainer && pricingPlansDynamicContainer.children.length === 0) {
-                // If pricing section is checked and no plans exist, add one by default
+            // Auto-add a pricing plan entry if the "Products / Pricing Plans" section is checked and no plans exist
+            if (checkbox.checked && container === pricingFieldsContainer && pricingPlansDynamicContainer && pricingPlansDynamicContainer.children.length === 0) {
                 addPricingPlanEntry();
             }
         }
@@ -609,7 +615,7 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
 
     function addPricingPlanEntry() {
         if (!pricingPlansDynamicContainer) {
-            console.error("Pricing plans dynamic container not found!");
+            console.error("Pricing plans dynamic container (pricing-plans-dynamic-container) not found!");
             return;
         }
 
