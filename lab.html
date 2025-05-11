@@ -426,24 +426,40 @@
                             <div id="pricing-fields-container" class="conditional-fields-container" style="display: none;">
                                 <h4 class="conditional-section-title"><i class="fas fa-dollar-sign"></i> Products / Pricing Plans Details</h4>
                                 <div id="pricing-plans-dynamic-container">
-                                    <div class="pricing-plan-entry"> <!-- Entry 0 -->
+                                    <!-- Initial (static) pricing plan entry - updated to match dynamic structure -->
+                                    <div class="pricing-plan-entry form-subsection">
+                                        <h5 class="subsection-title">Product / Plan 1</h5>
                                         <div class="form-field">
                                             <label for="pricing-plan-name-0">Plan/Product Name:</label>
                                             <input type="text" id="pricing-plan-name-0" name="pricingPlans[0][name]" placeholder="e.g., Basic Plan, Pro Product">
                                         </div>
-                                        <div class="form-field">
+                                        <div class="form-field price-field-group">
                                             <label for="pricing-plan-price-0">Price:</label>
-                                            <input type="text" id="pricing-plan-price-0" name="pricingPlans[0][price]" placeholder="e.g., $19/month, $99">
+                                            <input type="number" id="pricing-plan-price-0" name="pricingPlans[0][price]" placeholder="e.g., 10" required step="any">
+                                            <select id="pricing-plan-currency-0" name="pricingPlans[0][currency]" aria-label="Currency">
+                                                <option value="USD">$ (USD)</option>
+                                                <option value="GBP">£ (GBP)</option>
+                                                <option value="EUR">€ (EUR)</option>
+                                                <option value="CAD">$ (CAD)</option>
+                                                <option value="AUD">$ (AUD)</option>
+                                                <option value="JPY">¥ (JPY)</option>
+                                            </select>
+                                            <select id="pricing-plan-cycle-0" name="pricingPlans[0][cycle]" aria-label="Billing Cycle">
+                                                <option value="/month">/month</option>
+                                                <option value="/year">/year</option>
+                                                <option value="one-time">one-time</option>
+                                                <option value="">(no cycle)</option>
+                                            </select>
                                         </div>
                                         <div class="form-field">
                                             <label for="pricing-plan-features-0">Key Features (1-3, comma-separated):</label>
                                             <input type="text" id="pricing-plan-features-0" name="pricingPlans[0][features]" placeholder="e.g., Feature 1, Feature 2, Feature 3">
                                         </div>
-                                        <!-- No remove button for the first plan by default -->
+                                        <!-- No remove button for the first plan by default, or handled by JS to not remove if only one -->
                                     </div>
                                 </div>
                                 <button type="button" id="add-pricing-plan-btn" class="btn btn-outline btn-add-more" aria-label="Add another pricing entry">
-                                    <i class="fas fa-plus"></i> Add Another
+                                    <i class="fas fa-plus"></i> Add Another Product/Plan
                                 </button>
                             </div>
 

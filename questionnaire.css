@@ -455,6 +455,86 @@
     border-color: #2c3a4f; /* Darker dashed border for entries */
 }
 
+/* Styles for the price field group */
+.price-field-group {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    gap: 10px; /* Space between elements */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.price-field-group label {
+    margin-bottom: 0; /* Remove bottom margin as it's now inline */
+    flex-shrink: 0; /* Prevent label from shrinking */
+}
+
+.price-field-group input[type="number"] {
+    flex-grow: 1; /* Allow price input to take available space */
+    min-width: 80px; /* Minimum width for the price input */
+    width: auto; /* Override 100% width from general input styles */
+
+    /* Added styles for consistency with other inputs */
+    padding: 15px; /* Consistent with text inputs */
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f8fafc;
+    color: var(--dark-color);
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Ensure padding/border don't add to flex item's base size unexpectedly */
+}
+
+.price-field-group input[type="number"]:hover {
+    border-color: #cbd5e1;
+}
+
+.price-field-group input[type="number"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    background-color: #fff;
+}
+
+/* Dark theme adjustments for price input[type="number"] */
+.dark-theme .price-field-group input[type="number"] {
+    background-color: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.dark-theme .price-field-group input[type="number"]:hover {
+    border-color: #475569;
+}
+
+.dark-theme .price-field-group input[type="number"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3);
+    background-color: #1e293b;
+}
+
+.price-field-group select {
+    flex-grow: 1; /* Allow selects to take available space */
+    min-width: 100px; /* Minimum width for selects */
+    width: auto; /* Override 100% width from general select styles */
+}
+
+/* Adjustments for smaller screens if needed */
+@media (max-width: 480px) {
+    .price-field-group {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: stretch; /* Stretch items to full width */
+    }
+
+    .price-field-group label {
+        margin-bottom: 5px; /* Add some space below label when stacked */
+    }
+
+    .price-field-group input[type="number"],
+    .price-field-group select {
+        width: 100%; /* Make inputs and selects full width when stacked */
+    }
+}
+
 .pricing-plan-entry:last-child,
 .testimonial-entry:last-child,
 .faq-entry:last-child {

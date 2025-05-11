@@ -623,8 +623,9 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
 
         const newEntry = document.createElement('div');
         newEntry.classList.add('pricing-plan-entry', 'form-subsection');
+        // Ensure the title is "Product / Plan" and the numbering is correct
         newEntry.innerHTML = `
-            <h5 class="subsection-title">Pricing Plan ${entryIndex + 1}</h5>
+            <h5 class="subsection-title">Product / Plan ${entryIndex + 1}</h5>
             <div class="form-field">
                 <label for="pricing-plan-name-${entryIndex}">Plan/Product Name:</label>
                 <input type="text" id="pricing-plan-name-${entryIndex}" name="pricingPlans[${entryIndex}][name]" placeholder="e.g., Basic, Pro, Website Tier 1">
@@ -661,12 +662,12 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
         const removeBtn = newEntry.querySelector('.btn-remove-item');
         removeBtn.addEventListener('click', () => {
             newEntry.remove();
-            // Re-title subsections if needed
+            // Re-title subsections
             const remainingEntries = pricingPlansDynamicContainer.querySelectorAll('.pricing-plan-entry');
             remainingEntries.forEach((entry, idx) => {
                 const titleElement = entry.querySelector('.subsection-title');
                 if (titleElement) {
-                    titleElement.textContent = `Pricing Plan ${idx + 1}`;
+                    titleElement.textContent = `Product / Plan ${idx + 1}`;
                 }
             });
         });
