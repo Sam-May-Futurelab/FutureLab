@@ -317,6 +317,7 @@ function applyColors() {
         window.notifyUnsavedChange();
     }
     console.log("InPageEditor: Stored custom colors for", elementId, ". Rules:", customCssRules[elementId]);
+    closeColorPicker(); // Added to close picker after applying colors
 }
 
 function removeCustomColors() {

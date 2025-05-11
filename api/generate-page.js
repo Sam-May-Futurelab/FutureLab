@@ -357,13 +357,11 @@ function _buildAboutUsPromptPart(data) {
     let part = '';
     part += `--- About Us Section ---\n`;
     if (data.aboutUsSnippet && data.aboutUsSnippet.trim() !== '') {
-        part += `The user has provided an "About Us" snippet. Include a dedicated "About Us" section on the page. Use the following content:\n`;
-        part += `  - Snippet: "${data.aboutUsSnippet.trim()}"\n`;
-        part += `Style this section appropriately to fit the overall design and effectively introduce the business/project. The main content/text of this section should be **centered on the page** (e.g., within a container that has auto margins or uses flexbox for centering).\n`;
+        part += `Include an "About Us" section. Content: "${data.aboutUsSnippet.trim()}"\n`;
     } else if (data.sections && data.sections.includes('about')) {
-        part += `The user selected to include an "About Us" section but did not provide a specific snippet. Generate a concise, well-written placeholder "About Us" section that is relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}". Clearly mark this content as placeholder text that the user should customize, for example, by starting with "[Placeholder: Tell your story here...]". The main content/text of this section should be **centered on the page**.\n`;
+        part += `Include an "About Us" section. Generate suitable content based on the business description and tone.\n`;
     } else {
-        part += `No "About Us" snippet provided and the section was not explicitly requested to be generated with placeholder content. Omit the "About Us" section unless it is critically essential for the business type and AI suggests it (in which case, use a clearly marked placeholder as described above, ensuring its content is centered).\n`;
+        part += `No "About Us" section requested or no specific content provided.\n`;
     }
     part += `--- End About Us Section ---\n\n`;
     return part;
@@ -372,38 +370,22 @@ function _buildAboutUsPromptPart(data) {
 function _buildPricingPromptPart(data) {
     let part = '';
     part += `--- Pricing Section ---\n`;
-    if (data.pricingPlans && Array.isArray(data.pricingPlans) && data.pricingPlans.length > 0 && data.pricingPlans.some(p => p.name && p.price)) {
-        part += `The user has provided pricing plan information. Include a dedicated section with a clear heading like "Pricing" or "Our Plans". The pricing plans (whether as cards, table rows, etc.) should be presented clearly *under* this main heading, not inline with it. The entire section, or its main content container holding the pricing plans, should be styled to ensure it is **centered on the page**. A table structure or a series of styled cards is often effective for comparing plans. Include ALL provided pricing plans and their details. For each plan, display its name, price, list of features, and a call to action button/link if provided.\n`;
+    if (data.pricingPlans && Array.isArray(data.pricingPlans) && data.pricingPlans.length > 0 && data.pricingPlans.some(p => p && p.price && p.price.trim() !== '')) {
+        part += `Include a "Pricing Section" with the following plans. If a plan name is missing, use a generic name like "Standard Plan" or "Product Tier X". If features are missing, the AI can generate some suitable ones based on the business type and plan price point. Ensure the currency symbol and billing cycle are displayed clearly with the price.\n`;
         data.pricingPlans.forEach((plan, index) => {
-            part += `  Plan ${index + 1}:\n`;
-            if (plan.name && plan.name.trim() !== '') {
-                part += `    - Name: "${plan.name.trim()}"\n`;
-            }
-            if (plan.price && plan.price.trim() !== '') {
-                part += `    - Price: "${plan.price.trim()}"\n`;
-            }
-            if (plan.features && Array.isArray(plan.features) && plan.features.length > 0) {
-                part += `    - Features: \n`;
-                plan.features.forEach(feature => {
-                    if (feature && feature.trim() !== '') {
-                        part += `      - "${feature.trim()}"\n`;
-                    }
-                });
-            }
-            if (plan.callToAction && plan.callToAction.trim() !== '') {
-                part += `    - Call to Action Text: "${plan.callToAction.trim()}" (This should be a clickable button/link for the plan)\n`;
+            if (plan && plan.price && plan.price.trim() !== '') { // Ensure at least a price is present
+                part += `  Plan ${index + 1}:\n`;
+                part += `    Name: ${plan.name || `Plan ${index + 1}`}\n`;
+                part += `    Price: ${plan.price}\n`;
+                part += `    Currency: ${plan.currency || 'USD'}\n`; // Default to USD if not provided
+                part += `    Billing Cycle: ${plan.cycle || 'one-time'}\n`; // Default to one-time if not provided
+                part += `    Features: ${plan.features || 'AI to generate suitable features.'}\n`;
             }
         });
-        part += `Style this section to be clear, easy to compare, and visually appealing, encouraging users to choose a plan.\n`;
     } else if (data.sections && data.sections.includes('pricing')) {
-        part += `The user selected to include a "Pricing" section but did not provide specific plan data. Generate a placeholder section with a clear heading like "Pricing", "Our Plans", or something more tailored to the business type (e.g., "Service Packages" for a consultancy, "Membership Tiers" for a gym). \n`;
-        part += `*Under* this heading, create 2-3 sample plans. CRITICALLY, these plans must be highly relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}". \n`;
-        part += `The plan names, sample prices (e.g., "$X/month", "Starting at $Y"), and especially the features listed within each plan should be realistically tailored to what that specific business type would offer to that audience. For example:\n`;
-        part += `  - For a 'bakery_cafe_coffee' targeting 'local residents', placeholder plans might be named 'Morning Perks Club', 'Artisan Bread Box', or 'Custom Celebration Cakes', with features like 'Daily free coffee upgrade', 'Weekly sourdough loaf', 'Consultation & tasting'.\n`;
-        part += `  - For a 'saas_software_tech' targeting 'small businesses', placeholder plans could be 'Starter Suite', 'Growth Engine', or 'Enterprise Connect', with features like '10 users, 100GB storage, Basic analytics', 'Unlimited users, 1TB storage, Advanced analytics, API access', 'Custom solution, Dedicated support, SLA'.\n`;
-        part += `The entire section, or its main content container holding these placeholder plans, should be styled to ensure it is **centered on the page**. Each placeholder plan should have a name, a sample price, a few bullet points for features, and a call to action button. Clearly mark this content as placeholder text that the user should customize, for example, by starting plan descriptions with "[Placeholder: Customize this plan...]" or noting "Sample Plans - Update with your offerings."\n`;
+        part += `A "Pricing Section" is requested, but no specific plan details were provided. Generate 2-3 sample pricing plans suitable for the business type and goals. Each plan should have a name, price (with currency like $ or £), a billing cycle (e.g., /month, /year, one-time), and 2-3 key features.\n`;
     } else {
-        part += `No pricing plans provided and the section was not explicitly requested to be generated with placeholder content. Omit the "Pricing" section unless it is critically essential for the business type and AI suggests it (in which case, use a clearly marked placeholder as described above).\n`;
+        part += `No "Pricing Section" requested or no specific plan details provided.\n`;
     }
     part += `--- End Pricing Section ---\n\n`;
     return part;

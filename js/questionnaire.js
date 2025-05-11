@@ -39,8 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const testimonialsFieldsContainer = document.getElementById('testimonials-fields-container');
     const pricingSectionCheckbox = document.getElementById('pricing-section-checkbox');
     const pricingFieldsContainer = document.getElementById('pricing-fields-container');
-    const faqSectionCheckbox = document.getElementById('faq-section-checkbox');
-    const faqFieldsContainer = document.getElementById('faq-fields-container');
     const featuresSectionCheckbox = document.getElementById('features-section-checkbox'); // Added
     const featuresBenefitsFieldsContainer = document.getElementById('features-benefits-fields-container'); // Added
     const businessTypeDropdown = document.getElementById('business-type'); // Added
@@ -51,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const contactFormEmailInput = document.getElementById('contact-form-email'); // Added for the actual email input
     
     // Dynamic entry containers and buttons
-    const addPricingPlanBtn = document.getElementById('add-pricing-plan-btn');
-    const pricingPlansDynamicContainer = document.getElementById('pricing-plans-dynamic-container');
-    let pricingPlanIndex = 1; // Start index for dynamically added plans
+    const addPricingPlanBtn = document.querySelector('.add-pricing-plan-btn'); // Updated selector
+    const pricingPlansDynamicContainer = document.getElementById('pricing-plan-entries-container'); // Updated selector
+    let pricingPlanIndex = 0; // Start index for dynamically added plans
 
     const addTestimonialBtn = document.getElementById('add-testimonial-btn');
     const testimonialsDynamicContainer = document.getElementById('testimonials-dynamic-container');
@@ -243,7 +241,12 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
             testimonialsSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(testimonialsSectionCheckbox, testimonialsFieldsContainer));
         }
         if (pricingSectionCheckbox) {
-            pricingSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(pricingSectionCheckbox, pricingFieldsContainer));
+            const actualPricingCheckbox = document.querySelector('input[name="sections[]"][value="pricing"]');
+            if (actualPricingCheckbox) {
+                actualPricingCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(actualPricingCheckbox, document.getElementById('pricing-plans-fields-container')));
+            } else {
+                console.warn("Pricing section checkbox for conditional display not found with specific query.");
+            }
         }
         if (faqSectionCheckbox) {
             faqSectionCheckbox.addEventListener('change', () => toggleConditionalSectionDisplay(faqSectionCheckbox, faqFieldsContainer));
@@ -277,6 +280,8 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
         // Event listener for adding pricing plans
         if (addPricingPlanBtn) {
             addPricingPlanBtn.addEventListener('click', addPricingPlanEntry);
+        } else {
+            console.warn("Add Pricing Plan button not found. Dynamic pricing plans might not work.");
         }
 
         // Event listener for adding testimonials
@@ -391,11 +396,21 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
     
     function validateCurrentStep() {
         const currentStepElement = formSteps[currentStep - 1];
-        const requiredInputs = currentStepElement.querySelectorAll('input[required], textarea[required]');
+        const requiredInputs = currentStepElement.querySelectorAll('input[required]:not([disabled]), textarea[required]:not([disabled]), select[required]:not([disabled])');
         let isValid = true;
         
         requiredInputs.forEach(input => {
-            if (!input.value.trim()) {
+            // For radio buttons, check if any in the group is selected
+            if (input.type === 'radio') {
+                const radioGroup = currentStepElement.querySelectorAll(`input[name="${input.name}"][required]`);
+                if (!Array.from(radioGroup).some(radio => radio.checked)) {
+                    isValid = false;
+                    // Highlight the first radio in the group or a container
+                    highlightInvalidInput(radioGroup[0]); 
+                } else {
+                    Array.from(radioGroup).forEach(radio => removeInvalidHighlight(radio));
+                }
+            } else if (!input.value.trim()) {
                 isValid = false;
                 highlightInvalidInput(input);
             } else {
@@ -403,10 +418,8 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
             }
         });
 
-        // Specific validation for business type dropdown in its relevant step
-        // Assuming businessTypeDropdown is in the first step (currentStep === 1)
-        // Adjust the step number if it's located in a different step.
-        if (currentStep === 1) { // IMPORTANT: Confirm this is the correct step for the business type dropdown
+        // Specific validation for business type dropdown
+        if (currentStepElement.contains(document.getElementById('business-type'))) {
             const businessTypeDropdown = document.getElementById('business-type');
             if (businessTypeDropdown && businessTypeDropdown.value === '') {
                 isValid = false;
@@ -416,6 +429,20 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
             }
         }
 
+        // Validate dynamically added pricing plans if the section is visible and active
+        const pricingCheckbox = document.querySelector('input[name="sections[]"][value="pricing"]');
+        if (pricingCheckbox && pricingCheckbox.checked && currentStepElement.contains(pricingPlansDynamicContainer)) {
+            const priceInputs = pricingPlansDynamicContainer.querySelectorAll('input[name^="pricingPlans"][name$="[price]"][required]');
+            priceInputs.forEach(priceInput => {
+                if (!priceInput.value.trim()) {
+                    isValid = false;
+                    highlightInvalidInput(priceInput);
+                } else {
+                    removeInvalidHighlight(priceInput);
+                }
+            });
+        }
+        
         if (!isValid) {
             const activeStep = formSteps[currentStep - 1];
             if (activeStep) {
@@ -542,6 +569,10 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
     function toggleConditionalSectionDisplay(checkbox, container) {
         if (checkbox && container) {
             container.style.display = checkbox.checked ? 'block' : 'none';
+            if (checkbox.checked && checkbox.value === 'pricing' && pricingPlansDynamicContainer && pricingPlansDynamicContainer.children.length === 0) {
+                // If pricing section is checked and no plans exist, add one by default
+                addPricingPlanEntry();
+            }
         }
     }
 
@@ -577,38 +608,62 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
     }
 
     function addPricingPlanEntry() {
-        if (!pricingPlansDynamicContainer) return;
+        if (!pricingPlansDynamicContainer) {
+            console.error("Pricing plans dynamic container not found!");
+            return;
+        }
+
+        const entryIndex = pricingPlansDynamicContainer.children.length; // Use current children length for unique index
 
         const newEntry = document.createElement('div');
-        newEntry.classList.add('pricing-plan-entry');
+        newEntry.classList.add('pricing-plan-entry', 'form-subsection');
         newEntry.innerHTML = `
+            <h5 class="subsection-title">Pricing Plan ${entryIndex + 1}</h5>
             <div class="form-field">
-                <label for="pricing-plan-name-${pricingPlanIndex}">Plan/Product Name:</label>
-                <input type="text" id="pricing-plan-name-${pricingPlanIndex}" name="pricingPlans[${pricingPlanIndex}][name]" placeholder="e.g., Standard Plan, Premium Product">
+                <label for="pricing-plan-name-${entryIndex}">Plan/Product Name:</label>
+                <input type="text" id="pricing-plan-name-${entryIndex}" name="pricingPlans[${entryIndex}][name]" placeholder="e.g., Basic, Pro, Website Tier 1">
+            </div>
+            <div class="form-field price-field-group">
+                <label for="pricing-plan-price-${entryIndex}">Price:</label>
+                <input type="number" id="pricing-plan-price-${entryIndex}" name="pricingPlans[${entryIndex}][price]" placeholder="e.g., 10" required step="any">
+                <select id="pricing-plan-currency-${entryIndex}" name="pricingPlans[${entryIndex}][currency]" aria-label="Currency">
+                    <option value="USD">$ (USD)</option>
+                    <option value="GBP">£ (GBP)</option>
+                    <option value="EUR">€ (EUR)</option>
+                    <option value="CAD">$ (CAD)</option>
+                    <option value="AUD">$ (AUD)</option>
+                    <option value="JPY">¥ (JPY)</option>
+                </select>
+                <select id="pricing-plan-cycle-${entryIndex}" name="pricingPlans[${entryIndex}][cycle]" aria-label="Billing Cycle">
+                    <option value="/month">/month</option>
+                    <option value="/year">/year</option>
+                    <option value="one-time">one-time</option>
+                    <option value="">(no cycle)</option>
+                </select>
             </div>
             <div class="form-field">
-                <label for="pricing-plan-price-${pricingPlanIndex}">Price:</label>
-                <input type="text" id="pricing-plan-price-${pricingPlanIndex}" name="pricingPlans[${pricingPlanIndex}][price]" placeholder="e.g., $49/month, $199">
+                <label for="pricing-plan-features-${entryIndex}">Key Features (1-3, comma-separated):</label>
+                <input type="text" id="pricing-plan-features-${entryIndex}" name="pricingPlans[${entryIndex}][features]" placeholder="e.g., Feature 1, Feature 2, Feature 3">
             </div>
-            <div class="form-field">
-                <label for="pricing-plan-features-${pricingPlanIndex}">Key Features (1-3, comma-separated):</label>
-                <input type="text" id="pricing-plan-features-${pricingPlanIndex}" name="pricingPlans[${pricingPlanIndex}][features]" placeholder="e.g., Feature A, Feature B, Feature C">
-            </div>
-            <button type="button" class="btn btn-remove-item" aria-label="Remove this pricing entry">
-                <i class="fas fa-trash-alt"></i> Remove
+            <button type="button" class="btn btn-remove-item btn-danger btn-sm" aria-label="Remove this pricing plan">
+                <i class="fas fa-trash-alt"></i> Remove Plan
             </button>
         `;
 
         pricingPlansDynamicContainer.appendChild(newEntry);
 
-        // Add event listener to the new remove button
         const removeBtn = newEntry.querySelector('.btn-remove-item');
         removeBtn.addEventListener('click', () => {
             newEntry.remove();
-            // Optionally, re-index remaining items if necessary, though form submission will handle array notation correctly.
+            // Re-title subsections if needed
+            const remainingEntries = pricingPlansDynamicContainer.querySelectorAll('.pricing-plan-entry');
+            remainingEntries.forEach((entry, idx) => {
+                const titleElement = entry.querySelector('.subsection-title');
+                if (titleElement) {
+                    titleElement.textContent = `Pricing Plan ${idx + 1}`;
+                }
+            });
         });
-
-        pricingPlanIndex++;
     }
 
     function addTestimonialEntry() {
@@ -822,11 +877,13 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
                 continue;
             }
             if (key === 'business-type' && value === 'other') {
+                data['businessType'] = formData.get('other-business-type') ? formData.get('other-business-type').trim() : 'Other';
+                continue; 
+            }
+            if (key === 'other-business-type') {
                 continue;
             }
-            if (key === 'other-business-type' && formData.get('business-type') === 'other') {
-                data['businessType'] = value.trim();
-            } else if (key.startsWith('sections[')) {
+            if (key.startsWith('sections[')) {
                 sections.push(value);
             } else if (key.startsWith('sellingPoints[')) {
                 if (value.trim()) sellingPoints.push(value.trim());
@@ -847,7 +904,9 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
                     const index = parseInt(match[1]);
                     const field = match[2];
                     if (!pricingPlans[index]) pricingPlans[index] = {};
-                    if (value.trim()) pricingPlans[index][field] = value.trim();
+                    if (value.trim() || field === 'price') { // Allow empty strings for non-price fields, but price is crucial
+                        pricingPlans[index][field] = value.trim();
+                    }
                 }
             } else if (key.startsWith('faqs[')) {
                 const match = key.match(/faqs\[(\d+)\]\[(.*?)\]/);
@@ -862,11 +921,11 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
             }
         }
         data.sections = sections;
-        data.sellingPoints = sellingPoints;
+        data.sellingPoints = sellingPoints.filter(sp => sp); // Filter out empty selling points
         data.socials = socials;
-        data.testimonials = testimonials.filter(t => t && (t.text || t.author));
-        data.pricingPlans = pricingPlans.filter(p => p && (p.name || p.price || p.features));
-        data.faqs = faqs.filter(f => f && (f.question || f.answer));
+        data.testimonials = testimonials.filter(t => t && (t.text || t.author)); // Filter out empty testimonials
+        data.pricingPlans = pricingPlans.filter(p => p && p.price); // Ensure price is present
+        data.faqs = faqs.filter(f => f && (f.question || f.answer)); // Filter out empty FAQs
         
         // Update project name for downloads
         const projectNameFromForm = data.businessName || 'My Awesome Project';

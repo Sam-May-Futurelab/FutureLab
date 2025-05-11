@@ -286,71 +286,112 @@
 /* Color Picker Panel */
 .color-picker-panel {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--light-color);
+    top: 150px; /* Adjusted to avoid header overlap */
+    right: 20px;
+    background-color: var(--background-color, #fff);
+    border: 1px solid var(--border-color, #ddd);
     padding: 20px;
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--box-shadow-lg);
-    z-index: 1100; /* Above save notification */
-    border: 1px solid var(--border-color);
+    z-index: 1005; /* Ensure it's above other elements like the edit mode instructions */
+    display: none;
+    flex-direction: column;
+    gap: 15px;
     width: 280px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Modern shadow */
+    border-radius: 12px; /* Rounded corners */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
 }
 
-.dark-theme .color-picker-panel {
-    background-color: var(--dark-bg-secondary);
-    border-color: var(--dark-border-color);
+.color-picker-panel.show-panel {
+    display: flex; /* Use flex when showing */
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .color-picker-panel h4 {
     margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-    color: var(--dark-color);
-    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: var(--text-color, #333);
+    border-bottom: 1px solid var(--border-color, #eee);
+    padding-bottom: 10px;
 }
 
-.dark-theme .color-picker-panel h4 {
-    color: var(--light-color);
+.color-picker-panel .target-info {
+    font-size: 0.85em;
+    color: var(--muted-text-color, #555);
+    margin-bottom: 15px;
+    padding: 8px;
+    background-color: var(--light-gray-bg, #f9f9f9);
+    border-radius: 6px;
+    border: 1px solid var(--border-color, #eee);
 }
 
-.color-picker-panel .color-input-group {
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.color-picker-panel .target-info strong {
+    color: var(--primary-color, #4361ee);
 }
 
 .color-picker-panel label {
-    margin-right: 10px;
-    font-size: 0.95rem;
-    color: var(--text-color);
-}
-.dark-theme .color-picker-panel label {
-    color: var(--dark-theme-text-color);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    color: var(--text-color, #333);
 }
 
 .color-picker-panel input[type="color"] {
-    width: 100px; /* Adjust as needed */
+    width: 100%;
     height: 35px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-sm);
-    padding: 2px;
-}
-.dark-theme .color-picker-panel input[type="color"] {
-    border-color: var(--dark-border-color);
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: 5px;
+    padding: 0 5px; /* Add some padding */
+    box-sizing: border-box;
 }
 
-.color-picker-panel .button-group {
-    margin-top: 20px;
+.color-picker-panel .picker-group {
+    margin-bottom: 10px;
+}
+
+.color-picker-panel .panel-buttons {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller panel width */
+    gap: 10px;
+    margin-top: 10px;
+    border-top: 1px solid var(--border-color, #eee);
+    padding-top: 15px;
 }
 
-.color-picker-panel .btn-sm {
-    padding: 6px 10px;
-    font-size: 0.85rem;
+.color-picker-panel .panel-buttons .btn {
+    flex-grow: 1; /* Allow buttons to share space */
+    padding: 8px 12px;
+    font-size: 0.9em;
+    min-width: 80px; /* Minimum width for smaller buttons */
+}
+
+/* Ensure dark mode compatibility if theme variables are used */
+body.dark-theme .color-picker-panel {
+    background-color: var(--dark-background, #2c2c2c);
+    border-color: var(--dark-border, #444);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .color-picker-panel h4,
+body.dark-theme .color-picker-panel label {
+    color: var(--dark-text-color, #f1f1f1);
+}
+
+body.dark-theme .color-picker-panel .target-info {
+    background-color: var(--dark-secondary-bg, #383838);
+    color: var(--dark-muted-text-color, #bbb);
+    border-color: var(--dark-border, #444);
+}
+
+body.dark-theme .color-picker-panel .target-info strong {
+    color: var(--primary-color-dark-theme, #58a6ff); /* Adjust if primary color needs dark theme variant */
+}
+
+body.dark-theme .color-picker-panel input[type="color"] {
+    border-color: var(--dark-border, #555);
 }
 
 #color-picker-panel {
