@@ -17,6 +17,7 @@ let colorPickerPanel, bgColorPicker, textColorPicker, applyColorsBtn, removeColo
 // This function should be called once the main DOM is loaded, perhaps by lab.js or questionnaire.js
 // For now, assuming it's called and populates the variables above.
 function initInPageEditorControls(panel, bgPicker, txtPicker, applyBtn, removeBtn, closeBtn, targetInfoDiv) {
+    console.log("[DEBUG] initInPageEditorControls: Received panel:", panel ? panel.id : 'null'); // DEBUG
     colorPickerPanel = panel;
     bgColorPicker = bgPicker;
     textColorPicker = txtPicker;
@@ -24,6 +25,11 @@ function initInPageEditorControls(panel, bgPicker, txtPicker, applyBtn, removeBt
     removeColorsBtn = removeBtn;
     closeColorPickerBtn = closeBtn;
     colorPickerTargetInfo = targetInfoDiv;
+
+    if (!panel) console.error("[DEBUG] initInPageEditorControls: colorPickerPanel is NULL!"); // DEBUG
+    if (!bgPicker) console.error("[DEBUG] initInPageEditorControls: bgColorPicker is NULL!"); // DEBUG
+    if (!txtPicker) console.error("[DEBUG] initInPageEditorControls: textColorPicker is NULL!"); // DEBUG
+    if (!targetInfoDiv) console.error("[DEBUG] initInPageEditorControls: colorPickerTargetInfo is NULL!"); // DEBUG
 
     if (applyColorsBtn) applyColorsBtn.addEventListener('click', applyColors);
     if (removeColorsBtn) removeColorsBtn.addEventListener('click', removeCustomColors);
@@ -109,12 +115,24 @@ function handleIframeElementClick(event) {
     }
 
     const targetElement = event.target;
-    console.log("InPageEditor: Clicked in iframe on:", targetElement);
+    console.log("[DEBUG] handleIframeElementClick: Top of function. Edit mode ON. Clicked in iframe on:", targetElement); // DEBUG
+
+    // Ensure the color picker panel itself isn't the target if it's somehow in the iframe (it shouldn't be)
+    if (targetElement.closest && targetElement.closest('#color-picker-panel')) {
+        console.log("[DEBUG] handleIframeElementClick: Click was on color picker panel itself. Ignoring."); // DEBUG
+        return;
+    }
+    
+    // Check if the click is on a scrollbar (common issue)
+    if (event.clientX >= targetElement.clientWidth || event.clientY >= targetElement.clientHeight) {
+        console.log("[DEBUG] handleIframeElementClick: Click likely on scrollbar, not element content. Ignoring."); //DEBUG
+        // return; // Commenting out for now to see if it's too aggressive
+    }
 
     if (event.altKey) {
         if (targetElement && targetElement !== currentIframeDocument.body && targetElement !== currentIframeDocument.documentElement) {
-            console.log("InPageEditor: Alt+Click detected, opening color picker for:", targetElement);
-            applyHighlight(targetElement); // Highlight for CSS editing
+            console.log("[DEBUG] handleIframeElementClick: Alt+Click detected, attempting to open color picker for:", targetElement); // DEBUG
+            applyHighlight(targetElement); 
             openColorPicker(targetElement);
             event.preventDefault();
             event.stopPropagation();
@@ -166,8 +184,8 @@ function handleIframeElementClick(event) {
         }
     } else if (structuralOrStylableTags.includes(targetElement.tagName) || targetElement.classList.length > 0 || (targetElement.id && targetElement.id !== 'page-preview')) {
         if (targetElement !== currentIframeDocument.body && targetElement !== currentIframeDocument.documentElement) {
-            console.log("InPageEditor: Opening color picker for structural/styled element:", targetElement);
-            applyHighlight(targetElement); // Highlight for CSS editing
+            console.log("[DEBUG] handleIframeElementClick: Structural/stylable element, attempting to open color picker for:", targetElement); // DEBUG
+            applyHighlight(targetElement); 
             openColorPicker(targetElement);
             event.preventDefault();
             event.stopPropagation();
@@ -176,8 +194,8 @@ function handleIframeElementClick(event) {
     } else {
         console.log("InPageEditor: Click on unhandled element type for direct editing:", targetElement.tagName, targetElement);
         if ((targetElement.id || targetElement.classList.length > 0) && targetElement !== currentIframeDocument.body && targetElement !== currentIframeDocument.documentElement) {
-            console.log("InPageEditor: Fallback - Opening color picker due to ID/class:", targetElement);
-            applyHighlight(targetElement); // Highlight for CSS editing
+            console.log("[DEBUG] handleIframeElementClick: Fallback - Opening color picker due to ID/class for:", targetElement); // DEBUG
+            applyHighlight(targetElement); 
             openColorPicker(targetElement);
             event.preventDefault();
             event.stopPropagation();
@@ -212,22 +230,25 @@ function setInPageEditMode(isActive, iframeDoc = null) {
     isEditModeActive = isActive;
     currentIframeDocument = iframeDoc; 
 
-    console.log(`InPageEditor: setInPageEditMode called. Active: ${isActive}, iframeDoc: ${iframeDoc ? 'provided' : 'null'}`);
+    console.log(`[DEBUG] setInPageEditMode: Active: ${isActive}, iframeDoc: ${iframeDoc ? 'provided' : 'null'}`); // DEBUG
 
     if (previousDoc && previouslyActive && previousDoc !== currentIframeDocument) {
+        console.log("[DEBUG] setInPageEditMode: Detaching listeners from previous document."); // DEBUG
         detachEditListeners(previousDoc);
     }
 
     if (currentIframeDocument && isEditModeActive) {
         if (!previouslyActive || previousDoc !== currentIframeDocument) {
+            console.log("[DEBUG] setInPageEditMode: Attaching listeners to new/current document."); // DEBUG
             attachEditListeners(currentIframeDocument);
         }
-        applyCustomCssToIframe(); // Apply/re-apply custom styles
+        applyCustomCssToIframe(); 
     } else if (isEditModeActive && !currentIframeDocument) {
-        console.warn("InPageEditor: Edit mode enabled, but no iframe document provided. Waiting for iframe load.");
+        console.warn("[DEBUG] setInPageEditMode: Edit mode ON, but no iframe document. Waiting for iframe load."); // DEBUG
     }
 
     if (!isActive) {
+        console.log("[DEBUG] setInPageEditMode: Edit mode turned OFF. Cleaning up highlights and color picker."); // DEBUG
         if (currentlyHighlightedElement) {
             removeHighlight(currentlyHighlightedElement);
         }
@@ -246,8 +267,12 @@ function ensureId(element) {
 }
 
 function openColorPicker(element) {
+    console.log("[DEBUG] openColorPicker: Function called for element:", element); // DEBUG
     if (!colorPickerPanel || !bgColorPicker || !textColorPicker) {
-        console.error("Color picker elements not initialized. Ensure initInPageEditorControls was called.");
+        console.error("[DEBUG] openColorPicker: CRITICAL - Color picker elements (panel, bgPicker, or textColorPicker) are NOT INITIALIZED. Aborting."); // DEBUG
+        if (!colorPickerPanel) console.error("   ↳ colorPickerPanel is missing");
+        if (!bgColorPicker) console.error("   ↳ bgColorPicker is missing");
+        if (!textColorPicker) console.error("   ↳ textColorPicker is missing");
         return;
     }
     currentEditingElementForColor = element;
@@ -292,12 +317,13 @@ function openColorPicker(element) {
     bgColorPicker.value = currentBgColor;
     textColorPicker.value = currentTextColor;
     colorPickerPanel.style.display = 'block';
-    console.log("InPageEditor: Color picker opened for", element.id, "Computed BG:", computedStyle.backgroundColor, "->", currentBgColor, "Computed Text:", computedStyle.color, "->", currentTextColor);
+    console.log("[DEBUG] openColorPicker: Color picker panel display set to 'block'. Element:", element.id); // DEBUG
 }
 
 function closeColorPicker() {
     if (colorPickerPanel) {
         colorPickerPanel.style.display = 'none';
+        console.log("[DEBUG] closeColorPicker: Panel display set to 'none'."); // DEBUG
     }
     currentEditingElementForColor = null;
     if (colorPickerTargetInfo) { 

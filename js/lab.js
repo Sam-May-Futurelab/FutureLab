@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const colorPickerTargetInfo = document.getElementById('color-picker-target-info');
 
     if (window.initInPageEditorControls) {
+        console.log("[DEBUG] lab.js: Attempting to call window.initInPageEditorControls."); // DEBUG
+        console.log("[DEBUG] lab.js: Panel element:", colorPickerPanel ? colorPickerPanel.id : "null"); // DEBUG
+        console.log("[DEBUG] lab.js: TargetInfo element:", colorPickerTargetInfo ? colorPickerTargetInfo.id : "null"); // DEBUG
         window.initInPageEditorControls(
             colorPickerPanel,
             bgColorPicker,
@@ -128,31 +131,40 @@ document.addEventListener('DOMContentLoaded', function() {
     function setupInPageEditorForIframe() {
         if (editorActive && pagePreviewIframe && pagePreviewIframe.contentDocument) {
             if (typeof window.setInPageEditMode === 'function') {
-                console.log("Lab.js: Setting up in-page editor for iframe content.");
+                console.log("[DEBUG] Lab.js: Calling window.setInPageEditMode(true, iframe.contentDocument)."); // DEBUG
                 window.setInPageEditMode(true, pagePreviewIframe.contentDocument);
             } else {
-                console.warn("Lab.js: window.setInPageEditMode is not defined.");
+                console.warn("[DEBUG] Lab.js: window.setInPageEditMode is not defined when trying to setup for iframe."); // DEBUG
             }
         } else if (editorActive) {
-            console.warn("Lab.js: Edit mode is active, but iframe or its document is not ready for setup.");
+            console.warn("[DEBUG] Lab.js: Edit mode active, but iframe or its document not ready for setupInPageEditorForIframe."); // DEBUG
+            if (!pagePreviewIframe) console.warn("   ↳ pagePreviewIframe is null");
+            else if (!pagePreviewIframe.contentDocument) console.warn("   ↳ pagePreviewIframe.contentDocument is null");
         }
     }
 
     // Listen for iframe load event to setup editor if active
     if (pagePreviewIframe) {
         pagePreviewIframe.addEventListener('load', () => {
-            console.log("Lab.js: Iframe loaded.");
-            setupInPageEditorForIframe();
+            console.log("[DEBUG] Lab.js: Iframe LOADED."); // DEBUG
+            // Attempt to set up editor immediately on load if already active
+            if(editorActive) {
+                console.log("[DEBUG] Lab.js: Editor was active during iframe load, calling setupInPageEditorForIframe."); // DEBUG
+                setupInPageEditorForIframe();
+            }
         });
     }
 
     if (toggleEditModeBtn) {
         toggleEditModeBtn.addEventListener('click', () => {
             editorActive = !editorActive;
+            console.log(`[DEBUG] lab.js: Toggle Edit Mode button clicked. editorActive is now: ${editorActive}`); // DEBUG
             if (typeof window.setInPageEditMode === 'function') {
                 if (pagePreviewIframe && pagePreviewIframe.contentDocument) {
+                    console.log("[DEBUG] lab.js: Calling window.setInPageEditMode with iframe.doc."); // DEBUG
                     window.setInPageEditMode(editorActive, pagePreviewIframe.contentDocument);
                 } else {
+                    console.log("[DEBUG] lab.js: Calling window.setInPageEditMode with null document (iframe not ready or no iframe)."); // DEBUG
                     window.setInPageEditMode(editorActive, null);
                     if (editorActive) {
                         console.warn("Lab.js: Tried to toggle edit mode, but iframe contentDocument is not available yet.");
@@ -198,8 +210,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Buttons are hidden by display:none, but ensure their logical disabled state is correct if they were to be shown.
                 if (downloadEditedPageBtn) downloadEditedPageBtn.disabled = !hasEverBeenSaved;
                 if (downloadEditedCssBtn) downloadEditedCssBtn.disabled = !hasEverBeenSaved;
-            } else {
-                setupInPageEditorForIframe();
+            } else { // Edit mode is being turned ON
+                console.log("[DEBUG] lab.js: Edit mode turned ON. Calling setupInPageEditorForIframe."); // DEBUG
+                setupInPageEditorForIframe(); // Ensure listeners are attached if iframe is ready
             }
         });
     }
