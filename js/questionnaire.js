@@ -574,9 +574,34 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
 
     function toggleConditionalSectionDisplay(checkbox, container) {
         if (checkbox && container) {
-            container.style.display = checkbox.checked ? 'block' : 'none';
-            // Auto-add a pricing plan entry if the "Products / Pricing Plans" section is checked and no plans exist
-            if (checkbox.checked && container === pricingFieldsContainer && pricingPlansDynamicContainer && pricingPlansDynamicContainer.children.length === 0) {
+            const isChecked = checkbox.checked;
+            container.style.display = isChecked ? 'block' : 'none';
+
+            // Find all elements within the container that have the 'required' attribute.
+            const requiredElementsInContainer = container.querySelectorAll('[required]');
+
+            requiredElementsInContainer.forEach(el => {
+                el.disabled = !isChecked; // Disable if section is hidden, enable if shown.
+                                          // Disabled elements are not validated by the browser or custom validation.
+                if (!isChecked) {
+                    // If hidden, also remove any 'invalid' class
+                    if (el.classList.contains('invalid')) {
+                        removeInvalidHighlight(el); // Assuming removeInvalidHighlight is available
+                    }
+                    // Optionally, clear values if needed, though disabled fields aren't submitted.
+                    // if (el.type !== 'checkbox' && el.type !== 'radio' && el.tagName.toLowerCase() !== 'select') {
+                    //     el.value = '';
+                    // } else if (el.tagName.toLowerCase() === 'select') {
+                    //     el.selectedIndex = 0; // Or reset to a default/placeholder
+                    // }
+                }
+            });
+
+            // Auto-add a pricing plan entry if the "Products / Pricing Plans" section is checked
+            // and the dynamic container for plans is empty.
+            if (isChecked && container === pricingFieldsContainer && pricingPlansDynamicContainer && pricingPlansDynamicContainer.children.length === 0) {
+                // This ensures that if the user checks the box, at least one plan entry form is available.
+                // The static plan's inputs are handled by the loop above.
                 addPricingPlanEntry();
             }
         }
