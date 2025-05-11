@@ -43,9 +43,7 @@ function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATUR
     if (applyColorsBtn) applyColorsBtn.addEventListener('click', applyColors);
     if (removeCustomColorBtn) removeCustomColorBtn.addEventListener('click', removeCustomColors);
     if (closeColorPickerBtn) {
-        closeColorPickerBtn.addEventListener('click', () => {
-            closeColorPicker();
-        });
+        closeColorPickerBtn.addEventListener('click', closeColorPicker); // Corrected listener
     }
 }
 window.initInPageEditorControls = initInPageEditorControls;
@@ -275,26 +273,35 @@ function ensureId(element) {
 }
 
 function openColorPicker(element) {
-    if (!colorPickerPanel || !bgColorPicker || !textColorPicker || !colorPickerTargetInfo) {
+    if (!colorPickerPanel || !bgColorPicker || !textColorPicker) { // Removed colorPickerTargetInfo from this initial check as it's for display only
+        console.error("InPageEditor: Color picker panel or essential color inputs not initialized.");
         return;
     }
     currentEditingElementForColor = element;
     ensureId(currentEditingElementForColor); 
     
+    // Debugging for "N/A" issue
+    console.log("InPageEditor: openColorPicker called for element:", element);
+    console.log("InPageEditor: colorPickerTargetInfo element:", colorPickerTargetInfo);
+
     if (colorPickerTargetInfo) {
         let targetName = currentEditingElementForColor.tagName.toLowerCase();
         if (currentEditingElementForColor.id && !currentEditingElementForColor.id.startsWith('custom-')) {
             targetName += `#${currentEditingElementForColor.id}`;
-        } else if (currentEditingElementForColor.classList.length > 0) {
+        } else if (currentEditingElementForColor.classList && currentEditingElementForColor.classList.length > 0) {
             targetName += `.${Array.from(currentEditingElementForColor.classList).join('.')}`;
-        } else {
-            const text = currentEditingElementForColor.textContent.trim().split(/\s+/).slice(0, 3).join(" ");
-            if (text) targetName += ` ("${text}...")`;
         }
+        console.log("InPageEditor: Constructed targetName for display:", targetName);
+
         const spanElement = colorPickerTargetInfo.querySelector('span');
+        console.log("InPageEditor: Found spanElement for target info:", spanElement);
         if (spanElement) {
             spanElement.textContent = targetName;
+        } else {
+            console.error("InPageEditor: Could not find span element within colorPickerTargetInfo to display target name.");
         }
+    } else {
+        console.warn("InPageEditor: colorPickerTargetInfo is null or undefined in openColorPicker. Target name won't be displayed.");
     }
 
     const iframeWindow = currentEditingElementForColor.ownerDocument.defaultView;
