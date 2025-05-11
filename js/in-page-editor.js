@@ -13,16 +13,32 @@ let customStyleTagId = 'in-page-editor-custom-styles'; // Added
 let colorPickerPanel, bgColorPicker, textColorPicker, applyColorsBtn, removeColorsBtn, closeColorPickerBtn;
 
 // Initialize references to color picker panel elements from the main document
-// This function should be called once the main DOM is loaded, perhaps by lab.js or questionnaire.js
-// For now, assuming it's called and populates the variables above.
-function initInPageEditorControls(panel, bgPicker, txtPicker, applyBtn, removeBtn, closeBtn, targetInfoDiv) {
-    colorPickerPanel = panel;
-    bgColorPicker = bgPicker;
-    textColorPicker = txtPicker;
-    applyColorsBtn = applyBtn;
-    removeColorsBtn = removeBtn;
-    closeColorPickerBtn = closeBtn;
-    colorPickerTargetInfo = targetInfoDiv;
+function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATURE UPDATED
+    colorPickerPanel = panelElement;
+    colorPickerTargetInfo = targetInfoElement; // CORRECTLY ASSIGNED
+
+    if (!colorPickerPanel) {
+        console.error("InPageEditor: Color picker panel element (colorPickerPanel) not provided to initInPageEditorControls.");
+        return;
+    }
+    if (!colorPickerTargetInfo) {
+        // Though this is passed, it's good to be aware if it's missing in lab.html
+        console.warn("InPageEditor: Target info element (colorPickerTargetInfo) not provided to initInPageEditorControls.");
+    }
+
+    // Query for child elements from the provided panelElement
+    bgColorPicker = colorPickerPanel.querySelector('#bgColorPicker');
+    textColorPicker = colorPickerPanel.querySelector('#textColorPicker');
+    applyColorsBtn = colorPickerPanel.querySelector('#apply-colors-btn'); 
+    removeColorsBtn = colorPickerPanel.querySelector('#remove-custom-color-btn'); 
+    closeColorPickerBtn = colorPickerPanel.querySelector('#close-color-picker');
+
+    // Debugging logs to ensure elements are found (can be removed after verification)
+    if (!bgColorPicker) console.error("InPageEditor: bgColorPicker (#bgColorPicker) not found in panel.");
+    if (!textColorPicker) console.error("InPageEditor: textColorPicker (#textColorPicker) not found in panel.");
+    if (!applyColorsBtn) console.error("InPageEditor: applyColorsBtn (#apply-colors-btn) not found in panel.");
+    if (!removeColorsBtn) console.error("InPageEditor: removeColorsBtn (#remove-custom-color-btn) not found in panel.");
+    if (!closeColorPickerBtn) console.error("InPageEditor: closeColorPickerBtn (#close-color-picker) not found in panel.");
 
     if (applyColorsBtn) applyColorsBtn.addEventListener('click', applyColors);
     if (removeColorsBtn) removeColorsBtn.addEventListener('click', removeCustomColors);
@@ -32,7 +48,6 @@ function initInPageEditorControls(panel, bgPicker, txtPicker, applyBtn, removeBt
         });
     }
 }
-// Make it globally available if lab.js needs to call it with elements from lab.html
 window.initInPageEditorControls = initInPageEditorControls;
 
 // Function to generate CSS from customCssRules
@@ -110,16 +125,12 @@ function handleIframeElementClick(event) {
 
     const targetElement = event.target;
 
-    // Ensure the color picker panel itself isn't the target if it's somehow in the iframe (it shouldn't be)
+    // Ignore clicks on the color picker panel itself (it's in the parent document)
     if (targetElement.closest && targetElement.closest('#color-picker-panel')) {
         return;
     }
     
-    // Check if the click is on a scrollbar (common issue)
-    if (event.clientX >= targetElement.clientWidth || event.clientY >= targetElement.clientHeight) {
-        // return; // Commenting out for now to see if it's too aggressive
-    }
-
+    // ALT-CLICK: Force open color picker for the clicked element
     if (event.altKey) {
         if (targetElement && targetElement !== currentIframeDocument.body && targetElement !== currentIframeDocument.documentElement) {
             applyHighlight(targetElement); 
@@ -130,59 +141,83 @@ function handleIframeElementClick(event) {
         }
     }
 
-    const textEditableTags = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'A', 'LI', 'TD', 'TH', 'FIGCAPTION', 'BUTTON', 'LABEL'];
-    const structuralOrStylableTags = ['DIV', 'SECTION', 'ARTICLE', 'ASIDE', 'HEADER', 'FOOTER', 'MAIN', 'NAV', 'FORM', 'UL', 'OL', 'TABLE', 'THEAD', 'TBODY', 'TR'];
-
-    if (targetElement.closest('button, input, textarea, select')) {
-        return;
+    // Ignore clicks on common interactive form elements for this flow unless they are specifically designated as editable (e.g. button text)
+    // This check is simplified; specific handling for A and BUTTON tags happens later.
+    if (targetElement.closest('input, textarea, select')) { 
+        if (!targetElement.closest('input[type=button], input[type=submit]')) { // Allow button-like inputs to be potentially styled/edited
+             return;
+        }
     }
     
+    // If already content editable (e.g., user clicked into an already focused editable element from our system)
     let el = targetElement;
-    let isNestedInEditable = false;
+    let isNestedInActiveEditable = false;
     while(el && el !== currentIframeDocument.body) {
-        if (el.isContentEditable) {
-            isNestedInEditable = true;
+        // Check if it's an *active* edit session initiated by this script
+        if (el.isContentEditable && el.style.outline && el.style.outline.includes('dashed')) { 
+            isNestedInActiveEditable = true;
             break;
         }
         el = el.parentElement;
     }
+    if (isNestedInActiveEditable) {
+        return; // Allow normal editing within that element
+    }
 
-    if (isNestedInEditable) {
+    const textEditableTags = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'A', 'LI', 'TD', 'TH', 'FIGCAPTION', 'BUTTON', 'LABEL', 'PRE', 'BLOCKQUOTE', 'DT', 'DD'];
+    const structuralOrStylableTags = ['DIV', 'SECTION', 'ARTICLE', 'ASIDE', 'HEADER', 'FOOTER', 'MAIN', 'NAV', 'FORM', 'UL', 'OL', 'TABLE', 'THEAD', 'TBODY', 'TR', 'FIGURE'];
+
+    // PRIORITY 1: Text Editing for specific tags or simple DIVs with text
+    if (textEditableTags.includes(targetElement.tagName) || 
+        (targetElement.tagName === 'DIV' && !targetElement.children.length && targetElement.textContent && targetElement.textContent.trim().length > 0)) {
+        
+        if (targetElement.isContentEditable && targetElement.style.outline.includes('dashed')) {
+            // Already actively being edited by us, do nothing extra, let user type.
+            return;
+        }
+        
+        // Make it contentEditable
+        applyHighlight(targetElement); 
+        targetElement.contentEditable = 'true';
+        targetElement.focus();
+        
+        // Add a blur listener to clean up
+        targetElement.addEventListener('blur', function tempBlurHandler() {
+            targetElement.contentEditable = 'false';
+            removeHighlight(targetElement);
+            if (typeof window.notifyUnsavedChange === 'function') {
+                window.notifyUnsavedChange();
+            }
+            targetElement.removeEventListener('blur', tempBlurHandler); // Remove self
+        });
+
+        event.preventDefault(); 
+        event.stopPropagation();
+        return;
+    } 
+    // PRIORITY 2: Color Picker for structural elements or elements with class/id
+    else if (
+        targetElement !== currentIframeDocument.body && 
+        targetElement !== currentIframeDocument.documentElement &&
+        (structuralOrStylableTags.includes(targetElement.tagName) ||
+         (targetElement.classList && targetElement.classList.length > 0) ||
+         (targetElement.id && targetElement.id !== 'page-preview' && targetElement.id !== customStyleTagId) // customStyleTagId is id of <style> tag
+        )
+    ) {
+        applyHighlight(targetElement); 
+        openColorPicker(targetElement);
+        event.preventDefault();
+        event.stopPropagation();
         return;
     }
 
-    if (textEditableTags.includes(targetElement.tagName) || (targetElement.tagName === 'DIV' && !targetElement.children.length && targetElement.textContent.trim().length > 0)) {
-        if (!targetElement.isContentEditable) {
-            applyHighlight(targetElement); // Highlight for HTML editing
-            targetElement.contentEditable = 'true';
-            targetElement.focus();
-            targetElement.addEventListener('blur', function onBlur() {
-                targetElement.contentEditable = 'false';
-                removeHighlight(targetElement); // Remove highlight on blur
-                if (typeof window.notifyUnsavedChange === 'function') {
-                    window.notifyUnsavedChange();
-                }
-                targetElement.removeEventListener('blur', onBlur);
-            }, { once: false });
-            event.preventDefault(); 
-            event.stopPropagation();
-            return;
-        }
-    } else if (structuralOrStylableTags.includes(targetElement.tagName) || targetElement.classList.length > 0 || (targetElement.id && targetElement.id !== 'page-preview')) {
-        if (targetElement !== currentIframeDocument.body && targetElement !== currentIframeDocument.documentElement) {
-            applyHighlight(targetElement); 
-            openColorPicker(targetElement);
-            event.preventDefault();
-            event.stopPropagation();
-            return;
-        }
-    } else {
-        if ((targetElement.id || targetElement.classList.length > 0) && targetElement !== currentIframeDocument.body && targetElement !== currentIframeDocument.documentElement) {
-            applyHighlight(targetElement); 
-            openColorPicker(targetElement);
-            event.preventDefault();
-            event.stopPropagation();
-            return;
+    // If a click didn't result in an action & a different element is highlighted, clear old highlight.
+    // This is a soft reset for context.
+    if (currentlyHighlightedElement && currentlyHighlightedElement !== targetElement) {
+        // Ensure the click wasn't inside the color picker panel itself
+        let mainDocColorPicker = document.getElementById('color-picker-panel'); // Get panel from main doc
+        if (!mainDocColorPicker || !mainDocColorPicker.contains(event.target)) {
+             removeHighlight(currentlyHighlightedElement);
         }
     }
 }
