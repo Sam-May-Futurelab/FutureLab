@@ -336,10 +336,8 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
             const activeStep = formSteps[currentStep - 1];
             activeStep.classList.add('active');
             updateProgressBar();
-            // MODIFIED SCROLL TARGET
-            if (progressSteps.length > 0) {
-                progressSteps[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else if (questionnaireContainer) { // Fallback
+            // Scroll to the top of the questionnaire container
+            if (questionnaireContainer) {
                 questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
@@ -352,10 +350,8 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
             const activeStep = formSteps[currentStep - 1];
             activeStep.classList.add('active');
             updateProgressBar();
-            // MODIFIED SCROLL TARGET
-            if (progressSteps.length > 0) {
-                progressSteps[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else if (questionnaireContainer) { // Fallback
+            // Scroll to the top of the questionnaire container
+            if (questionnaireContainer) {
                 questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
@@ -367,10 +363,8 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
         const activeStep = formSteps[currentStep - 1];
         activeStep.classList.add('active');
         updateProgressBar();
-        // MODIFIED SCROLL TARGET
-        if (progressSteps.length > 0) {
-            progressSteps[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else if (questionnaireContainer) { // Fallback
+        // Scroll to the top of the questionnaire container
+        if (questionnaireContainer) {
             questionnaireContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }

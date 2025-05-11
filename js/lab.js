@@ -30,6 +30,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeSaveNotificationBtn = document.getElementById('close-save-notification');
     const pagePreviewIframe = document.getElementById('page-preview'); // Defined earlier for broader scope
 
+    // Smooth scroll for hero CTA
+    const heroCtaButton = document.querySelector('.hero-cta-button');
+    if (heroCtaButton) {
+        heroCtaButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
+
     // Initialize In-Page Editor Controls
     const colorPickerPanel = document.getElementById('color-picker-panel');
     const bgColorPicker = document.getElementById('bgColorPicker');
@@ -238,11 +253,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             if (lastSavedEditedHtml) {
-                if (typeof window.downloadEditedPageAsHTML === 'function') {
-                    window.downloadEditedPageAsHTML(lastSavedEditedHtml);
+                // Ensure lastSavedCustomCSS is defined, even if empty
+                const customCssToEmbed = lastSavedCustomCSS || ''; 
+                if (typeof window.downloadHtmlContent === 'function') {
+                    // Call the global download function with HTML body, custom CSS, filename, and 'not original' flag
+                    window.downloadHtmlContent(lastSavedEditedHtml, customCssToEmbed, 'index.html', false);
                 } else {
-                    alert("Download function for edited page is not available.");
-                    console.error("window.downloadEditedPageAsHTML is not defined.");
+                    alert("Download function (downloadHtmlContent) is not available.");
+                    console.error("window.downloadHtmlContent is not defined. Ensure it's globally available from questionnaire.js or similar.");
                 }
             } else {
                 alert("No saved edits available to download. Please make and save some edits first.");

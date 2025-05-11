@@ -431,6 +431,173 @@
     color: var(--color-picker-label-text-dark, #c5c8c6); /* Ensure this is also themed */
 }
 
+/* Hero Section Styles */
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem; /* Adjust gap as needed */
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+.hero-text-content {
+    flex-basis: 55%; /* Adjust width as needed */
+}
+
+.hero-text-content h1 {
+    font-size: 2.8rem; /* Example size */
+    margin-bottom: 1rem;
+}
+
+.hero-text-content p {
+    font-size: 1.1rem; /* Example size */
+    margin-bottom: 1.5rem;
+}
+
+.hero-animation-content {
+    flex-basis: 40%; /* Adjust width as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animated Gradient Text */
+.animated-gradient {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--primary-color));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text; /* Standard property */
+    -webkit-text-fill-color: transparent;
+    animation: gradient-animation 4s linear infinite;
+}
+
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* How It Works Section Styles */
+.how-it-works-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    background-color: var(--background-offset); /* Or a subtle background color */
+}
+.dark-theme .how-it-works-section {
+    background-color: var(--background-offset-dark);
+}
+
+.how-it-works-section .section-title {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.how-it-works-section .section-intro {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 2.5rem auto;
+    font-size: 1.1em;
+    color: var(--text-secondary);
+}
+
+.steps-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.step-card {
+    flex-basis: calc(33.333% - 2rem); /* Adjust for gap */
+    min-width: 280px; /* Minimum width before wrapping */
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.dark-theme .step-card {
+    background-color: var(--background-dark);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.step-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+.dark-theme .step-card:hover {
+    box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+}
+
+.step-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    display: inline-block;
+    padding: 0.8rem;
+    background-color: rgba(var(--primary-color-rgb), 0.1); /* Use RGB version of primary color for alpha */
+    border-radius: 50%;
+    width: 70px; /* Fixed width */
+    height: 70px; /* Fixed height */
+    line-height: 40px; /* Adjust to center icon if needed */
+}
+.dark-theme .step-icon {
+    background-color: rgba(var(--primary-color-rgb), 0.2);
+}
+
+.step-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+.dark-theme .step-card h3 {
+    color: var(--text-primary-dark);
+}
+
+.step-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+.dark-theme .step-card p {
+    color: var(--text-secondary-dark);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero-text-content {
+        flex-basis: 100%;
+        margin-bottom: 2rem;
+    }
+    .hero-animation-content {
+        flex-basis: 100%;
+        max-width: 350px; /* Adjust animation size for stacked layout */
+        margin: 0 auto;
+    }
+    .steps-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .step-card {
+        flex-basis: 80%; /* Allow cards to be wider when stacked */
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-text-content h1 {
+        font-size: 2.4rem;
+    }
+    .step-card {
+        flex-basis: 95%;
+    }
+}
+
 @media (max-width: 768px) {
     .ai-features-section ul,
     .ai-customization-section ul {
