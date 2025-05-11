@@ -670,38 +670,36 @@
     </footer>
 
     <!-- Color Picker Panel -->
-    <div id="color-picker-panel" class="color-picker-panel" style="display: none;">
+    <div id="color-picker-panel" class="color-picker-panel">
         <h4>Element Colors</h4>
-        <div id="color-picker-target-info" style="margin-bottom: 10px; font-size: 0.9em;">Editing: <span>N/A</span></div>
-        
-        <div class="color-input-group">
-            <label for="bgColorPicker" id="bgColorPickerLabel">Background Color 1:</label>
-            <input type="color" id="bgColorPicker" value="#ffffff">
-            <datalist id="recentBgColorsList1"></datalist>
+        <div id="color-picker-target-info" class="target-info">Editing: <span id="colorPickerTargetElementName">N/A</span></div>
+
+        <div class="picker-group" id="bgColorPicker-group">
+            <label id="bgColorPickerLabel" for="bgColorPicker">Background Color</label>
+            <input type="color" id="bgColorPicker" list="recentBgColorsList">
+            <datalist id="recentBgColorsList"></datalist>
         </div>
 
-        <div class="form-field" style="margin-bottom: 12px; margin-top: 5px;"> <!-- Adjusted margin -->
-            <label class="checkbox-container" for="useBgGradient">
-                <input type="checkbox" id="useBgGradient">
+        <!-- Gradient Section Start -->
+        <div class="gradient-section">
+            <div class="checkbox-container">
+                <input type="checkbox" id="useBgGradient" name="useBgGradient">
                 <span class="checkmark"></span>
-                Use Background Gradient?
-            </label>
-        </div>
+                <label for="useBgGradient" class="checkbox-label-text">Use Background Gradient?</label>
+            </div>
 
-        <div class="color-input-group" id="bgColorPicker2-group" style="display: none;">
-            <label for="bgColorPicker2">Background Color 2:</label>
-            <input type="color" id="bgColorPicker2" value="#ffffff">
-            <datalist id="recentBgColorsList2"></datalist>
+            <div class="picker-group" id="bgColorPicker2-group" style="display: none;">
+                <label id="bgColorPicker2Label" for="bgColorPicker2">Gradient Color 2</label>
+                <input type="color" id="bgColorPicker2" list="recentBgColorsList2">
+                <datalist id="recentBgColorsList2"></datalist>
+            </div>
         </div>
+        <!-- Gradient Section End -->
 
-        <div class="color-input-group">
-            <label for="textColorPicker">Text Color:</label>
-            <input type="color" id="textColorPicker" value="#000000">
-        </div>
-        <div class="button-group">
-            <button id="applyColorsBtn" class="btn btn-sm btn-success">Apply</button>
-            <button id="removeColorsBtn" class="btn btn-sm btn-warning">Remove Custom</button>
-            <button id="closeColorPickerBtn" class="btn btn-sm btn-secondary">Close</button>
+        <div class="panel-buttons">
+            <button id="applyColorsBtn" class="btn btn-primary">Apply</button>
+            <button id="resetColorsBtn" class="btn btn-secondary">Reset</button>
+            <button id="closeColorPickerBtn" class="btn btn-icon btn-subtle" title="Close"><i class="fas fa-times"></i></button>
         </div>
     </div>
 

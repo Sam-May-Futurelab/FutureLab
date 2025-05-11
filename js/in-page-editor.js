@@ -4,13 +4,13 @@ let isEditModeActive = false;
 let currentIframeDocument = null;
 let currentEditingElementForColor = null;
 let colorPickerTargetInfo = null; // Reference to the color picker target info div
-const customCssRules = {}; // Stores element.id -> { background: '...', text: '...' }
+const customCssRules = {}; // Stores element.id -> { background: '...' }
 let currentlyHighlightedElement = null; // Added to track highlighted element
 const HIGHLIGHT_STYLE = '2px dashed #007bff'; // Style for the highlight
 let customStyleTagId = 'in-page-editor-custom-styles'; // Added
 
 // Color Picker Panel elements
-let colorPickerPanel, bgColorPicker, textColorPicker, applyColorsBtn, removeCustomColorBtn, closeColorPickerBtn;
+let colorPickerPanel, bgColorPicker, applyColorsBtn, resetColorsBtn, closeColorPickerBtn;
 let useBgGradientCheckbox, bgColorPicker2Group, bgColorPicker2; // Added for gradient
 let recentBgColors1 = [];
 let recentBgColors2 = [];
@@ -32,10 +32,9 @@ function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATUR
 
     // Query for child elements from the provided panelElement
     bgColorPicker = colorPickerPanel.querySelector('#bgColorPicker');
-    textColorPicker = colorPickerPanel.querySelector('#textColorPicker');
-    applyColorsBtn = colorPickerPanel.querySelector('#applyColorsBtn'); // Corrected ID
-    removeCustomColorBtn = colorPickerPanel.querySelector('#removeColorsBtn'); // Corrected ID
-    closeColorPickerBtn = colorPickerPanel.querySelector('#closeColorPickerBtn'); // Corrected ID
+    applyColorsBtn = colorPickerPanel.querySelector('#applyColorsBtn');
+    resetColorsBtn = colorPickerPanel.querySelector('#resetColorsBtn'); // Changed from removeCustomColorBtn and updated ID
+    closeColorPickerBtn = colorPickerPanel.querySelector('#closeColorPickerBtn');
 
     // New gradient elements
     useBgGradientCheckbox = colorPickerPanel.querySelector('#useBgGradient');
@@ -44,16 +43,15 @@ function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATUR
 
     // Debugging logs to ensure elements are found (can be removed after verification)
     if (!bgColorPicker) console.error("InPageEditor: bgColorPicker (#bgColorPicker) not found in panel.");
-    if (!textColorPicker) console.error("InPageEditor: textColorPicker (#textColorPicker) not found in panel.");
     if (!applyColorsBtn) console.error("InPageEditor: applyColorsBtn (#applyColorsBtn) not found in panel.");
-    if (!removeCustomColorBtn) console.error("removeCustomColorBtn (#removeColorsBtn) not found in panel.");
+    if (!resetColorsBtn) console.error("resetColorsBtn (#resetColorsBtn) not found in panel."); // Changed from removeCustomColorBtn
     if (!closeColorPickerBtn) console.error("closeColorPickerBtn (#closeColorPickerBtn) not found in panel.");
     if (!useBgGradientCheckbox) console.error("InPageEditor: useBgGradientCheckbox (#useBgGradient) not found in panel.");
     if (!bgColorPicker2Group) console.error("InPageEditor: bgColorPicker2Group (#bgColorPicker2-group) not found in panel.");
     if (!bgColorPicker2) console.error("InPageEditor: bgColorPicker2 (#bgColorPicker2) not found in panel.");
 
     if (applyColorsBtn) applyColorsBtn.addEventListener('click', applyColors);
-    if (removeCustomColorBtn) removeCustomColorBtn.addEventListener('click', removeCustomColors);
+    if (resetColorsBtn) resetColorsBtn.addEventListener('click', removeCustomColors); // Changed from removeCustomColorBtn
     if (closeColorPickerBtn) {
         closeColorPickerBtn.addEventListener('click', closeColorPicker); // Corrected listener
     }
@@ -71,7 +69,7 @@ function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATUR
 
     // Load recent colors from localStorage
     loadRecentColors();
-    updateRecentColorsDatalist('recentBgColorsList1', recentBgColors1);
+    updateRecentColorsDatalist('recentBgColorsList', recentBgColors1); // Changed recentBgColorsList1 to recentBgColorsList
     updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
 
     // Add event listeners to update recent colors when a color is chosen
@@ -100,9 +98,6 @@ function getCustomCss() {
                     cssString += `  background-color: transparent !important;\n`; // Ensure solid bg doesn't interfere
                 } else if (rules.backgroundColor) {
                     cssString += `  background-color: ${rules.backgroundColor} !important;\n`;
-                }
-                if (rules.text) {
-                    cssString += `  color: ${rules.text} !important;\n`;
                 }
                 cssString += `}\n`;
             }
@@ -312,7 +307,7 @@ function ensureId(element) {
 }
 
 function openColorPicker(element) {
-    if (!colorPickerPanel || !bgColorPicker || !textColorPicker || !useBgGradientCheckbox || !bgColorPicker2 || !bgColorPicker2Group) {
+    if (!colorPickerPanel || !bgColorPicker || !useBgGradientCheckbox || !bgColorPicker2 || !bgColorPicker2Group) {
         console.error("InPageEditor: Color picker panel or essential color inputs (including gradient) not initialized.");
         return;
     }
@@ -358,7 +353,6 @@ function openColorPicker(element) {
     bgColorPicker2Group.style.display = 'none';
 
     let currentBgColor = '#ffffff'; // Default
-    let currentTextColor = '#000000'; // Default
 
     // Check for existing linear gradient on background-image
     const existingGradient = computedStyle.backgroundImage;
@@ -376,20 +370,11 @@ function openColorPicker(element) {
         currentBgColor = rgbToHex(computedStyle.backgroundColor);
     }
 
-    try {
-        currentTextColor = rgbToHex(computedStyle.color);
-    } catch (e) {
-    }
-    
     if (!isValidHex(currentBgColor) || currentBgColor === '#000000' && (computedStyle.backgroundColor === 'rgba(0, 0, 0, 0)' || computedStyle.backgroundColor === 'transparent')) {
         currentBgColor = '#ffffff'; 
     }
-    if (!isValidHex(currentTextColor)) {
-        currentTextColor = '#000000'; 
-    }
     
     bgColorPicker.value = currentBgColor;
-    textColorPicker.value = currentTextColor;
     
     // Ensure second picker has a valid default if not set by gradient
     if (!useBgGradientCheckbox.checked) {
@@ -397,11 +382,11 @@ function openColorPicker(element) {
     }
 
     // Update datalists for recent colors every time picker is opened
-    updateRecentColorsDatalist('recentBgColorsList1', recentBgColors1);
+    updateRecentColorsDatalist('recentBgColorsList', recentBgColors1); // Changed recentBgColorsList1 to recentBgColorsList
     updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
     
     // Associate datalists with inputs
-    if (bgColorPicker) bgColorPicker.setAttribute('list', 'recentBgColorsList1');
+    if (bgColorPicker) bgColorPicker.setAttribute('list', 'recentBgColorsList'); // Changed recentBgColorsList1 to recentBgColorsList
     if (bgColorPicker2) bgColorPicker2.setAttribute('list', 'recentBgColorsList2');
 
     // Update label for bgColorPicker based on checkbox state
@@ -438,12 +423,11 @@ function handleFocusOutColorPicker(event) {
 }
 
 function applyColors() {
-    if (!currentEditingElementForColor || !bgColorPicker || !textColorPicker || !useBgGradientCheckbox || !bgColorPicker2) {
+    if (!currentEditingElementForColor || !bgColorPicker || !useBgGradientCheckbox || !bgColorPicker2) {
         console.error("InPageEditor: Cannot apply colors, essential elements not found.");
         return;
     }
 
-    const newTextColor = textColorPicker.value;
     const elementId = ensureId(currentEditingElementForColor);
 
     if (!customCssRules[elementId]) {
@@ -465,7 +449,6 @@ function applyColors() {
         }
         addRecentColor(newBgColor, 'recentBgColors1'); // Also add to list1 if not gradient
     }
-    customCssRules[elementId].text = newTextColor;
 
     applyCustomCssToIframe();
 
@@ -482,7 +465,7 @@ function removeCustomColors() {
 
     const elementId = currentEditingElementForColor.id;
     if (elementId && customCssRules[elementId]) {
-        delete customCssRules[elementId]; // This will remove all keys: background, text, backgroundImage
+        delete customCssRules[elementId]; // This will remove all keys: background, backgroundImage
         applyCustomCssToIframe();
     }
 
@@ -512,7 +495,7 @@ function addRecentColor(color, listKey) {
 
     if (listKey === 'recentBgColors1') {
         recentBgColors1 = recentColorsList;
-        updateRecentColorsDatalist('recentBgColorsList1', recentBgColors1);
+        updateRecentColorsDatalist('recentBgColorsList', recentBgColors1); // Changed recentBgColorsList1 to recentBgColorsList
     } else {
         recentBgColors2 = recentColorsList;
         updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
@@ -569,10 +552,6 @@ window.getCustomCss = function() {
                 cssString += `  background-color: transparent !important;\n`; // Ensure solid bg doesn't interfere
             } else if (rule.backgroundColor) {
                 cssString += `  background-color: ${rule.backgroundColor} !important;\n`;
-            }
-            // Assuming 'text' key stores text color
-            if (rule.text) {
-                cssString += `  color: ${rule.text} !important;\n`;
             }
             cssString += `}\n`;
         }

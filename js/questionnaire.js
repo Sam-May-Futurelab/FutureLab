@@ -1,3 +1,43 @@
+// Function to download content as a file
+function downloadFile(filename, content, contentType) {
+    const blob = new Blob([content], { type: contentType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Make this function globally available for lab.js
+window.downloadHtmlContent = function(bodyHtml, cssContent, filename = 'index.html', isOriginal = true) {
+    const pageTitle = lastProjectName || (isOriginal ? 'Generated Page' : 'Edited Page');
+    const fullHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${pageTitle}</title>
+    <style>
+        body {
+            margin: 0; /* Basic reset */
+            padding: 0; /* Basic reset */
+        }
+${cssContent || '/* No CSS available */'}
+    </style>
+</head>
+<body>
+${bodyHtml || '<!-- No HTML content available -->'}
+</body>
+</html>
+    `;
+    downloadFile(filename, fullHtml, 'text/html');
+    console.log(`${isOriginal ? 'Original' : 'Edited'} page download initiated as: ${filename}`);
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     // Cache DOM elements
     const form = document.getElementById('ai-questionnaire');
@@ -89,47 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (downloadCssBtn) {
         downloadCssBtn.textContent = 'Download Original CSS';
     }
-
-    // Expose a function to download the edited page with embedded CSS
-    window.downloadEditedPageAsHTML = function(editedBodyHtml) {
-        if (!lastGeneratedCSS && !editedBodyHtml) {
-            alert("No content available to download.");
-            return;
-        }
-
-        const fullHtml = `
-<!DOCTYPE html>
-<html lang=\"en\">
-<head>
-    <meta charset=\"UTF-8\">
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-    <title>${lastProjectName || 'Edited Page'}</title>
-    <style>
-        body { 
-            margin: 0; /* Basic reset */
-            padding: 0; /* Basic reset */
-            /* You might want to add more base styles here or ensure they are in the generated CSS */
-        }
-${lastGeneratedCSS || '/* No CSS available */'}
-    </style>
-</head>
-<body>
-${editedBodyHtml || '<!-- No HTML content available -->'}
-</body>
-</html>
-        `;
-
-        const blob = new Blob([fullHtml], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${lastProjectName || 'edited-page'}.html`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        console.log("Edited page download initiated as:", `${lastProjectName || 'edited-page'}.html`);
-    };
 
     // Initialize form
     initializeForm();
@@ -815,7 +814,7 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
         generationOverlay.classList.add('active');
         generationStep.textContent = 'Connecting to AI assistant...';
 
-        // --- START: Lab-themed loading messages ---
+        // --- START: Lab-themed loading messages --- 
         const labMessages = [
             "Initializing the flux capacitor...",
             "Reticulating splines...",
@@ -1148,26 +1147,20 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
         }, 1500); 
     }
 
-    function downloadFile(filename, content, mimeType) {
-        const blob = new Blob([content], { type: mimeType });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
-    }
-
     function downloadHTML() {
         if (lastGeneratedHTML) {
-            downloadFile(`${lastProjectName}.html`, lastGeneratedHTML, 'text/html');
+            // Call the global download function with HTML body, CSS, filename, and 'original' flag
+            window.downloadHtmlContent(lastGeneratedHTML, lastGeneratedCSS, `${lastProjectName}-original.html`, true);
+        } else {
+            alert("No HTML content has been generated yet.");
         }
     }
 
     function downloadCSS() {
         if (lastGeneratedCSS) {
-            downloadFile(`${lastProjectName}.css`, lastGeneratedCSS, 'text/css');
+            downloadFile(`${lastProjectName}-original.css`, lastGeneratedCSS, 'text/css');
+        } else {
+            alert("No CSS content has been generated yet.");
         }
     }
     

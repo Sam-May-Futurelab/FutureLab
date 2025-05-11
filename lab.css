@@ -323,6 +323,43 @@
     color: var(--primary-color, #4361ee);
 }
 
+/* Styles for the new gradient section within the color picker panel */
+.color-picker-panel .gradient-section {
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.08); /* Subtle border for light mode */
+    border-radius: var(--border-radius-sm, 4px);
+    margin-top: 5px; /* Adjusted from 0 to provide some space if panel gap is small */
+    margin-bottom: 5px; /* Adjusted from 0 */
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Space between checkbox and second color picker */
+}
+
+[data-theme="dark"] .color-picker-panel .gradient-section {
+    border-color: rgba(255, 255, 255, 0.12); /* Subtle border for dark mode */
+}
+
+/* Ensure picker groups within the gradient section don't have extra bottom margin */
+.color-picker-panel .gradient-section .picker-group {
+    margin-bottom: 0;
+}
+
+/* Styling for the label text next to the custom checkbox */
+.color-picker-panel .checkbox-container .checkbox-label-text {
+    display: inline; /* Override general panel label 'display: block' */
+    margin-bottom: 0; /* Override general panel label 'margin-bottom' */
+    margin-left: 6px; /* Space between checkmark visual and the text label */
+    font-size: 0.9em; /* Consistent with other labels */
+    color: var(--color-picker-label-text, #555);
+    cursor: pointer; /* Make text itself clickable */
+    line-height: 1.4; /* Ensure proper vertical alignment with checkbox */
+    align-self: center; 
+}
+
+[data-theme="dark"] .color-picker-panel .checkbox-container .checkbox-label-text {
+    color: var(--color-picker-label-text-dark, #c5c8c6);
+}
+
 .color-picker-panel label {
     display: block;
     margin-bottom: 5px;
@@ -357,6 +394,38 @@
     padding: 8px 12px;
     font-size: 0.9em;
     min-width: 80px; /* Minimum width for smaller buttons */
+}
+
+/* Refined Close button style within panel-buttons */
+.color-picker-panel .panel-buttons #closeColorPickerBtn {
+    flex-grow: 0; /* Don't grow like other buttons */
+    min-width: auto; /* Reset min-width */
+    padding: 6px 8px; /* Smaller padding for an icon button */
+    background-color: transparent;
+    border: none; /* No border */
+    color: var(--color-picker-close-btn-text, #555);
+    margin-left: auto; /* Push to the far right of the button group */
+    line-height: 1; /* Center icon */
+    box-shadow: none; /* Remove any default button shadow */
+}
+
+.color-picker-panel .panel-buttons #closeColorPickerBtn:hover {
+    background-color: rgba(0,0,0,0.05); /* Subtle hover feedback */
+    color: var(--color-picker-close-btn-text, #333); /* Slightly darken icon on hover */
+}
+
+.color-picker-panel .panel-buttons #closeColorPickerBtn i {
+    font-size: 1.1em; /* Adjust icon size if needed */
+    vertical-align: middle;
+}
+
+[data-theme="dark"] .color-picker-panel .panel-buttons #closeColorPickerBtn {
+    color: var(--color-picker-close-btn-text-dark, #abb2bf);
+}
+
+[data-theme="dark"] .color-picker-panel .panel-buttons #closeColorPickerBtn:hover {
+    background-color: rgba(255,255,255,0.1); /* Subtle hover for dark mode */
+    color: var(--color-picker-close-btn-hover-text-dark, #ffffff);
 }
 
 .color-picker-panel .button-group {
@@ -546,7 +615,7 @@ body.dark-theme .color-picker-panel input[type="color"] {
     top: 2px;
     width: 5px;
     height: 10px;
-    border: solid white;
+    border: solid white; /* Default for light mode or if dark theme var is not set */
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
 }
@@ -564,6 +633,11 @@ body.dark-theme .color-picker-panel input[type="color"] {
 [data-theme="dark"] .checkbox-container input[type="checkbox"]:checked ~ .checkmark {
     background-color: var(--primary-color-dark-theme, #58a6ff);
     border-color: var(--primary-color-dark-theme, #58a6ff);
+}
+
+/* Ensure checkmark symbol is light in dark mode and contrasts with the checked background */
+[data-theme="dark"] .checkbox-container input[type="checkbox"]:checked ~ .checkmark:after {
+    border-color: var(--dark-text-color, #f1f1f1); /* Use a theme variable for light text in dark mode */
 }
 
 /* Ensure label text color is consistent */
