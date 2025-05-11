@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize any lab page specific functionality
-    console.log('Lab page loaded with new questionnaire form.');
     
     // If the page was loaded with a hash, scroll to that section
     if (window.location.hash) {
@@ -55,9 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const colorPickerTargetInfo = document.getElementById('color-picker-target-info');
 
     if (window.initInPageEditorControls) {
-        console.log("[DEBUG] lab.js: Attempting to call window.initInPageEditorControls."); // DEBUG
-        console.log("[DEBUG] lab.js: Panel element:", colorPickerPanel ? colorPickerPanel.id : "null"); // DEBUG
-        console.log("[DEBUG] lab.js: TargetInfo element:", colorPickerTargetInfo ? colorPickerTargetInfo.id : "null"); // DEBUG
         window.initInPageEditorControls(
             colorPickerPanel,
             bgColorPicker,
@@ -129,28 +125,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to initialize or re-initialize in-page editor event handlers
     function setupInPageEditorForIframe() {
-        if (editorActive && pagePreviewIframe && pagePreviewIframe.contentDocument) {
+        if (editorActive && pagePreviewIframe && pagePreviewIframe.contentDocument && pagePreviewIframe.contentWindow) {
             if (typeof window.setInPageEditMode === 'function') {
-                console.log("[DEBUG] Lab.js: Calling window.setInPageEditMode(true, iframe.contentDocument)."); // DEBUG
-                window.setInPageEditMode(true, pagePreviewIframe.contentDocument);
-            } else {
-                console.warn("[DEBUG] Lab.js: window.setInPageEditMode is not defined when trying to setup for iframe."); // DEBUG
+                window.setInPageEditMode(true, pagePreviewIframe.contentDocument, pagePreviewIframe.contentWindow);
             }
-        } else if (editorActive) {
-            console.warn("[DEBUG] Lab.js: Edit mode active, but iframe or its document not ready for setupInPageEditorForIframe."); // DEBUG
-            if (!pagePreviewIframe) console.warn("   ↳ pagePreviewIframe is null");
-            else if (!pagePreviewIframe.contentDocument) console.warn("   ↳ pagePreviewIframe.contentDocument is null");
         }
     }
 
     // Listen for iframe load event to setup editor if active
     if (pagePreviewIframe) {
         pagePreviewIframe.addEventListener('load', () => {
-            console.log("[DEBUG] Lab.js: Iframe LOADED."); // DEBUG
-            // Attempt to set up editor immediately on load if already active
-            if(editorActive) {
-                console.log("[DEBUG] Lab.js: Editor was active during iframe load, calling setupInPageEditorForIframe."); // DEBUG
-                setupInPageEditorForIframe();
+            if (editorActive && pagePreviewIframe.contentDocument && pagePreviewIframe.contentWindow) {
+                if (typeof window.setInPageEditMode === 'function') {
+                    window.setInPageEditMode(true, pagePreviewIframe.contentDocument, pagePreviewIframe.contentWindow);
+                }
             }
         });
     }
@@ -158,14 +146,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (toggleEditModeBtn) {
         toggleEditModeBtn.addEventListener('click', () => {
             editorActive = !editorActive;
-            console.log(`[DEBUG] lab.js: Toggle Edit Mode button clicked. editorActive is now: ${editorActive}`); // DEBUG
             if (typeof window.setInPageEditMode === 'function') {
-                if (pagePreviewIframe && pagePreviewIframe.contentDocument) {
-                    console.log("[DEBUG] lab.js: Calling window.setInPageEditMode with iframe.doc."); // DEBUG
-                    window.setInPageEditMode(editorActive, pagePreviewIframe.contentDocument);
+                if (pagePreviewIframe && pagePreviewIframe.contentDocument && pagePreviewIframe.contentWindow) {
+                    window.setInPageEditMode(editorActive, pagePreviewIframe.contentDocument, pagePreviewIframe.contentWindow);
                 } else {
-                    console.log("[DEBUG] lab.js: Calling window.setInPageEditMode with null document (iframe not ready or no iframe)."); // DEBUG
-                    window.setInPageEditMode(editorActive, null);
                     if (editorActive) {
                         console.warn("Lab.js: Tried to toggle edit mode, but iframe contentDocument is not available yet.");
                     }
@@ -211,7 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (downloadEditedPageBtn) downloadEditedPageBtn.disabled = !hasEverBeenSaved;
                 if (downloadEditedCssBtn) downloadEditedCssBtn.disabled = !hasEverBeenSaved;
             } else { // Edit mode is being turned ON
-                console.log("[DEBUG] lab.js: Edit mode turned ON. Calling setupInPageEditorForIframe."); // DEBUG
                 setupInPageEditorForIframe(); // Ensure listeners are attached if iframe is ready
             }
         });
@@ -226,7 +209,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     lastSavedCustomCSS = window.getCustomCss();
                 } else {
                     lastSavedCustomCSS = ''; 
-                    console.warn("window.getCustomCss function not found. Custom CSS will not be available for download separately.");
                 }
 
                 hasUnsavedChanges = false;
@@ -240,7 +222,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     saveNotificationPopup.classList.add('success-message'); // Add class for specific styling
                 }
                 showSaveNotification("Your edits have been saved! You can now download the page or continue editing.");
-                console.log("Saved HTML content and custom CSS prepared.");
 
                 // Enable download buttons after saving, based on content availability
                 if (downloadEditedPageBtn) {
@@ -273,7 +254,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.downloadHtmlContent(lastSavedEditedHtml, customCssToEmbed, 'index.html', false);
                 } else {
                     alert("Download function (downloadHtmlContent) is not available.");
-                    console.error("window.downloadHtmlContent is not defined. Ensure it's globally available from questionnaire.js or similar.");
                 }
             } else {
                 alert("No saved edits available to download. Please make and save some edits first.");
@@ -299,7 +279,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                console.log("Downloaded custom CSS.");
             } else {
                 alert("No custom CSS has been saved. Apply some color changes and save your edits first.");
             }

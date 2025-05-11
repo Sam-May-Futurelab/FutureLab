@@ -1041,27 +1041,15 @@ ${editedBodyHtml || '<!-- No HTML content available -->'}
                 if (pagePreview) {
                     pagePreview.style.display = 'block'; 
 
-                    // Define the onload handler for the iframe
-                    pagePreview.onload = () => {
-                        try {
-                            const iframeDoc = pagePreview.contentDocument || pagePreview.contentWindow.document;
-                            if (typeof initInPageEditor === 'function') {
-                                initInPageEditor(iframeDoc); // Initialize the editor with the iframe's document
-                                console.log("In-page editor initialized for the generated preview.");
-                            } else {
-                                console.warn("initInPageEditor function not found. In-page editing will not be available.");
-                            }
-                        } catch (e) {
-                            console.error("Error accessing iframe content or initializing editor:", e);
-                            // This can happen due to cross-origin restrictions if srcdoc is not used or if there are other issues.
-                        }
-                        // It's good practice to clear the onload handler after it has run, 
-                        // especially if the iframe might be reloaded or its srcdoc changed again.
-                        pagePreview.onload = null; 
-                    };
+                    // REMOVED: The problematic pagePreview.onload assignment.
+                    // The lab.js script, which hosts the iframe, has an iframe 'load' event listener.
+                    // That listener is now solely responsible for calling window.setInPageEditMode 
+                    // to initialize or update the in-page editor state when the iframe's content (srcdoc) is loaded.
+                    // This change prevents the "initInPageEditor function not found" warning that originated here.
 
                     // Set the srcdoc to load the content. 
-                    // The onload event defined above will fire after the content is parsed and loaded.
+                    // The 'load' event will fire on pagePreview (the iframe element in lab.html),
+                    // which lab.js listens to.
                     pagePreview.srcdoc = previewDocContent;
 
                 } else {

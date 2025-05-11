@@ -292,21 +292,12 @@
     border: 1px solid var(--border-color, #ddd);
     padding: 20px;
     z-index: 1005; /* Ensure it's above other elements like the edit mode instructions */
-    display: none;
+    display: none; /* Initially hidden, JS will change to flex */
     flex-direction: column;
     gap: 15px;
     width: 280px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Modern shadow */
     border-radius: 12px; /* Rounded corners */
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    opacity: 0;
-    transform: translateY(10px);
-}
-
-.color-picker-panel.show-panel {
-    display: flex; /* Use flex when showing */
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .color-picker-panel h4 {
