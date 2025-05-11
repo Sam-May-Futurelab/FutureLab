@@ -10,7 +10,7 @@ const HIGHLIGHT_STYLE = '2px dashed #007bff'; // Style for the highlight
 let customStyleTagId = 'in-page-editor-custom-styles'; // Added
 
 // Color Picker Panel elements
-let colorPickerPanel, bgColorPicker, textColorPicker, applyColorsBtn, removeColorsBtn, closeColorPickerBtn;
+let colorPickerPanel, bgColorPicker, textColorPicker, applyColorsBtn, removeCustomColorBtn, closeColorPickerBtn;
 
 // Initialize references to color picker panel elements from the main document
 function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATURE UPDATED
@@ -29,19 +29,19 @@ function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATUR
     // Query for child elements from the provided panelElement
     bgColorPicker = colorPickerPanel.querySelector('#bgColorPicker');
     textColorPicker = colorPickerPanel.querySelector('#textColorPicker');
-    applyColorsBtn = colorPickerPanel.querySelector('#apply-colors-btn'); 
-    removeColorsBtn = colorPickerPanel.querySelector('#remove-custom-color-btn'); 
-    closeColorPickerBtn = colorPickerPanel.querySelector('#close-color-picker');
+    applyColorsBtn = colorPickerPanel.querySelector('#applyColorsBtn'); // Corrected ID
+    removeCustomColorBtn = colorPickerPanel.querySelector('#removeColorsBtn'); // Corrected ID
+    closeColorPickerBtn = colorPickerPanel.querySelector('#closeColorPickerBtn'); // Corrected ID
 
     // Debugging logs to ensure elements are found (can be removed after verification)
     if (!bgColorPicker) console.error("InPageEditor: bgColorPicker (#bgColorPicker) not found in panel.");
     if (!textColorPicker) console.error("InPageEditor: textColorPicker (#textColorPicker) not found in panel.");
-    if (!applyColorsBtn) console.error("InPageEditor: applyColorsBtn (#apply-colors-btn) not found in panel.");
-    if (!removeColorsBtn) console.error("InPageEditor: removeColorsBtn (#remove-custom-color-btn) not found in panel.");
-    if (!closeColorPickerBtn) console.error("InPageEditor: closeColorPickerBtn (#close-color-picker) not found in panel.");
+    if (!applyColorsBtn) console.error("InPageEditor: applyColorsBtn (#applyColorsBtn) not found in panel.");
+    if (!removeCustomColorBtn) console.error("removeCustomColorBtn (#removeColorsBtn) not found in panel.");
+    if (!closeColorPickerBtn) console.error("closeColorPickerBtn (#closeColorPickerBtn) not found in panel.");
 
     if (applyColorsBtn) applyColorsBtn.addEventListener('click', applyColors);
-    if (removeColorsBtn) removeColorsBtn.addEventListener('click', removeCustomColors);
+    if (removeCustomColorBtn) removeCustomColorBtn.addEventListener('click', removeCustomColors);
     if (closeColorPickerBtn) {
         closeColorPickerBtn.addEventListener('click', () => {
             closeColorPicker();
