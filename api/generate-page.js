@@ -315,6 +315,7 @@ function _buildTestimonialsPromptPart(data) {
     part += `--- Testimonials Section ---\n`;
     if (data.testimonials && Array.isArray(data.testimonials) && data.testimonials.some(t => t.text && t.text.trim() !== '')) {
         part += `The user has provided testimonials. Include a dedicated section with a clear heading like "Testimonials" or "What Our Clients Say". The testimonial items themselves (text, author, etc.) should be presented clearly *under* this main heading, not inline with it. The entire section, or its main content container holding the testimonials, should be styled to ensure it is **centered on the page**. For each testimonial, display the testimonial text, author, and author's title/company (if provided). Style this section to be engaging and build trust. Individual testimonial items (e.g., cards or blocks) should have a subtle and clean CSS hover animation (e.g., slight lift, shadow change, or border highlight) to enhance interactivity. Include ALL provided testimonials:\n`;
+        part += `   - Visual Styling: Testimonial items should be visually distinct. Consider subtle background colors, borders, or unique typographic treatments to make them engaging, harmonious with the overall theme.\n`;
         data.testimonials.forEach((testimonial, index) => {
             if (testimonial.text && testimonial.text.trim() !== '') {
                 part += `  Testimonial ${index + 1}:\n`;
@@ -339,6 +340,7 @@ function _buildFaqsPromptPart(data) {
     part += `--- FAQs Section ---\n`;
     if (data.faqs && Array.isArray(data.faqs) && data.faqs.some(f => f.question && f.question.trim() !== '' && f.answer && f.answer.trim() !== '')) {
         part += `The user has provided FAQs. Include a dedicated "Frequently Asked Questions" (or similar) section. For each FAQ, display the question directly above its corresponding answer, making both visible by default. Style each Q&A pair as a distinct visual block (e.g., like a list item or a card). Apply a subtle and clean CSS hover animation to each FAQ item (e.g., slight lift, shadow change, or border highlight) to enhance interactivity. Include ALL provided FAQs:\n`;
+        part += `   - Visual Styling: Each Q&A pair, styled as a distinct block, should be visually clear. Consider subtle background differentiation or border treatments to enhance readability and visual appeal, in line with the overall design theme.\n`;
         data.faqs.forEach((faq, index) => {
             if (faq.question && faq.question.trim() !== '' && faq.answer && faq.answer.trim() !== '') {
                 part += `  FAQ ${index + 1}:\n`;
@@ -372,6 +374,7 @@ function _buildPricingPromptPart(data) {
     part += `--- Pricing Section ---\n`;
     if (data.pricingPlans && Array.isArray(data.pricingPlans) && data.pricingPlans.length > 0 && data.pricingPlans.some(p => p && p.price && p.price.trim() !== '')) {
         part += `Include a "Pricing Section" with the following plans. If a plan name is missing, use a generic name like "Standard Plan" or "Product Tier X". If features are missing, the AI can generate some suitable ones based on the business type and plan price point. Ensure the currency symbol and billing cycle are displayed clearly with the price.\n`;
+        part += `   - Visual Styling: Present pricing plans as visually distinct cards or columns. Each plan should be styled to be attractive and easy to read. Consider using subtle background colors, borders, or shadows to differentiate plans. Apply a subtle CSS hover animation to each plan (e.g., slight lift, shadow enhancement, or border highlight) to improve interactivity and draw attention. Ensure these styles are applied even if the main page colors are AI-selected, using harmonious shades from the palette.\n`;
         data.pricingPlans.forEach((plan, index) => {
             if (plan && plan.price && plan.price.trim() !== '') { // Ensure at least a price is present
                 part += `  Plan ${index + 1}:\n`;
@@ -384,6 +387,7 @@ function _buildPricingPromptPart(data) {
         });
     } else if (data.sections && data.sections.includes('pricing')) {
         part += `A "Pricing Section" is requested, but no specific plan details were provided. Generate 2-3 sample pricing plans suitable for the business type and goals. Each plan should have a name, price (with currency like $ or £), a billing cycle (e.g., /month, /year, one-time), and 2-3 key features.\n`;
+        part += `   - Visual Styling: Present these generated pricing plans as visually distinct cards or columns. Each plan should be styled to be attractive and easy to read. Consider using subtle background colors, borders, or shadows to differentiate plans. Apply a subtle CSS hover animation to each plan (e.g., slight lift, shadow enhancement, or border highlight) to improve interactivity and draw attention. Ensure these styles are applied even if the main page colors are AI-selected, using harmonious shades from the palette.\n`;
     } else {
         part += `No "Pricing Section" requested or no specific plan details provided.\n`;
     }
@@ -423,7 +427,8 @@ function _buildFeaturesBenefitsPromptPart(data) {
         if (data.mustHaveElements && data.mustHaveElements.trim() !== '') {
             part += `   - Primary Content Source: Use the user-provided "Must-Have Elements/Keywords": "${data.mustHaveElements.trim()}". Interpret these as the core features/benefits to showcase.\n`;
             part += `   - Presentation: Present these as a list, a series of cards, or iconic blurbs. Each item should be distinct and easy to read.\n`;
-            part += `   - Animation: If presented as multiple items (cards, list items), apply a subtle CSS hover animation to each item (e.g., slight lift, shadow change, border highlight) for interactivity.\n`;
+            part += `   - Visual Styling: Each feature/benefit item (if presented as a card or distinct block) should have a visually appealing design. Consider using subtle background colors, soft gradients, or distinct border treatments to make them stand out from the main section background, even if the overall page color scheme is AI-selected. These should be harmonious with the overall palette and contribute to a modern, engaging look.\n`;
+            part += `   - Animation: If presented as multiple items (cards, list items), apply a subtle CSS hover animation to each item (e.g., slight lift, shadow change, or border highlight) for interactivity.\n`;
         } else {
             part += `   - Content Generation: The user did not provide specific "Must-Have Elements/Keywords" for this section. \n`;
             part += `     Attempt to intelligently derive 3-5 compelling features/benefits by analyzing the following user inputs (if available):\n`;
@@ -435,6 +440,7 @@ function _buildFeaturesBenefitsPromptPart(data) {
             part += `       4. About Us Snippet: "${data.aboutUsSnippet || 'N/A'}"\n`;
             part += `     Synthesize these details to create features that are highly relevant to the business type: "${data.businessType || 'general business'}" and target audience: "${data.targetAudience || 'general audience'}".\n`;
             part += `     If sufficient detail cannot be derived, then as a last resort, use generic placeholders like "[Placeholder: Describe a key feature/benefit here.]".\n`;
+            part += `   - Visual Styling: Each feature/benefit item (if presented as a card or distinct block) should have a visually appealing design. Consider using subtle background colors, soft gradients, or distinct border treatments to make them stand out from the main section background, even if the overall page color scheme is AI-selected. These should be harmonious with the overall palette and contribute to a modern, engaging look.\n`;
             part += `   - Animation: If presented as multiple items, apply a subtle CSS hover animation as described above.\n`;
         }
         part += `Style this section to be persuasive and visually engaging, reinforcing the value proposition of the business/product.\n`;
