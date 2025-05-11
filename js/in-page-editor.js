@@ -267,9 +267,9 @@ function ensureId(element) {
 }
 
 function openColorPicker(element) {
-    console.log("[DEBUG] openColorPicker: Function called for element:", element); // DEBUG
+    console.log("[DEBUG] openColorPicker: Function called for element:", element); 
     if (!colorPickerPanel || !bgColorPicker || !textColorPicker) {
-        console.error("[DEBUG] openColorPicker: CRITICAL - Color picker elements (panel, bgPicker, or textColorPicker) are NOT INITIALIZED. Aborting."); // DEBUG
+        console.error("[DEBUG] openColorPicker: CRITICAL - Color picker elements (panel, bgPicker, or textColorPicker) are NOT INITIALIZED. Aborting."); 
         if (!colorPickerPanel) console.error("   ↳ colorPickerPanel is missing");
         if (!bgColorPicker) console.error("   ↳ bgColorPicker is missing");
         if (!textColorPicker) console.error("   ↳ textColorPicker is missing");
@@ -277,8 +277,8 @@ function openColorPicker(element) {
     }
     currentEditingElementForColor = element;
     ensureId(currentEditingElementForColor); 
-    console.log("[DEBUG] openColorPicker: currentEditingElementForColor:", currentEditingElementForColor); // DEBUG
-    console.log("[DEBUG] openColorPicker: colorPickerTargetInfo:", colorPickerTargetInfo); // DEBUG
+    console.log("[DEBUG] openColorPicker: currentEditingElementForColor:", currentEditingElementForColor); 
+    console.log("[DEBUG] openColorPicker: colorPickerTargetInfo:", colorPickerTargetInfo); 
 
     if (colorPickerTargetInfo) {
         let targetName = currentEditingElementForColor.tagName.toLowerCase();
@@ -290,34 +290,72 @@ function openColorPicker(element) {
             const text = currentEditingElementForColor.textContent.trim().split(/\s+/).slice(0, 3).join(" ");
             if (text) targetName += ` ("${text}...")`;
         }
-        console.log("[DEBUG] openColorPicker: targetName to be displayed:", targetName); // DEBUG
+        console.log("[DEBUG] openColorPicker: targetName to be displayed:", targetName); 
+        
         const spanElement = colorPickerTargetInfo.querySelector('span');
+        console.log("[DEBUG] openColorPicker: spanElement found:", spanElement); // LOG 1
         if (spanElement) {
             spanElement.textContent = targetName;
+            console.log("[DEBUG] openColorPicker: spanElement.textContent set to:", targetName); // LOG 2
         } else {
-            console.error("[DEBUG] openColorPicker: Could not find span inside colorPickerTargetInfo:", colorPickerTargetInfo); // DEBUG
+            console.error("[DEBUG] openColorPicker: Could not find span inside colorPickerTargetInfo:", colorPickerTargetInfo);
         }
     } else {
-        console.error("[DEBUG] openColorPicker: colorPickerTargetInfo is null or undefined."); // DEBUG
+        console.error("[DEBUG] openColorPicker: colorPickerTargetInfo is null or undefined.");
     }
 
-    const iframeWindow = element.ownerDocument.defaultView;
-    const computedStyle = iframeWindow.getComputedStyle(element);
+    console.log("[DEBUG] openColorPicker: Proceeding to get computed styles for element:", currentEditingElementForColor); // LOG 3
+    const iframeWindow = currentEditingElementForColor.ownerDocument.defaultView;
+    console.log("[DEBUG] openColorPicker: iframeWindow:", iframeWindow); // LOG 4
+    if (!iframeWindow) {
+        console.error("[DEBUG] openColorPicker: CRITICAL - iframeWindow is null. Cannot get computed styles. Aborting.");
+        return; 
+    }
 
-    let currentBgColor = rgbToHex(computedStyle.backgroundColor);
-    let currentTextColor = rgbToHex(computedStyle.color);
+    const computedStyle = iframeWindow.getComputedStyle(currentEditingElementForColor);
+    console.log("[DEBUG] openColorPicker: computedStyle object:", computedStyle); // LOG 5
+    if (!computedStyle) {
+        console.error("[DEBUG] openColorPicker: CRITICAL - computedStyle is null. Cannot proceed. Aborting.");
+        return; 
+    }
+
+    let currentBgColor = '#ffffff'; // Default
+    let currentTextColor = '#000000'; // Default
+
+    try {
+        currentBgColor = rgbToHex(computedStyle.backgroundColor);
+        console.log("[DEBUG] openColorPicker: Raw bgColor:", computedStyle.backgroundColor, "Converted bgColor:", currentBgColor); // LOG 6
+        currentTextColor = rgbToHex(computedStyle.color);
+        console.log("[DEBUG] openColorPicker: Raw textColor:", computedStyle.color, "Converted textColor:", currentTextColor); // LOG 7
+    } catch (e) {
+        console.error("[DEBUG] openColorPicker: Error during rgbToHex conversion or accessing computedStyle properties:", e);
+        // Keep default colors
+    }
     
     if (!isValidHex(currentBgColor) || currentBgColor === '#000000' && (computedStyle.backgroundColor === 'rgba(0, 0, 0, 0)' || computedStyle.backgroundColor === 'transparent')) {
         currentBgColor = '#ffffff'; 
+        console.log("[DEBUG] openColorPicker: Adjusted bgColor to default #ffffff"); // LOG
     }
     if (!isValidHex(currentTextColor)) {
         currentTextColor = '#000000'; 
+        console.log("[DEBUG] openColorPicker: Adjusted textColor to default #000000"); // LOG
     }
     
-    bgColorPicker.value = currentBgColor;
-    textColorPicker.value = currentTextColor;
-    colorPickerPanel.style.display = 'block';
-    console.log("[DEBUG] openColorPicker: Color picker panel display set to 'block'. Element:", element.id); // DEBUG
+    console.log("[DEBUG] openColorPicker: About to set picker values. bgColorPicker:", bgColorPicker, "textColorPicker:", textColorPicker); // LOG 8
+
+    if (bgColorPicker && textColorPicker && colorPickerPanel) {
+        bgColorPicker.value = currentBgColor;
+        textColorPicker.value = currentTextColor;
+        console.log("[DEBUG] openColorPicker: Picker values set. bgColorPicker.value:", bgColorPicker.value, "textColorPicker.value:", textColorPicker.value); // LOG 9
+        
+        colorPickerPanel.style.display = 'block';
+        console.log("[DEBUG] openColorPicker: Color picker panel display SET TO 'block'. Element:", currentEditingElementForColor.id); // LOG 10
+    } else {
+        console.error("[DEBUG] openColorPicker: One or more picker elements (bgColorPicker, textColorPicker, colorPickerPanel) are null before setting values/display. Aborting display.");
+        if (!bgColorPicker) console.error("   ↳ bgColorPicker is missing before set");
+        if (!textColorPicker) console.error("   ↳ textColorPicker is missing before set");
+        if (!colorPickerPanel) console.error("   ↳ colorPickerPanel is missing before set");
+    }
 }
 
 function closeColorPicker() {
