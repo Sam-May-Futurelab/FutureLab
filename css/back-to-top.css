@@ -1,0 +1,45 @@
+/* c:\Users\Sam\Desktop\Future Me\css\back-to-top.css */
+#backToTopBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 30px; /* Place the button 30px from the bottom */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 1000; /* Make sure it does not overlap other items */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: var(--primary-color, #4361EE); /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px 18px; /* Some padding */
+    border-radius: 50%; /* Circular button */
+    font-size: 20px; /* Increase font size */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease, opacity 0.5s ease-in-out, transform 0.3s ease;
+}
+
+#backToTopBtn:hover {
+    background-color: var(--primary-color-dark, #3a52cc); /* Add a dark-grey background on hover */
+    transform: translateY(-3px);
+}
+
+#backToTopBtn.show {
+    display: block;
+    opacity: 1;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dark theme adjustments */
+.dark-theme #backToTopBtn {
+    background-color: var(--primary-color-dark-theme, #5a78ff); /* A slightly lighter blue for dark mode */
+    color: var(--text-color-dark, #FFFFFF);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme #backToTopBtn:hover {
+    background-color: var(--primary-color-dark-theme-hover, #7c96ff);
+}
