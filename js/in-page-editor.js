@@ -2,6 +2,7 @@
 
 let isEditModeActive = false;
 let currentIframeDocument = null;
+let currentIframeWindow = null; // Added to store iframe window reference if needed, though defaultView is often used
 let currentEditingElement = null; // Renamed from currentEditingElementForColor for broader use
 let colorPickerTargetInfo = null; 
 const customCssRules = {}; 
@@ -19,6 +20,68 @@ let useBgGradientCheckbox, bgColorPicker2Group, bgColorPicker2;
 let recentBgColors1 = [];
 let recentBgColors2 = [];
 const MAX_RECENT_COLORS = 5;
+
+// --- START: Functions for managing recent colors ---
+function addRecentColor(color, listKey) {
+    let colorsArray = listKey === 'recentBgColors1' ? recentBgColors1 : recentBgColors2;
+    if (!color || !isValidHex(color)) return; // Do not add invalid or empty colors
+
+    // Remove the color if it already exists to move it to the front
+    const existingIndex = colorsArray.indexOf(color);
+    if (existingIndex > -1) {
+        colorsArray.splice(existingIndex, 1);
+    }
+    // Add to the beginning
+    colorsArray.unshift(color);
+    // Limit to MAX_RECENT_COLORS
+    if (colorsArray.length > MAX_RECENT_COLORS) {
+        colorsArray.length = MAX_RECENT_COLORS;
+    }
+    saveRecentColors(); // Save after modification
+}
+
+function updateRecentColorsDatalist(datalistId, colorsArray) {
+    const datalist = colorPickerPanel ? colorPickerPanel.querySelector(`#${datalistId}`) : null;
+    if (datalist) {
+        datalist.innerHTML = ''; // Clear existing options
+        colorsArray.forEach(color => {
+            const option = document.createElement('option');
+            option.value = color;
+            datalist.appendChild(option);
+        });
+    }
+}
+
+function saveRecentColors() {
+    try {
+        localStorage.setItem('recentBgColors1', JSON.stringify(recentBgColors1));
+        localStorage.setItem('recentBgColors2', JSON.stringify(recentBgColors2));
+    } catch (e) {
+        console.warn("Could not save recent colors to localStorage:", e);
+    }
+}
+
+function loadRecentColors() {
+    try {
+        const storedColors1 = localStorage.getItem('recentBgColors1');
+        const storedColors2 = localStorage.getItem('recentBgColors2');
+        if (storedColors1) {
+            recentBgColors1 = JSON.parse(storedColors1).filter(isValidHex);
+        } else {
+            recentBgColors1 = [];
+        }
+        if (storedColors2) {
+            recentBgColors2 = JSON.parse(storedColors2).filter(isValidHex);
+        } else {
+            recentBgColors2 = [];
+        }
+    } catch (e) {
+        console.warn("Could not load recent colors from localStorage:", e);
+        recentBgColors1 = [];
+        recentBgColors2 = [];
+    }
+}
+// --- END: Functions for managing recent colors ---
 
 // --- START: Image Editor Panel elements ---
 let imageEditorPanel, imageFileInput, imageUrlInput, applyImageBtn, removeImageBtn, closeImageEditorBtn;
@@ -101,9 +164,18 @@ function initInPageEditorControls(
         });
     }
 
+    // Load recent colors from localStorage & update datalists
     loadRecentColors();
     updateRecentColorsDatalist('recentBgColorsList', recentBgColors1);
     updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
+
+    // Add event listeners to update recent colors when a color is chosen
+    if (bgColorPicker) {
+        bgColorPicker.addEventListener('change', () => addRecentColor(bgColorPicker.value, 'recentBgColors1'));
+    }
+    if (bgColorPicker2) {
+        bgColorPicker2.addEventListener('change', () => addRecentColor(bgColorPicker2.value, 'recentBgColors2'));
+    }
 
     // Hide both panels initially
     if(colorPickerPanel) colorPickerPanel.classList.add('hidden');
@@ -343,3 +415,152 @@ function removeCustomColors() {
     useBgGradientCheckbox.checked = false;
     bgColorPicker2Group.style.display = 'none';
 }
+
+function setInPageEditMode(isActive, iframeDoc, iframeWin) {
+    console.log(`setInPageEditMode: requested state: ${isActive}, current isEditModeActive: ${isEditModeActive}, currentDoc valid: ${!!currentIframeDocument}, newDoc valid: ${!!iframeDoc}`);
+
+    // If trying to activate on the exact same document that's already active, do nothing.
+    if (isActive && isEditModeActive && currentIframeDocument === iframeDoc) {
+        console.log("setInPageEditMode: Already active on this document. No change.");
+        return;
+    }
+
+    // If trying to deactivate but already inactive, do nothing.
+    if (!isActive && !isEditModeActive) {
+        console.log("setInPageEditMode: Already inactive. No change.");
+        return;
+    }
+
+    // Cleanup listeners from the current/previous document if it exists and had listeners.
+    if (currentIframeDocument && currentIframeDocument.body) {
+        console.log("setInPageEditMode: Cleaning up listeners from previous/current document body.");
+        const oldElements = currentIframeDocument.body.querySelectorAll('*');
+        oldElements.forEach(el => {
+            el.removeEventListener('click', handleIframeElementClick, true);
+            el.removeEventListener('mouseover', handleMouseOverElement, true);
+            el.removeEventListener('mouseout', handleMouseOutElement, true);
+            removeHighlight(el); // Clean up any highlights
+        });
+    } else if (currentIframeDocument) {
+        console.warn("setInPageEditMode: currentIframeDocument existed but body was null during cleanup attempt.");
+    }
+
+
+    isEditModeActive = isActive; // Set the new intended state
+    currentIframeDocument = iframeDoc;
+    currentIframeWindow = iframeWin; // Store iframe window reference
+
+    if (!isEditModeActive) { // Deactivating
+        console.log("In-Page Editor: Deactivating edit mode. Closing panels.");
+        closeColorPicker();
+        closeImageEditor();
+        // currentEditingElement and currentlyHighlightedElement are reset by close functions.
+        // currentIframeDocument is now the new doc (could be null).
+        // isEditModeActive is false.
+        return; // Done with deactivation
+    }
+
+    // If we've reached here, we are trying to ACTIVATE (isEditModeActive is true)
+
+    if (!currentIframeDocument || !currentIframeDocument.body) {
+        console.error("setInPageEditMode: Cannot activate. Iframe document or its body is not available.");
+        isEditModeActive = false; // Revert state as activation failed
+        currentIframeDocument = null; // Clear doc reference
+        currentIframeWindow = null;
+        // Close panels just in case they were somehow opened
+        closeColorPicker();
+        closeImageEditor();
+        return;
+    }
+
+    console.log("In-Page Editor: Activating edit mode. Adding listeners to elements in iframe body.");
+    const allElements = currentIframeDocument.body.querySelectorAll('*');
+    allElements.forEach(el => {
+        el.addEventListener('click', handleIframeElementClick, true);
+        el.addEventListener('mouseover', handleMouseOverElement, true);
+        el.addEventListener('mouseout', handleMouseOutElement, true);
+    });
+    applyCustomCssToIframe(); // Apply any existing custom styles to the newly active document
+}
+window.setInPageEditMode = setInPageEditMode;
+
+function getCustomCss() {
+    let cssString = "";
+    if (!currentIframeDocument) return cssString; // Ensure doc exists
+
+    for (const id in customCssRules) {
+        const rules = customCssRules[id];
+        // Check if element with this ID still exists in the current iframe document
+        const elementExists = currentIframeDocument.getElementById(id);
+        if (elementExists && Object.keys(rules).length > 0) {
+            cssString += `#${id} {\n`;
+            for (const prop in rules) {
+                cssString += `  ${prop}: ${rules[prop]};\n`;
+            }
+            cssString += "}\n\n";
+        } else if (!elementExists) {
+            // Optionally, clean up rules for elements that no longer exist
+            // console.warn(`Element with ID #${id} not found in iframe, consider cleaning up its CSS rules.`);
+            // delete customCssRules[id]; // Be cautious with auto-deletion
+        }
+    }
+    return cssString;
+}
+
+function applyCustomCssToIframe() {
+    if (!currentIframeDocument || !currentIframeDocument.head) { // Ensure doc and head exist
+        // console.warn("applyCustomCssToIframe: No iframe document or head to apply styles to.");
+        return;
+    }
+    let styleTag = currentIframeDocument.getElementById(customStyleTagId);
+    if (!styleTag) {
+        styleTag = currentIframeDocument.createElement('style');
+        styleTag.id = customStyleTagId;
+        currentIframeDocument.head.appendChild(styleTag);
+    }
+    styleTag.textContent = getCustomCss();
+}
+
+function ensureId(element) {
+    if (!element) return null;
+    if (!element.id) {
+        // Generate a simple unique ID if one doesn't exist
+        element.id = 'editable-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+    }
+    return element.id;
+}
+
+function isValidHex(color) {
+    if (!color || typeof color !== 'string') return false;
+    return /^#[0-9A-F]{6}$/i.test(color) || /^#[0-9A-F]{3}$/i.test(color);
+}
+
+function rgbToHex(rgbString) {
+    if (!rgbString || typeof rgbString !== 'string') return '#ffffff'; // Default for invalid input
+    if (rgbString.startsWith('#')) return rgbString; // Already hex
+
+    const match = rgbString.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)$/);
+    if (!match) {
+        return '#ffffff'; 
+    }
+
+    function componentToHex(c) {
+        const hex = parseInt(c).toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
+    return "#" + componentToHex(match[1]) + componentToHex(match[2]) + componentToHex(match[3]);
+}
+
+function parseGradientColors(gradientString) {
+    const colorMatches = gradientString.match(/rgb\([^\)]+\)/g);
+    if (colorMatches && colorMatches.length >= 1) {
+        const colors = colorMatches.map(rgbStr => rgbToHex(rgbStr));
+        return colors;
+    }
+    return [null, null]; // Default if parsing fails
+}
+
+window.isValidHex = isValidHex;
+window.rgbToHex = rgbToHex;
+window.parseGradientColors = parseGradientColors;
+window.ensureId = ensureId;
