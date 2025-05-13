@@ -417,6 +417,16 @@ function openImageEditor(element) {
     activePanel = 'image';
 }
 
+function closeImageEditor() {
+    if (imageEditorPanel) imageEditorPanel.classList.remove('active');
+    if (currentlyHighlightedElement) {
+        removeHighlight(currentlyHighlightedElement);
+        currentlyHighlightedElement = null;
+    }
+    currentEditingElement = null;
+    activePanel = null;
+}
+
 // Helper function to set select option
 function setSelectOption(selectElement, value) {
     if (!selectElement) return;
