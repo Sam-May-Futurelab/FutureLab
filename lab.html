@@ -767,6 +767,24 @@
                 <label for="image-url-input">Or Image URL:</label>
                 <input type="url" id="image-url-input" class="form-control form-control-sm" placeholder="https://example.com/image.png">
             </div>
+            <div class="form-group">
+                <label for="image-width-input">Width (e.g., 100px, 50%):</label>
+                <input type="text" id="image-width-input" class="form-control form-control-sm" placeholder="auto">
+            </div>
+            <div class="form-group">
+                <label for="image-height-input">Height (e.g., 100px, auto):</label>
+                <input type="text" id="image-height-input" class="form-control form-control-sm" placeholder="auto">
+            </div>
+            <div class="form-group">
+                <label for="image-fit-select">Image Fit:</label>
+                <select id="image-fit-select" class="form-control form-control-sm">
+                    <option value="fill">Fill</option>
+                    <option value="contain">Contain</option>
+                    <option value="cover">Cover</option>
+                    <option value="none">None</option>
+                    <option value="scale-down">Scale-down</option>
+                </select>
+            </div>
             <div class="panel-actions">
                 <button id="apply-image-btn" class="btn btn-primary btn-sm">Apply Image</button>
                 <button id="remove-image-btn" class="btn btn-danger btn-sm">Remove Image</button>

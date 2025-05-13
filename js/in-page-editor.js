@@ -115,6 +115,7 @@ function loadRecentColors() {
 
 // --- START: Image Editor Panel elements ---
 let imageEditorPanel, imageFileInput, imageUrlInput, applyImageBtn, removeImageBtn, closeImageEditorBtn;
+let imageWidthInput, imageHeightInput, imageFitSelect; // Added for image sizing
 let imageEditorTargetElementNameSpan; // To show which element is being edited for image
 let switchToImageEditorBtn, switchToColorEditorBtn; // Buttons to switch between panels
 // --- END: Image Editor Panel elements ---
@@ -148,6 +149,9 @@ function initInPageEditorControls(
     if (imageEditorPanel) {
         imageFileInput = imageEditorPanel.querySelector('#image-file-input');
         imageUrlInput = imageEditorPanel.querySelector('#image-url-input');
+        imageWidthInput = imageEditorPanel.querySelector('#image-width-input'); // Added
+        imageHeightInput = imageEditorPanel.querySelector('#image-height-input'); // Added
+        imageFitSelect = imageEditorPanel.querySelector('#image-fit-select'); // Added
         applyImageBtn = imageEditorPanel.querySelector('#apply-image-btn');
         removeImageBtn = imageEditorPanel.querySelector('#remove-image-btn');
         closeImageEditorBtn = imageEditorPanel.querySelector('#close-image-editor-btn');
@@ -156,6 +160,9 @@ function initInPageEditorControls(
 
         if (!imageFileInput) console.error("Image file input not found");
         if (!imageUrlInput) console.error("Image URL input not found");
+        if (!imageWidthInput) console.error("Image width input not found"); // Added
+        if (!imageHeightInput) console.error("Image height input not found"); // Added
+        if (!imageFitSelect) console.error("Image fit select not found"); // Added
         if (!applyImageBtn) console.error("Apply image button not found");
         if (!removeImageBtn) console.error("Remove image button not found");
         if (!closeImageEditorBtn) console.error("Close image editor button not found");
@@ -395,22 +402,61 @@ function openImageEditor(element) {
         console.warn("imageEditorTargetElementNameSpan not found");
     }
 
-    // Pre-fill URL input
+    // Pre-fill URL input and sizing controls
     if (element.tagName === 'IMG') {
-        imageUrlInput.value = element.src || '';
+        imageUrlInput.value = element.getAttribute('src') || ''; // Use getAttribute for src
+        imageWidthInput.value = element.style.width || 'auto';
+        imageHeightInput.value = element.style.height || 'auto';
+        imageFitSelect.value = element.style.objectFit || 'fill'; // Default to 'fill' or another sensible default
     } else {
-        // This case (background image for non-IMG) might be handled by color picker if we simplify, but keeping for now
-        if (currentIframeDocument && currentIframeDocument.defaultView) {
-            const computedStyle = currentIframeDocument.defaultView.getComputedStyle(element);
-            const bgImage = computedStyle.backgroundImage;
-            if (bgImage && bgImage !== 'none' && bgImage.startsWith('url("')) {
-                imageUrlInput.value = bgImage.slice(5, -2);
-            } else {
-                imageUrlInput.value = '';
+        // Background image
+        let bgImage = '';
+        let bgSize = 'cover'; // Default for backgrounds
+        let bgWidth = 'auto';
+        let bgHeight = 'auto';
+
+        if (customCssRules[element.id] && customCssRules[element.id].background) {
+            const ruleBackground = customCssRules[element.id].background;
+            if (ruleBackground.startsWith('url("')) {
+                bgImage = ruleBackground.slice(5, -2);
             }
-        } else {
-            console.warn("[DEBUG] openImageEditor: currentIframeDocument or defaultView not available for computedStyle.");
-            imageUrlInput.value = '';
+            // Prefer custom rules for size if they exist
+            const customBgSize = customCssRules[element.id]['background-size'];
+            if (customBgSize) {
+                bgSize = customBgSize;
+            }
+        } else if (currentIframeDocument && currentIframeDocument.defaultView) {
+            const computedStyle = currentIframeDocument.defaultView.getComputedStyle(element);
+            const computedBgImage = computedStyle.backgroundImage;
+            if (computedBgImage && computedBgImage !== 'none' && computedBgImage.startsWith('url("')) {
+                bgImage = computedBgImage.slice(5, -2);
+            }
+            bgSize = computedStyle.backgroundSize;
+        }
+
+        imageUrlInput.value = bgImage;
+        
+        // Attempt to parse bgSize for width, height, and fit
+        if (bgSize === 'cover' || bgSize === 'contain') {
+            imageFitSelect.value = bgSize;
+            imageWidthInput.value = 'auto';
+            imageHeightInput.value = 'auto';
+        } else if (bgSize && bgSize !== 'auto' && bgSize.includes(' ')) {
+            // Potentially two values e.g., "100px 50%" or "auto 100px"
+            const parts = bgSize.split(' ');
+            imageWidthInput.value = parts[0] || 'auto';
+            imageHeightInput.value = parts[1] || 'auto';
+            imageFitSelect.value = 'fill'; // Default if specific dimensions are set
+        } else if (bgSize && bgSize !== 'auto'){
+            // Single value like "100%" or "100px" - could be width, height or both depending on context
+            // For simplicity, apply to width and set height to auto, or let user adjust
+            imageWidthInput.value = bgSize;
+            imageHeightInput.value = 'auto';
+            imageFitSelect.value = 'fill'; 
+        } else { // Default / auto
+            imageWidthInput.value = 'auto';
+            imageHeightInput.value = 'auto';
+            imageFitSelect.value = 'cover'; // Default for background images
         }
     }
     if (imageFileInput) imageFileInput.value = ''; // Clear file input
@@ -444,32 +490,71 @@ function applyImage() {
 
     const file = imageFileInput.files[0];
     const url = imageUrlInput.value.trim();
+    const width = imageWidthInput.value.trim();
+    const height = imageHeightInput.value.trim();
+    const fit = imageFitSelect.value;
 
     if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-            setImageSource(currentEditingElement, e.target.result);
+            setImageSource(currentEditingElement, e.target.result, width, height, fit);
         };
         reader.readAsDataURL(file);
     } else if (url) {
-        setImageSource(currentEditingElement, url);
+        setImageSource(currentEditingElement, url, width, height, fit);
     } else {
-        return; 
+        // If no new image source, but sizing might have changed, apply sizing to existing image/background
+        setImageSource(currentEditingElement, null, width, height, fit); 
     }
     if (window.notifyUnsavedChange) window.notifyUnsavedChange();
 }
 
-function setImageSource(element, src) {
-    if (element.tagName === 'IMG') {
-        element.setAttribute('src', src);
+function setImageSource(element, src, width, height, fit) {
+    const isImgTag = element.tagName === 'IMG';
+
+    if (src) { // If a new source (file or URL) is provided
+        if (isImgTag) {
+            element.setAttribute('src', src);
+        } else {
+            if (!customCssRules[element.id]) {
+                customCssRules[element.id] = {};
+            }
+            customCssRules[element.id].background = `url("${src}")`;
+            // Default repeat and position, fit will be handled below
+            customCssRules[element.id]['background-repeat'] = 'no-repeat';
+            customCssRules[element.id]['background-position'] = 'center'; 
+        }
+    }
+
+    // Apply sizing and fit
+    if (isImgTag) {
+        element.style.width = width || 'auto';
+        element.style.height = height || 'auto';
+        element.style.objectFit = fit || 'fill';
     } else {
+        // For background images
         if (!customCssRules[element.id]) {
             customCssRules[element.id] = {};
         }
-        customCssRules[element.id].background = src ? `url("${src}")` : 'none';
-        customCssRules[element.id]['background-size'] = 'cover'; 
-        customCssRules[element.id]['background-position'] = 'center'; 
-        customCssRules[element.id]['background-repeat'] = 'no-repeat'; 
+        if (fit === 'cover' || fit === 'contain') {
+            customCssRules[element.id]['background-size'] = fit;
+        } else if (width && height && width !== 'auto' && height !== 'auto') {
+            customCssRules[element.id]['background-size'] = `${width} ${height}`;
+        } else if (width && width !== 'auto') {
+            customCssRules[element.id]['background-size'] = `${width} auto`;
+        } else if (height && height !== 'auto') {
+            customCssRules[element.id]['background-size'] = `auto ${height}`;
+        } else {
+            // If fit is something else (like 'fill', 'none', 'scale-down') and no dimensions,
+            // or dimensions are auto, it's harder to map directly to background-size without context.
+            // 'cover' is a safe default if no specific dimensions are given for backgrounds.
+            customCssRules[element.id]['background-size'] = 'cover'; 
+        }
+        // object-fit doesn't apply to background images, background-size is used instead.
+        // background-position could be adjusted further if needed, e.g. based on 'fit' for 'none' or 'scale-down'.
+    }
+
+    if (!isImgTag) {
         applyCustomCssToIframe();
     }
 }
@@ -480,6 +565,9 @@ function removeImage() {
 
     if (currentEditingElement.tagName === 'IMG') {
         currentEditingElement.removeAttribute('src');
+        currentEditingElement.style.width = '';
+        currentEditingElement.style.height = '';
+        currentEditingElement.style.objectFit = '';
     } else {
         if (customCssRules[currentEditingElement.id]) {
             delete customCssRules[currentEditingElement.id].background;
@@ -490,12 +578,19 @@ function removeImage() {
                 delete customCssRules[currentEditingElement.id];
             }
         }
+        // Clear inline styles too, if any were applied directly (though we prefer customCssRules for backgrounds)
         currentEditingElement.style.backgroundImage = ''; 
+        currentEditingElement.style.backgroundSize = '';
+        currentEditingElement.style.backgroundPosition = '';
+        currentEditingElement.style.backgroundRepeat = '';
         applyCustomCssToIframe();
     }
     if (window.notifyUnsavedChange) window.notifyUnsavedChange();
     if(imageUrlInput) imageUrlInput.value = '';
     if(imageFileInput) imageFileInput.value = '';
+    if(imageWidthInput) imageWidthInput.value = 'auto';
+    if(imageHeightInput) imageHeightInput.value = 'auto';
+    if(imageFitSelect) imageFitSelect.value = 'fill'; // Reset to a default
 }
 
 // --- END: Image Editor Functions ---

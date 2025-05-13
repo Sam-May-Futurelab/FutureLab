@@ -926,16 +926,16 @@
 /* Image Editor Panel */
 .image-editor-panel {
     position: fixed;
-    top: 150px; /* Consistent with color picker */
+    top: 150px; /* Match color picker panel */
     right: 20px;
     background-color: var(--background-color, #fff);
     border: 1px solid var(--border-color, #ddd);
     padding: 15px;
     z-index: 1005; 
-    display: flex; /* ADDED to ensure it's a flex container by default, visibility controlled by opacity/transform */
+    display: flex; 
     flex-direction: column;
-    gap: 15px;
-    width: 280px;
+    gap: 10px; /* Reduced gap for tighter layout */
+    width: 280px; /* Match color picker panel */
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     border-radius: 12px;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
@@ -946,355 +946,333 @@
 .image-editor-panel.active {
     transform: translateX(0);
     opacity: 1;
-    /* No need to change display here if it's already flex */
-}
-
-.dark-theme .image-editor-panel {
-    background-color: var(--background-color-dark);
-    color: var(--text-color-dark);
-    border-color: var(--border-color-dark);
 }
 
 .image-editor-panel h4 {
     margin-top: 0;
     margin-bottom: 10px;
     font-size: 1.1em;
-    font-weight: 600;
-    color: var(--primary-color);
+    color: var(--text-color, #333);
+    border-bottom: 1px solid var(--border-color, #eee);
+    padding-bottom: 10px;
+}
+
+.image-editor-panel label {
+    display: block;
+    margin-bottom: 3px; /* Reduced margin */
+    font-size: 0.85em; /* Slightly smaller label */
+    color: var(--text-color, #555);
+    font-weight: 500;
+}
+
+.image-editor-panel .form-group {
+    margin-bottom: 10px; /* Reduced margin */
+}
+
+.image-editor-panel .form-control-sm {
+    height: calc(1.5em + .5rem + 2px);
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+    border: 1px solid var(--border-color, #ced4da);
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--input-bg, #fff);
+    color: var(--input-text-color, #495057);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.image-editor-panel .form-control-sm:focus {
+    border-color: var(--primary-color);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.image-editor-panel input[type="file"].form-control-sm {
+    padding: .1rem .5rem; /* Adjust padding for file input */
+}
+
+.image-editor-panel select.form-control-sm {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right .5rem center;
+    background-size: 16px 12px;
+}
+
+/* Custom File Input Styling */
+.image-editor-panel .custom-file-upload-container {
+    margin-bottom: 5px; /* Space below the button and filename */
+}
+
+.image-editor-panel input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    overflow: hidden;
+}
+
+.image-editor-panel .custom-file-upload {
+    border: 1px solid var(--border-color, #ced4da);
+    display: block; 
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: .2rem;
+    background-color: var(--light-bg, #f8f9fa);
+    color: var(--text-color, #333);
+    text-align: center;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%; 
+    box-sizing: border-box;
+    font-size: 0.875rem;
+}
+
+.image-editor-panel .custom-file-upload:hover {
+    background-color: var(--light-hover-bg, #e9ecef);
+}
+
+.image-editor-panel .file-name-display {
+    font-size: 0.8em;
+    color: var(--text-color-muted, #6c757d);
+    margin-top: 5px;
+    display: block;
+    text-align: center;
+    min-height: 1.2em; 
+    word-break: break-all;
+}
+
+/* "Or Image URL" text */
+.image-editor-panel .image-url-separator {
+    display: block;
+    text-align: center;
+    font-size: 0.8em;
+    color: var(--text-color-muted, #6c757d);
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.image-editor-panel .panel-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; 
+    margin-top: 15px; 
+    border-top: 1px solid var(--border-color, #eee);
+    padding-top: 15px;
+}
+
+.image-editor-panel .panel-actions .btn {
+    flex-grow: 1;
+    padding: 8px 10px; 
+    font-size: 0.875em; 
+    min-width: 60px; 
+}
+
+.image-editor-panel .panel-actions #close-image-editor-btn {
+    flex-grow: 0; 
+    min-width: auto; 
+    padding: 6px 8px; 
+    background-color: transparent;
+    border: none; 
+    color: var(--color-picker-close-btn-text, #555);
+    margin-left: auto; 
+    line-height: 1; 
+    box-shadow: none; 
+}
+
+.image-editor-panel .panel-actions #close-image-editor-btn:hover {
+    background-color: rgba(0,0,0,0.05); 
+    color: var(--color-picker-close-btn-text, #333); 
+}
+
+.image-editor-panel .panel-actions #close-image-editor-btn i {
+    font-size: 1.1em; 
+    vertical-align: middle;
+}
+
+/* Styling for the panel switch buttons */
+.panel-switch-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px; 
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.panel-switch-actions .btn-sm {
+    font-size: 0.8em;
+    padding: .25rem .5rem;
+}
+
+/* Dark theme adjustments for Image Editor Panel */
+.dark-theme .image-editor-panel {
+    background-color: var(--color-picker-bg-dark, #282c34);
+    color: var(--color-picker-text-dark, #abb2bf);
+    border-color: var(--color-picker-border-dark, #3a3f4b);
 }
 
 .dark-theme .image-editor-panel h4 {
-    color: var(--primary-color-dark-theme);
+    color: var(--color-picker-header-text-dark, #e2e8f0);
+    border-bottom-color: var(--color-picker-border-dark, #3a3f4b);
 }
 
-.image-editor-panel .target-info {
-    font-size: 0.9em;
-    margin-bottom: 15px;
-    color: var(--text-color-light-secondary);
-}
-
-.dark-theme .image-editor-panel .target-info {
-    color: var(--text-color-dark-secondary);
-}
-
-.image-editor-panel .target-info strong {
-    font-weight: 600;
-    color: var(--text-color-light);
-}
-
-.dark-theme .image-editor-panel .target-info strong {
-    color: var(--text-color-dark);
-}
-
-.image-editor-panel .picker-group {
-    margin-bottom: 15px;
-}
-
-.image-editor-panel .picker-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    font-size: 0.95em;
-}
-
-.image-editor-panel input[type="file"],
-.image-editor-panel input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid var(--border-color-light);
-    border-radius: 4px;
-    background-color: var(--input-bg-light);
-    color: var(--text-color-light);
-    font-size: 0.9em;
-    box-sizing: border-box; /* Ensures padding doesn't expand width */
-}
-
-.dark-theme .image-editor-panel input[type="file"],
-.dark-theme .image-editor-panel input[type="text"] {
-    border-color: var(--border-color-dark);
-    background-color: var(--input-bg-dark);
-    color: var(--text-color-dark);
-}
-
-.image-editor-panel input[type="file"]:focus,
-.image-editor-panel input[type="text"]:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px var(--primary-color-focus);
-}
-
-.dark-theme .image-editor-panel input[type="file"]:focus,
-.dark-theme .image-editor-panel input[type="text"]:focus {
-    border-color: var(--primary-color-dark-theme);
-    box-shadow: 0 0 0 2px var(--primary-color-dark-theme-focus);
-}
-
-.image-editor-panel .panel-buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.image-editor-panel .panel-buttons .btn {
-    flex-grow: 1;
-    padding: 8px 12px;
-    font-size: 0.9em;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.image-editor-panel .btn-link {
-    background-color: transparent;
-    color: var(--primary-color);
-    border: none;
-    padding: 0;
-    text-decoration: underline;
-}
-.dark-theme .image-editor-panel .btn-link {
-    color: var(--primary-color-dark-theme);
-}
-
-/* Ensure panel buttons match theme */
-.dark-theme #image-editor-panel .panel-buttons .btn-primary {
-    background-color: var(--primary-color-dark-theme);
-    border-color: var(--primary-color-dark-theme);
-    color: #fff;
-}
-.dark-theme #image-editor-panel .panel-buttons .btn-primary:hover {
-    background-color: var(--primary-color-dark-theme-hover);
-    border-color: var(--primary-color-dark-theme-hover);
-}
-.dark-theme #image-editor-panel .panel-buttons .btn-secondary {
-    background-color: var(--secondary-button-bg-dark);
-    border-color: var(--secondary-button-border-dark);
-    color: var(--secondary-button-text-dark);
-}
-.dark-theme #image-editor-panel .panel-buttons .btn-secondary:hover {
-    background-color: var(--secondary-button-bg-hover-dark);
-    border-color: var(--secondary-button-border-hover-dark);
-}
-.dark-theme #image-editor-panel .panel-buttons .btn-danger {
-    background-color: var(--danger-color-dark);
-    border-color: var(--danger-color-dark);
-    color: #fff;
-}
-.dark-theme #image-editor-panel .panel-buttons .btn-danger:hover {
-    background-color: var(--danger-color-hover-dark);
-    border-color: var(--danger-color-hover-dark);
-}
-
-/* Styling for "Or Image URL:" input field and its placeholder */
-.image-editor-panel .form-group label[for="image-url-input"] {
-    /* General label styles are already applied. Add specific overrides if needed. */
-    /* For example, slightly more margin on top if it follows another input closely */
-    margin-top: 10px; 
-}
-
-.image-editor-panel input[type="url"]#image-url-input {
-    /* General input styles are applied via .image-editor-panel input[type="text"]
-       Add specific overrides for type="url" if necessary */
-    width: 100%;
-    padding: 8px;
-    border: 1px solid var(--border-color-light, #ced4da);
-    border-radius: var(--border-radius-sm, 4px);
-    background-color: var(--input-bg-light, #fff);
-    color: var(--text-color-light, #495057);
-    font-size: 0.9em;
-    box-sizing: border-box;
-    line-height: 1.5; /* Ensure placeholder text is vertically centered */
-}
-
-.dark-theme .image-editor-panel input[type="url"]#image-url-input {
-    border-color: var(--border-color-dark, #4a4e58);
-    background-color: var(--input-bg-dark, #2b3035);
-    color: var(--text-color-dark, #adb5bd);
-}
-
-.image-editor-panel input[type="url"]#image-url-input::placeholder {
-    color: var(--placeholder-text-color, #6c757d);
-    opacity: 1; /* Firefox */
-}
-
-.dark-theme .image-editor-panel input[type="url"]#image-url-input::placeholder {
-    color: var(--placeholder-text-color-dark, #7a8288);
-    opacity: 1; /* Firefox */
-}
-
-/* Hide panels by default */
-.color-picker-panel.hidden,
-.image-editor-panel.hidden {
-    display: none !important;
-}
-
-/* Editor Panel General Styling Enhancements */
-.color-picker-panel .form-group,
-.image-editor-panel .form-group {
-    margin-bottom: 12px; /* Consistent spacing for form groups */
-}
-
-.color-picker-panel label,
-.image-editor-panel label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 0.9em;
-    color: var(--text-color, #333);
-    font-weight: 500;
-}
-
-.dark-theme .color-picker-panel label,
 .dark-theme .image-editor-panel label {
     color: var(--color-picker-label-text-dark, #c5c8c6);
 }
 
-.color-picker-panel .panel-header,
-.image-editor-panel .panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color, #eee);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-}
-.dark-theme .color-picker-panel .panel-header,
-.dark-theme .image-editor-panel .panel-header {
-    border-bottom-color: var(--color-picker-border-dark, #3a3f4b);
+.dark-theme .image-editor-panel .form-control-sm {
+    background-color: var(--dark-input-bg, #212529); 
+    color: var(--dark-input-text-color, #e2e8f0); 
+    border-color: var(--dark-input-border-color, #495057);
 }
 
-.color-picker-panel .panel-header h5,
-.image-editor-panel .panel-header h5 {
-    margin: 0;
-    font-size: 1.1em;
-    color: var(--text-color, #333);
-}
-.dark-theme .color-picker-panel .panel-header h5,
-.dark-theme .image-editor-panel .panel-header h5 {
-    color: var(--color-picker-header-text-dark, #e2e8f0);
+.dark-theme .image-editor-panel .form-control-sm:focus {
+    border-color: var(--primary-color-dark-theme);
+    box-shadow: 0 0 0 0.2rem rgba(88,166,255,.25); 
 }
 
-.color-picker-panel .btn-close,
-.image-editor-panel .btn-close {
-    background: transparent;
-    border: none;
-    font-size: 1.2rem;
-    padding: 0.25rem 0.5rem;
-    color: var(--text-color, #555);
-}
-.dark-theme .color-picker-panel .btn-close,
-.dark-theme .image-editor-panel .btn-close {
-    color: var(--color-picker-label-text-dark, #c5c8c6);
-}
-.color-picker-panel .btn-close:hover,
-.image-editor-panel .btn-close:hover {
-    color: var(--primary-color);
+.dark-theme .image-editor-panel select.form-control-sm {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23e2e8f0' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
 }
 
-/* Styling for input[type="color"] */
-.color-picker-panel input[type="color"] {
-    width: 100%;
-    height: 40px; /* Increased height */
-    border: 1px solid var(--border-color, #ccc);
-    border-radius: var(--border-radius-sm, 4px); /* Consistent border radius */
-    padding: 2px; /* Minimal padding for the color swatch */
-    box-sizing: border-box;
-    cursor: pointer;
-    -webkit-appearance: none; 
-    -moz-appearance: none;
-    appearance: none;
-    background-color: transparent; 
+.dark-theme .image-editor-panel .custom-file-upload {
+    background-color: var(--dark-input-bg, #3a3f4b);
+    color: var(--dark-input-text-color, #e2e8f0);
+    border-color: var(--dark-input-border-color, #555);
 }
 
-.dark-theme .color-picker-panel input[type="color"] {
-    border-color: var(--color-picker-border-dark, #3a3f4b);
+.dark-theme .image-editor-panel .custom-file-upload:hover {
+    background-color: var(--dark-input-hover-bg, #4a4e58);
 }
 
-.color-picker-panel input[type="color"]::-webkit-color-swatch-wrapper {
-    padding: 0;
-    border-radius: var(--border-radius-sm, 3px); 
+.dark-theme .image-editor-panel .file-name-display {
+    color: var(--dark-text-color-muted, #868e96);
 }
 
-.color-picker-panel input[type="color"]::-webkit-color-swatch {
-    border: none; 
-    border-radius: var(--border-radius-sm, 3px);
+.dark-theme .image-editor-panel .image-url-separator {
+    color: var(--dark-text-color-muted, #868e96);
 }
 
-/* Styling for "Use Gradient" Checkbox */
-.color-picker-panel .form-check {
-    display: flex;
-    align-items: center;
-    padding-left: 0; 
-}
-
-.color-picker-panel .form-check-input {
-    margin-right: 8px;
-    width: 16px; 
-    height: 16px; 
-    cursor: pointer;
-}
-
-.color-picker-panel .form-check-label {
-    font-size: 0.9em;
-    margin-bottom: 0; 
-    cursor: pointer;
-}
-
-/* Styling for "Choose File" button (input[type="file"]) */
-.image-editor-panel input[type="file"].form-control-sm {
-    padding: 0; 
-    border: none; 
-}
-
-.image-editor-panel input[type="file"].form-control-sm::file-selector-button {
-    font-weight: 400;
-    line-height: 1.5;
-    color: #fff;
-    background-color: var(--primary-color, #007bff);
-    border-color: var(--primary-color, #007bff);
-    padding: 0.25rem 0.5rem; 
-    font-size: 0.875rem; 
-    border-radius: var(--border-radius-sm, 0.2rem);
-    border: 1px solid transparent;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    cursor: pointer;
-    margin-right: 10px; 
-}
-
-.dark-theme .image-editor-panel input[type="file"].form-control-sm::file-selector-button {
-    background-color: var(--primary-color-dark, #4361ee); 
-    border-color: var(--primary-color-dark, #4361ee);
-}
-
-.image-editor-panel input[type="file"].form-control-sm::file-selector-button:hover {
-    background-color: #0056b3; 
-    border-color: #0056b3;
-}
-.dark-theme .image-editor-panel input[type="file"].form-control-sm::file-selector-button:hover {
-    background-color: var(--primary-color-hover-dark, #3550d3);
-    border-color: var(--primary-color-hover-dark, #3550d3);
-}
-
-/* Styling for panel action buttons */
-.color-picker-panel .panel-actions,
-.image-editor-panel .panel-actions {
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 10px; 
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid var(--border-color, #eee);
-}
-
-.dark-theme .color-picker-panel .panel-actions,
 .dark-theme .image-editor-panel .panel-actions {
     border-top-color: var(--color-picker-border-dark, #3a3f4b);
 }
 
-.color-picker-panel .panel-actions .btn,
-.image-editor-panel .panel-actions .btn {
-    flex-grow: 1; 
-    min-width: calc(33.333% - 10px); 
-    text-align: center;
+.dark-theme .image-editor-panel .panel-actions #close-image-editor-btn {
+    color: var(--color-picker-close-btn-text-dark, #abb2bf);
+}
+
+.dark-theme .image-editor-panel .panel-actions #close-image-editor-btn:hover {
+    background-color: rgba(255,255,255,0.1); 
+    color: var(--color-picker-close-btn-hover-text-dark, #ffffff);
+}
+
+.dark-theme .panel-switch-actions {
+    border-bottom-color: var(--color-picker-border-dark, #3a3f4b);
+}
+
+/* Ensure target info display is consistent */
+#image-editor-target-info, #color-picker-target-info {
+    padding: 8px 10px;
+    background-color: var(--light-gray-bg, #f0f0f0);
+    border-radius: var(--border-radius-sm, 4px);
+    font-size: 0.85em;
+    color: var(--text-color, #333);
+    margin-bottom: 10px;
+    word-break: break-all;
+}
+
+#image-editor-target-info span, #color-picker-target-info span {
+    font-weight: bold;
+    color: var(--primary-color, #007bff);
+}
+
+.dark-theme #image-editor-target-info, .dark-theme #color-picker-target-info {
+    background-color: var(--dark-secondary-bg, #383838);
+    color: var(--color-picker-label-text-dark, #dde1e4);
+    border: 1px solid var(--color-picker-border-dark, #3a3f4b);
+}
+
+.dark-theme #image-editor-target-info span, .dark-theme #color-picker-target-info span {
+    color: var(--primary-color-dark-theme, #58a6ff);
+}
+
+/* General styling for editor panel placeholder text */
+.image-editor-panel ::placeholder, 
+.color-picker-panel ::placeholder {
+    color: var(--input-placeholder-color, #6c757d);
+    opacity: 1; /* Override Firefox's lower opacity */
+}
+
+.dark-theme .image-editor-panel ::placeholder,
+.dark-theme .color-picker-panel ::placeholder {
+    color: var(--dark-input-placeholder-color, #868e96);
+}
+
+/* Shared button styles for panels */
+.color-picker-panel .panel-buttons .btn-outline-secondary,
+.image-editor-panel .panel-actions .btn-outline-secondary {
+    color: var(--secondary-color, #6c757d);
+    border-color: var(--secondary-color, #6c757d);
+}
+
+.color-picker-panel .panel-buttons .btn-outline-secondary:hover,
+.image-editor-panel .panel-actions .btn-outline-secondary:hover {
+    color: #fff;
+    background-color: var(--secondary-color, #6c757d);
+    border-color: var(--secondary-color, #6c757d);
+}
+
+.dark-theme .color-picker-panel .panel-buttons .btn-outline-secondary,
+.dark-theme .image-editor-panel .panel-actions .btn-outline-secondary {
+    color: var(--secondary-color-dark, #adb5bd);
+    border-color: var(--secondary-color-dark, #adb5bd);
+}
+
+.dark-theme .color-picker-panel .panel-buttons .btn-outline-secondary:hover,
+.dark-theme .image-editor-panel .panel-actions .btn-outline-secondary:hover {
+    color: var(--dark-theme-bg, #0d1117); 
+    background-color: var(--secondary-color-dark, #adb5bd);
+    border-color: var(--secondary-color-dark, #adb5bd);
+}
+
+.color-picker-panel .panel-buttons .btn-primary,
+.image-editor-panel .panel-actions .btn-primary {
+    color: #fff;
+    background-color: var(--primary-color, #007bff);
+    border-color: var(--primary-color, #007bff);
+}
+
+.color-picker-panel .panel-buttons .btn-primary:hover,
+.image-editor-panel .panel-actions .btn-primary:hover {
+    background-color: var(--primary-color-darker, #0069d9); 
+    border-color: var(--primary-color-darker, #0062cc);
+}
+
+.dark-theme .color-picker-panel .panel-buttons .btn-primary,
+.dark-theme .image-editor-panel .panel-actions .btn-primary {
+    background-color: var(--primary-color-dark-theme, #58a6ff); 
+    border-color: var(--primary-color-dark-theme, #58a6ff);
+    color: var(--dark-theme-bg, #0d1117); 
+}
+
+.dark-theme .color-picker-panel .panel-buttons .btn-primary:hover,
+.dark-theme .image-editor-panel .panel-actions .btn-primary:hover {
+    background-color: var(--primary-color-dark-theme-hover, #79b8ff); 
+    border-color: var(--primary-color-dark-theme-hover, #79b8ff);
+}
+
+/* Ensure close buttons in both panels have consistent styling */
+.dark-theme #color-picker-panel .panel-buttons #closeColorPickerBtn,
+.dark-theme .image-editor-panel .panel-actions #close-image-editor-btn {
+    color: var(--color-picker-close-btn-text-dark, #abb2bf);
+}
+
+.dark-theme #color-picker-panel .panel-buttons #closeColorPickerBtn:hover,
+.dark-theme .image-editor-panel .panel-actions #close-image-editor-btn:hover {
+    background-color: rgba(255,255,255,0.1); 
+    color: var(--color-picker-close-btn-hover-text-dark, #ffffff);
 }
 
 /* Responsive adjustments */
