@@ -179,6 +179,16 @@ function loadRecentColors() {
 // --- START: Image Editor Panel elements ---
 // --- END: Image Editor Panel elements ---
 
+// Utility function to read a file as a Data URL
+function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
 // Initialize references to panel elements from the main document
 function initInPageEditorControls(options) {
     colorPickerPanel = options.colorPickerPanel;
