@@ -303,6 +303,14 @@
     width: 280px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Modern shadow */
     border-radius: 12px; /* Rounded corners */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform: translateX(100%); /* Initially off-screen */
+    opacity: 0; /* Initially transparent */
+}
+
+.color-picker-panel.active {
+    transform: translateX(0);
+    opacity: 1;
 }
 
 .color-picker-panel h4 {
@@ -952,6 +960,13 @@
     z-index: 1001; /* Ensure it's above the iframe */
     font-family: 'Inter', sans-serif;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform: translateX(100%); /* Initially off-screen */
+    opacity: 0; /* Initially transparent */
+}
+
+.image-editor-panel.active {
+    transform: translateX(0);
+    opacity: 1;
 }
 
 .dark-theme .image-editor-panel {
@@ -1093,7 +1108,7 @@
 /* Hide panels by default */
 .color-picker-panel.hidden,
 .image-editor-panel.hidden {
-    display: none;
+    display: none !important;
 }
 
 /* Responsive adjustments */

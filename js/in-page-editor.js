@@ -206,9 +206,9 @@ function initInPageEditorControls(
         bgColorPicker2.addEventListener('change', () => addRecentColor(bgColorPicker2.value, 'recentBgColors2'));
     }
 
-    // Hide both panels initially
-    if(colorPickerPanel) colorPickerPanel.classList.add('hidden');
-    if(imageEditorPanel) imageEditorPanel.classList.add('hidden');
+    // Ensure panels are not active initially (they are off-screen by default CSS)
+    if(colorPickerPanel) colorPickerPanel.classList.remove('active');
+    if(imageEditorPanel) imageEditorPanel.classList.remove('active');
 }
 window.initInPageEditorControls = initInPageEditorControls;
 
@@ -280,14 +280,14 @@ function openColorPicker(element) {
         bgColorPicker2Group.style.display = 'none';
     }
 
-    if(imageEditorPanel) imageEditorPanel.classList.add('hidden');
-    if(colorPickerPanel) colorPickerPanel.classList.remove('hidden');
+    if(imageEditorPanel) imageEditorPanel.classList.remove('active');
+    if(colorPickerPanel) colorPickerPanel.classList.add('active');
     activePanel = 'color';
     colorPickerPanel.focus(); 
 }
 
 function closeColorPicker() {
-    if (colorPickerPanel) colorPickerPanel.classList.add('hidden');
+    if (colorPickerPanel) colorPickerPanel.classList.remove('active');
     if (currentlyHighlightedElement) {
         removeHighlight(currentlyHighlightedElement);
         currentlyHighlightedElement = null;
@@ -323,14 +323,14 @@ function openImageEditor(element) {
     }
     imageFileInput.value = ''; // Clear file input
 
-    if(colorPickerPanel) colorPickerPanel.classList.add('hidden');
-    if(imageEditorPanel) imageEditorPanel.classList.remove('hidden');
+    if(colorPickerPanel) colorPickerPanel.classList.remove('active');
+    if(imageEditorPanel) imageEditorPanel.classList.add('active');
     activePanel = 'image';
     imageEditorPanel.focus();
 }
 
 function closeImageEditor() {
-    if (imageEditorPanel) imageEditorPanel.classList.add('hidden');
+    if (imageEditorPanel) imageEditorPanel.classList.remove('active');
     if (currentlyHighlightedElement) {
         removeHighlight(currentlyHighlightedElement);
         currentlyHighlightedElement = null;
