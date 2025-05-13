@@ -45,8 +45,9 @@ let activePanel = null; // 'color' or 'image'
 // --- END: Panel State Management ---
 
 // Color Picker Panel elements
-let colorPickerPanel, bgColorPicker, applyColorsBtn, resetColorsBtn, closeColorPickerBtn;
-let useBgGradientCheckbox, bgColorPicker2Group, bgColorPicker2; 
+let colorPickerPanel, closeColorPickerBtn, bgColorPicker, useBgGradient, bgColorPicker2, bgColorPicker2Group, applyColorsBtn, resetColorsBtn, colorPickerTargetElementName, recentBgColorsList, recentBgColorsList2;
+let imageEditorPanel, closeImageEditorBtn, imageFileInput, imageUrlInput, imageWidthSelect, imageHeightSelect, imageFitSelect, applyImageBtn, removeImageBtnEditor, imageEditorTargetElementName, fileNameDisplay; // Renamed imageWidthInput to imageWidthSelect, imageHeightInput to imageHeightSelect, added fileNameDisplay
+let switchToImageEditorBtn, switchToColorEditorBtn;
 let recentBgColors1 = [];
 let recentBgColors2 = [];
 const MAX_RECENT_COLORS = 5;
@@ -114,22 +115,13 @@ function loadRecentColors() {
 // --- END: Functions for managing recent colors ---
 
 // --- START: Image Editor Panel elements ---
-let imageEditorPanel, imageFileInput, imageUrlInput, applyImageBtn, removeImageBtn, closeImageEditorBtn;
-let imageWidthInput, imageHeightInput, imageFitSelect; // Added for image sizing
-let imageEditorTargetElementNameSpan; // To show which element is being edited for image
-let switchToImageEditorBtn, switchToColorEditorBtn; // Buttons to switch between panels
 // --- END: Image Editor Panel elements ---
 
-
 // Initialize references to panel elements from the main document
-function initInPageEditorControls(
-    colorPanelElement, 
-    colorTargetInfoElement,
-    imagePanelElement // New parameter for the image editor panel
-) {
-    colorPickerPanel = colorPanelElement;
-    colorPickerTargetInfo = colorTargetInfoElement;
-    imageEditorPanel = imagePanelElement; // Initialize image panel
+function initInPageEditorControls(options) {
+    colorPickerPanel = options.colorPickerPanel;
+    colorPickerTargetInfo = options.colorPickerTargetInfo;
+    imageEditorPanel = options.imageEditorPanel;
 
     if (!colorPickerPanel) console.error("Color picker panel not found in initInPageEditorControls");
     if (!colorPickerTargetInfo) console.error("Color picker target info div not found in initInPageEditorControls");
@@ -140,51 +132,52 @@ function initInPageEditorControls(
     applyColorsBtn = colorPickerPanel.querySelector('#applyColorsBtn');
     resetColorsBtn = colorPickerPanel.querySelector('#resetColorsBtn');
     closeColorPickerBtn = colorPickerPanel.querySelector('#closeColorPickerBtn');
-    useBgGradientCheckbox = colorPickerPanel.querySelector('#useBgGradient');
+    useBgGradient = colorPickerPanel.querySelector('#useBgGradient');
     bgColorPicker2Group = colorPickerPanel.querySelector('#bgColorPicker2-group');
     bgColorPicker2 = colorPickerPanel.querySelector('#bgColorPicker2');
     switchToImageEditorBtn = colorPickerPanel.querySelector('#switch-to-image-editor');
 
     // Query for Image Editor child elements
-    if (imageEditorPanel) {
-        imageFileInput = imageEditorPanel.querySelector('#image-file-input');
-        imageUrlInput = imageEditorPanel.querySelector('#image-url-input');
-        imageWidthInput = imageEditorPanel.querySelector('#image-width-input'); // Added
-        imageHeightInput = imageEditorPanel.querySelector('#image-height-input'); // Added
-        imageFitSelect = imageEditorPanel.querySelector('#image-fit-select'); // Added
-        applyImageBtn = imageEditorPanel.querySelector('#apply-image-btn');
-        removeImageBtn = imageEditorPanel.querySelector('#remove-image-btn');
-        closeImageEditorBtn = imageEditorPanel.querySelector('#close-image-editor-btn');
-        imageEditorTargetElementNameSpan = imageEditorPanel.querySelector('#imageEditorTargetElementName');
-        switchToColorEditorBtn = imageEditorPanel.querySelector('#switch-to-color-editor');
+    closeImageEditorBtn = document.getElementById('close-image-editor-btn');
+    imageFileInput = document.getElementById('image-file-input');
+    fileNameDisplay = document.getElementById('file-name-display'); // Initialize fileNameDisplay
+    imageUrlInput = document.getElementById('image-url-input');
+    imageWidthSelect = document.getElementById('image-width-select'); // Updated ID
+    imageHeightSelect = document.getElementById('image-height-select'); // Updated ID
+    imageFitSelect = document.getElementById('image-fit-select');
+    applyImageBtn = document.getElementById('apply-image-btn');
+    removeImageBtnEditor = document.getElementById('remove-image-btn'); // Ensure this is the button in the editor panel
+    imageEditorTargetElementName = document.getElementById('imageEditorTargetElementName');
+    switchToColorEditorBtn = imageEditorPanel.querySelector('#switch-to-color-editor');
 
-        if (!imageFileInput) console.error("Image file input not found");
-        if (!imageUrlInput) console.error("Image URL input not found");
-        if (!imageWidthInput) console.error("Image width input not found"); // Added
-        if (!imageHeightInput) console.error("Image height input not found"); // Added
-        if (!imageFitSelect) console.error("Image fit select not found"); // Added
-        if (!applyImageBtn) console.error("Apply image button not found");
-        if (!removeImageBtn) console.error("Remove image button not found");
-        if (!closeImageEditorBtn) console.error("Close image editor button not found");
-        if (!imageEditorTargetElementNameSpan) console.error("Image editor target element name span not found");
-        if (!switchToColorEditorBtn) console.error("Switch to color editor button not found");
-    }
-    
     // Event listeners for Color Picker
     if (applyColorsBtn) applyColorsBtn.addEventListener('click', applyColors);
     if (resetColorsBtn) resetColorsBtn.addEventListener('click', removeCustomColors);
     if (closeColorPickerBtn) closeColorPickerBtn.addEventListener('click', closeColorPicker);
-    if (useBgGradientCheckbox && bgColorPicker2Group) {
-        useBgGradientCheckbox.addEventListener('change', () => {
-            bgColorPicker2Group.style.display = useBgGradientCheckbox.checked ? 'block' : 'none';
+    if (useBgGradient && bgColorPicker2Group) {
+        useBgGradient.addEventListener('change', () => {
+            bgColorPicker2Group.style.display = useBgGradient.checked ? 'block' : 'none';
         });
     }
 
     // Event listeners for Image Editor
-    if (applyImageBtn) applyImageBtn.addEventListener('click', applyImage);
-    if (removeImageBtn) removeImageBtn.addEventListener('click', removeImage);
-    if (closeImageEditorBtn) closeImageEditorBtn.addEventListener('click', closeImageEditor);
-    
+    if (imageEditorPanel) {
+        closeImageEditorBtn.addEventListener('click', closeImageEditor);
+        applyImageBtn.addEventListener('click', applyImage);
+        removeImageBtnEditor.addEventListener('click', removeImage); // Changed from removeImageBtn to removeImageBtnEditor for clarity
+        
+        // Event listener for file input change
+        if (imageFileInput && fileNameDisplay) {
+            imageFileInput.addEventListener('change', () => {
+                if (imageFileInput.files && imageFileInput.files.length > 0) {
+                    fileNameDisplay.textContent = imageFileInput.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = 'No file chosen';
+                }
+            });
+        }
+    }
+
     // Event listeners for switching panels
     if (switchToImageEditorBtn) {
         switchToImageEditorBtn.addEventListener('click', () => {
@@ -342,20 +335,20 @@ function openColorPicker(element) {
                 bgColorPicker.value = colors[0] ? rgbToHex(colors[0]) : '#ffffff';
                 if (colors[1]) {
                     bgColorPicker2.value = rgbToHex(colors[1]);
-                    useBgGradientCheckbox.checked = true;
+                    useBgGradient.checked = true;
                     if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'block';
                 } else {
-                    useBgGradientCheckbox.checked = false;
+                    useBgGradient.checked = false;
                     if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
                 }
             } else { // Solid color
                 bgColorPicker.value = rgbToHex(customBg);
-                useBgGradientCheckbox.checked = false;
+                useBgGradient.checked = false;
                 if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
             }
         } else { // No custom rule, use computed style
             bgColorPicker.value = rgbToHex(bgColor);
-            useBgGradientCheckbox.checked = false;
+            useBgGradient.checked = false;
             if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
         }
     } else {
@@ -388,124 +381,118 @@ function closeColorPicker() {
 // --- START: Image Editor Functions ---
 function openImageEditor(element) {
     console.log("[DEBUG] openImageEditor called for:", element ? element.tagName : 'null', "ID:", element ? element.id : 'N/A'); // DEBUG
-    if (!imageEditorPanel || !element) {
-        console.error("[DEBUG] openImageEditor: Panel or element missing. Panel:", imageEditorPanel, "Element:", element); // DEBUG
-        return;
-    }
+    if (!element) return;
     currentEditingElement = element;
-
-    ensureId(element);
-    const targetName = element.tagName.toLowerCase() + (element.id ? `#${element.id}` : '');
-    if (imageEditorTargetElementNameSpan) {
-        imageEditorTargetElementNameSpan.textContent = targetName;
+    imageEditorTargetElementName.textContent = element.tagName.toLowerCase() + (element.id ? `#${element.id}` : '') + (element.className ? `.${element.className.split(' ')[0]}` : '');
+    
+    // Pre-fill controls
+    const computedStyle = currentIframeDocument.defaultView.getComputedStyle(element);
+    let currentSrc = element.src || element.style.backgroundImage.slice(4, -1).replace(/"/g, "");
+    if (currentSrc && currentSrc.startsWith('blob:')) { // If it's a blob URL from a previous file upload
+        imageUrlInput.value = ''; // Don't show blob URL to user
+        // fileNameDisplay might still hold the previous file name if not cleared
     } else {
-        console.warn("imageEditorTargetElementNameSpan not found");
+        imageUrlInput.value = currentSrc.startsWith(window.location.origin) ? '' : currentSrc; // Clear if it's a blob or internal URL
     }
+    
+    // Pre-fill select dropdowns
+    const widthValue = element.style.width || computedStyle.width;
+    const heightValue = element.style.height || computedStyle.height;
+    const fitValue = element.style.objectFit || computedStyle.objectFit;
 
-    // Pre-fill URL input and sizing controls
-    if (element.tagName === 'IMG') {
-        imageUrlInput.value = element.getAttribute('src') || ''; // Use getAttribute for src
-        imageWidthInput.value = element.style.width || 'auto';
-        imageHeightInput.value = element.style.height || 'auto';
-        imageFitSelect.value = element.style.objectFit || 'fill'; // Default to 'fill' or another sensible default
+    setSelectOption(imageWidthSelect, widthValue);
+    setSelectOption(imageHeightSelect, heightValue);
+    setSelectOption(imageFitSelect, fitValue);
+    
+    // Reset file input and display if no file was used for the current image
+    if (!element.dataset.originalFileName) {
+        imageFileInput.value = ''; // Clear file input
+        fileNameDisplay.textContent = 'No file chosen';
     } else {
-        // Background image
-        let bgImage = '';
-        let bgSize = 'cover'; // Default for backgrounds
-        let bgWidth = 'auto';
-        let bgHeight = 'auto';
-
-        if (customCssRules[element.id] && customCssRules[element.id].background) {
-            const ruleBackground = customCssRules[element.id].background;
-            if (ruleBackground.startsWith('url("')) {
-                bgImage = ruleBackground.slice(5, -2);
-            }
-            // Prefer custom rules for size if they exist
-            const customBgSize = customCssRules[element.id]['background-size'];
-            if (customBgSize) {
-                bgSize = customBgSize;
-            }
-        } else if (currentIframeDocument && currentIframeDocument.defaultView) {
-            const computedStyle = currentIframeDocument.defaultView.getComputedStyle(element);
-            const computedBgImage = computedStyle.backgroundImage;
-            if (computedBgImage && computedBgImage !== 'none' && computedBgImage.startsWith('url("')) {
-                bgImage = computedBgImage.slice(5, -2);
-            }
-            bgSize = computedStyle.backgroundSize;
-        }
-
-        imageUrlInput.value = bgImage;
-        
-        // Attempt to parse bgSize for width, height, and fit
-        if (bgSize === 'cover' || bgSize === 'contain') {
-            imageFitSelect.value = bgSize;
-            imageWidthInput.value = 'auto';
-            imageHeightInput.value = 'auto';
-        } else if (bgSize && bgSize !== 'auto' && bgSize.includes(' ')) {
-            // Potentially two values e.g., "100px 50%" or "auto 100px"
-            const parts = bgSize.split(' ');
-            imageWidthInput.value = parts[0] || 'auto';
-            imageHeightInput.value = parts[1] || 'auto';
-            imageFitSelect.value = 'fill'; // Default if specific dimensions are set
-        } else if (bgSize && bgSize !== 'auto'){
-            // Single value like "100%" or "100px" - could be width, height or both depending on context
-            // For simplicity, apply to width and set height to auto, or let user adjust
-            imageWidthInput.value = bgSize;
-            imageHeightInput.value = 'auto';
-            imageFitSelect.value = 'fill'; 
-        } else { // Default / auto
-            imageWidthInput.value = 'auto';
-            imageHeightInput.value = 'auto';
-            imageFitSelect.value = 'cover'; // Default for background images
-        }
+        fileNameDisplay.textContent = element.dataset.originalFileName;
     }
-    if (imageFileInput) imageFileInput.value = ''; // Clear file input
 
-    if(colorPickerPanel) {
-        console.log("[DEBUG] openImageEditor: Removing 'active' from color panel."); // DEBUG
-        colorPickerPanel.classList.remove('active');
-    }
-    if(imageEditorPanel) {
-        console.log("[DEBUG] openImageEditor: Adding 'active' to image panel. Panel classList before:", imageEditorPanel.classList.toString()); // DEBUG
-        imageEditorPanel.classList.add('active');
-        console.log("[DEBUG] openImageEditor: Panel classList after:", imageEditorPanel.classList.toString()); // DEBUG
-    }
+    imageEditorPanel.classList.add('active');
+    colorPickerPanel.classList.remove('active');
     activePanel = 'image';
-    // imageEditorPanel.focus();
 }
 
-function closeImageEditor() {
-    if (imageEditorPanel) imageEditorPanel.classList.remove('active');
-    if (currentlyHighlightedElement) {
-        removeHighlight(currentlyHighlightedElement);
-        currentlyHighlightedElement = null;
+// Helper function to set select option
+function setSelectOption(selectElement, value) {
+    if (!selectElement) return;
+    let optionFound = false;
+    for (let i = 0; i < selectElement.options.length; i++) {
+        if (selectElement.options[i].value === value) {
+            selectElement.selectedIndex = i;
+            optionFound = true;
+            break;
+        }
     }
-    currentEditingElement = null;
-    activePanel = null;
+    if (!optionFound) {
+        // If the exact value isn't found, try to find a common default or set to auto/first
+        const autoOption = Array.from(selectElement.options).find(opt => opt.value.toLowerCase() === 'auto');
+        if (autoOption) {
+            selectElement.value = autoOption.value;
+        } else if (selectElement.options.length > 0) {
+            selectElement.selectedIndex = 0; // Default to the first option
+        }
+    }
 }
 
-function applyImage() {
-    if (!currentEditingElement || !currentIframeDocument) return;
-    ensureId(currentEditingElement);
+async function applyImage() {
+    if (!currentEditingElement) return;
 
-    const file = imageFileInput.files[0];
-    const url = imageUrlInput.value.trim();
-    const width = imageWidthInput.value.trim();
-    const height = imageHeightInput.value.trim();
+    const width = imageWidthSelect.value;
+    const height = imageHeightSelect.value;
     const fit = imageFitSelect.value;
+    let imageSource = imageUrlInput.value.trim();
 
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            setImageSource(currentEditingElement, e.target.result, width, height, fit);
-        };
-        reader.readAsDataURL(file);
-    } else if (url) {
-        setImageSource(currentEditingElement, url, width, height, fit);
+    // Prioritize file input if a file is selected
+    if (imageFileInput.files && imageFileInput.files.length > 0) {
+        const file = imageFileInput.files[0];
+        imageSource = await readFileAsDataURL(file);
+        currentEditingElement.dataset.originalFileName = file.name; // Store filename
+        fileNameDisplay.textContent = file.name; // Ensure display is updated
     } else {
-        // If no new image source, but sizing might have changed, apply sizing to existing image/background
-        setImageSource(currentEditingElement, null, width, height, fit); 
+        // If no new file, and URL is empty, but there was an original file name, it means user might want to keep existing file if any
+        // However, if URL is also empty, and no file selected, it implies clearing or no change if current is URL
+        if (!imageSource && currentEditingElement.dataset.originalFileName) {
+            // If URL is cleared and there was a file, do nothing to imageSource, assume keeping current
+            // Or, if we want to clear if URL is empty and no file, then:
+            // imageSource = ''; // This would clear it. For now, let's assume they want to keep if URL is empty but file was there.
+        }
+        if (imageSource) { // If URL is provided, clear original file name
+            delete currentEditingElement.dataset.originalFileName;
+            // fileNameDisplay.textContent = 'No file chosen'; // Reset if URL is used
+        }
     }
+    
+    setImageSource(currentEditingElement, imageSource, width, height, fit);
+    if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+}
+
+function removeImage() {
+    if (!currentEditingElement) return;
+    const element = currentEditingElement;
+    if (element.tagName === 'IMG') {
+        element.src = '';
+    } else {
+        element.style.backgroundImage = 'none';
+    }
+    element.style.width = 'auto'; // Reset styles
+    element.style.height = 'auto';
+    element.style.objectFit = 'initial'; // Or 'fill' as a common default
+
+    delete element.dataset.originalFileName; // Clear stored filename
+
+    // Reset controls in the panel
+    imageFileInput.value = ''; // Clear the file input
+    fileNameDisplay.textContent = 'No file chosen';
+    imageUrlInput.value = '';
+    setSelectOption(imageWidthSelect, 'auto');
+    setSelectOption(imageHeightSelect, 'auto');
+    setSelectOption(imageFitSelect, 'fill'); // Default fit
+
     if (window.notifyUnsavedChange) window.notifyUnsavedChange();
 }
 
@@ -559,38 +546,14 @@ function setImageSource(element, src, width, height, fit) {
     }
 }
 
-function removeImage() {
-    if (!currentEditingElement) return;
-    ensureId(currentEditingElement);
-
-    if (currentEditingElement.tagName === 'IMG') {
-        currentEditingElement.removeAttribute('src');
-        currentEditingElement.style.width = '';
-        currentEditingElement.style.height = '';
-        currentEditingElement.style.objectFit = '';
-    } else {
-        if (customCssRules[currentEditingElement.id]) {
-            delete customCssRules[currentEditingElement.id].background;
-            delete customCssRules[currentEditingElement.id]['background-size'];
-            delete customCssRules[currentEditingElement.id]['background-position'];
-            delete customCssRules[currentEditingElement.id]['background-repeat'];
-            if (Object.keys(customCssRules[currentEditingElement.id]).length === 0) {
-                delete customCssRules[currentEditingElement.id];
-            }
-        }
-        // Clear inline styles too, if any were applied directly (though we prefer customCssRules for backgrounds)
-        currentEditingElement.style.backgroundImage = ''; 
-        currentEditingElement.style.backgroundSize = '';
-        currentEditingElement.style.backgroundPosition = '';
-        currentEditingElement.style.backgroundRepeat = '';
-        applyCustomCssToIframe();
-    }
-    if (window.notifyUnsavedChange) window.notifyUnsavedChange();
-    if(imageUrlInput) imageUrlInput.value = '';
-    if(imageFileInput) imageFileInput.value = '';
-    if(imageWidthInput) imageWidthInput.value = 'auto';
-    if(imageHeightInput) imageHeightInput.value = 'auto';
-    if(imageFitSelect) imageFitSelect.value = 'fill'; // Reset to a default
+// Helper function to read file as Data URL (if not already present)
+async function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
 }
 
 // --- END: Image Editor Functions ---
@@ -599,7 +562,7 @@ function applyColors() {
     if (!currentEditingElement || !bgColorPicker) return;
     ensureId(currentEditingElement);
     const newBgColor = bgColorPicker.value;
-    const useGradient = useBgGradientCheckbox.checked;
+    const useGradient = useBgGradient.checked;
     const newBgColor2 = bgColorPicker2.value;
 
     if (!customCssRules[currentEditingElement.id]) {
@@ -635,7 +598,7 @@ function removeCustomColors() {
     }
     const computedStyle = currentIframeDocument.defaultView.getComputedStyle(currentEditingElement);
     bgColorPicker.value = rgbToHex(computedStyle.backgroundColor);
-    useBgGradientCheckbox.checked = false;
+    useBgGradient.checked = false;
     bgColorPicker2Group.style.display = 'none';
 }
 
