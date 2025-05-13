@@ -697,12 +697,17 @@ function openColorPicker(element) {
 
 function closeColorPicker() {
     if (colorPickerPanel) colorPickerPanel.classList.remove('active');
-    if (currentlyHighlightedElement) {
-        removeHighlight(currentlyHighlightedElement);
-        currentlyHighlightedElement = null;
+    // If an element was being edited by this panel, remove its specific highlight
+    // and clear it as the target for this panel.
+    // The general currentlyHighlightedElement from hover can remain if it's different,
+    // or will be cleared if it was the same.
+    if (currentEditingElement && activePanel === 'color') {
+        removeHighlight(currentEditingElement); // Remove highlight if it was for this panel's element
+        currentEditingElement = null;
     }
-    currentEditingElement = null;
     activePanel = null;
+    // Do not set currentlyHighlightedElement = null here, to allow hover highlights to continue
+    // Do not set isEditModeActive = false here
 }
 
 // Helper function to set select option
@@ -800,12 +805,15 @@ function closeImageEditor() {
     imagePreviewState.elementId = null;
 
     if (imageEditorPanel) imageEditorPanel.classList.remove('active');
-    if (currentlyHighlightedElement) {
-        removeHighlight(currentlyHighlightedElement);
-        currentlyHighlightedElement = null;
+    // If an element was being edited by this panel, remove its specific highlight
+    // and clear it as the target for this panel.
+    if (currentEditingElement && activePanel === 'image') {
+        removeHighlight(currentEditingElement); // Remove highlight if it was for this panel's element
+        currentEditingElement = null;
     }
-    currentEditingElement = null;
     activePanel = null;
+    // Do not set currentlyHighlightedElement = null here
+    // Do not set isEditModeActive = false here
 }
 
 async function applyImage() {
