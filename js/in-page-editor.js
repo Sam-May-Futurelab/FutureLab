@@ -10,6 +10,7 @@ let currentlyHighlightedElement = null;
 const HIGHLIGHT_STYLE = '2px dashed #007bff'; 
 let customStyleTagId = 'in-page-editor-custom-styles';
 let textEditingTarget = null; // For managing direct text editing
+let originalTextContent = ''; // Added for text editing undo
 let pagePreviewIframeElement; // NEW: To store the iframe DOM element itself
 
 // NEW: State management for image previews
@@ -113,6 +114,86 @@ function removeHighlight(element) {
 // --- START: Panel State Management ---
 let activePanel = null; // 'color' or 'image'
 // --- END: Panel State Management ---
+
+// --- START: Text Editing Functions ---
+function makeTextEditable(element) {
+    if (!element || textEditingTarget === element) return;
+
+    if (textEditingTarget) {
+        makeTextReadOnly(textEditingTarget); // Make previously edited element read-only
+    }
+
+    textEditingTarget = element;
+    originalTextContent = element.textContent; // Store original content
+    element.contentEditable = 'true';
+    element.focus();
+    // Optional: Add some visual cue that it's editable, e.g., different outline
+    element.style.outline = '1px solid #00ff00'; 
+
+    element.addEventListener('blur', handleTextEditBlur, { once: true });
+    element.addEventListener('keydown', handleTextEditKeyDown);
+}
+
+function makeTextReadOnly(element, saveChanges = true) {
+    if (!element || !textEditingTarget || textEditingTarget !== element) return;
+
+    element.contentEditable = 'false';
+    element.style.outline = ''; // Remove editing visual cue
+    element.removeEventListener('blur', handleTextEditBlur);
+    element.removeEventListener('keydown', handleTextEditKeyDown);
+
+    const newTextContent = element.textContent;
+
+    if (saveChanges && newTextContent !== originalTextContent) {
+        ensureId(element);
+        const actionElementId = element.id;
+        const oldText = originalTextContent; // Capture for closure
+        const newText = newTextContent;   // Capture for closure
+
+        recordAction({
+            type: 'text',
+            elementId: actionElementId,
+            undo: function() {
+                const doc = getActiveIframeDocument();
+                if (!doc) { console.error("Undo Text: iframe doc not found."); return; }
+                const targetElement = doc.getElementById(this.elementId);
+                if (targetElement) {
+                    targetElement.textContent = oldText;
+                }
+            },
+            redo: function() {
+                const doc = getActiveIframeDocument();
+                if (!doc) { console.error("Redo Text: iframe doc not found."); return; }
+                const targetElement = doc.getElementById(this.elementId);
+                if (targetElement) {
+                    targetElement.textContent = newText;
+                }
+            }
+        });
+    }
+    textEditingTarget = null;
+    originalTextContent = '';
+}
+
+function handleTextEditBlur(event) {
+    if (event.target === textEditingTarget) {
+        makeTextReadOnly(event.target, true);
+    }
+}
+
+function handleTextEditKeyDown(event) {
+    if (event.target === textEditingTarget) {
+        if (event.key === 'Enter' && !event.shiftKey) { // Save on Enter (if not Shift+Enter for newline)
+            event.preventDefault(); // Prevent newline in contentEditable
+            makeTextReadOnly(event.target, true);
+        } else if (event.key === 'Escape') { // Cancel on Escape
+            event.preventDefault();
+            event.target.textContent = originalTextContent; // Revert to original
+            makeTextReadOnly(event.target, false); // Don't save changes
+        }
+    }
+}
+// --- END: Text Editing Functions ---
 
 // Color Picker Panel elements
 let colorPickerPanel, closeColorPickerBtn, bgColorPicker, useBgGradient, bgColorPicker2, bgColorPicker2Group, applyColorsBtn, resetColorsBtn, colorPickerTargetElementName, recentBgColorsList, recentBgColorsList2;
