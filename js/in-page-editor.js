@@ -624,6 +624,7 @@ function setImageSource(element, src, width, height, fit, originalFileName) {
 async function applyImage() {
     if (!currentEditingElement) return;
     ensureId(currentEditingElement);
+    const actionElementId = currentEditingElement.id; // Capture ID for the action object
 
     const oldState = {
         src: currentEditingElement.tagName === 'IMG' ? currentEditingElement.getAttribute('src') : null,
@@ -681,10 +682,17 @@ async function applyImage() {
 
     recordAction({
         type: 'image',
-        elementId: currentEditingElement.id,
-        undo: () => {
-            const targetElement = iframeDocument.getElementById(currentEditingElement.id);
-            if (!targetElement) return;
+        elementId: actionElementId, // Use captured ID
+        undo: function() { // Use function() to ensure 'this' is the action object
+            if (!iframeDocument) {
+                console.error("CRITICAL_ERROR: iframeDocument is not defined in image apply undo action!");
+                return;
+            }
+            const targetElement = iframeDocument.getElementById(this.elementId);
+            if (!targetElement) {
+                console.warn(`Undo Image Apply: Target element with ID '${this.elementId}' not found.`);
+                return;
+            }
 
             // Restore element styles from oldState
             if (targetElement.tagName === 'IMG') {
@@ -709,9 +717,16 @@ async function applyImage() {
             }
             applyCustomCssToIframe();
         },
-        redo: () => {
-            const targetElement = iframeDocument.getElementById(currentEditingElement.id);
-            if (!targetElement) return;
+        redo: function() { // Use function() to ensure 'this' is the action object
+            if (!iframeDocument) {
+                console.error("CRITICAL_ERROR: iframeDocument is not defined in image apply redo action!");
+                return;
+            }
+            const targetElement = iframeDocument.getElementById(this.elementId);
+            if (!targetElement) {
+                console.warn(`Redo Image Apply: Target element with ID '${this.elementId}' not found.`);
+                return;
+            }
 
             // Restore element styles from newState
             if (targetElement.tagName === 'IMG') {
@@ -744,6 +759,7 @@ async function applyImage() {
 function removeImage() {
     if (!currentEditingElement) return;
     ensureId(currentEditingElement);
+    const actionElementId = currentEditingElement.id; // Capture ID for the action object
 
     const oldState = {
         src: currentEditingElement.tagName === 'IMG' ? currentEditingElement.getAttribute('src') : null,
@@ -785,20 +801,27 @@ function removeImage() {
 
     recordAction({
         type: 'image',
-        elementId: elementId,
-        undo: () => {
-            const targetElement = currentIframeDocument.getElementById(elementId);
-            if (!targetElement) return;
+        elementId: actionElementId, // Use captured ID
+        undo: function() { // Use function() to ensure 'this' is the action object
+            if (!iframeDocument) {
+                console.error("CRITICAL_ERROR: iframeDocument is not defined in image remove undo action!");
+                return;
+            }
+            const targetElement = iframeDocument.getElementById(this.elementId);
+            if (!targetElement) {
+                console.warn(`Undo Image Remove: Target element with ID '${this.elementId}' not found.`);
+                return;
+            }
 
             if (targetElement.tagName === 'IMG') {
                 if (oldState.src) targetElement.setAttribute('src', oldState.src);
             } else {
                 targetElement.style.backgroundImage = oldState.backgroundImage || '';
-                if (customCssRules[elementId] && oldState.backgroundImage) {
-                    customCssRules[elementId].background = oldState.backgroundImage;
-                    customCssRules[elementId]['background-size'] = oldState.backgroundSize || '';
-                    customCssRules[elementId]['background-repeat'] = oldState.backgroundRepeat || '';
-                    customCssRules[elementId]['background-position'] = oldState.backgroundPosition || '';
+                if (customCssRules[this.elementId] && oldState.backgroundImage) {
+                    customCssRules[this.elementId].background = oldState.backgroundImage;
+                    customCssRules[this.elementId]['background-size'] = oldState.backgroundSize || '';
+                    customCssRules[this.elementId]['background-repeat'] = oldState.backgroundRepeat || '';
+                    customCssRules[this.elementId]['background-position'] = oldState.backgroundPosition || '';
                 }
             }
             targetElement.style.width = oldState.width || '';
@@ -807,7 +830,7 @@ function removeImage() {
             if (oldState.originalFileName) targetElement.dataset.originalFileName = oldState.originalFileName;
             
             // Restore panel state if this is the currently edited element
-            if (currentEditingElement && currentEditingElement.id === elementId) {
+            if (currentEditingElement && currentEditingElement.id === this.elementId) {
                 fileNameDisplay.textContent = oldState.originalFileName || 'No file chosen';
                 imageUrlInput.value = (oldState.src && !oldState.src.startsWith('blob:')) ? oldState.src : (oldState.backgroundImage && !oldState.backgroundImage.includes('blob:')) ? oldState.backgroundImage.slice(5, -2) : '';
                 setSelectOption(imageWidthSelect, oldState.width || 'auto');
@@ -816,19 +839,26 @@ function removeImage() {
             }
             applyCustomCssToIframe();
         },
-        redo: () => {
-            const targetElement = currentIframeDocument.getElementById(elementId);
-            if (!targetElement) return;
+        redo: function() { // Use function() to ensure 'this' is the action object
+            if (!iframeDocument) {
+                console.error("CRITICAL_ERROR: iframeDocument is not defined in image remove redo action!");
+                return;
+            }
+            const targetElement = iframeDocument.getElementById(this.elementId);
+            if (!targetElement) {
+                console.warn(`Redo Image Remove: Target element with ID '${this.elementId}' not found.`);
+                return;
+            }
 
             if (targetElement.tagName === 'IMG') {
                 targetElement.src = '';
             } else {
                 targetElement.style.backgroundImage = 'none';
-                if (customCssRules[elementId]) {
-                    delete customCssRules[elementId]['background-image'];
-                    delete customCssRules[elementId]['background-size'];
-                    delete customCssRules[elementId]['background-repeat'];
-                    delete customCssRules[elementId]['background-position'];
+                if (customCssRules[this.elementId]) {
+                    delete customCssRules[this.elementId]['background-image'];
+                    delete customCssRules[this.elementId]['background-size'];
+                    delete customCssRules[this.elementId]['background-repeat'];
+                    delete customCssRules[this.elementId]['background-position'];
                 }
             }
             targetElement.style.width = 'auto'; 
@@ -837,7 +867,7 @@ function removeImage() {
             delete targetElement.dataset.originalFileName; 
 
             // Reset panel state if this is the currently edited element
-            if (currentEditingElement && currentEditingElement.id === elementId) {
+            if (currentEditingElement && currentEditingElement.id === this.elementId) {
                 imageFileInput.value = ''; 
                 fileNameDisplay.textContent = 'No file chosen';
                 imageUrlInput.value = '';
