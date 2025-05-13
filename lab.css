@@ -1206,6 +1206,69 @@
     color: var(--dark-input-placeholder-color, #868e96);
 }
 
+/* Styling for Panel Headers */
+.color-picker-panel .panel-header,
+.image-editor-panel .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Add some space below the header */
+    padding-bottom: 10px; /* Add some space below the header */
+    border-bottom: 1px solid var(--border-color, #eee); /* Separator line */
+}
+
+.dark-theme .color-picker-panel .panel-header,
+.dark-theme .image-editor-panel .panel-header {
+    border-bottom-color: var(--color-picker-border-dark, #3a3f4b);
+}
+
+.color-picker-panel .panel-header h5,
+.image-editor-panel .panel-header h5 {
+    margin: 0; /* Remove default margin from h5 */
+    font-size: 1.1em;
+    font-weight: 600; /* Make header text a bit bolder */
+    color: var(--text-color, #333);
+}
+
+.dark-theme .color-picker-panel .panel-header h5,
+.dark-theme .image-editor-panel .panel-header h5 {
+    color: var(--color-picker-header-text-dark, #e2e8f0);
+}
+
+/* Basic .btn-close styling (mimicking Bootstrap) */
+.btn-close {
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    padding: .25em .25em;
+    color: #000;
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+    border: 0;
+    border-radius: .25rem;
+    opacity: .5;
+    cursor: pointer;
+}
+.btn-close:hover {
+    color: #000;
+    text-decoration: none;
+    opacity: .75;
+}
+.btn-close:focus {
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25); /* Example focus, adjust as needed */
+    opacity: 1;
+}
+.btn-close:disabled, .btn-close.disabled {
+    pointer-events: none;
+    user-select: none;
+    opacity: .25;
+}
+
+/* Dark theme for .btn-close */
+.dark-theme .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%); /* Makes the black SVG white */
+}
+
 /* Shared button styles for panels */
 .color-picker-panel .panel-buttons .btn-outline-secondary,
 .image-editor-panel .panel-actions .btn-outline-secondary {
