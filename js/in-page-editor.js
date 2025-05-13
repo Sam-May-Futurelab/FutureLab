@@ -305,7 +305,11 @@ function handleTextEditKeyDown(event) {
 // --- END: Text Editing Functions ---
 
 function openColorPicker(element) {
-    if (!colorPickerPanel || !element) return;
+    console.log("[DEBUG] openColorPicker called for:", element ? element.tagName : 'null', "ID:", element ? element.id : 'N/A'); // DEBUG
+    if (!colorPickerPanel || !element) {
+        console.error("[DEBUG] openColorPicker: Panel or element missing. Panel:", colorPickerPanel, "Element:", element); // DEBUG
+        return;
+    }
     currentEditingElement = element; // Ensure this is set
 
     // Ensure ID and update target info
@@ -320,37 +324,48 @@ function openColorPicker(element) {
     }
     
     // Pre-fill color pickers
-    const computedStyle = currentIframeDocument.defaultView.getComputedStyle(element);
-    let bgColor = computedStyle.backgroundColor;
+    if (currentIframeDocument && currentIframeDocument.defaultView) {
+        const computedStyle = currentIframeDocument.defaultView.getComputedStyle(element);
+        let bgColor = computedStyle.backgroundColor;
 
-    if (customCssRules[element.id] && customCssRules[element.id].background) {
-        const customBg = customCssRules[element.id].background;
-        if (customBg.startsWith('linear-gradient')) {
-            const colors = parseGradientColors(customBg);
-            bgColorPicker.value = colors[0] ? rgbToHex(colors[0]) : '#ffffff'; // Default if parse fails
-            if (colors[1]) {
-                bgColorPicker2.value = rgbToHex(colors[1]);
-                useBgGradientCheckbox.checked = true;
-                bgColorPicker2Group.style.display = 'block';
-            } else {
+        if (customCssRules[element.id] && customCssRules[element.id].background) {
+            const customBg = customCssRules[element.id].background;
+            if (customBg.startsWith('linear-gradient')) {
+                const colors = parseGradientColors(customBg);
+                bgColorPicker.value = colors[0] ? rgbToHex(colors[0]) : '#ffffff';
+                if (colors[1]) {
+                    bgColorPicker2.value = rgbToHex(colors[1]);
+                    useBgGradientCheckbox.checked = true;
+                    if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'block';
+                } else {
+                    useBgGradientCheckbox.checked = false;
+                    if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
+                }
+            } else { // Solid color
+                bgColorPicker.value = rgbToHex(customBg);
                 useBgGradientCheckbox.checked = false;
-                bgColorPicker2Group.style.display = 'none';
+                if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
             }
-        } else { // Solid color
-            bgColorPicker.value = rgbToHex(customBg); // Assumes custom rule is a valid color
+        } else { // No custom rule, use computed style
+            bgColorPicker.value = rgbToHex(bgColor);
             useBgGradientCheckbox.checked = false;
-            bgColorPicker2Group.style.display = 'none';
+            if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
         }
-    } else { // No custom rule, use computed style
-        bgColorPicker.value = rgbToHex(bgColor);
-        useBgGradientCheckbox.checked = false;
-        bgColorPicker2Group.style.display = 'none';
+    } else {
+        console.warn("[DEBUG] openColorPicker: currentIframeDocument or defaultView not available for computedStyle.");
     }
 
-    if(imageEditorPanel) imageEditorPanel.classList.remove('active');
-    if(colorPickerPanel) colorPickerPanel.classList.add('active');
+    if(imageEditorPanel) {
+        console.log("[DEBUG] openColorPicker: Removing 'active' from image panel."); // DEBUG
+        imageEditorPanel.classList.remove('active');
+    }
+    if(colorPickerPanel) {
+        console.log("[DEBUG] openColorPicker: Adding 'active' to color panel. Panel classList before:", colorPickerPanel.classList.toString()); // DEBUG
+        colorPickerPanel.classList.add('active');
+        console.log("[DEBUG] openColorPicker: Panel classList after:", colorPickerPanel.classList.toString()); // DEBUG
+    }
     activePanel = 'color';
-    colorPickerPanel.focus(); 
+    // colorPickerPanel.focus(); 
 }
 
 function closeColorPicker() {
@@ -365,7 +380,11 @@ function closeColorPicker() {
 
 // --- START: Image Editor Functions ---
 function openImageEditor(element) {
-    if (!imageEditorPanel || !element) return;
+    console.log("[DEBUG] openImageEditor called for:", element ? element.tagName : 'null', "ID:", element ? element.id : 'N/A'); // DEBUG
+    if (!imageEditorPanel || !element) {
+        console.error("[DEBUG] openImageEditor: Panel or element missing. Panel:", imageEditorPanel, "Element:", element); // DEBUG
+        return;
+    }
     currentEditingElement = element;
 
     ensureId(element);
@@ -376,24 +395,37 @@ function openImageEditor(element) {
         console.warn("imageEditorTargetElementNameSpan not found");
     }
 
-    // Pre-fill URL input if current element is an image or has a background image
+    // Pre-fill URL input
     if (element.tagName === 'IMG') {
         imageUrlInput.value = element.src || '';
     } else {
-        const computedStyle = currentIframeDocument.defaultView.getComputedStyle(element);
-        const bgImage = computedStyle.backgroundImage;
-        if (bgImage && bgImage !== 'none' && bgImage.startsWith('url("')) {
-            imageUrlInput.value = bgImage.slice(5, -2); // Extract URL from url("...")
+        // This case (background image for non-IMG) might be handled by color picker if we simplify, but keeping for now
+        if (currentIframeDocument && currentIframeDocument.defaultView) {
+            const computedStyle = currentIframeDocument.defaultView.getComputedStyle(element);
+            const bgImage = computedStyle.backgroundImage;
+            if (bgImage && bgImage !== 'none' && bgImage.startsWith('url("')) {
+                imageUrlInput.value = bgImage.slice(5, -2);
+            } else {
+                imageUrlInput.value = '';
+            }
         } else {
+            console.warn("[DEBUG] openImageEditor: currentIframeDocument or defaultView not available for computedStyle.");
             imageUrlInput.value = '';
         }
     }
-    imageFileInput.value = ''; // Clear file input
+    if (imageFileInput) imageFileInput.value = ''; // Clear file input
 
-    if(colorPickerPanel) colorPickerPanel.classList.remove('active');
-    if(imageEditorPanel) imageEditorPanel.classList.add('active');
+    if(colorPickerPanel) {
+        console.log("[DEBUG] openImageEditor: Removing 'active' from color panel."); // DEBUG
+        colorPickerPanel.classList.remove('active');
+    }
+    if(imageEditorPanel) {
+        console.log("[DEBUG] openImageEditor: Adding 'active' to image panel. Panel classList before:", imageEditorPanel.classList.toString()); // DEBUG
+        imageEditorPanel.classList.add('active');
+        console.log("[DEBUG] openImageEditor: Panel classList after:", imageEditorPanel.classList.toString()); // DEBUG
+    }
     activePanel = 'image';
-    imageEditorPanel.focus();
+    // imageEditorPanel.focus();
 }
 
 function closeImageEditor() {

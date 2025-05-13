@@ -297,7 +297,7 @@
     border: 1px solid var(--border-color, #ddd);
     padding: 15px; /* Added padding */
     z-index: 1005; /* Ensure it's above other elements like the edit mode instructions */
-    display: none; /* Initially hidden, JS will change to flex */
+    display: flex; /* ADDED to ensure it's a flex container by default, visibility controlled by opacity/transform */
     flex-direction: column;
     gap: 15px;
     width: 280px;
@@ -311,29 +311,7 @@
 .color-picker-panel.active {
     transform: translateX(0);
     opacity: 1;
-}
-
-.color-picker-panel h4 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.1em;
-    color: var(--text-color, #333);
-    border-bottom: 1px solid var(--border-color, #eee);
-    padding-bottom: 10px;
-}
-
-.color-picker-panel .target-info {
-    font-size: 0.85em;
-    color: var(--muted-text-color, #555);
-    margin-bottom: 15px;
-    padding: 8px;
-    background-color: var(--light-gray-bg, #f9f9f9);
-    border-radius: 6px;
-    border: 1px solid var(--border-color, #eee);
-}
-
-.color-picker-panel .target-info strong {
-    color: var(--primary-color, #4361ee);
+    /* No need to change display here if it's already flex */
 }
 
 /* Styles for the new gradient section within the color picker panel */
@@ -948,17 +926,18 @@
 /* Image Editor Panel */
 .image-editor-panel {
     position: fixed;
-    bottom: 20px;
+    top: 150px; /* Consistent with color picker */
     right: 20px;
-    width: 300px;
-    background-color: var(--background-color-light);
-    color: var(--text-color-light);
-    border: 1px solid var(--border-color-light);
-    border-radius: 8px;
+    background-color: var(--background-color, #fff);
+    border: 1px solid var(--border-color, #ddd);
     padding: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    z-index: 1001; /* Ensure it's above the iframe */
-    font-family: 'Inter', sans-serif;
+    z-index: 1005; 
+    display: flex; /* ADDED to ensure it's a flex container by default, visibility controlled by opacity/transform */
+    flex-direction: column;
+    gap: 15px;
+    width: 280px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
     transform: translateX(100%); /* Initially off-screen */
     opacity: 0; /* Initially transparent */
@@ -967,6 +946,7 @@
 .image-editor-panel.active {
     transform: translateX(0);
     opacity: 1;
+    /* No need to change display here if it's already flex */
 }
 
 .dark-theme .image-editor-panel {
