@@ -560,6 +560,33 @@ function closeColorPicker() {
     activePanel = null;
 }
 
+// Helper function to set select option
+function setSelectOption(selectElement, value) {
+    if (!selectElement) return;
+    let optionFound = false;
+    for (let i = 0; i < selectElement.options.length; i++) {
+        if (selectElement.options[i].value === value || 
+            (selectElement.options[i].value === 'auto' && (value === '' || value === null || value === 'auto')) ||
+            (selectElement.options[i].value === 'initial' && (value === '' || value === null || value === 'initial')) ||
+            (selectElement.options[i].value === 'fill' && (value === '' || value === null || value === 'fill'))
+           ) {
+            selectElement.selectedIndex = i;
+            optionFound = true;
+            break;
+        }
+    }
+    if (!optionFound) {
+        // If the exact value isn't found, try to find a common default or set to auto/first
+        const autoOption = Array.from(selectElement.options).find(opt => opt.value.toLowerCase() === 'auto');
+        if (autoOption) {
+            selectElement.value = autoOption.value;
+        } else if (selectElement.options.length > 0) {
+            selectElement.selectedIndex = 0; // Default to the first option
+        }
+    }
+}
+
+// --- START: Image Editor Functions ---
 function openImageEditor(element) {
     console.log("[DEBUG] openImageEditor called for:", element ? element.tagName : 'null', "ID:", element ? element.id : 'N/A'); // DEBUG
     if (!element) return;
