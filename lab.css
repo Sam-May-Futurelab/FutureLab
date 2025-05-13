@@ -426,6 +426,7 @@
 .color-picker-panel .panel-buttons #closeColorPickerBtn i {
     font-size: 1.1em; /* Adjust icon size if needed */
     vertical-align: middle;
+    margin-right: 5px;
 }
 
 .dark-theme #color-picker-panel .panel-buttons #closeColorPickerBtn {
@@ -934,6 +935,165 @@
 .dark-theme .btn-warning:hover {
     background-color: var(--warning-color-hover-dark-bg, #e0a800);
     border-color: var(--warning-color-hover-dark-bg, #e0a800);
+}
+
+/* Image Editor Panel */
+.image-editor-panel {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: var(--background-color-light);
+    color: var(--text-color-light);
+    border: 1px solid var(--border-color-light);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1001; /* Ensure it's above the iframe */
+    font-family: 'Inter', sans-serif;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.dark-theme .image-editor-panel {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+.image-editor-panel h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.dark-theme .image-editor-panel h4 {
+    color: var(--primary-color-dark-theme);
+}
+
+.image-editor-panel .target-info {
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    color: var(--text-color-light-secondary);
+}
+
+.dark-theme .image-editor-panel .target-info {
+    color: var(--text-color-dark-secondary);
+}
+
+.image-editor-panel .target-info strong {
+    font-weight: 600;
+    color: var(--text-color-light);
+}
+
+.dark-theme .image-editor-panel .target-info strong {
+    color: var(--text-color-dark);
+}
+
+.image-editor-panel .picker-group {
+    margin-bottom: 15px;
+}
+
+.image-editor-panel .picker-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+.image-editor-panel input[type="file"],
+.image-editor-panel input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color-light);
+    border-radius: 4px;
+    background-color: var(--input-bg-light);
+    color: var(--text-color-light);
+    font-size: 0.9em;
+    box-sizing: border-box; /* Ensures padding doesn't expand width */
+}
+
+.dark-theme .image-editor-panel input[type="file"],
+.dark-theme .image-editor-panel input[type="text"] {
+    border-color: var(--border-color-dark);
+    background-color: var(--input-bg-dark);
+    color: var(--text-color-dark);
+}
+
+.image-editor-panel input[type="file"]:focus,
+.image-editor-panel input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-color-focus);
+}
+
+.dark-theme .image-editor-panel input[type="file"]:focus,
+.dark-theme .image-editor-panel input[type="text"]:focus {
+    border-color: var(--primary-color-dark-theme);
+    box-shadow: 0 0 0 2px var(--primary-color-dark-theme-focus);
+}
+
+.image-editor-panel .panel-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.image-editor-panel .panel-buttons .btn {
+    flex-grow: 1;
+    padding: 8px 12px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.image-editor-panel .btn-link {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: none;
+    padding: 0;
+    text-decoration: underline;
+}
+.dark-theme .image-editor-panel .btn-link {
+    color: var(--primary-color-dark-theme);
+}
+
+/* Ensure panel buttons match theme */
+.dark-theme #image-editor-panel .panel-buttons .btn-primary {
+    background-color: var(--primary-color-dark-theme);
+    border-color: var(--primary-color-dark-theme);
+    color: #fff;
+}
+.dark-theme #image-editor-panel .panel-buttons .btn-primary:hover {
+    background-color: var(--primary-color-dark-theme-hover);
+    border-color: var(--primary-color-dark-theme-hover);
+}
+.dark-theme #image-editor-panel .panel-buttons .btn-secondary {
+    background-color: var(--secondary-button-bg-dark);
+    border-color: var(--secondary-button-border-dark);
+    color: var(--secondary-button-text-dark);
+}
+.dark-theme #image-editor-panel .panel-buttons .btn-secondary:hover {
+    background-color: var(--secondary-button-bg-hover-dark);
+    border-color: var(--secondary-button-border-hover-dark);
+}
+.dark-theme #image-editor-panel .panel-buttons .btn-danger {
+    background-color: var(--danger-color-dark);
+    border-color: var(--danger-color-dark);
+    color: #fff;
+}
+.dark-theme #image-editor-panel .panel-buttons .btn-danger:hover {
+    background-color: var(--danger-color-hover-dark);
+    border-color: var(--danger-color-hover-dark);
+}
+
+/* Hide panels by default */
+.color-picker-panel.hidden,
+.image-editor-panel.hidden {
+    display: none;
 }
 
 /* Responsive adjustments */

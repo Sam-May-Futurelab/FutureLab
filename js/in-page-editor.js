@@ -2,612 +2,344 @@
 
 let isEditModeActive = false;
 let currentIframeDocument = null;
-let currentEditingElementForColor = null;
-let colorPickerTargetInfo = null; // Reference to the color picker target info div
-const customCssRules = {}; // Stores element.id -> { background: '...' }
-let currentlyHighlightedElement = null; // Added to track highlighted element
-const HIGHLIGHT_STYLE = '2px dashed #007bff'; // Style for the highlight
-let customStyleTagId = 'in-page-editor-custom-styles'; // Added
+let currentEditingElement = null; // Renamed from currentEditingElementForColor for broader use
+let colorPickerTargetInfo = null; 
+const customCssRules = {}; 
+let currentlyHighlightedElement = null; 
+const HIGHLIGHT_STYLE = '2px dashed #007bff'; 
+let customStyleTagId = 'in-page-editor-custom-styles';
+
+// --- START: Panel State Management ---
+let activePanel = null; // 'color' or 'image'
+// --- END: Panel State Management ---
 
 // Color Picker Panel elements
 let colorPickerPanel, bgColorPicker, applyColorsBtn, resetColorsBtn, closeColorPickerBtn;
-let useBgGradientCheckbox, bgColorPicker2Group, bgColorPicker2; // Added for gradient
+let useBgGradientCheckbox, bgColorPicker2Group, bgColorPicker2; 
 let recentBgColors1 = [];
 let recentBgColors2 = [];
 const MAX_RECENT_COLORS = 5;
 
-// Initialize references to color picker panel elements from the main document
-function initInPageEditorControls(panelElement, targetInfoElement) { // SIGNATURE UPDATED
-    colorPickerPanel = panelElement;
-    colorPickerTargetInfo = targetInfoElement; // CORRECTLY ASSIGNED
+// --- START: Image Editor Panel elements ---
+let imageEditorPanel, imageFileInput, imageUrlInput, applyImageBtn, removeImageBtn, closeImageEditorBtn;
+let imageEditorTargetElementNameSpan; // To show which element is being edited for image
+let switchToImageEditorBtn, switchToColorEditorBtn; // Buttons to switch between panels
+// --- END: Image Editor Panel elements ---
 
-    if (!colorPickerPanel) {
-        console.error("InPageEditor: Color picker panel element (colorPickerPanel) not provided to initInPageEditorControls.");
-        return;
-    }
-    if (!colorPickerTargetInfo) {
-        // Though this is passed, it's good to be aware if it's missing in lab.html
-        console.warn("InPageEditor: Target info element (colorPickerTargetInfo) not provided to initInPageEditorControls.");
-    }
 
-    // Query for child elements from the provided panelElement
+// Initialize references to panel elements from the main document
+function initInPageEditorControls(
+    colorPanelElement, 
+    colorTargetInfoElement,
+    imagePanelElement // New parameter for the image editor panel
+) {
+    colorPickerPanel = colorPanelElement;
+    colorPickerTargetInfo = colorTargetInfoElement;
+    imageEditorPanel = imagePanelElement; // Initialize image panel
+
+    if (!colorPickerPanel) console.error("Color picker panel not found in initInPageEditorControls");
+    if (!colorPickerTargetInfo) console.error("Color picker target info div not found in initInPageEditorControls");
+    if (!imageEditorPanel) console.error("Image editor panel not found in initInPageEditorControls");
+
+    // Query for Color Picker child elements
     bgColorPicker = colorPickerPanel.querySelector('#bgColorPicker');
     applyColorsBtn = colorPickerPanel.querySelector('#applyColorsBtn');
-    resetColorsBtn = colorPickerPanel.querySelector('#resetColorsBtn'); // Changed from removeCustomColorBtn and updated ID
+    resetColorsBtn = colorPickerPanel.querySelector('#resetColorsBtn');
     closeColorPickerBtn = colorPickerPanel.querySelector('#closeColorPickerBtn');
-
-    // New gradient elements
     useBgGradientCheckbox = colorPickerPanel.querySelector('#useBgGradient');
     bgColorPicker2Group = colorPickerPanel.querySelector('#bgColorPicker2-group');
     bgColorPicker2 = colorPickerPanel.querySelector('#bgColorPicker2');
+    switchToImageEditorBtn = colorPickerPanel.querySelector('#switch-to-image-editor');
 
-    // Debugging logs to ensure elements are found (can be removed after verification)
-    if (!bgColorPicker) console.error("InPageEditor: bgColorPicker (#bgColorPicker) not found in panel.");
-    if (!applyColorsBtn) console.error("InPageEditor: applyColorsBtn (#applyColorsBtn) not found in panel.");
-    if (!resetColorsBtn) console.error("resetColorsBtn (#resetColorsBtn) not found in panel."); // Changed from removeCustomColorBtn
-    if (!closeColorPickerBtn) console.error("closeColorPickerBtn (#closeColorPickerBtn) not found in panel.");
-    if (!useBgGradientCheckbox) console.error("InPageEditor: useBgGradientCheckbox (#useBgGradient) not found in panel.");
-    if (!bgColorPicker2Group) console.error("InPageEditor: bgColorPicker2Group (#bgColorPicker2-group) not found in panel.");
-    if (!bgColorPicker2) console.error("InPageEditor: bgColorPicker2 (#bgColorPicker2) not found in panel.");
+    // Query for Image Editor child elements
+    if (imageEditorPanel) {
+        imageFileInput = imageEditorPanel.querySelector('#image-file-input');
+        imageUrlInput = imageEditorPanel.querySelector('#image-url-input');
+        applyImageBtn = imageEditorPanel.querySelector('#apply-image-btn');
+        removeImageBtn = imageEditorPanel.querySelector('#remove-image-btn');
+        closeImageEditorBtn = imageEditorPanel.querySelector('#close-image-editor-btn');
+        imageEditorTargetElementNameSpan = imageEditorPanel.querySelector('#imageEditorTargetElementName');
+        switchToColorEditorBtn = imageEditorPanel.querySelector('#switch-to-color-editor');
 
-    if (applyColorsBtn) applyColorsBtn.addEventListener('click', applyColors);
-    if (resetColorsBtn) resetColorsBtn.addEventListener('click', removeCustomColors); // Changed from removeCustomColorBtn
-    if (closeColorPickerBtn) {
-        closeColorPickerBtn.addEventListener('click', closeColorPicker); // Corrected listener
+        if (!imageFileInput) console.error("Image file input not found");
+        if (!imageUrlInput) console.error("Image URL input not found");
+        if (!applyImageBtn) console.error("Apply image button not found");
+        if (!removeImageBtn) console.error("Remove image button not found");
+        if (!closeImageEditorBtn) console.error("Close image editor button not found");
+        if (!imageEditorTargetElementNameSpan) console.error("Image editor target element name span not found");
+        if (!switchToColorEditorBtn) console.error("Switch to color editor button not found");
     }
-
-    // Event listener for the gradient checkbox
+    
+    // Event listeners for Color Picker
+    if (applyColorsBtn) applyColorsBtn.addEventListener('click', applyColors);
+    if (resetColorsBtn) resetColorsBtn.addEventListener('click', removeCustomColors);
+    if (closeColorPickerBtn) closeColorPickerBtn.addEventListener('click', closeColorPicker);
     if (useBgGradientCheckbox && bgColorPicker2Group) {
         useBgGradientCheckbox.addEventListener('change', () => {
-            console.log('[InPageEditor] Gradient checkbox current checked state before change handler logic:', useBgGradientCheckbox.checked);
-            bgColorPicker2Group.style.display = useBgGradientCheckbox.checked ? 'flex' : 'none';
-            const bgLabel = colorPickerPanel.querySelector('#bgColorPickerLabel');
-            if (bgLabel) {
-                bgLabel.textContent = useBgGradientCheckbox.checked ? 'Background Color 1:' : 'Background Color:';
-            }
-            console.log('[InPageEditor] Gradient checkbox changed. New display for bgColorPicker2Group:', bgColorPicker2Group.style.display);
+            bgColorPicker2Group.style.display = useBgGradientCheckbox.checked ? 'block' : 'none';
         });
     }
 
-    // Load recent colors from localStorage
+    // Event listeners for Image Editor
+    if (applyImageBtn) applyImageBtn.addEventListener('click', applyImage);
+    if (removeImageBtn) removeImageBtn.addEventListener('click', removeImage);
+    if (closeImageEditorBtn) closeImageEditorBtn.addEventListener('click', closeImageEditor);
+    
+    // Event listeners for switching panels
+    if (switchToImageEditorBtn) {
+        switchToImageEditorBtn.addEventListener('click', () => {
+            if (currentEditingElement) {
+                openImageEditor(currentEditingElement);
+            }
+        });
+    }
+    if (switchToColorEditorBtn) {
+        switchToColorEditorBtn.addEventListener('click', () => {
+            if (currentEditingElement) {
+                openColorPicker(currentEditingElement);
+            }
+        });
+    }
+
     loadRecentColors();
-    updateRecentColorsDatalist('recentBgColorsList', recentBgColors1); // Changed recentBgColorsList1 to recentBgColorsList
+    updateRecentColorsDatalist('recentBgColorsList', recentBgColors1);
     updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
 
-    // Add event listeners to update recent colors when a color is chosen
-    if (bgColorPicker) {
-        bgColorPicker.addEventListener('change', () => addRecentColor(bgColorPicker.value, 'recentBgColors1'));
-    }
-    if (bgColorPicker2) {
-        bgColorPicker2.addEventListener('change', () => addRecentColor(bgColorPicker2.value, 'recentBgColors2'));
-    }
+    // Hide both panels initially
+    if(colorPickerPanel) colorPickerPanel.classList.add('hidden');
+    if(imageEditorPanel) imageEditorPanel.classList.add('hidden');
 }
 window.initInPageEditorControls = initInPageEditorControls;
 
-// Function to generate CSS from customCssRules
-function getCustomCss() {
-    let cssString = "";
-    if (!currentIframeDocument) return cssString;
-
-    for (const id in customCssRules) {
-        if (Object.prototype.hasOwnProperty.call(customCssRules, id)) {
-            // Ensure the element still exists in the current iframe document
-            if (currentIframeDocument.getElementById(id)) {
-                const rules = customCssRules[id];
-                cssString += `#${id} {\n`;
-                if (rules.backgroundImage) { // Check for gradient first
-                    cssString += `  background-image: ${rules.backgroundImage} !important;\n`;
-                    cssString += `  background-color: transparent !important;\n`; // Ensure solid bg doesn't interfere
-                } else if (rules.backgroundColor) {
-                    cssString += `  background-color: ${rules.backgroundColor} !important;\n`;
-                }
-                cssString += `}\n`;
-            }
-        }
-    }
-    return cssString;
-}
-window.getCustomCss = getCustomCss; // Expose for lab.js download functionality
-
-// Function to apply the custom CSS to a <style> tag in the iframe
-function applyCustomCssToIframe() {
-    if (!currentIframeDocument || !currentIframeDocument.head) {
-        return;
-    }
-
-    let styleTag = currentIframeDocument.getElementById(customStyleTagId);
-    if (!styleTag) {
-        styleTag = currentIframeDocument.createElement('style');
-        styleTag.id = customStyleTagId;
-        styleTag.type = 'text/css';
-        currentIframeDocument.head.appendChild(styleTag);
-    }
-    const cssContent = getCustomCss();
-    if (styleTag.innerHTML !== cssContent) { // Only update if changed
-        styleTag.innerHTML = cssContent;
-    }
-}
-
-// Function to apply highlight
-function applyHighlight(element) {
-    if (currentlyHighlightedElement && currentlyHighlightedElement !== element) {
-        removeHighlight(currentlyHighlightedElement);
-    }
-    if (element) {
-        element.style.outline = HIGHLIGHT_STYLE;
-        element.style.outlineOffset = '2px'; // Prevents overlap with element's own border
-        currentlyHighlightedElement = element;
-    }
-}
-
-// Function to remove highlight
-function removeHighlight(element) {
-    if (element) {
-        element.style.outline = '';
-        element.style.outlineOffset = '';
-    }
-    if (currentlyHighlightedElement === element) {
-        currentlyHighlightedElement = null;
-    }
-}
-
 // Event handler for clicks inside the iframe
 function handleIframeElementClick(event) {
-    if (!isEditModeActive || !currentIframeDocument) {
-        return;
+    event.preventDefault();
+    event.stopPropagation();
+
+    let el = event.target;
+    if (!el) return;
+
+    currentEditingElement = el; // Keep track of the raw clicked element
+
+    if (currentlyHighlightedElement && currentlyHighlightedElement !== el) {
+        removeHighlight(currentlyHighlightedElement);
     }
+    applyHighlight(el);
+    currentlyHighlightedElement = el;
 
-    const targetElement = event.target;
-
-    // Ignore clicks on the color picker panel itself (it's in the parent document)
-    if (targetElement.closest && targetElement.closest('#color-picker-panel')) {
-        return;
+    // Determine which editor to open based on element type or existing styles
+    if (el.tagName === 'IMG') {
+        openImageEditor(el);
+    } else {
+        // For other elements, default to color picker, but allow switching
+        openColorPicker(el); 
     }
-    
-    // ALT-CLICK: Force open color picker for the clicked element
-    if (event.altKey) {
-        if (targetElement && targetElement !== currentIframeDocument.body && targetElement !== currentIframeDocument.documentElement) {
-            applyHighlight(targetElement); 
-            openColorPicker(targetElement);
-            event.preventDefault();
-            event.stopPropagation();
-            return;
-        }
-    }
-
-    // Ignore clicks on common interactive form elements for this flow unless they are specifically designated as editable (e.g. button text)
-    // This check is simplified; specific handling for A and BUTTON tags happens later.
-    if (targetElement.closest('input, textarea, select')) { 
-        if (!targetElement.closest('input[type=button], input[type=submit]')) { // Allow button-like inputs to be potentially styled/edited
-             return;
-        }
-    }
-    
-    // If already content editable (e.g., user clicked into an already focused editable element from our system)
-    let el = targetElement;
-    let isNestedInActiveEditable = false;
-    while(el && el !== currentIframeDocument.body) {
-        // Check if it's an *active* edit session initiated by this script
-        if (el.isContentEditable && el.style.outline && el.style.outline.includes('dashed')) { 
-            isNestedInActiveEditable = true;
-            break;
-        }
-        el = el.parentElement;
-    }
-    if (isNestedInActiveEditable) {
-        return; // Allow normal editing within that element
-    }
-
-    const textEditableTags = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'A', 'LI', 'TD', 'TH', 'FIGCAPTION', 'BUTTON', 'LABEL', 'PRE', 'BLOCKQUOTE', 'DT', 'DD'];
-    const structuralOrStylableTags = ['DIV', 'SECTION', 'ARTICLE', 'ASIDE', 'HEADER', 'FOOTER', 'MAIN', 'NAV', 'FORM', 'UL', 'OL', 'TABLE', 'THEAD', 'TBODY', 'TR', 'FIGURE'];
-
-    // PRIORITY 1: Text Editing for specific tags or simple DIVs with text
-    if (textEditableTags.includes(targetElement.tagName) || 
-        (targetElement.tagName === 'DIV' && !targetElement.children.length && targetElement.textContent && targetElement.textContent.trim().length > 0)) {
-        
-        if (targetElement.isContentEditable && targetElement.style.outline.includes('dashed')) {
-            // Already actively being edited by us, do nothing extra, let user type.
-            return;
-        }
-        
-        // Make it contentEditable
-        applyHighlight(targetElement); 
-        targetElement.contentEditable = 'true';
-        targetElement.focus();
-        
-        // Add a blur listener to clean up
-        targetElement.addEventListener('blur', function tempBlurHandler() {
-            targetElement.contentEditable = 'false';
-            removeHighlight(targetElement);
-            if (typeof window.notifyUnsavedChange === 'function') {
-                window.notifyUnsavedChange();
-            }
-            targetElement.removeEventListener('blur', tempBlurHandler); // Remove self
-        });
-
-        event.preventDefault(); 
-        event.stopPropagation();
-        return;
-    } 
-    // PRIORITY 2: Color Picker for structural elements or elements with class/id
-    else if (
-        targetElement !== currentIframeDocument.body && 
-        targetElement !== currentIframeDocument.documentElement &&
-        (structuralOrStylableTags.includes(targetElement.tagName) ||
-         (targetElement.classList && targetElement.classList.length > 0) ||
-         (targetElement.id && targetElement.id !== 'page-preview' && targetElement.id !== customStyleTagId) // customStyleTagId is id of <style> tag
-        )
-    ) {
-        applyHighlight(targetElement); 
-        openColorPicker(targetElement);
-        event.preventDefault();
-        event.stopPropagation();
-        return;
-    }
-
-    // If a click didn't result in an action & a different element is highlighted, clear old highlight.
-    // This is a soft reset for context.
-    if (currentlyHighlightedElement && currentlyHighlightedElement !== targetElement) {
-        // Ensure the click wasn't inside the color picker panel itself
-        let mainDocColorPicker = document.getElementById('color-picker-panel'); // Get panel from main doc
-        if (!mainDocColorPicker || !mainDocColorPicker.contains(event.target)) {
-             removeHighlight(currentlyHighlightedElement);
-        }
-    }
-}
-
-function attachEditListeners(doc) {
-    if (!doc || !doc.body) {
-        return;
-    }
-    doc.body.addEventListener('click', handleIframeElementClick, true);
-}
-
-function detachEditListeners(doc) {
-    if (!doc || !doc.body) {
-        return;
-    }
-    doc.body.removeEventListener('click', handleIframeElementClick, true);
-}
-
-// Function to set the status of edit mode
-function setInPageEditMode(isActive, iframeDoc = null) {
-    const previouslyActive = isEditModeActive;
-    const previousDoc = currentIframeDocument;
-
-    isEditModeActive = isActive;
-    currentIframeDocument = iframeDoc; 
-
-    if (previousDoc && previouslyActive && previousDoc !== currentIframeDocument) {
-        detachEditListeners(previousDoc);
-    }
-
-    if (currentIframeDocument && isEditModeActive) {
-        if (!previouslyActive || previousDoc !== currentIframeDocument) {
-            attachEditListeners(currentIframeDocument);
-        }
-        applyCustomCssToIframe(); 
-    } else if (isEditModeActive && !currentIframeDocument) {
-    }
-
-    if (!isActive) {
-        if (currentlyHighlightedElement) {
-            removeHighlight(currentlyHighlightedElement);
-        }
-        if (colorPickerPanel && colorPickerPanel.style.display !== 'none') {
-            closeColorPicker();
-        }
-    }
-}
-window.setInPageEditMode = setInPageEditMode;
-
-function ensureId(element) {
-    if (!element.id) {
-        element.id = 'custom-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-    }
-    return element.id;
 }
 
 function openColorPicker(element) {
-    if (!colorPickerPanel || !bgColorPicker || !useBgGradientCheckbox || !bgColorPicker2 || !bgColorPicker2Group) {
-        console.error("[InPageEditor] Color picker panel or essential color inputs (including gradient) not initialized.");
-        return;
-    }
-    currentEditingElementForColor = element;
-    ensureId(currentEditingElementForColor); 
-    
-    // Debugging for "N/A" issue
-    console.log("InPageEditor: openColorPicker called for element:", element);
-    console.log("InPageEditor: colorPickerTargetInfo element:", colorPickerTargetInfo);
+    if (!colorPickerPanel || !element) return;
+    currentEditingElement = element; // Ensure this is set
 
+    // Ensure ID and update target info
+    ensureId(element);
+    const targetName = element.tagName.toLowerCase() + (element.id ? `#${element.id}` : '');
     if (colorPickerTargetInfo) {
-        let targetName = currentEditingElementForColor.tagName.toLowerCase();
-        if (currentEditingElementForColor.id && !currentEditingElementForColor.id.startsWith('custom-')) {
-            targetName += `#${currentEditingElementForColor.id}`;
-        } else if (currentEditingElementForColor.classList && currentEditingElementForColor.classList.length > 0) {
-            targetName += `.${Array.from(currentEditingElementForColor.classList).join('.')}`;
-        }
-        console.log("InPageEditor: Constructed targetName for display:", targetName);
-
-        const spanElement = colorPickerTargetInfo.querySelector('span');
-        console.log("InPageEditor: Found spanElement for target info:", spanElement);
-        if (spanElement) {
-            spanElement.textContent = targetName;
-        } else {
-            console.error("InPageEditor: Could not find span element within colorPickerTargetInfo to display target name.");
-        }
+        const targetElementNameSpan = colorPickerTargetInfo.querySelector('#colorPickerTargetElementName');
+        if (targetElementNameSpan) targetElementNameSpan.textContent = targetName;
+        else console.warn("colorPickerTargetElementName span not found in colorPickerTargetInfo");
     } else {
-        console.warn("InPageEditor: colorPickerTargetInfo is null or undefined in openColorPicker. Target name won't be displayed.");
+        console.warn("colorPickerTargetInfo div not found");
     }
+    
+    // Pre-fill color pickers
+    const computedStyle = currentIframeDocument.defaultView.getComputedStyle(element);
+    let bgColor = computedStyle.backgroundColor;
 
-    const iframeWindow = currentEditingElementForColor.ownerDocument.defaultView;
-    if (!iframeWindow) {
-        return; 
-    }
-
-    const computedStyle = iframeWindow.getComputedStyle(currentEditingElementForColor);
-    if (!computedStyle) {
-        return; 
-    }
-
-    // Reset gradient checkbox and hide second color picker initially
-    useBgGradientCheckbox.checked = false;
-    bgColorPicker2Group.style.display = 'none';
-    console.log('[InPageEditor] openColorPicker: Initialized useBgGradientCheckbox.checked to false.');
-
-    let currentBgColor = '#ffffff'; // Default
-
-    console.log('[InPageEditor] openColorPicker: Computed backgroundImage for element:', computedStyle.backgroundImage);
-
-    // Check for existing linear gradient on background-image
-    const existingGradient = computedStyle.backgroundImage;
-    if (existingGradient && existingGradient.startsWith('linear-gradient')) {
-        const colors = parseGradientColors(existingGradient);
-        console.log('[InPageEditor] openColorPicker: Parsed gradient colors:', colors);
-        if (colors.length >= 2) {
-            currentBgColor = rgbToHex(colors[0]);
-            bgColorPicker2.value = rgbToHex(colors[1]);
-            useBgGradientCheckbox.checked = true;
-            bgColorPicker2Group.style.display = 'flex';
-            console.log('[InPageEditor] openColorPicker: Gradient detected and applied. useBgGradientCheckbox.checked:', useBgGradientCheckbox.checked);
-        } else if (colors.length === 1) { // Fallback if gradient parsing is weird
-            currentBgColor = rgbToHex(colors[0]);
-            console.log('[InPageEditor] openColorPicker: Partial gradient (1 color) detected.');
+    if (customCssRules[element.id] && customCssRules[element.id].background) {
+        const customBg = customCssRules[element.id].background;
+        if (customBg.startsWith('linear-gradient')) {
+            const colors = parseGradientColors(customBg);
+            bgColorPicker.value = colors[0] ? rgbToHex(colors[0]) : '#ffffff'; // Default if parse fails
+            if (colors[1]) {
+                bgColorPicker2.value = rgbToHex(colors[1]);
+                useBgGradientCheckbox.checked = true;
+                bgColorPicker2Group.style.display = 'block';
+            } else {
+                useBgGradientCheckbox.checked = false;
+                bgColorPicker2Group.style.display = 'none';
+            }
+        } else { // Solid color
+            bgColorPicker.value = rgbToHex(customBg); // Assumes custom rule is a valid color
+            useBgGradientCheckbox.checked = false;
+            bgColorPicker2Group.style.display = 'none';
         }
-    } else if (computedStyle.backgroundColor) {
-        currentBgColor = rgbToHex(computedStyle.backgroundColor);
+    } else { // No custom rule, use computed style
+        bgColorPicker.value = rgbToHex(bgColor);
+        useBgGradientCheckbox.checked = false;
+        bgColorPicker2Group.style.display = 'none';
     }
 
-    console.log('[InPageEditor] openColorPicker: State of useBgGradientCheckbox.checked before final UI update:', useBgGradientCheckbox.checked);
-    console.log('[InPageEditor] openColorPicker: bgColorPicker2Group display state:', bgColorPicker2Group.style.display);
-
-    if (!isValidHex(currentBgColor) || currentBgColor === '#000000' && (computedStyle.backgroundColor === 'rgba(0, 0, 0, 0)' || computedStyle.backgroundColor === 'transparent')) {
-        currentBgColor = '#ffffff'; 
-    }
-    
-    bgColorPicker.value = currentBgColor;
-    
-    // Ensure second picker has a valid default if not set by gradient
-    if (!useBgGradientCheckbox.checked) {
-        bgColorPicker2.value = '#ffffff'; // Default or derive from bgColor1
-    }
-
-    // Update datalists for recent colors every time picker is opened
-    updateRecentColorsDatalist('recentBgColorsList', recentBgColors1); // Changed recentBgColorsList1 to recentBgColorsList
-    updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
-    
-    // Associate datalists with inputs
-    if (bgColorPicker) bgColorPicker.setAttribute('list', 'recentBgColorsList'); // Changed recentBgColorsList1 to recentBgColorsList
-    if (bgColorPicker2) bgColorPicker2.setAttribute('list', 'recentBgColorsList2');
-
-    // Update label for bgColorPicker based on checkbox state
-    const bgLabel = colorPickerPanel.querySelector('#bgColorPickerLabel');
-    if (bgLabel && useBgGradientCheckbox) {
-        bgLabel.textContent = useBgGradientCheckbox.checked ? 'Background Color 1:' : 'Background Color:';
-    }
-
-    colorPickerPanel.style.display = 'flex'; // Ensure display is set to flex
+    if(imageEditorPanel) imageEditorPanel.classList.add('hidden');
+    if(colorPickerPanel) colorPickerPanel.classList.remove('hidden');
+    activePanel = 'color';
+    colorPickerPanel.focus(); 
 }
 
 function closeColorPicker() {
-    if (colorPickerPanel) {
-        colorPickerPanel.style.display = 'none';
+    if (colorPickerPanel) colorPickerPanel.classList.add('hidden');
+    if (currentlyHighlightedElement) {
+        removeHighlight(currentlyHighlightedElement);
+        currentlyHighlightedElement = null;
     }
-    currentEditingElementForColor = null;
-    document.removeEventListener('click', handleFocusOutColorPicker, true);
-    if (colorPickerPanel) {
-        colorPickerPanel.dataset.focusOutListenerAttached = 'false';
+    currentEditingElement = null;
+    activePanel = null;
+}
+
+// --- START: Image Editor Functions ---
+function openImageEditor(element) {
+    if (!imageEditorPanel || !element) return;
+    currentEditingElement = element;
+
+    ensureId(element);
+    const targetName = element.tagName.toLowerCase() + (element.id ? `#${element.id}` : '');
+    if (imageEditorTargetElementNameSpan) {
+        imageEditorTargetElementNameSpan.textContent = targetName;
+    } else {
+        console.warn("imageEditorTargetElementNameSpan not found");
+    }
+
+    // Pre-fill URL input if current element is an image or has a background image
+    if (element.tagName === 'IMG') {
+        imageUrlInput.value = element.src || '';
+    } else {
+        const computedStyle = currentIframeDocument.defaultView.getComputedStyle(element);
+        const bgImage = computedStyle.backgroundImage;
+        if (bgImage && bgImage !== 'none' && bgImage.startsWith('url("')) {
+            imageUrlInput.value = bgImage.slice(5, -2); // Extract URL from url("...")
+        } else {
+            imageUrlInput.value = '';
+        }
+    }
+    imageFileInput.value = ''; // Clear file input
+
+    if(colorPickerPanel) colorPickerPanel.classList.add('hidden');
+    if(imageEditorPanel) imageEditorPanel.classList.remove('hidden');
+    activePanel = 'image';
+    imageEditorPanel.focus();
+}
+
+function closeImageEditor() {
+    if (imageEditorPanel) imageEditorPanel.classList.add('hidden');
+    if (currentlyHighlightedElement) {
+        removeHighlight(currentlyHighlightedElement);
+        currentlyHighlightedElement = null;
+    }
+    currentEditingElement = null;
+    activePanel = null;
+}
+
+function applyImage() {
+    if (!currentEditingElement || !currentIframeDocument) return;
+    ensureId(currentEditingElement);
+
+    const file = imageFileInput.files[0];
+    const url = imageUrlInput.value.trim();
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            setImageSource(currentEditingElement, e.target.result);
+        };
+        reader.readAsDataURL(file);
+    } else if (url) {
+        setImageSource(currentEditingElement, url);
+    } else {
+        return; 
+    }
+    if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+}
+
+function setImageSource(element, src) {
+    if (element.tagName === 'IMG') {
+        element.setAttribute('src', src);
+    } else {
+        if (!customCssRules[element.id]) {
+            customCssRules[element.id] = {};
+        }
+        customCssRules[element.id].background = src ? `url("${src}")` : 'none';
+        customCssRules[element.id]['background-size'] = 'cover'; 
+        customCssRules[element.id]['background-position'] = 'center'; 
+        customCssRules[element.id]['background-repeat'] = 'no-repeat'; 
+        applyCustomCssToIframe();
     }
 }
 
-function handleFocusOutColorPicker(event) {
-    if (colorPickerPanel && colorPickerPanel.style.display === 'flex' && !colorPickerPanel.contains(event.target) && currentEditingElementForColor && !currentEditingElementForColor.contains(event.target)) {
-        const targetIsEditable = event.target.closest('body > *');
-        if (targetIsEditable && event.target !== currentEditingElementForColor) {
-            document.removeEventListener('click', handleFocusOutColorPicker, true);
-            if (colorPickerPanel) {
-                colorPickerPanel.dataset.focusOutListenerAttached = 'false';
+function removeImage() {
+    if (!currentEditingElement) return;
+    ensureId(currentEditingElement);
+
+    if (currentEditingElement.tagName === 'IMG') {
+        currentEditingElement.removeAttribute('src');
+    } else {
+        if (customCssRules[currentEditingElement.id]) {
+            delete customCssRules[currentEditingElement.id].background;
+            delete customCssRules[currentEditingElement.id]['background-size'];
+            delete customCssRules[currentEditingElement.id]['background-position'];
+            delete customCssRules[currentEditingElement.id]['background-repeat'];
+            if (Object.keys(customCssRules[currentEditingElement.id]).length === 0) {
+                delete customCssRules[currentEditingElement.id];
             }
-            return; 
         }
+        currentEditingElement.style.backgroundImage = ''; 
+        applyCustomCssToIframe();
     }
+    if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+    if(imageUrlInput) imageUrlInput.value = '';
+    if(imageFileInput) imageFileInput.value = '';
 }
+
+// --- END: Image Editor Functions ---
 
 function applyColors() {
-    if (!currentEditingElementForColor || !bgColorPicker || !useBgGradientCheckbox || !bgColorPicker2) {
-        console.error("InPageEditor: Cannot apply colors, essential elements not found.");
-        return;
+    if (!currentEditingElement || !bgColorPicker) return;
+    ensureId(currentEditingElement);
+    const newBgColor = bgColorPicker.value;
+    const useGradient = useBgGradientCheckbox.checked;
+    const newBgColor2 = bgColorPicker2.value;
+
+    if (!customCssRules[currentEditingElement.id]) {
+        customCssRules[currentEditingElement.id] = {};
     }
 
-    const elementId = ensureId(currentEditingElementForColor);
-
-    if (!customCssRules[elementId]) {
-        customCssRules[elementId] = {};
-    }
-
-    if (useBgGradientCheckbox.checked) {
-        const newBgColor1 = bgColorPicker.value;
-        const newBgColor2 = bgColorPicker2.value;
-        customCssRules[elementId].backgroundImage = `linear-gradient(to right, ${newBgColor1}, ${newBgColor2})`;
-        customCssRules[elementId].backgroundColor = 'transparent'; 
-        addRecentColor(newBgColor1, 'recentBgColors1');
+    if (useGradient && newBgColor2) {
+        customCssRules[currentEditingElement.id].background = `linear-gradient(${newBgColor}, ${newBgColor2})`;
         addRecentColor(newBgColor2, 'recentBgColors2');
+        updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
     } else {
-        const newBgColor = bgColorPicker.value;
-        customCssRules[elementId].backgroundColor = newBgColor;
-        if (customCssRules[elementId].backgroundImage) {
-            delete customCssRules[elementId].backgroundImage;
-        }
-        addRecentColor(newBgColor, 'recentBgColors1'); // Also add to list1 if not gradient
+        customCssRules[currentEditingElement.id].background = newBgColor;
     }
+    
+    addRecentColor(newBgColor, 'recentBgColors1');
+    updateRecentColorsDatalist('recentBgColorsList', recentBgColors1);
+    saveRecentColors();
 
     applyCustomCssToIframe();
-
-    if (typeof window.notifyUnsavedChange === 'function') {
-        window.notifyUnsavedChange();
-    }
-    closeColorPicker(); // Added to close picker after applying colors
+    if (window.notifyUnsavedChange) window.notifyUnsavedChange();
 }
 
 function removeCustomColors() {
-    if (!currentEditingElementForColor) {
-        return;
-    }
-
-    const elementId = currentEditingElementForColor.id;
-    if (elementId && customCssRules[elementId]) {
-        delete customCssRules[elementId]; // This will remove all keys: background, backgroundImage
+    if (!currentEditingElement) return;
+    ensureId(currentEditingElement);
+    if (customCssRules[currentEditingElement.id] && customCssRules[currentEditingElement.id].background) {
+        delete customCssRules[currentEditingElement.id].background;
+        if (Object.keys(customCssRules[currentEditingElement.id]).length === 0) {
+            delete customCssRules[currentEditingElement.id];
+        }
         applyCustomCssToIframe();
+        if (window.notifyUnsavedChange) window.notifyUnsavedChange();
     }
-
-    if (typeof window.notifyUnsavedChange === 'function') {
-        window.notifyUnsavedChange();
-    }
-    openColorPicker(currentEditingElementForColor);
-}
-
-// Functions for managing recent colors
-function addRecentColor(color, listKey) {
-    let recentColorsList = listKey === 'recentBgColors1' ? recentBgColors1 : recentBgColors2;
-    
-    // Remove the color if it already exists to move it to the front
-    const existingIndex = recentColorsList.indexOf(color);
-    if (existingIndex > -1) {
-        recentColorsList.splice(existingIndex, 1);
-    }
-
-    // Add to the beginning of the array
-    recentColorsList.unshift(color);
-
-    // Keep the list to a maximum size
-    if (recentColorsList.length > MAX_RECENT_COLORS) {
-        recentColorsList.pop();
-    }
-
-    if (listKey === 'recentBgColors1') {
-        recentBgColors1 = recentColorsList;
-        updateRecentColorsDatalist('recentBgColorsList', recentBgColors1); // Changed recentBgColorsList1 to recentBgColorsList
-    } else {
-        recentBgColors2 = recentColorsList;
-        updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
-    }
-    saveRecentColors();
-}
-
-function updateRecentColorsDatalist(datalistId, colorsArray) {
-    const datalist = colorPickerPanel.querySelector(`#${datalistId}`);
-    if (datalist) {
-        datalist.innerHTML = ''; // Clear existing options
-        colorsArray.forEach(color => {
-            const option = document.createElement('option');
-            option.value = color;
-            datalist.appendChild(option);
-        });
-    }
-}
-
-function saveRecentColors() {
-    try {
-        localStorage.setItem('recentBgColors1', JSON.stringify(recentBgColors1));
-        localStorage.setItem('recentBgColors2', JSON.stringify(recentBgColors2));
-    } catch (e) {
-        console.warn("InPageEditor: Could not save recent colors to localStorage.", e);
-    }
-}
-
-function loadRecentColors() {
-    try {
-        const storedColors1 = localStorage.getItem('recentBgColors1');
-        const storedColors2 = localStorage.getItem('recentBgColors2');
-        if (storedColors1) {
-            recentBgColors1 = JSON.parse(storedColors1);
-        }
-        if (storedColors2) {
-            recentBgColors2 = JSON.parse(storedColors2);
-        }
-    } catch (e) {
-        console.warn("InPageEditor: Could not load recent colors from localStorage.", e);
-        recentBgColors1 = [];
-        recentBgColors2 = [];
-    }
-}
-
-window.getCustomCss = function() {
-    let cssString = "/* Custom CSS rules generated by In-Page Editor */\n";
-    for (const id in customCssRules) {
-        if (Object.hasOwnProperty.call(customCssRules, id)) {
-            const rule = customCssRules[id];
-            cssString += `#${id} {\n`;
-            if (rule.backgroundImage) { // Check for gradient first
-                cssString += `  background-image: ${rule.backgroundImage} !important;\n`;
-                cssString += `  background-color: transparent !important;\n`; // Ensure solid bg doesn't interfere
-            } else if (rule.backgroundColor) {
-                cssString += `  background-color: ${rule.backgroundColor} !important;\n`;
-            }
-            cssString += `}\n`;
-        }
-    }
-    return cssString;
-}
-
-// Helper to parse colors from a linear-gradient string (basic implementation)
-function parseGradientColors(gradientString) {
-    const colors = [];
-    // This regex is very basic and might need improvement for complex gradients
-    const colorRegex = /rgba?\([^)]+\)|#[0-9a-fA-F]{3,8}|(?:rgb|hsl)a?\([^)]+\)|[a-zA-Z]+(?![-\w])/g;
-    let match;
-    while ((match = colorRegex.exec(gradientString)) !== null) {
-        // Check if the found color is not part of a direction like 'to right'
-        // This is a heuristic and might not be perfectly robust for all CSS color names that might resemble directions.
-        const potentialColor = match[0].toLowerCase();
-        if (!['top', 'bottom', 'left', 'right', 'center'].some(dir => potentialColor.includes(dir))) {
-             if (!potentialColor.startsWith('to ') && !potentialColor.endsWith('deg')) { // Further check to avoid capturing angles or keywords
-                colors.push(potentialColor);
-            }
-        }
-    }
-    return colors;
-}
-
-function rgbToHex(rgbString) {
-    if (!rgbString || typeof rgbString !== 'string') return '#ffffff';
-    if (/^#[0-9A-F]{6}$/i.test(rgbString) || /^#[0-9A-F]{3}$/i.test(rgbString)) {
-        return rgbString.toLowerCase();
-    }
-
-    const match = rgbString.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)$/);
-    if (!match) {
-        if (rgbString === 'transparent' || rgbString === 'rgba(0, 0, 0, 0)') return '#000000';
-        return '#ffffff';
-    }
-
-    function componentToHex(c) {
-        const hex = Number(c).toString(16);
-        return hex.length === 1 ? "0" + hex : hex;
-    }
-    return ("#" + componentToHex(match[1]) + componentToHex(match[2]) + componentToHex(match[3])).toLowerCase();
-}
-
-function isValidHex(hex) {
-    return /^#[0-9A-F]{6}$/i.test(hex) || /^#[0-9A-F]{3}$/i.test(hex);
+    const computedStyle = currentIframeDocument.defaultView.getComputedStyle(currentEditingElement);
+    bgColorPicker.value = rgbToHex(computedStyle.backgroundColor);
+    useBgGradientCheckbox.checked = false;
+    bgColorPicker2Group.style.display = 'none';
 }

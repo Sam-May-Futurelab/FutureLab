@@ -46,11 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize In-Page Editor Controls
     const colorPickerPanel = document.getElementById('color-picker-panel');
     const colorPickerTargetInfoDiv = document.getElementById('color-picker-target-info'); // Correctly get the div
+    const imageEditorPanel = document.getElementById('image-editor-panel'); // Get the new image editor panel
 
     if (window.initInPageEditorControls) {
         window.initInPageEditorControls(
             colorPickerPanel, // Pass the main panel
-            colorPickerTargetInfoDiv // Pass the target info div
+            colorPickerTargetInfoDiv, // Pass the target info div
+            imageEditorPanel // Pass the image editor panel to the init function
         );
     } else {
         console.error("Lab.js: In-page editor control initialization function not found.");
