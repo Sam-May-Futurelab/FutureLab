@@ -1085,6 +1085,43 @@
     border-color: var(--danger-color-hover-dark);
 }
 
+/* Styling for "Or Image URL:" input field and its placeholder */
+.image-editor-panel .form-group label[for="image-url-input"] {
+    /* General label styles are already applied. Add specific overrides if needed. */
+    /* For example, slightly more margin on top if it follows another input closely */
+    margin-top: 10px; 
+}
+
+.image-editor-panel input[type="url"]#image-url-input {
+    /* General input styles are applied via .image-editor-panel input[type="text"]
+       Add specific overrides for type="url" if necessary */
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color-light, #ced4da);
+    border-radius: var(--border-radius-sm, 4px);
+    background-color: var(--input-bg-light, #fff);
+    color: var(--text-color-light, #495057);
+    font-size: 0.9em;
+    box-sizing: border-box;
+    line-height: 1.5; /* Ensure placeholder text is vertically centered */
+}
+
+.dark-theme .image-editor-panel input[type="url"]#image-url-input {
+    border-color: var(--border-color-dark, #4a4e58);
+    background-color: var(--input-bg-dark, #2b3035);
+    color: var(--text-color-dark, #adb5bd);
+}
+
+.image-editor-panel input[type="url"]#image-url-input::placeholder {
+    color: var(--placeholder-text-color, #6c757d);
+    opacity: 1; /* Firefox */
+}
+
+.dark-theme .image-editor-panel input[type="url"]#image-url-input::placeholder {
+    color: var(--placeholder-text-color-dark, #7a8288);
+    opacity: 1; /* Firefox */
+}
+
 /* Hide panels by default */
 .color-picker-panel.hidden,
 .image-editor-panel.hidden {
