@@ -550,6 +550,77 @@ function setSelectOption(selectElement, value) {
     }
 }
 
+function setImageSource(element, src, width, height, fit, originalFileName) {
+    ensureId(element); // Ensure element has an ID for CSS rules if needed
+
+    if (element.tagName === 'IMG') {
+        if (src !== undefined && src !== null) { // Only update src if a value is explicitly passed
+            if (src === '') element.removeAttribute('src');
+            else element.src = src;
+        }
+        element.style.width = width;
+        element.style.height = height;
+        element.style.objectFit = fit;
+    } else { // For background images on other elements
+        if (src !== undefined && src !== null) { // Only update background image if a value is explicitly passed
+            if (src === '') {
+                element.style.backgroundImage = 'none';
+            } else {
+                element.style.backgroundImage = `url('${src}')`;
+            }
+        }
+        
+        // Always apply width/height for consistency, even for background images on divs/sections
+        element.style.width = width;
+        element.style.height = height;
+
+        // Translate 'fit' to background-size
+        if (fit === 'cover' || fit === 'contain') {
+            element.style.backgroundSize = fit;
+        } else if (fit === 'fill') {
+            element.style.backgroundSize = '100% 100%'; // Stretches to fill
+        } else if (fit === 'none') {
+            element.style.backgroundSize = 'auto'; // Actual size
+        } else if (fit === 'scale-down') {
+            // True scale-down is complex for background-size. 'contain' is a common approximation.
+            // Or use 'auto' if you want it to be actual size if smaller, or scaled if larger (like 'contain').
+            element.style.backgroundSize = 'contain'; 
+        } else { // Default or unknown fit
+            element.style.backgroundSize = 'auto auto';
+        }
+        element.style.backgroundRepeat = 'no-repeat';
+        element.style.backgroundPosition = 'center';
+    }
+
+    if (originalFileName !== undefined) {
+        if (originalFileName === null || originalFileName === '') {
+            delete element.dataset.originalFileName;
+        } else {
+            element.dataset.originalFileName = originalFileName;
+        }
+    }
+    
+    // Update custom CSS rules if the element is not an IMG tag (for background images)
+    // and if a new image source was actually applied or removed.
+    if (element.tagName !== 'IMG' && (src !== undefined && src !== null)) {
+        customCssRules[element.id] = customCssRules[element.id] || {};
+        if (src === '' || element.style.backgroundImage === 'none') {
+            delete customCssRules[element.id]['background-image'];
+            delete customCssRules[element.id]['background-size'];
+            delete customCssRules[element.id]['background-repeat'];
+            delete customCssRules[element.id]['background-position'];
+        } else {
+            customCssRules[element.id]['background-image'] = element.style.backgroundImage;
+            customCssRules[element.id]['background-size'] = element.style.backgroundSize;
+            customCssRules[element.id]['background-repeat'] = element.style.backgroundRepeat;
+            customCssRules[element.id]['background-position'] = element.style.backgroundPosition;
+        }
+        // Width and height are applied as inline styles, so no need to add to customCssRules here
+        // unless a specific strategy for that is adopted later.
+    }
+    applyCustomCssToIframe(); // Apply all custom rules
+}
+
 async function applyImage() {
     if (!currentEditingElement) return;
     ensureId(currentEditingElement);
@@ -566,24 +637,35 @@ async function applyImage() {
         originalFileName: currentEditingElement.dataset.originalFileName
     };
 
-    const width = imageWidthSelect.value;
-    const height = imageHeightSelect.value;
-    const fit = imageFitSelect.value;
-    let imageSource = imageUrlInput.value.trim();
-    let newOriginalFileName = oldState.originalFileName;
+    const newWidth = imageWidthSelect.value;
+    const newHeight = imageHeightSelect.value;
+    const newFit = imageFitSelect.value;
+    
+    let imageFile = (imageFileInput.files && imageFileInput.files.length > 0) ? imageFileInput.files[0] : null;
+    let imageUrlFromInput = imageUrlInput.value.trim();
 
-    // Prioritize file input if a file is selected
-    if (imageFileInput.files && imageFileInput.files.length > 0) {
-        const file = imageFileInput.files[0];
-        imageSource = await readFileAsDataURL(file);
-        newOriginalFileName = file.name;
+    let finalImageSrcToApply; // This will be undefined if no new image is chosen and no existing one
+    let finalOriginalFileNameToSet;
+
+    if (imageFile) {
+        finalImageSrcToApply = await readFileAsDataURL(imageFile);
+        finalOriginalFileNameToSet = imageFile.name;
+        fileNameDisplay.textContent = imageFile.name; // Update display
+        imageUrlInput.value = ''; // Clear URL input if file is chosen
+    } else if (imageUrlFromInput) {
+        finalImageSrcToApply = imageUrlFromInput;
+        finalOriginalFileNameToSet = null; // It's a URL, no original file name
+        fileNameDisplay.textContent = 'No file chosen'; // Clear file display
     } else {
-        if (imageSource) { // If URL is provided, clear original file name
-            newOriginalFileName = undefined;
-        }
+        // No new image explicitly provided via inputs.
+        // We want to apply dimension/fit changes to the existing image, if any.
+        // So, we pass 'undefined' for src to setImageSource, which means "don't change the src/backgroundImage".
+        finalImageSrcToApply = undefined; 
+        finalOriginalFileNameToSet = undefined; // Don't change dataset.originalFileName either
+                                                // It will be preserved on the element unless a new image is set.
     }
     
-    setImageSource(currentEditingElement, imageSource, width, height, fit, newOriginalFileName);
+    setImageSource(currentEditingElement, finalImageSrcToApply, newWidth, newHeight, newFit, finalOriginalFileNameToSet);
     
     const newState = {
         src: currentEditingElement.tagName === 'IMG' ? currentEditingElement.getAttribute('src') : null,
@@ -598,47 +680,65 @@ async function applyImage() {
     };
 
     recordAction({
+        type: 'image',
+        elementId: currentEditingElement.id,
         undo: () => {
-            if (currentEditingElement.tagName === 'IMG') {
-                if (oldState.src) currentEditingElement.setAttribute('src', oldState.src); else currentEditingElement.removeAttribute('src');
-            } else {
-                currentEditingElement.style.backgroundImage = oldState.backgroundImage || '';
-                currentEditingElement.style.backgroundSize = oldState.backgroundSize || '';
-                currentEditingElement.style.backgroundRepeat = oldState.backgroundRepeat || '';
-                currentEditingElement.style.backgroundPosition = oldState.backgroundPosition || '';
-            }
-            currentEditingElement.style.width = oldState.width || '';
-            currentEditingElement.style.height = oldState.height || '';
-            currentEditingElement.style.objectFit = oldState.objectFit || '';
-            if (oldState.originalFileName) currentEditingElement.dataset.originalFileName = oldState.originalFileName;
-            else delete currentEditingElement.dataset.originalFileName;
-            
-            fileNameDisplay.textContent = oldState.originalFileName || 'No file chosen';
-            imageUrlInput.value = (oldState.src && !oldState.src.startsWith('blob:')) ? oldState.src : (oldState.backgroundImage && !oldState.backgroundImage.includes('blob:')) ? oldState.backgroundImage.slice(5, -2) : '';
+            const targetElement = iframeDocument.getElementById(currentEditingElement.id);
+            if (!targetElement) return;
 
-            applyCustomCssToIframe(); // Important if background image was in CSS rules
+            // Restore element styles from oldState
+            if (targetElement.tagName === 'IMG') {
+                if (oldState.src) targetElement.setAttribute('src', oldState.src); 
+                else targetElement.removeAttribute('src');
+            } else {
+                targetElement.style.backgroundImage = oldState.backgroundImage || '';
+                targetElement.style.backgroundSize = oldState.backgroundSize || '';
+                targetElement.style.backgroundRepeat = oldState.backgroundRepeat || '';
+                targetElement.style.backgroundPosition = oldState.backgroundPosition || '';
+            }
+            targetElement.style.width = oldState.width || '';
+            targetElement.style.height = oldState.height || '';
+            targetElement.style.objectFit = oldState.objectFit || '';
+            
+            if (oldState.originalFileName) targetElement.dataset.originalFileName = oldState.originalFileName;
+            else delete targetElement.dataset.originalFileName;
+            
+            // If this is the currently active element in the panel, update panel to reflect old state
+            if (window.currentEditingElement && window.currentEditingElement.id === targetElement.id && imageEditorPanel.classList.contains('active')) {
+                openImageEditor(targetElement); // Re-populate panel from the element's restored state
+            }
+            applyCustomCssToIframe();
         },
         redo: () => {
-            if (currentEditingElement.tagName === 'IMG') {
-                if (newState.src) currentEditingElement.setAttribute('src', newState.src); else currentEditingElement.removeAttribute('src');
+            const targetElement = iframeDocument.getElementById(currentEditingElement.id);
+            if (!targetElement) return;
+
+            // Restore element styles from newState
+            if (targetElement.tagName === 'IMG') {
+                if (newState.src) targetElement.setAttribute('src', newState.src); 
+                else targetElement.removeAttribute('src');
             } else {
-                currentEditingElement.style.backgroundImage = newState.backgroundImage || '';
-                currentEditingElement.style.backgroundSize = newState.backgroundSize || '';
-                currentEditingElement.style.backgroundRepeat = newState.backgroundRepeat || '';
-                currentEditingElement.style.backgroundPosition = newState.backgroundPosition || '';
+                targetElement.style.backgroundImage = newState.backgroundImage || '';
+                targetElement.style.backgroundSize = newState.backgroundSize || '';
+                targetElement.style.backgroundRepeat = newState.backgroundRepeat || '';
+                targetElement.style.backgroundPosition = newState.backgroundPosition || '';
             }
-            currentEditingElement.style.width = newState.width || '';
-            currentEditingElement.style.height = newState.height || '';
-            currentEditingElement.style.objectFit = newState.objectFit || '';
-            if (newState.originalFileName) currentEditingElement.dataset.originalFileName = newState.originalFileName;
-            else delete currentEditingElement.dataset.originalFileName;
+            targetElement.style.width = newState.width || '';
+            targetElement.style.height = newState.height || '';
+            targetElement.style.objectFit = newState.objectFit || '';
 
-            fileNameDisplay.textContent = newState.originalFileName || 'No file chosen';
-            imageUrlInput.value = (newState.src && !newState.src.startsWith('blob:')) ? newState.src : (newState.backgroundImage && !newState.backgroundImage.includes('blob:')) ? newState.backgroundImage.slice(5, -2) : '';
+            if (newState.originalFileName) targetElement.dataset.originalFileName = newState.originalFileName;
+            else delete targetElement.dataset.originalFileName;
 
+            // If this is the currently active element in the panel, update panel to reflect new state
+             if (window.currentEditingElement && window.currentEditingElement.id === targetElement.id && imageEditorPanel.classList.contains('active')) {
+                openImageEditor(targetElement); // Re-populate panel from the element's restored state
+            }
             applyCustomCssToIframe();
         }
     });
+    // Clear file input after applying to prevent re-applying the same file unintentionally
+    if (imageFileInput) imageFileInput.value = ''; 
 }
 
 function removeImage() {
@@ -656,6 +756,7 @@ function removeImage() {
         backgroundPosition: currentEditingElement.style.backgroundPosition,
         originalFileName: currentEditingElement.dataset.originalFileName
     };
+    const elementId = currentEditingElement.id; // Capture id before element might change
 
     const element = currentEditingElement;
     if (element.tagName === 'IMG') {
@@ -683,132 +784,70 @@ function removeImage() {
     setSelectOption(imageFitSelect, 'fill'); 
 
     recordAction({
+        type: 'image',
+        elementId: elementId,
         undo: () => {
-            if (element.tagName === 'IMG') {
-                if (oldState.src) element.setAttribute('src', oldState.src);
+            const targetElement = currentIframeDocument.getElementById(elementId);
+            if (!targetElement) return;
+
+            if (targetElement.tagName === 'IMG') {
+                if (oldState.src) targetElement.setAttribute('src', oldState.src);
             } else {
-                element.style.backgroundImage = oldState.backgroundImage || '';
-                if (customCssRules[element.id] && oldState.backgroundImage) {
-                    customCssRules[element.id].background = oldState.backgroundImage;
-                    customCssRules[element.id]['background-size'] = oldState.backgroundSize || '';
-                    customCssRules[element.id]['background-repeat'] = oldState.backgroundRepeat || '';
-                    customCssRules[element.id]['background-position'] = oldState.backgroundPosition || '';
+                targetElement.style.backgroundImage = oldState.backgroundImage || '';
+                if (customCssRules[elementId] && oldState.backgroundImage) {
+                    customCssRules[elementId].background = oldState.backgroundImage;
+                    customCssRules[elementId]['background-size'] = oldState.backgroundSize || '';
+                    customCssRules[elementId]['background-repeat'] = oldState.backgroundRepeat || '';
+                    customCssRules[elementId]['background-position'] = oldState.backgroundPosition || '';
                 }
             }
-            element.style.width = oldState.width || '';
-            element.style.height = oldState.height || '';
-            element.style.objectFit = oldState.objectFit || '';
-            if (oldState.originalFileName) element.dataset.originalFileName = oldState.originalFileName;
+            targetElement.style.width = oldState.width || '';
+            targetElement.style.height = oldState.height || '';
+            targetElement.style.objectFit = oldState.objectFit || '';
+            if (oldState.originalFileName) targetElement.dataset.originalFileName = oldState.originalFileName;
             
-            fileNameDisplay.textContent = oldState.originalFileName || 'No file chosen';
-            imageUrlInput.value = (oldState.src && !oldState.src.startsWith('blob:')) ? oldState.src : (oldState.backgroundImage && !oldState.backgroundImage.includes('blob:')) ? oldState.backgroundImage.slice(5, -2) : '';
-
+            // Restore panel state if this is the currently edited element
+            if (currentEditingElement && currentEditingElement.id === elementId) {
+                fileNameDisplay.textContent = oldState.originalFileName || 'No file chosen';
+                imageUrlInput.value = (oldState.src && !oldState.src.startsWith('blob:')) ? oldState.src : (oldState.backgroundImage && !oldState.backgroundImage.includes('blob:')) ? oldState.backgroundImage.slice(5, -2) : '';
+                setSelectOption(imageWidthSelect, oldState.width || 'auto');
+                setSelectOption(imageHeightSelect, oldState.height || 'auto');
+                setSelectOption(imageFitSelect, oldState.objectFit || 'fill');
+            }
             applyCustomCssToIframe();
         },
         redo: () => {
-            if (element.tagName === 'IMG') {
-                element.src = '';
+            const targetElement = currentIframeDocument.getElementById(elementId);
+            if (!targetElement) return;
+
+            if (targetElement.tagName === 'IMG') {
+                targetElement.src = '';
             } else {
-                element.style.backgroundImage = 'none';
-                if (customCssRules[element.id]) {
-                    delete customCssRules[element.id]['background-image'];
-                    delete customCssRules[element.id]['background-size'];
-                    delete customCssRules[element.id]['background-repeat'];
-                    delete customCssRules[element.id]['background-position'];
+                targetElement.style.backgroundImage = 'none';
+                if (customCssRules[elementId]) {
+                    delete customCssRules[elementId]['background-image'];
+                    delete customCssRules[elementId]['background-size'];
+                    delete customCssRules[elementId]['background-repeat'];
+                    delete customCssRules[elementId]['background-position'];
                 }
             }
-            element.style.width = 'auto';
-            element.style.height = 'auto';
-            element.style.objectFit = 'initial';
-            delete element.dataset.originalFileName;
+            targetElement.style.width = 'auto'; 
+            targetElement.style.height = 'auto';
+            targetElement.style.objectFit = 'initial'; 
+            delete targetElement.dataset.originalFileName; 
 
-            imageFileInput.value = ''; 
-            fileNameDisplay.textContent = 'No file chosen';
-            imageUrlInput.value = '';
-            setSelectOption(imageWidthSelect, 'auto');
-            setSelectOption(imageHeightSelect, 'auto');
-            setSelectOption(imageFitSelect, 'fill');
+            // Reset panel state if this is the currently edited element
+            if (currentEditingElement && currentEditingElement.id === elementId) {
+                imageFileInput.value = ''; 
+                fileNameDisplay.textContent = 'No file chosen';
+                imageUrlInput.value = '';
+                setSelectOption(imageWidthSelect, 'auto');
+                setSelectOption(imageHeightSelect, 'auto');
+                setSelectOption(imageFitSelect, 'fill'); 
+            }
             applyCustomCssToIframe();
         }
     });
-}
-
-function setImageSource(element, src, width, height, fit, originalFileName) { // Added originalFileName
-    const isImgTag = element.tagName === 'IMG';
-    ensureId(element); // Ensure element has an ID for CSS rules if needed
-
-    if (originalFileName) {
-        element.dataset.originalFileName = originalFileName;
-        if (fileNameDisplay) fileNameDisplay.textContent = originalFileName;
-    } else {
-        delete element.dataset.originalFileName;
-        if (fileNameDisplay) fileNameDisplay.textContent = 'No file chosen';
-    }
-    if (imageUrlInput && src && !src.startsWith('blob:')) { // If src is a URL, update input
-        imageUrlInput.value = src;
-    } else if (imageUrlInput && !src) { // If src is cleared (e.g. by removeImage)
-        imageUrlInput.value = '';
-    }
-
-    if (src) { 
-        if (isImgTag) {
-            element.setAttribute('src', src);
-        } else {
-            if (!customCssRules[element.id]) {
-                customCssRules[element.id] = {};
-            }
-            const existingBg = customCssRules[element.id].background;
-            if (existingBg && existingBg.startsWith('linear-gradient')) {
-                customCssRules[element.id].background = `url("${src}")`;
-            } else {
-                customCssRules[element.id].background = `url("${src}")`;
-            }
-            customCssRules[element.id]['background-repeat'] = 'no-repeat';
-            customCssRules[element.id]['background-position'] = 'center'; 
-        }
-    } else { // No src, means remove image
-        if (isImgTag) {
-            element.removeAttribute('src');
-        } else {
-            if (customCssRules[element.id]) {
-                if (customCssRules[element.id].background && customCssRules[element.id].background.includes('url(')) {
-                    delete customCssRules[element.id].background;
-                    delete customCssRules[element.id]['background-size'];
-                    delete customCssRules[element.id]['background-repeat'];
-                    delete customCssRules[element.id]['background-position'];
-                }
-            }
-        }
-    }
-
-    if (isImgTag) {
-        element.style.width = width || 'auto';
-        element.style.height = height || 'auto';
-        element.style.objectFit = fit || 'fill';
-    } else {
-        if (!customCssRules[element.id]) { // Should not happen if src was applied
-            customCssRules[element.id] = {};
-        }
-        if (customCssRules[element.id].background && customCssRules[element.id].background.includes('url(')) {
-            if (fit === 'cover' || fit === 'contain') {
-                customCssRules[element.id]['background-size'] = fit;
-            } else if (width && height && width !== 'auto' && height !== 'auto') {
-                customCssRules[element.id]['background-size'] = `${width} ${height}`;
-            } else if (width && width !== 'auto') {
-                customCssRules[element.id]['background-size'] = `${width} auto`;
-            } else if (height && height !== 'auto') {
-                customCssRules[element.id]['background-size'] = `auto ${height}`;
-            } else {
-                customCssRules[element.id]['background-size'] = 'cover'; 
-            }
-        } else if (!customCssRules[element.id].background || !customCssRules[element.id].background.includes('url(')) {
-            delete customCssRules[element.id]['background-size'];
-        }
-    }
-
-    if (!isImgTag) {
-        applyCustomCssToIframe();
-    }
 }
 
 // --- END: Image Editor Functions ---
