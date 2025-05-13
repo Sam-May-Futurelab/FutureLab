@@ -373,7 +373,7 @@ function _buildPricingPromptPart(data) {
     let part = '';
     part += `--- Pricing Section ---\n`;
     if (data.pricingPlans && Array.isArray(data.pricingPlans) && data.pricingPlans.length > 0 && data.pricingPlans.some(p => p && p.price && p.price.trim() !== '')) {
-        part += `Include a "Pricing Section" with the following plans. If a plan name is missing, use a generic name like "Standard Plan" or "Product Tier X". If features are missing, the AI can generate some suitable ones based on the business type and plan price point. Ensure the currency symbol and billing cycle are displayed clearly with the price.\n`;
+        part += `Include a "Pricing Section" with the following plans. If a plan name is missing, use a generic name like "Standard Plan" or "Product Tier X". If features are missing, the AI MUST generate 2-4 specific, tangible, and benefit-oriented features that are highly relevant to the business type: "${data.businessType || 'the described business'}", the plan's name: "${data.planName || 'this plan'}", and its price point. Do NOT use generic placeholders like 'Feature A', 'Feature B'. Instead, describe what a user GETS. For example, for a 'SaaS Basic Plan', features could be '10GB Storage', 'Basic Analytics', 'Email Support'. For a 'Web Design Gold Package', features could be 'Custom 5-Page Website', 'Mobile Responsive Design', 'SEO Optimization Basics'. Ensure the currency symbol and billing cycle are displayed clearly with the price.\n`;
         part += `   - Visual Styling: Present pricing plans as visually distinct cards or columns. Each plan should be styled to be attractive and easy to read. Consider using subtle background colors, borders, or shadows to differentiate plans. Apply a subtle CSS hover animation to each plan (e.g., slight lift, shadow enhancement, or border highlight) to improve interactivity and draw attention. Ensure these styles are applied even if the main page colors are AI-selected, using harmonious shades from the palette.\n`;
         data.pricingPlans.forEach((plan, index) => {
             if (plan && plan.price && plan.price.trim() !== '') { // Ensure at least a price is present
@@ -382,11 +382,11 @@ function _buildPricingPromptPart(data) {
                 part += `    Price: ${plan.price}\n`;
                 part += `    Currency: ${plan.currency || 'USD'}\n`; // Default to USD if not provided
                 part += `    Billing Cycle: ${plan.cycle || 'one-time'}\n`; // Default to one-time if not provided
-                part += `    Features: ${plan.features || 'AI to generate suitable features.'}\n`;
+                part += `    Features: ${plan.features || 'AI to generate 2-4 specific, tangible, and benefit-oriented features based on business type, plan name, and price. Do NOT use generic placeholders like \'Feature X\'.'}\n`;
             }
         });
     } else if (data.sections && data.sections.includes('pricing')) {
-        part += `A "Pricing Section" is requested, but no specific plan details were provided. Generate 2-3 sample pricing plans suitable for the business type and goals. Each plan should have a name, price (with currency like $ or £), a billing cycle (e.g., /month, /year, one-time), and 2-3 key features.\n`;
+        part += `A "Pricing Section" is requested, but no specific plan details were provided. Generate 2-3 sample pricing plans suitable for the business type: "${data.businessType || 'the described business'}" and its goals. Each plan MUST have a descriptive name, a price (with currency like $ or £), a billing cycle (e.g., /month, /year, one-time), and 2-4 specific, tangible, and benefit-oriented features. Do NOT use generic placeholders like 'Feature A', 'Feature B'. Instead, describe what a user GETS. For example, for a 'SaaS Basic Plan', features could be '10GB Storage', 'Basic Analytics', 'Email Support'.\n`;
         part += `   - Visual Styling: Present these generated pricing plans as visually distinct cards or columns. Each plan should be styled to be attractive and easy to read. Consider using subtle background colors, borders, or shadows to differentiate plans. Apply a subtle CSS hover animation to each plan (e.g., slight lift, shadow enhancement, or border highlight) to improve interactivity and draw attention. Ensure these styles are applied even if the main page colors are AI-selected, using harmonious shades from the palette.\n`;
     } else {
         part += `No "Pricing Section" requested or no specific plan details provided.\n`;
