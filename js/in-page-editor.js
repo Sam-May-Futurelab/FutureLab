@@ -224,36 +224,35 @@ function handleIframeElementClick(event) {
 
     // If a text element is already being edited, finalize it before handling new click.
     if (textEditingTarget && textEditingTarget !== el) {
-        makeTextReadOnly(textEditingTarget); // Finalize previous
+        makeTextReadOnly(textEditingTarget);
     }
 
-    currentEditingElement = el;
+    currentEditingElement = el; // This is the element that was clicked.
 
+    // Manage highlights
     if (currentlyHighlightedElement && currentlyHighlightedElement !== el) {
         removeHighlight(currentlyHighlightedElement);
     }
     applyHighlight(el); // Apply highlight to the clicked element
     currentlyHighlightedElement = el;
 
-    const editableTextTags = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'A', 'BUTTON', 'LI', 'FIGCAPTION', 'LABEL', 'STRONG', 'EM', 'TD', 'TH'];
-    const nonEditableParents = ['BUTTON', 'A']; // Tags whose children shouldn't become editable if parent is already interactive
-
-    if (el.closest(nonEditableParents.join(',')) && !editableTextTags.includes(el.tagName)) {
-        // If the click is on a non-directly-editable child of an interactive element (like text inside a button),
-        // let the color/image picker logic proceed for the interactive parent if appropriate.
-        // The `currentEditingElement` is already `el`. We might want to target `el.closest(nonEditableParents.join(','))` for panels.
-        // For now, this simply prevents such children from becoming text editable.
-    } else if (editableTextTags.includes(el.tagName)) {
-        if (el.tagName !== 'IMG' && el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA' && el.tagName !== 'SELECT') {
-            makeTextEditable(el);
-            return; // Prioritize text editing
-        }
-    }
-
+    // Determine which panel to open and/or if text should be editable
     if (el.tagName === 'IMG') {
         openImageEditor(el);
+        // Images are not typically text-editable directly via contentEditable in this system
     } else {
+        // For all non-image elements, open the color picker
         openColorPicker(el);
+
+        // Additionally, if the element is suitable for text editing, make it so.
+        const editableTextTags = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'A', 'BUTTON', 'LI', 'FIGCAPTION', 'LABEL', 'STRONG', 'EM', 'TD', 'TH'];
+        
+        if (editableTextTags.includes(el.tagName) &&
+            el.tagName !== 'INPUT' && 
+            el.tagName !== 'TEXTAREA' && 
+            el.tagName !== 'SELECT') {
+            makeTextEditable(el); // This will set contentEditable=true and focus
+        }
     }
 }
 
