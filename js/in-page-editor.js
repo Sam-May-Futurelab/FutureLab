@@ -1311,18 +1311,50 @@ function getCustomCss() {
 }
 
 function applyCustomCssToIframe() {
-    let doc = getActiveIframeDocument(); // USE HELPER
-    if (!doc || !doc.head) { // Ensure doc and head exist
-        console.error("Cannot apply custom CSS, iframe document not available (applyCustomCssToIframe).");
-        return;
-    }
-    let styleTag = doc.getElementById(customStyleTagId);
+    const iframe = getActiveIframeDocument();
+    if (!iframe) return;
+
+    let styleTag = iframe.getElementById(customStyleTagId);
     if (!styleTag) {
-        styleTag = doc.createElement('style');
+        styleTag = iframe.createElement('style');
         styleTag.id = customStyleTagId;
-        doc.head.appendChild(styleTag);
+        styleTag.type = 'text/css';
+        iframe.head.appendChild(styleTag);
     }
-    styleTag.textContent = getCustomCss();
+
+    let cssText = '';
+    for (const id in customCssRules) {
+        if (Object.hasOwnProperty.call(customCssRules, id)) {
+            const rules = customCssRules[id];
+            let ruleParts = [];
+
+            // Handle legacy 'background' shorthand first if present
+            if (rules.background && rules.background !== 'none' && rules.background !== '') {
+                ruleParts.push(`background: ${rules.background} !important;`);
+            } else {
+                // Handle individual background properties if 'background' isn't a valid shorthand
+                if (rules['background-image'] && rules['background-image'] !== 'none' && rules['background-image'] !== '') {
+                    ruleParts.push(`background-image: ${rules['background-image']} !important;`);
+                }
+                if (rules['background-size'] && rules['background-size'] !== '') {
+                    ruleParts.push(`background-size: ${rules['background-size']} !important;`);
+                }
+                if (rules['background-repeat'] && rules['background-repeat'] !== '') {
+                    ruleParts.push(`background-repeat: ${rules['background-repeat']} !important;`);
+                }
+                if (rules['background-position'] && rules['background-position'] !== '') {
+                    ruleParts.push(`background-position: ${rules['background-position']} !important;`);
+                }
+            }
+            
+            // Add other non-background related rules here if any in the future
+
+            if (ruleParts.length > 0) {
+                cssText += `#${id} { ${ruleParts.join(' ')} }\n`;
+            }
+        }
+    }
+    styleTag.textContent = cssText;
 }
 
 function ensureId(element) {
