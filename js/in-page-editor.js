@@ -10,6 +10,35 @@ let currentlyHighlightedElement = null;
 const HIGHLIGHT_STYLE = '2px dashed #007bff'; 
 let customStyleTagId = 'in-page-editor-custom-styles';
 
+// --- START: Mouse hover highlighting functions ---
+function handleMouseOverElement(event) {
+    if (!isEditModeActive || !event.target || event.target === currentlyHighlightedElement) return;
+    applyHighlight(event.target);
+}
+
+function handleMouseOutElement(event) {
+    if (!isEditModeActive || !event.target || event.target === currentlyHighlightedElement) return;
+    // Only remove highlight if it's not the currently selected (clicked) element
+    if (event.target !== currentEditingElement) {
+        removeHighlight(event.target);
+    }
+}
+
+function applyHighlight(element) {
+    if (element && element.style) {
+        element.style.outline = HIGHLIGHT_STYLE;
+        element.style.cursor = 'pointer'; // Indicate interactivity
+    }
+}
+
+function removeHighlight(element) {
+    if (element && element.style) {
+        element.style.outline = '';
+        element.style.cursor = '';
+    }
+}
+// --- END: Mouse hover highlighting functions ---
+
 // --- START: Panel State Management ---
 let activePanel = null; // 'color' or 'image'
 // --- END: Panel State Management ---
