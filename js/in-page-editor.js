@@ -9,6 +9,7 @@ const customCssRules = {};
 let currentlyHighlightedElement = null; 
 const HIGHLIGHT_STYLE = '2px dashed #007bff'; 
 let customStyleTagId = 'in-page-editor-custom-styles';
+let textEditingTarget = null; // For managing direct text editing
 
 // --- START: Mouse hover highlighting functions ---
 function handleMouseOverElement(event) {
@@ -214,28 +215,95 @@ window.initInPageEditorControls = initInPageEditorControls;
 
 // Event handler for clicks inside the iframe
 function handleIframeElementClick(event) {
+    console.log("handleIframeElementClick triggered. Target:", event.target.tagName, event.target.id); // DEBUG LINE
     event.preventDefault();
     event.stopPropagation();
 
     let el = event.target;
     if (!el) return;
 
-    currentEditingElement = el; // Keep track of the raw clicked element
+    // If a text element is already being edited, finalize it before handling new click.
+    if (textEditingTarget && textEditingTarget !== el) {
+        makeTextReadOnly(textEditingTarget); // Finalize previous
+    }
+
+    currentEditingElement = el;
 
     if (currentlyHighlightedElement && currentlyHighlightedElement !== el) {
         removeHighlight(currentlyHighlightedElement);
     }
-    applyHighlight(el);
+    applyHighlight(el); // Apply highlight to the clicked element
     currentlyHighlightedElement = el;
 
-    // Determine which editor to open based on element type or existing styles
+    const editableTextTags = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'A', 'BUTTON', 'LI', 'FIGCAPTION', 'LABEL', 'STRONG', 'EM', 'TD', 'TH'];
+    const nonEditableParents = ['BUTTON', 'A']; // Tags whose children shouldn't become editable if parent is already interactive
+
+    if (el.closest(nonEditableParents.join(',')) && !editableTextTags.includes(el.tagName)) {
+        // If the click is on a non-directly-editable child of an interactive element (like text inside a button),
+        // let the color/image picker logic proceed for the interactive parent if appropriate.
+        // The `currentEditingElement` is already `el`. We might want to target `el.closest(nonEditableParents.join(','))` for panels.
+        // For now, this simply prevents such children from becoming text editable.
+    } else if (editableTextTags.includes(el.tagName)) {
+        if (el.tagName !== 'IMG' && el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA' && el.tagName !== 'SELECT') {
+            makeTextEditable(el);
+            return; // Prioritize text editing
+        }
+    }
+
     if (el.tagName === 'IMG') {
         openImageEditor(el);
     } else {
-        // For other elements, default to color picker, but allow switching
-        openColorPicker(el); 
+        openColorPicker(el);
     }
 }
+
+// --- START: Text Editing Functions ---
+function makeTextEditable(element) {
+    if (!element) return;
+    if (textEditingTarget && textEditingTarget !== element) {
+        makeTextReadOnly(textEditingTarget);
+    }
+
+    element.contentEditable = 'true';
+    element.style.outline = '2px solid orange'; 
+    element.focus();
+    textEditingTarget = element;
+
+    element.addEventListener('blur', handleTextEditBlur, { once: true });
+    element.addEventListener('keydown', handleTextEditKeyDown);
+    if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+}
+
+function makeTextReadOnly(element) {
+    if (!element || element.contentEditable !== 'true') return;
+    element.contentEditable = 'false';
+    element.style.outline = ''; 
+    if (element === currentlyHighlightedElement) {
+        applyHighlight(element); 
+    }
+    if (textEditingTarget === element) {
+        textEditingTarget = null;
+    }
+    element.removeEventListener('blur', handleTextEditBlur);
+    element.removeEventListener('keydown', handleTextEditKeyDown);
+}
+
+function handleTextEditBlur(event) {
+    if (event.target === textEditingTarget) {
+        makeTextReadOnly(event.target);
+    }
+}
+
+function handleTextEditKeyDown(event) {
+    if (!textEditingTarget || event.target !== textEditingTarget) return;
+    if (event.key === 'Enter' && !event.shiftKey) { 
+        event.preventDefault(); 
+        makeTextReadOnly(event.target);
+    } else if (event.key === 'Escape') {
+        makeTextReadOnly(event.target);
+    }
+}
+// --- END: Text Editing Functions ---
 
 function openColorPicker(element) {
     if (!colorPickerPanel || !element) return;
@@ -447,6 +515,10 @@ function removeCustomColors() {
 
 function setInPageEditMode(isActive, iframeDoc, iframeWin) {
     console.log(`setInPageEditMode: requested state: ${isActive}, current isEditModeActive: ${isEditModeActive}, currentDoc valid: ${!!currentIframeDocument}, newDoc valid: ${!!iframeDoc}`);
+
+    if (!isActive && textEditingTarget) {
+        makeTextReadOnly(textEditingTarget);
+    }
 
     // If trying to activate on the exact same document that's already active, do nothing.
     if (isActive && isEditModeActive && currentIframeDocument === iframeDoc) {
