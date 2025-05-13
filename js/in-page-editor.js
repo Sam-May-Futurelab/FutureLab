@@ -211,6 +211,70 @@ function getActiveIframeDocument() {
     return pagePreviewIframeElement.contentDocument || pagePreviewIframeElement.contentWindow.document;
 }
 
+// Moved setImageSource here to ensure it's defined before previewImageChanges and applyImage
+function setImageSource(element, src, width, height, fit, originalFileName) {
+    ensureId(element); // Ensure element has an ID for CSS rules if needed
+
+    if (element.tagName === 'IMG') {
+        if (src !== undefined && src !== null) { // Only update src if a value is explicitly passed
+            if (src === '') element.removeAttribute('src');
+            else element.src = src;
+        }
+        element.style.width = width;
+        element.style.height = height;
+        element.style.objectFit = fit;
+    } else { // For background images on other elements
+        if (src !== undefined && src !== null) { // Only update background image if a value is explicitly passed
+            if (src === '') {
+                element.style.backgroundImage = 'none';
+            } else {
+                element.style.backgroundImage = `url('${src}')`;
+            }
+        }
+        
+        element.style.width = width;
+        element.style.height = height;
+
+        if (fit === 'cover' || fit === 'contain') {
+            element.style.backgroundSize = fit;
+        } else if (fit === 'fill') {
+            element.style.backgroundSize = '100% 100%';
+        } else if (fit === 'none') {
+            element.style.backgroundSize = 'auto';
+        } else if (fit === 'scale-down') {
+            element.style.backgroundSize = 'contain'; 
+        } else { 
+            element.style.backgroundSize = 'auto auto';
+        }
+        element.style.backgroundRepeat = 'no-repeat';
+        element.style.backgroundPosition = 'center';
+    }
+
+    if (originalFileName !== undefined) {
+        if (originalFileName === null || originalFileName === '') {
+            delete element.dataset.originalFileName;
+        } else {
+            element.dataset.originalFileName = originalFileName;
+        }
+    }
+    
+    if (element.tagName !== 'IMG' && (src !== undefined && src !== null)) {
+        customCssRules[element.id] = customCssRules[element.id] || {};
+        if (src === '' || element.style.backgroundImage === 'none') {
+            delete customCssRules[element.id]['background-image'];
+            delete customCssRules[element.id]['background-size'];
+            delete customCssRules[element.id]['background-repeat'];
+            delete customCssRules[element.id]['background-position'];
+        } else {
+            customCssRules[element.id]['background-image'] = element.style.backgroundImage;
+            customCssRules[element.id]['background-size'] = element.style.backgroundSize;
+            customCssRules[element.id]['background-repeat'] = element.style.backgroundRepeat;
+            customCssRules[element.id]['background-position'] = element.style.backgroundPosition;
+        }
+    }
+    applyCustomCssToIframe();
+}
+
 // NEW: Function to apply image changes for live preview
 async function previewImageChanges() {
     if (!currentEditingElement || !imageEditorPanel || !imageEditorPanel.classList.contains('active')) return;
