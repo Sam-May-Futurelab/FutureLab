@@ -10,6 +10,7 @@ let currentlyHighlightedElement = null;
 const HIGHLIGHT_STYLE = '2px dashed #007bff'; 
 let customStyleTagId = 'in-page-editor-custom-styles';
 let textEditingTarget = null; // For managing direct text editing
+let pagePreviewIframeElement; // NEW: To store the iframe DOM element itself
 
 // --- START: Undo/Redo History Management ---
 const undoStack = [];
@@ -189,6 +190,20 @@ function readFileAsDataURL(file) {
     });
 }
 
+// NEW HELPER FUNCTION
+function getActiveIframeDocument() {
+    if (!pagePreviewIframeElement) {
+        console.error("pagePreviewIframeElement is not initialized.");
+        return null;
+    }
+    if (!pagePreviewIframeElement.contentWindow) {
+        // This can happen if the iframe is not in the DOM or not loaded
+        console.warn("pagePreviewIframeElement.contentWindow is not available. Iframe might not be ready.");
+        return null;
+    }
+    return pagePreviewIframeElement.contentDocument || pagePreviewIframeElement.contentWindow.document;
+}
+
 // Initialize references to panel elements from the main document
 function initInPageEditorControls(options) {
     colorPickerPanel = options.colorPickerPanel;
@@ -198,6 +213,28 @@ function initInPageEditorControls(options) {
     if (!colorPickerPanel) console.error("Color picker panel not found in initInPageEditorControls");
     if (!colorPickerTargetInfo) console.error("Color picker target info div not found in initInPageEditorControls");
     if (!imageEditorPanel) console.error("Image editor panel not found in initInPageEditorControls");
+
+    pagePreviewIframeElement = document.getElementById('page-preview'); // Initialize here
+
+    if (!pagePreviewIframeElement) {
+        console.error("CRITICAL: page-preview iframe element not found! In-page editor cannot initialize.");
+        return;
+    }
+
+    const setupEventListeners = () => {
+        iframeDocument = getActiveIframeDocument(); // Use helper
+        if (!iframeDocument) {
+            console.error("Failed to get iframe document for event listeners setup.");
+            return;
+        }
+        // ... rest of setupEventListeners
+    };
+
+    if (pagePreviewIframeElement.contentDocument && pagePreviewIframeElement.contentDocument.readyState === 'complete') {
+        setupEventListeners();
+    } else {
+        pagePreviewIframeElement.onload = setupEventListeners;
+    }
 
     // Query for Color Picker child elements
     bgColorPicker = colorPickerPanel.querySelector('#bgColorPicker');
@@ -624,7 +661,7 @@ function setImageSource(element, src, width, height, fit, originalFileName) {
 async function applyImage() {
     if (!currentEditingElement) return;
     ensureId(currentEditingElement);
-    const actionElementId = currentEditingElement.id; // Capture ID for the action object
+    const actionElementId = currentEditingElement.id;
 
     const oldState = {
         src: currentEditingElement.tagName === 'IMG' ? currentEditingElement.getAttribute('src') : null,
@@ -645,25 +682,21 @@ async function applyImage() {
     let imageFile = (imageFileInput.files && imageFileInput.files.length > 0) ? imageFileInput.files[0] : null;
     let imageUrlFromInput = imageUrlInput.value.trim();
 
-    let finalImageSrcToApply; // This will be undefined if no new image is chosen and no existing one
+    let finalImageSrcToApply; 
     let finalOriginalFileNameToSet;
 
     if (imageFile) {
         finalImageSrcToApply = await readFileAsDataURL(imageFile);
         finalOriginalFileNameToSet = imageFile.name;
-        fileNameDisplay.textContent = imageFile.name; // Update display
-        imageUrlInput.value = ''; // Clear URL input if file is chosen
+        if(fileNameDisplay) fileNameDisplay.textContent = imageFile.name; 
+        if(imageUrlInput) imageUrlInput.value = ''; 
     } else if (imageUrlFromInput) {
         finalImageSrcToApply = imageUrlFromInput;
-        finalOriginalFileNameToSet = null; // It's a URL, no original file name
-        fileNameDisplay.textContent = 'No file chosen'; // Clear file display
+        finalOriginalFileNameToSet = null; 
+        if(fileNameDisplay) fileNameDisplay.textContent = 'No file chosen';
     } else {
-        // No new image explicitly provided via inputs.
-        // We want to apply dimension/fit changes to the existing image, if any.
-        // So, we pass 'undefined' for src to setImageSource, which means "don't change the src/backgroundImage".
         finalImageSrcToApply = undefined; 
-        finalOriginalFileNameToSet = undefined; // Don't change dataset.originalFileName either
-                                                // It will be preserved on the element unless a new image is set.
+        finalOriginalFileNameToSet = undefined; 
     }
     
     setImageSource(currentEditingElement, finalImageSrcToApply, newWidth, newHeight, newFit, finalOriginalFileNameToSet);
@@ -682,15 +715,16 @@ async function applyImage() {
 
     recordAction({
         type: 'image',
-        elementId: actionElementId, // Use captured ID
-        undo: function() { // Use function() to ensure 'this' is the action object
-            if (!iframeDocument) {
-                console.error("CRITICAL_ERROR: iframeDocument is not defined in image apply undo action!");
+        elementId: actionElementId,
+        undo: function() {
+            const doc = getActiveIframeDocument(); // USE HELPER
+            if (!doc) {
+                console.error("CRITICAL_ERROR: iframe document not available in image apply undo.");
                 return;
             }
-            const targetElement = iframeDocument.getElementById(this.elementId);
+            const targetElement = doc.getElementById(this.elementId);
             if (!targetElement) {
-                console.warn(`Undo Image Apply: Target element with ID '${this.elementId}' not found.`);
+                console.warn(`Undo Image Apply: Target element '${this.elementId}' not found.`);
                 return;
             }
 
@@ -698,33 +732,47 @@ async function applyImage() {
             if (targetElement.tagName === 'IMG') {
                 if (oldState.src) targetElement.setAttribute('src', oldState.src); 
                 else targetElement.removeAttribute('src');
-            } else {
+                targetElement.style.objectFit = oldState.objectFit || '';
+            } else { // Background image
                 targetElement.style.backgroundImage = oldState.backgroundImage || '';
                 targetElement.style.backgroundSize = oldState.backgroundSize || '';
                 targetElement.style.backgroundRepeat = oldState.backgroundRepeat || '';
                 targetElement.style.backgroundPosition = oldState.backgroundPosition || '';
+                
+                // Update customCssRules for background images
+                customCssRules[this.elementId] = customCssRules[this.elementId] || {};
+                if (!oldState.backgroundImage || oldState.backgroundImage === 'none') {
+                    delete customCssRules[this.elementId]['background-image'];
+                    delete customCssRules[this.elementId]['background-size'];
+                    delete customCssRules[this.elementId]['background-repeat'];
+                    delete customCssRules[this.elementId]['background-position'];
+                } else {
+                    customCssRules[this.elementId]['background-image'] = oldState.backgroundImage;
+                    customCssRules[this.elementId]['background-size'] = oldState.backgroundSize;
+                    customCssRules[this.elementId]['background-repeat'] = oldState.backgroundRepeat;
+                    customCssRules[this.elementId]['background-position'] = oldState.backgroundPosition;
+                }
             }
             targetElement.style.width = oldState.width || '';
             targetElement.style.height = oldState.height || '';
-            targetElement.style.objectFit = oldState.objectFit || '';
             
             if (oldState.originalFileName) targetElement.dataset.originalFileName = oldState.originalFileName;
             else delete targetElement.dataset.originalFileName;
             
-            // If this is the currently active element in the panel, update panel to reflect old state
-            if (window.currentEditingElement && window.currentEditingElement.id === targetElement.id && imageEditorPanel.classList.contains('active')) {
-                openImageEditor(targetElement); // Re-populate panel from the element's restored state
+            if (window.currentEditingElement && window.currentEditingElement.id === this.elementId && imageEditorPanel && imageEditorPanel.classList.contains('active')) {
+                openImageEditor(targetElement); 
             }
             applyCustomCssToIframe();
         },
-        redo: function() { // Use function() to ensure 'this' is the action object
-            if (!iframeDocument) {
-                console.error("CRITICAL_ERROR: iframeDocument is not defined in image apply redo action!");
+        redo: function() {
+            const doc = getActiveIframeDocument(); // USE HELPER
+            if (!doc) {
+                console.error("CRITICAL_ERROR: iframe document not available in image apply redo.");
                 return;
             }
-            const targetElement = iframeDocument.getElementById(this.elementId);
+            const targetElement = doc.getElementById(this.elementId);
             if (!targetElement) {
-                console.warn(`Redo Image Apply: Target element with ID '${this.elementId}' not found.`);
+                console.warn(`Redo Image Apply: Target element '${this.elementId}' not found.`);
                 return;
             }
 
@@ -732,34 +780,46 @@ async function applyImage() {
             if (targetElement.tagName === 'IMG') {
                 if (newState.src) targetElement.setAttribute('src', newState.src); 
                 else targetElement.removeAttribute('src');
-            } else {
+                targetElement.style.objectFit = newState.objectFit || '';
+            } else { // Background image
                 targetElement.style.backgroundImage = newState.backgroundImage || '';
                 targetElement.style.backgroundSize = newState.backgroundSize || '';
                 targetElement.style.backgroundRepeat = newState.backgroundRepeat || '';
                 targetElement.style.backgroundPosition = newState.backgroundPosition || '';
+
+                // Update customCssRules for background images
+                customCssRules[this.elementId] = customCssRules[this.elementId] || {};
+                if (!newState.backgroundImage || newState.backgroundImage === 'none') {
+                    delete customCssRules[this.elementId]['background-image'];
+                    delete customCssRules[this.elementId]['background-size'];
+                    delete customCssRules[this.elementId]['background-repeat'];
+                    delete customCssRules[this.elementId]['background-position'];
+                } else {
+                    customCssRules[this.elementId]['background-image'] = newState.backgroundImage;
+                    customCssRules[this.elementId]['background-size'] = newState.backgroundSize;
+                    customCssRules[this.elementId]['background-repeat'] = newState.backgroundRepeat;
+                    customCssRules[this.elementId]['background-position'] = newState.backgroundPosition;
+                }
             }
             targetElement.style.width = newState.width || '';
             targetElement.style.height = newState.height || '';
-            targetElement.style.objectFit = newState.objectFit || '';
 
             if (newState.originalFileName) targetElement.dataset.originalFileName = newState.originalFileName;
             else delete targetElement.dataset.originalFileName;
 
-            // If this is the currently active element in the panel, update panel to reflect new state
-             if (window.currentEditingElement && window.currentEditingElement.id === targetElement.id && imageEditorPanel.classList.contains('active')) {
-                openImageEditor(targetElement); // Re-populate panel from the element's restored state
+            if (window.currentEditingElement && window.currentEditingElement.id === this.elementId && imageEditorPanel && imageEditorPanel.classList.contains('active')) {
+                openImageEditor(targetElement);
             }
             applyCustomCssToIframe();
         }
     });
-    // Clear file input after applying to prevent re-applying the same file unintentionally
     if (imageFileInput) imageFileInput.value = ''; 
 }
 
 function removeImage() {
     if (!currentEditingElement) return;
     ensureId(currentEditingElement);
-    const actionElementId = currentEditingElement.id; // Capture ID for the action object
+    const actionElementId = currentEditingElement.id;
 
     const oldState = {
         src: currentEditingElement.tagName === 'IMG' ? currentEditingElement.getAttribute('src') : null,
@@ -772,9 +832,8 @@ function removeImage() {
         backgroundPosition: currentEditingElement.style.backgroundPosition,
         originalFileName: currentEditingElement.dataset.originalFileName
     };
-    const elementId = currentEditingElement.id; // Capture id before element might change
 
-    const element = currentEditingElement;
+    const element = currentEditingElement; // Keep reference for immediate changes
     if (element.tagName === 'IMG') {
         element.src = '';
     } else {
@@ -786,67 +845,76 @@ function removeImage() {
             delete customCssRules[element.id]['background-position'];
         }
     }
+    // Reset styles
     element.style.width = 'auto'; 
     element.style.height = 'auto';
     element.style.objectFit = 'initial'; 
-
     delete element.dataset.originalFileName; 
 
-    imageFileInput.value = ''; 
-    fileNameDisplay.textContent = 'No file chosen';
-    imageUrlInput.value = '';
-    setSelectOption(imageWidthSelect, 'auto');
-    setSelectOption(imageHeightSelect, 'auto');
-    setSelectOption(imageFitSelect, 'fill'); 
+    // Reset panel inputs
+    if(imageFileInput) imageFileInput.value = ''; 
+    if(fileNameDisplay) fileNameDisplay.textContent = 'No file chosen';
+    if(imageUrlInput) imageUrlInput.value = '';
+    if(imageWidthSelect) setSelectOption(imageWidthSelect, 'auto');
+    if(imageHeightSelect) setSelectOption(imageHeightSelect, 'auto');
+    if(imageFitSelect) setSelectOption(imageFitSelect, 'fill'); 
+    applyCustomCssToIframe();
 
     recordAction({
         type: 'image',
-        elementId: actionElementId, // Use captured ID
-        undo: function() { // Use function() to ensure 'this' is the action object
-            if (!iframeDocument) {
-                console.error("CRITICAL_ERROR: iframeDocument is not defined in image remove undo action!");
+        elementId: actionElementId,
+        undo: function() {
+            const doc = getActiveIframeDocument(); // USE HELPER
+            if (!doc) {
+                console.error("CRITICAL_ERROR: iframe document not available in image remove undo.");
                 return;
             }
-            const targetElement = iframeDocument.getElementById(this.elementId);
+            const targetElement = doc.getElementById(this.elementId);
             if (!targetElement) {
-                console.warn(`Undo Image Remove: Target element with ID '${this.elementId}' not found.`);
+                console.warn(`Undo Image Remove: Target element '${this.elementId}' not found.`);
                 return;
             }
 
             if (targetElement.tagName === 'IMG') {
                 if (oldState.src) targetElement.setAttribute('src', oldState.src);
-            } else {
+                targetElement.style.objectFit = oldState.objectFit || '';
+            } else { // Background image
                 targetElement.style.backgroundImage = oldState.backgroundImage || '';
-                if (customCssRules[this.elementId] && oldState.backgroundImage) {
-                    customCssRules[this.elementId].background = oldState.backgroundImage;
-                    customCssRules[this.elementId]['background-size'] = oldState.backgroundSize || '';
-                    customCssRules[this.elementId]['background-repeat'] = oldState.backgroundRepeat || '';
-                    customCssRules[this.elementId]['background-position'] = oldState.backgroundPosition || '';
+                targetElement.style.backgroundSize = oldState.backgroundSize || '';
+                targetElement.style.backgroundRepeat = oldState.backgroundRepeat || '';
+                targetElement.style.backgroundPosition = oldState.backgroundPosition || '';
+                customCssRules[this.elementId] = customCssRules[this.elementId] || {};
+                if (!oldState.backgroundImage || oldState.backgroundImage === 'none') {
+                    delete customCssRules[this.elementId]['background-image'];
+                    delete customCssRules[this.elementId]['background-size'];
+                    delete customCssRules[this.elementId]['background-repeat'];
+                    delete customCssRules[this.elementId]['background-position'];
+                } else {
+                    customCssRules[this.elementId]['background-image'] = oldState.backgroundImage;
+                    customCssRules[this.elementId]['background-size'] = oldState.backgroundSize;
+                    customCssRules[this.elementId]['background-repeat'] = oldState.backgroundRepeat;
+                    customCssRules[this.elementId]['background-position'] = oldState.backgroundPosition;
                 }
             }
             targetElement.style.width = oldState.width || '';
             targetElement.style.height = oldState.height || '';
-            targetElement.style.objectFit = oldState.objectFit || '';
             if (oldState.originalFileName) targetElement.dataset.originalFileName = oldState.originalFileName;
-            
-            // Restore panel state if this is the currently edited element
-            if (currentEditingElement && currentEditingElement.id === this.elementId) {
-                fileNameDisplay.textContent = oldState.originalFileName || 'No file chosen';
-                imageUrlInput.value = (oldState.src && !oldState.src.startsWith('blob:')) ? oldState.src : (oldState.backgroundImage && !oldState.backgroundImage.includes('blob:')) ? oldState.backgroundImage.slice(5, -2) : '';
-                setSelectOption(imageWidthSelect, oldState.width || 'auto');
-                setSelectOption(imageHeightSelect, oldState.height || 'auto');
-                setSelectOption(imageFitSelect, oldState.objectFit || 'fill');
+            else delete targetElement.dataset.originalFileName;
+
+            if (window.currentEditingElement && window.currentEditingElement.id === this.elementId && imageEditorPanel && imageEditorPanel.classList.contains('active')) {
+                openImageEditor(targetElement);
             }
             applyCustomCssToIframe();
         },
-        redo: function() { // Use function() to ensure 'this' is the action object
-            if (!iframeDocument) {
-                console.error("CRITICAL_ERROR: iframeDocument is not defined in image remove redo action!");
+        redo: function() {
+            const doc = getActiveIframeDocument(); // USE HELPER
+            if (!doc) {
+                console.error("CRITICAL_ERROR: iframe document not available in image remove redo.");
                 return;
             }
-            const targetElement = iframeDocument.getElementById(this.elementId);
+            const targetElement = doc.getElementById(this.elementId);
             if (!targetElement) {
-                console.warn(`Redo Image Remove: Target element with ID '${this.elementId}' not found.`);
+                console.warn(`Redo Image Remove: Target element '${this.elementId}' not found.`);
                 return;
             }
 
@@ -854,11 +922,11 @@ function removeImage() {
                 targetElement.src = '';
             } else {
                 targetElement.style.backgroundImage = 'none';
-                if (customCssRules[this.elementId]) {
-                    delete customCssRules[this.elementId]['background-image'];
-                    delete customCssRules[this.elementId]['background-size'];
-                    delete customCssRules[this.elementId]['background-repeat'];
-                    delete customCssRules[this.elementId]['background-position'];
+                if (customCssRules[targetElement.id]) {
+                    delete customCssRules[targetElement.id]['background-image'];
+                    delete customCssRules[targetElement.id]['background-size'];
+                    delete customCssRules[targetElement.id]['background-repeat'];
+                    delete customCssRules[targetElement.id]['background-position'];
                 }
             }
             targetElement.style.width = 'auto'; 
@@ -866,14 +934,13 @@ function removeImage() {
             targetElement.style.objectFit = 'initial'; 
             delete targetElement.dataset.originalFileName; 
 
-            // Reset panel state if this is the currently edited element
-            if (currentEditingElement && currentEditingElement.id === this.elementId) {
-                imageFileInput.value = ''; 
-                fileNameDisplay.textContent = 'No file chosen';
-                imageUrlInput.value = '';
-                setSelectOption(imageWidthSelect, 'auto');
-                setSelectOption(imageHeightSelect, 'auto');
-                setSelectOption(imageFitSelect, 'fill'); 
+            if (window.currentEditingElement && window.currentEditingElement.id === this.elementId && imageEditorPanel && imageEditorPanel.classList.contains('active')) {
+                if(imageFileInput) imageFileInput.value = ''; 
+                if(fileNameDisplay) fileNameDisplay.textContent = 'No file chosen';
+                if(imageUrlInput) imageUrlInput.value = '';
+                if(imageWidthSelect) setSelectOption(imageWidthSelect, 'auto');
+                if(imageHeightSelect) setSelectOption(imageHeightSelect, 'auto');
+                if(imageFitSelect) setSelectOption(imageFitSelect, 'fill');
             }
             applyCustomCssToIframe();
         }
@@ -1095,14 +1162,16 @@ function getCustomCss() {
 }
 
 function applyCustomCssToIframe() {
-    if (!currentIframeDocument || !currentIframeDocument.head) { // Ensure doc and head exist
+    let doc = getActiveIframeDocument(); // USE HELPER
+    if (!doc || !doc.head) { // Ensure doc and head exist
+        console.error("Cannot apply custom CSS, iframe document not available (applyCustomCssToIframe).");
         return;
     }
-    let styleTag = currentIframeDocument.getElementById(customStyleTagId);
+    let styleTag = doc.getElementById(customStyleTagId);
     if (!styleTag) {
-        styleTag = currentIframeDocument.createElement('style');
+        styleTag = doc.createElement('style');
         styleTag.id = customStyleTagId;
-        currentIframeDocument.head.appendChild(styleTag);
+        doc.head.appendChild(styleTag);
     }
     styleTag.textContent = getCustomCss();
 }
