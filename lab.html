@@ -580,6 +580,14 @@
                                 <i class="fas fa-save"></i>
                                 <span class="btn-text">Save Edits</span>
                             </button>
+                            <button id="undo-edit-btn" class="btn btn-secondary btn-flex" title="Undo last change" style="display: none;" disabled>
+                                <i class="fas fa-undo"></i>
+                                <span class="btn-text">Undo</span>
+                            </button>
+                            <button id="redo-edit-btn" class="btn btn-secondary btn-flex" title="Redo last change" style="display: none;" disabled>
+                                <i class="fas fa-redo"></i>
+                                <span class="btn-text">Redo</span>
+                            </button>
                         </div>
                         <p id="edit-mode-instructions" class="instructions-text" style="display: none;">
                             <strong>Edit Mode ON:</strong> Click directly on text to edit. Click other elements (like sections or cards) to open the color picker. Press Enter or click away to confirm text changes. Remember to save your edits!
@@ -750,7 +758,7 @@
             <div class="panel-actions">
                 <button id="applyColorsBtn" class="btn btn-primary btn-sm">Apply Colors</button>
                 <button id="resetColorsBtn" class="btn btn-secondary btn-sm">Reset Colors</button>
-                <button id="switch-to-image-editor" class="btn btn-info btn-sm">Edit Image</button>
+                <button id="switch-to-image-editor" class="btn btn-info btn-sm">Add / Edit Image</button>
             </div>
         </div>
 
@@ -818,7 +826,7 @@
                 </select>
             </div>
             <div class="panel-actions">
-                <button id="apply-image-btn" class="btn btn-primary btn-sm">Apply Image</button>
+                <button id="apply-image-btn" class="btn btn-primary btn-sm">Apply</button>
                 <button id="remove-image-btn" class="btn btn-danger btn-sm">Remove Image</button>
                 <button id="switch-to-color-editor" class="btn btn-info btn-sm">Edit Colors</button>
             </div>
@@ -836,3 +844,4 @@
 
 </body>
 </html>
+``` 

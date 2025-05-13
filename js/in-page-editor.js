@@ -11,6 +11,68 @@ const HIGHLIGHT_STYLE = '2px dashed #007bff';
 let customStyleTagId = 'in-page-editor-custom-styles';
 let textEditingTarget = null; // For managing direct text editing
 
+// --- START: Undo/Redo History Management ---
+const undoStack = [];
+const redoStack = [];
+const MAX_HISTORY_SIZE = 50; // Limit the size of the history
+
+/**
+ * Adds an action to the undo stack.
+ * An action should be an object with `undo` and `redo` methods.
+ * @param {object} action - The action to add.
+ */
+function recordAction(action) {
+    if (undoStack.length >= MAX_HISTORY_SIZE) {
+        undoStack.shift(); // Remove the oldest action if max size is reached
+    }
+    undoStack.push(action);
+    redoStack.length = 0; // Clear redo stack whenever a new action is performed
+    if (window.updateUndoRedoButtons) window.updateUndoRedoButtons();
+    if (window.notifyUnsavedChange) window.notifyUnsavedChange(); // Also notify unsaved change
+}
+
+function undo() {
+    if (undoStack.length > 0) {
+        const action = undoStack.pop();
+        action.undo();
+        redoStack.push(action);
+        if (window.updateUndoRedoButtons) window.updateUndoRedoButtons();
+        if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+    }
+}
+
+function redo() {
+    if (redoStack.length > 0) {
+        const action = redoStack.pop();
+        action.redo();
+        undoStack.push(action);
+        if (window.updateUndoRedoButtons) window.updateUndoRedoButtons();
+        if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+    }
+}
+
+function canUndo() {
+    return undoStack.length > 0;
+}
+
+function canRedo() {
+    return redoStack.length > 0;
+}
+
+function clearUndoRedoHistory() {
+    undoStack.length = 0;
+    redoStack.length = 0;
+    if (window.updateUndoRedoButtons) window.updateUndoRedoButtons();
+}
+
+// Expose to global scope for lab.js to call
+window.undoInPageEdit = undo;
+window.redoInPageEdit = redo;
+window.canUndoInPageEdit = canUndo;
+window.canRedoInPageEdit = canRedo;
+window.clearInPageEditorHistory = clearUndoRedoHistory;
+// --- END: Undo/Redo History Management ---
+
 // --- START: Mouse hover highlighting functions ---
 function handleMouseOverElement(event) {
     if (!isEditModeActive || !event.target || event.target === currentlyHighlightedElement) return;
@@ -260,21 +322,29 @@ function handleIframeElementClick(event) {
 function makeTextEditable(element) {
     if (!element) return;
     if (textEditingTarget && textEditingTarget !== element) {
-        makeTextReadOnly(textEditingTarget);
+        makeTextReadOnly(textEditingTarget); // Finalize any ongoing edit
     }
 
+    const oldText = element.innerHTML;
     element.contentEditable = 'true';
     element.style.outline = '2px solid orange'; 
     element.focus();
     textEditingTarget = element;
 
+    // Store initial content for potential undo, only when starting to edit
+    element.dataset.initialTextForUndo = oldText; 
+
     element.addEventListener('blur', handleTextEditBlur, { once: true });
     element.addEventListener('keydown', handleTextEditKeyDown);
-    if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+    // Note: recordAction for text edits will be called in makeTextReadOnly or handleTextEditKeyDown (Enter)
 }
 
 function makeTextReadOnly(element) {
     if (!element || element.contentEditable !== 'true') return;
+
+    const oldText = element.dataset.initialTextForUndo || element.innerHTML; // Fallback if initial not set
+    const newText = element.innerHTML;
+
     element.contentEditable = 'false';
     element.style.outline = ''; 
     if (element === currentlyHighlightedElement) {
@@ -285,11 +355,26 @@ function makeTextReadOnly(element) {
     }
     element.removeEventListener('blur', handleTextEditBlur);
     element.removeEventListener('keydown', handleTextEditKeyDown);
+    delete element.dataset.initialTextForUndo; // Clean up
+
+    if (oldText !== newText) { // Only record if text actually changed
+        recordAction({
+            undo: () => {
+                element.innerHTML = oldText;
+                applyCustomCssToIframe(); // Reapply styles if text change affected layout/CSS
+            },
+            redo: () => {
+                element.innerHTML = newText;
+                applyCustomCssToIframe();
+            }
+        });
+        // window.notifyUnsavedChange(); // Moved to recordAction
+    }
 }
 
 function handleTextEditBlur(event) {
     if (event.target === textEditingTarget) {
-        makeTextReadOnly(event.target);
+        makeTextReadOnly(event.target); // This will now record the action
     }
 }
 
@@ -297,10 +382,16 @@ function handleTextEditKeyDown(event) {
     if (!textEditingTarget || event.target !== textEditingTarget) return;
     if (event.key === 'Enter' && !event.shiftKey) { 
         event.preventDefault(); 
-        makeTextReadOnly(event.target);
+        makeTextReadOnly(event.target); // This will now record the action
     } else if (event.key === 'Escape') {
-        makeTextReadOnly(event.target);
+        // For Escape, revert to initial text and don't record an action
+        const initialText = event.target.dataset.initialTextForUndo;
+        if (typeof initialText === 'string') {
+            event.target.innerHTML = initialText;
+        }
+        makeTextReadOnly(event.target); // Finalize without recording a new state
     }
+    // No notifyUnsavedChange here, it's handled by recordAction or makeTextReadOnly
 }
 // --- END: Text Editing Functions ---
 
@@ -451,104 +542,258 @@ function setSelectOption(selectElement, value) {
 
 async function applyImage() {
     if (!currentEditingElement) return;
+    ensureId(currentEditingElement);
+
+    const oldState = {
+        src: currentEditingElement.tagName === 'IMG' ? currentEditingElement.getAttribute('src') : null,
+        backgroundImage: currentEditingElement.style.backgroundImage,
+        width: currentEditingElement.style.width,
+        height: currentEditingElement.style.height,
+        objectFit: currentEditingElement.style.objectFit,
+        backgroundSize: currentEditingElement.style.backgroundSize,
+        backgroundRepeat: currentEditingElement.style.backgroundRepeat,
+        backgroundPosition: currentEditingElement.style.backgroundPosition,
+        originalFileName: currentEditingElement.dataset.originalFileName
+    };
 
     const width = imageWidthSelect.value;
     const height = imageHeightSelect.value;
     const fit = imageFitSelect.value;
     let imageSource = imageUrlInput.value.trim();
+    let newOriginalFileName = oldState.originalFileName;
 
     // Prioritize file input if a file is selected
     if (imageFileInput.files && imageFileInput.files.length > 0) {
         const file = imageFileInput.files[0];
         imageSource = await readFileAsDataURL(file);
-        currentEditingElement.dataset.originalFileName = file.name; // Store filename
-        fileNameDisplay.textContent = file.name; // Ensure display is updated
+        newOriginalFileName = file.name;
     } else {
-        // If no new file, and URL is empty, but there was an original file name, it means user might want to keep existing file if any
-        // However, if URL is also empty, and no file selected, it implies clearing or no change if current is URL
-        if (!imageSource && currentEditingElement.dataset.originalFileName) {
-            // If URL is cleared and there was a file, do nothing to imageSource, assume keeping current
-            // Or, if we want to clear if URL is empty and no file, then:
-            // imageSource = ''; // This would clear it. For now, let's assume they want to keep if URL is empty but file was there.
-        }
         if (imageSource) { // If URL is provided, clear original file name
-            delete currentEditingElement.dataset.originalFileName;
-            // fileNameDisplay.textContent = 'No file chosen'; // Reset if URL is used
+            newOriginalFileName = undefined;
         }
     }
     
-    setImageSource(currentEditingElement, imageSource, width, height, fit);
-    if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+    setImageSource(currentEditingElement, imageSource, width, height, fit, newOriginalFileName);
+    
+    const newState = {
+        src: currentEditingElement.tagName === 'IMG' ? currentEditingElement.getAttribute('src') : null,
+        backgroundImage: currentEditingElement.style.backgroundImage,
+        width: currentEditingElement.style.width,
+        height: currentEditingElement.style.height,
+        objectFit: currentEditingElement.style.objectFit,
+        backgroundSize: currentEditingElement.style.backgroundSize,
+        backgroundRepeat: currentEditingElement.style.backgroundRepeat,
+        backgroundPosition: currentEditingElement.style.backgroundPosition,
+        originalFileName: currentEditingElement.dataset.originalFileName
+    };
+
+    recordAction({
+        undo: () => {
+            if (currentEditingElement.tagName === 'IMG') {
+                if (oldState.src) currentEditingElement.setAttribute('src', oldState.src); else currentEditingElement.removeAttribute('src');
+            } else {
+                currentEditingElement.style.backgroundImage = oldState.backgroundImage || '';
+                currentEditingElement.style.backgroundSize = oldState.backgroundSize || '';
+                currentEditingElement.style.backgroundRepeat = oldState.backgroundRepeat || '';
+                currentEditingElement.style.backgroundPosition = oldState.backgroundPosition || '';
+            }
+            currentEditingElement.style.width = oldState.width || '';
+            currentEditingElement.style.height = oldState.height || '';
+            currentEditingElement.style.objectFit = oldState.objectFit || '';
+            if (oldState.originalFileName) currentEditingElement.dataset.originalFileName = oldState.originalFileName;
+            else delete currentEditingElement.dataset.originalFileName;
+            
+            fileNameDisplay.textContent = oldState.originalFileName || 'No file chosen';
+            imageUrlInput.value = (oldState.src && !oldState.src.startsWith('blob:')) ? oldState.src : (oldState.backgroundImage && !oldState.backgroundImage.includes('blob:')) ? oldState.backgroundImage.slice(5, -2) : '';
+
+            applyCustomCssToIframe(); // Important if background image was in CSS rules
+        },
+        redo: () => {
+            if (currentEditingElement.tagName === 'IMG') {
+                if (newState.src) currentEditingElement.setAttribute('src', newState.src); else currentEditingElement.removeAttribute('src');
+            } else {
+                currentEditingElement.style.backgroundImage = newState.backgroundImage || '';
+                currentEditingElement.style.backgroundSize = newState.backgroundSize || '';
+                currentEditingElement.style.backgroundRepeat = newState.backgroundRepeat || '';
+                currentEditingElement.style.backgroundPosition = newState.backgroundPosition || '';
+            }
+            currentEditingElement.style.width = newState.width || '';
+            currentEditingElement.style.height = newState.height || '';
+            currentEditingElement.style.objectFit = newState.objectFit || '';
+            if (newState.originalFileName) currentEditingElement.dataset.originalFileName = newState.originalFileName;
+            else delete currentEditingElement.dataset.originalFileName;
+
+            fileNameDisplay.textContent = newState.originalFileName || 'No file chosen';
+            imageUrlInput.value = (newState.src && !newState.src.startsWith('blob:')) ? newState.src : (newState.backgroundImage && !newState.backgroundImage.includes('blob:')) ? newState.backgroundImage.slice(5, -2) : '';
+
+            applyCustomCssToIframe();
+        }
+    });
 }
 
 function removeImage() {
     if (!currentEditingElement) return;
+    ensureId(currentEditingElement);
+
+    const oldState = {
+        src: currentEditingElement.tagName === 'IMG' ? currentEditingElement.getAttribute('src') : null,
+        backgroundImage: currentEditingElement.style.backgroundImage,
+        width: currentEditingElement.style.width,
+        height: currentEditingElement.style.height,
+        objectFit: currentEditingElement.style.objectFit,
+        backgroundSize: currentEditingElement.style.backgroundSize,
+        backgroundRepeat: currentEditingElement.style.backgroundRepeat,
+        backgroundPosition: currentEditingElement.style.backgroundPosition,
+        originalFileName: currentEditingElement.dataset.originalFileName
+    };
+
     const element = currentEditingElement;
     if (element.tagName === 'IMG') {
         element.src = '';
     } else {
         element.style.backgroundImage = 'none';
+        if (customCssRules[element.id]) {
+            delete customCssRules[element.id]['background-image'];
+            delete customCssRules[element.id]['background-size'];
+            delete customCssRules[element.id]['background-repeat'];
+            delete customCssRules[element.id]['background-position'];
+        }
     }
-    element.style.width = 'auto'; // Reset styles
+    element.style.width = 'auto'; 
     element.style.height = 'auto';
-    element.style.objectFit = 'initial'; // Or 'fill' as a common default
+    element.style.objectFit = 'initial'; 
 
-    delete element.dataset.originalFileName; // Clear stored filename
+    delete element.dataset.originalFileName; 
 
-    // Reset controls in the panel
-    imageFileInput.value = ''; // Clear the file input
+    imageFileInput.value = ''; 
     fileNameDisplay.textContent = 'No file chosen';
     imageUrlInput.value = '';
     setSelectOption(imageWidthSelect, 'auto');
     setSelectOption(imageHeightSelect, 'auto');
-    setSelectOption(imageFitSelect, 'fill'); // Default fit
+    setSelectOption(imageFitSelect, 'fill'); 
 
-    if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+    recordAction({
+        undo: () => {
+            if (element.tagName === 'IMG') {
+                if (oldState.src) element.setAttribute('src', oldState.src);
+            } else {
+                element.style.backgroundImage = oldState.backgroundImage || '';
+                if (customCssRules[element.id] && oldState.backgroundImage) {
+                    customCssRules[element.id].background = oldState.backgroundImage;
+                    customCssRules[element.id]['background-size'] = oldState.backgroundSize || '';
+                    customCssRules[element.id]['background-repeat'] = oldState.backgroundRepeat || '';
+                    customCssRules[element.id]['background-position'] = oldState.backgroundPosition || '';
+                }
+            }
+            element.style.width = oldState.width || '';
+            element.style.height = oldState.height || '';
+            element.style.objectFit = oldState.objectFit || '';
+            if (oldState.originalFileName) element.dataset.originalFileName = oldState.originalFileName;
+            
+            fileNameDisplay.textContent = oldState.originalFileName || 'No file chosen';
+            imageUrlInput.value = (oldState.src && !oldState.src.startsWith('blob:')) ? oldState.src : (oldState.backgroundImage && !oldState.backgroundImage.includes('blob:')) ? oldState.backgroundImage.slice(5, -2) : '';
+
+            applyCustomCssToIframe();
+        },
+        redo: () => {
+            if (element.tagName === 'IMG') {
+                element.src = '';
+            } else {
+                element.style.backgroundImage = 'none';
+                if (customCssRules[element.id]) {
+                    delete customCssRules[element.id]['background-image'];
+                    delete customCssRules[element.id]['background-size'];
+                    delete customCssRules[element.id]['background-repeat'];
+                    delete customCssRules[element.id]['background-position'];
+                }
+            }
+            element.style.width = 'auto';
+            element.style.height = 'auto';
+            element.style.objectFit = 'initial';
+            delete element.dataset.originalFileName;
+
+            imageFileInput.value = ''; 
+            fileNameDisplay.textContent = 'No file chosen';
+            imageUrlInput.value = '';
+            setSelectOption(imageWidthSelect, 'auto');
+            setSelectOption(imageHeightSelect, 'auto');
+            setSelectOption(imageFitSelect, 'fill');
+            applyCustomCssToIframe();
+        }
+    });
 }
 
-function setImageSource(element, src, width, height, fit) {
+function setImageSource(element, src, width, height, fit, originalFileName) { // Added originalFileName
     const isImgTag = element.tagName === 'IMG';
+    ensureId(element); // Ensure element has an ID for CSS rules if needed
 
-    if (src) { // If a new source (file or URL) is provided
+    if (originalFileName) {
+        element.dataset.originalFileName = originalFileName;
+        if (fileNameDisplay) fileNameDisplay.textContent = originalFileName;
+    } else {
+        delete element.dataset.originalFileName;
+        if (fileNameDisplay) fileNameDisplay.textContent = 'No file chosen';
+    }
+    if (imageUrlInput && src && !src.startsWith('blob:')) { // If src is a URL, update input
+        imageUrlInput.value = src;
+    } else if (imageUrlInput && !src) { // If src is cleared (e.g. by removeImage)
+        imageUrlInput.value = '';
+    }
+
+    if (src) { 
         if (isImgTag) {
             element.setAttribute('src', src);
         } else {
             if (!customCssRules[element.id]) {
                 customCssRules[element.id] = {};
             }
-            customCssRules[element.id].background = `url("${src}")`;
-            // Default repeat and position, fit will be handled below
+            const existingBg = customCssRules[element.id].background;
+            if (existingBg && existingBg.startsWith('linear-gradient')) {
+                customCssRules[element.id].background = `url("${src}")`;
+            } else {
+                customCssRules[element.id].background = `url("${src}")`;
+            }
             customCssRules[element.id]['background-repeat'] = 'no-repeat';
             customCssRules[element.id]['background-position'] = 'center'; 
         }
+    } else { // No src, means remove image
+        if (isImgTag) {
+            element.removeAttribute('src');
+        } else {
+            if (customCssRules[element.id]) {
+                if (customCssRules[element.id].background && customCssRules[element.id].background.includes('url(')) {
+                    delete customCssRules[element.id].background;
+                    delete customCssRules[element.id]['background-size'];
+                    delete customCssRules[element.id]['background-repeat'];
+                    delete customCssRules[element.id]['background-position'];
+                }
+            }
+        }
     }
 
-    // Apply sizing and fit
     if (isImgTag) {
         element.style.width = width || 'auto';
         element.style.height = height || 'auto';
         element.style.objectFit = fit || 'fill';
     } else {
-        // For background images
-        if (!customCssRules[element.id]) {
+        if (!customCssRules[element.id]) { // Should not happen if src was applied
             customCssRules[element.id] = {};
         }
-        if (fit === 'cover' || fit === 'contain') {
-            customCssRules[element.id]['background-size'] = fit;
-        } else if (width && height && width !== 'auto' && height !== 'auto') {
-            customCssRules[element.id]['background-size'] = `${width} ${height}`;
-        } else if (width && width !== 'auto') {
-            customCssRules[element.id]['background-size'] = `${width} auto`;
-        } else if (height && height !== 'auto') {
-            customCssRules[element.id]['background-size'] = `auto ${height}`;
-        } else {
-            // If fit is something else (like 'fill', 'none', 'scale-down') and no dimensions,
-            // or dimensions are auto, it's harder to map directly to background-size without context.
-            // 'cover' is a safe default if no specific dimensions are given for backgrounds.
-            customCssRules[element.id]['background-size'] = 'cover'; 
+        if (customCssRules[element.id].background && customCssRules[element.id].background.includes('url(')) {
+            if (fit === 'cover' || fit === 'contain') {
+                customCssRules[element.id]['background-size'] = fit;
+            } else if (width && height && width !== 'auto' && height !== 'auto') {
+                customCssRules[element.id]['background-size'] = `${width} ${height}`;
+            } else if (width && width !== 'auto') {
+                customCssRules[element.id]['background-size'] = `${width} auto`;
+            } else if (height && height !== 'auto') {
+                customCssRules[element.id]['background-size'] = `auto ${height}`;
+            } else {
+                customCssRules[element.id]['background-size'] = 'cover'; 
+            }
+        } else if (!customCssRules[element.id].background || !customCssRules[element.id].background.includes('url(')) {
+            delete customCssRules[element.id]['background-size'];
         }
-        // object-fit doesn't apply to background images, background-size is used instead.
-        // background-position could be adjusted further if needed, e.g. based on 'fit' for 'none' or 'scale-down'.
     }
 
     if (!isImgTag) {
@@ -556,21 +801,14 @@ function setImageSource(element, src, width, height, fit) {
     }
 }
 
-// Helper function to read file as Data URL (if not already present)
-async function readFileAsDataURL(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-}
-
 // --- END: Image Editor Functions ---
 
 function applyColors() {
     if (!currentEditingElement || !bgColorPicker) return;
     ensureId(currentEditingElement);
+
+    const oldBackground = customCssRules[currentEditingElement.id] ? customCssRules[currentEditingElement.id].background : currentIframeDocument.defaultView.getComputedStyle(currentEditingElement).background;
+
     const newBgColor = bgColorPicker.value;
     const useGradient = useBgGradient.checked;
     const newBgColor2 = bgColorPicker2.value;
@@ -579,37 +817,122 @@ function applyColors() {
         customCssRules[currentEditingElement.id] = {};
     }
 
+    let newBackgroundValue;
     if (useGradient && newBgColor2) {
-        customCssRules[currentEditingElement.id].background = `linear-gradient(${newBgColor}, ${newBgColor2})`;
+        newBackgroundValue = `linear-gradient(${newBgColor}, ${newBgColor2})`;
         addRecentColor(newBgColor2, 'recentBgColors2');
         updateRecentColorsDatalist('recentBgColorsList2', recentBgColors2);
     } else {
-        customCssRules[currentEditingElement.id].background = newBgColor;
+        newBackgroundValue = newBgColor;
     }
+    
+    customCssRules[currentEditingElement.id].background = newBackgroundValue;
     
     addRecentColor(newBgColor, 'recentBgColors1');
     updateRecentColorsDatalist('recentBgColorsList', recentBgColors1);
     saveRecentColors();
 
     applyCustomCssToIframe();
-    if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+    
+    recordAction({
+        undo: () => {
+            if (oldBackground) {
+                customCssRules[currentEditingElement.id].background = oldBackground;
+            } else {
+                delete customCssRules[currentEditingElement.id].background;
+            }
+            applyCustomCssToIframe();
+            if (oldBackground && oldBackground.startsWith('linear-gradient')) {
+                const colors = parseGradientColors(oldBackground);
+                bgColorPicker.value = colors[0] ? rgbToHex(colors[0]) : '#ffffff';
+                if (colors[1]) {
+                    bgColorPicker2.value = rgbToHex(colors[1]);
+                    useBgGradient.checked = true;
+                    if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'block';
+                } else {
+                    useBgGradient.checked = false;
+                    if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
+                }
+            } else {
+                bgColorPicker.value = oldBackground ? rgbToHex(oldBackground) : '#ffffff';
+                useBgGradient.checked = false;
+                if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
+            }
+        },
+        redo: () => {
+            customCssRules[currentEditingElement.id].background = newBackgroundValue;
+            applyCustomCssToIframe();
+            bgColorPicker.value = newBgColor;
+            if (useGradient && newBgColor2) {
+                bgColorPicker2.value = newBgColor2;
+                useBgGradient.checked = true;
+                if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'block';
+            } else {
+                useBgGradient.checked = false;
+                if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
+            }
+        }
+    });
 }
 
 function removeCustomColors() {
     if (!currentEditingElement) return;
     ensureId(currentEditingElement);
+
+    const oldBackground = customCssRules[currentEditingElement.id] ? customCssRules[currentEditingElement.id].background : null;
+
     if (customCssRules[currentEditingElement.id] && customCssRules[currentEditingElement.id].background) {
         delete customCssRules[currentEditingElement.id].background;
         if (Object.keys(customCssRules[currentEditingElement.id]).length === 0) {
             delete customCssRules[currentEditingElement.id];
         }
         applyCustomCssToIframe();
-        if (window.notifyUnsavedChange) window.notifyUnsavedChange();
+
+        recordAction({
+            undo: () => {
+                if (oldBackground) {
+                    if (!customCssRules[currentEditingElement.id]) { // Recreate if deleted
+                        customCssRules[currentEditingElement.id] = {};
+                    }
+                    customCssRules[currentEditingElement.id].background = oldBackground;
+                    applyCustomCssToIframe();
+                    if (oldBackground.startsWith('linear-gradient')) {
+                        const colors = parseGradientColors(oldBackground);
+                        bgColorPicker.value = colors[0] ? rgbToHex(colors[0]) : '#ffffff';
+                        if (colors[1]) {
+                            bgColorPicker2.value = rgbToHex(colors[1]);
+                            useBgGradient.checked = true;
+                            if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'block';
+                        } else {
+                             useBgGradient.checked = false;
+                            if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
+                        }
+                    } else {
+                        bgColorPicker.value = rgbToHex(oldBackground);
+                        useBgGradient.checked = false;
+                        if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
+                    }
+                }
+            },
+            redo: () => {
+                if (customCssRules[currentEditingElement.id] && customCssRules[currentEditingElement.id].background) {
+                    delete customCssRules[currentEditingElement.id].background;
+                    if (Object.keys(customCssRules[currentEditingElement.id]).length === 0) {
+                        delete customCssRules[currentEditingElement.id];
+                    }
+                    applyCustomCssToIframe();
+                }
+                const computedStyle = currentIframeDocument.defaultView.getComputedStyle(currentEditingElement);
+                bgColorPicker.value = rgbToHex(computedStyle.backgroundColor);
+                useBgGradient.checked = false;
+                if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
+            }
+        });
     }
     const computedStyle = currentIframeDocument.defaultView.getComputedStyle(currentEditingElement);
     bgColorPicker.value = rgbToHex(computedStyle.backgroundColor);
     useBgGradient.checked = false;
-    bgColorPicker2Group.style.display = 'none';
+    if (bgColorPicker2Group) bgColorPicker2Group.style.display = 'none';
 }
 
 function setInPageEditMode(isActive, iframeDoc, iframeWin) {
@@ -619,19 +942,16 @@ function setInPageEditMode(isActive, iframeDoc, iframeWin) {
         makeTextReadOnly(textEditingTarget);
     }
 
-    // If trying to activate on the exact same document that's already active, do nothing.
     if (isActive && isEditModeActive && currentIframeDocument === iframeDoc) {
         console.log("setInPageEditMode: Already active on this document. No change.");
         return;
     }
 
-    // If trying to deactivate but already inactive, do nothing.
     if (!isActive && !isEditModeActive) {
         console.log("setInPageEditMode: Already inactive. No change.");
         return;
     }
 
-    // Cleanup listeners from the current/previous document if it exists and had listeners.
     if (currentIframeDocument && currentIframeDocument.body) {
         console.log("setInPageEditMode: Cleaning up listeners from previous/current document body.");
         const oldElements = currentIframeDocument.body.querySelectorAll('*');
@@ -645,7 +965,6 @@ function setInPageEditMode(isActive, iframeDoc, iframeWin) {
         console.warn("setInPageEditMode: currentIframeDocument existed but body was null during cleanup attempt.");
     }
 
-
     isEditModeActive = isActive; // Set the new intended state
     currentIframeDocument = iframeDoc;
     currentIframeWindow = iframeWin; // Store iframe window reference
@@ -654,20 +973,14 @@ function setInPageEditMode(isActive, iframeDoc, iframeWin) {
         console.log("In-Page Editor: Deactivating edit mode. Closing panels.");
         closeColorPicker();
         closeImageEditor();
-        // currentEditingElement and currentlyHighlightedElement are reset by close functions.
-        // currentIframeDocument is now the new doc (could be null).
-        // isEditModeActive is false.
         return; // Done with deactivation
     }
-
-    // If we've reached here, we are trying to ACTIVATE (isEditModeActive is true)
 
     if (!currentIframeDocument || !currentIframeDocument.body) {
         console.error("setInPageEditMode: Cannot activate. Iframe document or its body is not available.");
         isEditModeActive = false; // Revert state as activation failed
         currentIframeDocument = null; // Clear doc reference
         currentIframeWindow = null;
-        // Close panels just in case they were somehow opened
         closeColorPicker();
         closeImageEditor();
         return;
@@ -690,7 +1003,6 @@ function getCustomCss() {
 
     for (const id in customCssRules) {
         const rules = customCssRules[id];
-        // Check if element with this ID still exists in the current iframe document
         const elementExists = currentIframeDocument.getElementById(id);
         if (elementExists && Object.keys(rules).length > 0) {
             cssString += `#${id} {\n`;
@@ -698,10 +1010,6 @@ function getCustomCss() {
                 cssString += `  ${prop}: ${rules[prop]};\n`;
             }
             cssString += "}\n\n";
-        } else if (!elementExists) {
-            // Optionally, clean up rules for elements that no longer exist
-            // console.warn(`Element with ID #${id} not found in iframe, consider cleaning up its CSS rules.`);
-            // delete customCssRules[id]; // Be cautious with auto-deletion
         }
     }
     return cssString;
@@ -709,7 +1017,6 @@ function getCustomCss() {
 
 function applyCustomCssToIframe() {
     if (!currentIframeDocument || !currentIframeDocument.head) { // Ensure doc and head exist
-        // console.warn("applyCustomCssToIframe: No iframe document or head to apply styles to.");
         return;
     }
     let styleTag = currentIframeDocument.getElementById(customStyleTagId);
@@ -724,7 +1031,6 @@ function applyCustomCssToIframe() {
 function ensureId(element) {
     if (!element) return null;
     if (!element.id) {
-        // Generate a simple unique ID if one doesn't exist
         element.id = 'editable-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
     }
     return element.id;

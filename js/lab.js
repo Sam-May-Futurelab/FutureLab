@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveNotificationMessage = document.getElementById('save-notification-message');
     const closeSaveNotificationBtn = document.getElementById('close-save-notification');
     const pagePreviewIframe = document.getElementById('page-preview'); // Defined earlier for broader scope
+    const undoBtn = document.getElementById('undo-edit-btn');
+    const redoBtn = document.getElementById('redo-edit-btn');
 
     // Smooth scroll for hero CTA
     const heroCtaButton = document.querySelector('.hero-cta-button');
@@ -112,6 +114,15 @@ document.addEventListener('DOMContentLoaded', function() {
             downloadEditedCssBtn.disabled = true;
             downloadEditedCssBtn.title = "Save your changes before downloading CSS.";
         }
+        if (window.updateUndoRedoButtons) window.updateUndoRedoButtons(); // Update button states
+    };
+
+    // Function to update Undo/Redo button states
+    window.updateUndoRedoButtons = () => {
+        if (undoBtn && redoBtn && typeof window.canUndoInPageEdit === 'function' && typeof window.canRedoInPageEdit === 'function') {
+            undoBtn.disabled = !window.canUndoInPageEdit();
+            redoBtn.disabled = !window.canRedoInPageEdit();
+        }
     };
 
     // Function to initialize or re-initialize in-page editor event handlers
@@ -155,6 +166,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (saveEditedPageBtn) {
                 saveEditedPageBtn.style.display = editorActive ? 'inline-block' : 'none';
             }
+            if (undoBtn) {
+                undoBtn.style.display = editorActive ? 'inline-block' : 'none';
+            }
+            if (redoBtn) {
+                redoBtn.style.display = editorActive ? 'inline-block' : 'none';
+            }
             
             const hasEverBeenSaved = lastSavedEditedHtml !== '';
 
@@ -184,9 +201,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Buttons are hidden by display:none, but ensure their logical disabled state is correct if they were to be shown.
                 if (downloadEditedPageBtn) downloadEditedPageBtn.disabled = !hasEverBeenSaved;
                 if (downloadEditedCssBtn) downloadEditedCssBtn.disabled = !hasEverBeenSaved;
+                if (typeof window.clearInPageEditorHistory === 'function') {
+                    window.clearInPageEditorHistory(); // Clear history when disabling edit mode
+                }
             } else { // Edit mode is being turned ON
                 setupInPageEditorForIframe(); // Ensure listeners are attached if iframe is ready
             }
+            if (window.updateUndoRedoButtons) window.updateUndoRedoButtons(); // Update on mode toggle
         });
     }
 
@@ -224,6 +245,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     downloadEditedCssBtn.disabled = !lastSavedCustomCSS; // Enable only if there's custom CSS
                     downloadEditedCssBtn.title = lastSavedCustomCSS ? "Download the custom CSS for your edits." : "No custom color styles saved to download.";
                 }
+                // After saving, it's common to clear the undo/redo history as the saved state is the new baseline
+                if (typeof window.clearInPageEditorHistory === 'function') {
+                    window.clearInPageEditorHistory();
+                }
+                if (window.updateUndoRedoButtons) window.updateUndoRedoButtons(); // Update button states
             } else {
                 alert("Could not retrieve content from the preview to save.");
             }
@@ -274,4 +300,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    if (undoBtn && typeof window.undoInPageEdit === 'function') {
+        undoBtn.addEventListener('click', () => {
+            window.undoInPageEdit();
+        });
+    }
+
+    if (redoBtn && typeof window.redoInPageEdit === 'function') {
+        redoBtn.addEventListener('click', () => {
+            window.redoInPageEdit();
+        });
+    }
+
+    // Initial button state update
+    if (window.updateUndoRedoButtons) window.updateUndoRedoButtons();
 });
