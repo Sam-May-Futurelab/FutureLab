@@ -1091,6 +1091,175 @@
     display: none !important;
 }
 
+/* Editor Panel General Styling Enhancements */
+.color-picker-panel .form-group,
+.image-editor-panel .form-group {
+    margin-bottom: 12px; /* Consistent spacing for form groups */
+}
+
+.color-picker-panel label,
+.image-editor-panel label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9em;
+    color: var(--text-color, #333);
+    font-weight: 500;
+}
+
+.dark-theme .color-picker-panel label,
+.dark-theme .image-editor-panel label {
+    color: var(--color-picker-label-text-dark, #c5c8c6);
+}
+
+.color-picker-panel .panel-header,
+.image-editor-panel .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color, #eee);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.dark-theme .color-picker-panel .panel-header,
+.dark-theme .image-editor-panel .panel-header {
+    border-bottom-color: var(--color-picker-border-dark, #3a3f4b);
+}
+
+.color-picker-panel .panel-header h5,
+.image-editor-panel .panel-header h5 {
+    margin: 0;
+    font-size: 1.1em;
+    color: var(--text-color, #333);
+}
+.dark-theme .color-picker-panel .panel-header h5,
+.dark-theme .image-editor-panel .panel-header h5 {
+    color: var(--color-picker-header-text-dark, #e2e8f0);
+}
+
+.color-picker-panel .btn-close,
+.image-editor-panel .btn-close {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    padding: 0.25rem 0.5rem;
+    color: var(--text-color, #555);
+}
+.dark-theme .color-picker-panel .btn-close,
+.dark-theme .image-editor-panel .btn-close {
+    color: var(--color-picker-label-text-dark, #c5c8c6);
+}
+.color-picker-panel .btn-close:hover,
+.image-editor-panel .btn-close:hover {
+    color: var(--primary-color);
+}
+
+/* Styling for input[type="color"] */
+.color-picker-panel input[type="color"] {
+    width: 100%;
+    height: 40px; /* Increased height */
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: var(--border-radius-sm, 4px); /* Consistent border radius */
+    padding: 2px; /* Minimal padding for the color swatch */
+    box-sizing: border-box;
+    cursor: pointer;
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent; 
+}
+
+.dark-theme .color-picker-panel input[type="color"] {
+    border-color: var(--color-picker-border-dark, #3a3f4b);
+}
+
+.color-picker-panel input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: var(--border-radius-sm, 3px); 
+}
+
+.color-picker-panel input[type="color"]::-webkit-color-swatch {
+    border: none; 
+    border-radius: var(--border-radius-sm, 3px);
+}
+
+/* Styling for "Use Gradient" Checkbox */
+.color-picker-panel .form-check {
+    display: flex;
+    align-items: center;
+    padding-left: 0; 
+}
+
+.color-picker-panel .form-check-input {
+    margin-right: 8px;
+    width: 16px; 
+    height: 16px; 
+    cursor: pointer;
+}
+
+.color-picker-panel .form-check-label {
+    font-size: 0.9em;
+    margin-bottom: 0; 
+    cursor: pointer;
+}
+
+/* Styling for "Choose File" button (input[type="file"]) */
+.image-editor-panel input[type="file"].form-control-sm {
+    padding: 0; 
+    border: none; 
+}
+
+.image-editor-panel input[type="file"].form-control-sm::file-selector-button {
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff;
+    background-color: var(--primary-color, #007bff);
+    border-color: var(--primary-color, #007bff);
+    padding: 0.25rem 0.5rem; 
+    font-size: 0.875rem; 
+    border-radius: var(--border-radius-sm, 0.2rem);
+    border: 1px solid transparent;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    cursor: pointer;
+    margin-right: 10px; 
+}
+
+.dark-theme .image-editor-panel input[type="file"].form-control-sm::file-selector-button {
+    background-color: var(--primary-color-dark, #4361ee); 
+    border-color: var(--primary-color-dark, #4361ee);
+}
+
+.image-editor-panel input[type="file"].form-control-sm::file-selector-button:hover {
+    background-color: #0056b3; 
+    border-color: #0056b3;
+}
+.dark-theme .image-editor-panel input[type="file"].form-control-sm::file-selector-button:hover {
+    background-color: var(--primary-color-hover-dark, #3550d3);
+    border-color: var(--primary-color-hover-dark, #3550d3);
+}
+
+/* Styling for panel action buttons */
+.color-picker-panel .panel-actions,
+.image-editor-panel .panel-actions {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color, #eee);
+}
+
+.dark-theme .color-picker-panel .panel-actions,
+.dark-theme .image-editor-panel .panel-actions {
+    border-top-color: var(--color-picker-border-dark, #3a3f4b);
+}
+
+.color-picker-panel .panel-actions .btn,
+.image-editor-panel .panel-actions .btn {
+    flex-grow: 1; 
+    min-width: calc(33.333% - 10px); 
+    text-align: center;
+}
+
 /* Responsive adjustments */
 @media (max-width: 992px) {
     .hero-container {
