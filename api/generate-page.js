@@ -349,7 +349,7 @@ function _buildFaqsPromptPart(data) {
             }
         });
     } else {
-        part += `No FAQs provided by the user. Do not include an FAQ section unless it's a generic placeholder clearly marked as such and suggested by the AI based on the business type. If you add a placeholder, clearly state "Placeholder for FAQs - user should add actual questions and answers here."\n`;
+        part += `No FAQs provided by the user. Do not include an FAQ section unless it is a generic placeholder clearly marked as such and suggested by the AI based on the business type. If you add a placeholder, clearly state "Placeholder for FAQs - user should add actual questions and answers here."\n`;
     }
     part += `--- End FAQs Section ---\n\n`;
     return part;
