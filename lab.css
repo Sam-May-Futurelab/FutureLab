@@ -563,7 +563,7 @@
     border-color: var(--primary-color-dark-theme, #58a6ff);
 }
 
-/* Ensure checkmark symbol is light in dark mode and contrasts with the checked background */
+/* Ensure checkmark symbol is light in dark mode and contrasts with te checked background */
 .dark-theme .checkbox-container input[type="checkbox"]:checked ~ .checkmark:after {
     border-color: var(--dark-text-color, #f1f1f1); /* Use a theme variable for light text in dark mode */
 }
