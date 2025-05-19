@@ -1276,3 +1276,98 @@ body.dark-theme .file-name-display {
         grid-template-columns: 1fr;
     }
 }
+
+/* Styles for AI Content Suggestions in Questionnaire */
+.input-with-suggestions {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between input and button */
+}
+
+.input-with-suggestions input[type="text"] {
+    flex-grow: 1; /* Input takes available space */
+}
+
+.btn-ai-suggest {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9rem;
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.btn-ai-suggest .fa-lightbulb {
+    margin-right: 5px;
+}
+
+.btn-ai-suggest .fa-spinner {
+    margin-right: 5px;
+}
+
+.suggestions-display-container {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: var(--border-radius-sm, 4px);
+    background-color: var(--input-bg-color, #f9f9f9);
+    max-height: 200px; /* Limit height and make scrollable if needed */
+    overflow-y: auto;
+}
+
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.suggestion-item {
+    padding: 8px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color-light, #eee);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background-color: var(--primary-color-light, #e0e7ff);
+    color: var(--primary-color, #4361EE);
+}
+
+.loading-suggestions,
+.no-suggestions,
+.error-suggestions {
+    padding: 10px;
+    text-align: center;
+    color: var(--text-color-secondary, #555);
+}
+
+.error-suggestions {
+    color: var(--danger-color, #dc3545);
+}
+
+/* Dark theme considerations for suggestion elements */
+[data-theme="dark"] .suggestions-display-container {
+    background-color: var(--input-bg-color-dark, #2b2b2b);
+    border-color: var(--border-color-dark, #444);
+}
+
+[data-theme="dark"] .suggestion-item {
+    border-bottom-color: var(--border-color-light-dark, #3a3a3a);
+}
+
+[data-theme="dark"] .suggestion-item:hover {
+    background-color: var(--primary-color-dark-hover, #303f9f); /* Adjust as needed */
+    color: var(--text-color-dark, #fff);
+}
+
+[data-theme="dark"] .loading-suggestions,
+[data-theme="dark"] .no-suggestions {
+    color: var(--text-color-secondary-dark, #aaa);
+}
+
+[data-theme="dark"] .error-suggestions {
+    color: var(--danger-color-dark, #f87171); /* Lighter red for dark mode */
+}
+
+/* ... existing styles ... */

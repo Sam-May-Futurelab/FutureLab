@@ -317,6 +317,20 @@
                             <h3 class="step-title"><i class="fas fa-layer-group"></i> Page Sections & Extras</h3>
                             
                             <div class="form-field">
+                                <label for="hero-headline">Hero Headline:</label>
+                                <div class="input-with-suggestions">
+                                    <input type="text" id="hero-headline" name="heroHeadline" placeholder="e.g., The Future of Web Design is Here">
+                                    <button type="button" id="get-hero-suggestions-btn" class="btn btn-outline btn-sm btn-ai-suggest" title="Get AI Suggestions">
+                                        <i class="fas fa-lightbulb"></i> Get Suggestions
+                                    </button>
+                                </div>
+                                <div id="hero-suggestions-container" class="suggestions-display-container" style="display: none;">
+                                    <!-- AI suggestions will be loaded here -->
+                                </div>
+                                <span class="field-note">Enter the main headline for your hero section, or get AI suggestions based on your project details.</span>
+                            </div>
+                            
+                            <div class="form-field">
                                 <label>Which sections would you like to include?</label>
                                 <div class="sections-grid">
                                     <div class="section-option">

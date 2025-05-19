@@ -72,6 +72,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const advancedDesignFieldsContainer = document.getElementById('advanced-design-fields-container'); // Added
     const advancedDesignToggleIcon = advancedDesignToggleHeader ? advancedDesignToggleHeader.querySelector('.toggle-icon') : null; // Added
 
+    // AI Content Suggestion Elements for Hero Headline
+    const getHeroSuggestionsBtn = document.getElementById('get-hero-suggestions-btn');
+    const heroSuggestionsContainer = document.getElementById('hero-suggestions-container');
+    const heroHeadlineInput = document.getElementById('hero-headline');
+
     // Conditional Page Section Fields
     const aboutSectionCheckbox = document.getElementById('about-section-checkbox');
     const aboutUsFieldsContainer = document.getElementById('about-us-fields-container');
@@ -336,6 +341,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 removeLogoBtn.style.display = 'none'; // Hide the remove button itself
             });
+        }
+
+        // Event listener for Hero Headline AI Suggestions
+        if (getHeroSuggestionsBtn) {
+            getHeroSuggestionsBtn.addEventListener('click', fetchHeroHeadlineSuggestions);
         }
     }
     
@@ -792,6 +802,79 @@ document.addEventListener('DOMContentLoaded', function() {
             input.disabled = isDisabled;
             input.style.opacity = isDisabled ? '0.5' : '1';
         });
+    }
+
+    async function fetchHeroHeadlineSuggestions() {
+        if (!getHeroSuggestionsBtn || !heroSuggestionsContainer || !heroHeadlineInput) return;
+
+        const businessDescription = document.getElementById('business-description')?.value || '';
+        const targetAudience = document.getElementById('target-audience')?.value || '';
+        const primaryGoal = document.getElementById('primary-goal')?.value || '';
+
+        if (!businessDescription && !targetAudience && !primaryGoal) {
+            alert('Please fill in Business Description, Target Audience, or Primary Goal in Step 2 to get relevant suggestions.');
+            // Optionally, focus the first empty field or the relevant step
+            // goToStep(2); // Example: navigate to step 2
+            // document.getElementById('business-description').focus();
+            return;
+        }
+
+        getHeroSuggestionsBtn.disabled = true;
+        getHeroSuggestionsBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Getting...';
+        heroSuggestionsContainer.style.display = 'block';
+        heroSuggestionsContainer.innerHTML = '<p class="loading-suggestions">Fetching suggestions...</p>';
+
+        try {
+            const response = await fetch('/api/generate-suggestions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fieldType: 'heroHeadline',
+                    context: {
+                        businessDescription,
+                        targetAudience,
+                        primaryGoal
+                    }
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({ message: 'Failed to get suggestions. Please try again.' }));
+                throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+            }
+
+            const suggestions = await response.json();
+
+            if (suggestions && suggestions.length > 0) {
+                heroSuggestionsContainer.innerHTML = ''; // Clear loading message
+                const ul = document.createElement('ul');
+                ul.classList.add('suggestions-list');
+                suggestions.forEach(suggestion => {
+                    const li = document.createElement('li');
+                    li.textContent = suggestion;
+                    li.classList.add('suggestion-item');
+                    li.addEventListener('click', () => {
+                        heroHeadlineInput.value = suggestion;
+                        heroSuggestionsContainer.style.display = 'none'; // Hide after selection
+                        heroSuggestionsContainer.innerHTML = ''; // Clear suggestions
+                    });
+                    ul.appendChild(li);
+                });
+                heroSuggestionsContainer.appendChild(ul);
+            } else {
+                heroSuggestionsContainer.innerHTML = '<p class="no-suggestions">No suggestions available at the moment. Try refining your project details.</p>';
+            }
+
+        } catch (error) {
+            console.error('Error fetching hero headline suggestions:', error);
+            heroSuggestionsContainer.innerHTML = `<p class="error-suggestions">Error: ${error.message}</p>`;
+        }
+        finally {
+            getHeroSuggestionsBtn.disabled = false;
+            getHeroSuggestionsBtn.innerHTML = '<i class="fas fa-lightbulb"></i> Get Suggestions';
+        }
     }
     
     function handleFormSubmit(e) {
