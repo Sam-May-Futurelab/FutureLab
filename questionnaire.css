@@ -1346,28 +1346,51 @@ body.dark-theme .file-name-display {
     color: var(--danger-color, #dc3545);
 }
 
-/* Dark theme considerations for suggestion elements */
-[data-theme="dark"] .suggestions-display-container {
-    background-color: var(--input-bg-color-dark, #2b2b2b);
-    border-color: var(--border-color-dark, #444);
+/* Dark theme for AI suggestions */
+/* .dark-theme .input-group-hero-suggestions input[type="text"] { */
+    /* This input is typically within a .form-field, so it should inherit dark theme styles like: */
+    /* .dark-theme .form-field input[type="text"] */
+    /* Explicit rules can be added if it's styled independently or needs overrides. */
+    /* Example: */
+    /* background-color: #0f172a; */
+    /* border-color: #334155; */
+    /* color: #e2e8f0; */
+/* } */
+
+/* .dark-theme #get-hero-suggestions-btn { */
+    /* Buttons usually have their own dark theme variants (e.g., .btn-primary). */
+    /* If this button needs specific dark theme styling different from global button rules: */
+    /* Example: */
+    /* background-color: var(--primary-color-dark-theme, #YOUR_DARK_PRIMARY_COLOR); */
+    /* color: #ffffff; */
+    /* border-color: var(--primary-color-dark-theme, #YOUR_DARK_PRIMARY_COLOR); */
+/* } */
+
+.dark-theme .suggestions-display-container {
+    background-color: #2d3748; /* Darker background for the container */
+    border-color: #4a5568; /* Darker border for the container */
+    color: #cbd5e1; /* Default light text color for content within the container */
 }
 
-[data-theme="dark"] .suggestion-item {
-    border-bottom-color: var(--border-color-light-dark, #3a3a3a);
+/* .dark-theme .suggestions-list { */
+    /* Typically, no specific color styling needed here if list items handle it. */
+/* } */
+
+/* Increased specificity for suggestion items in dark mode for better override capability */
+.dark-theme .suggestions-display-container .suggestions-list .suggestion-item {
+    border-bottom-color: #4a5568; /* Darker separator line between items */
+    color: #e2e8f0; /* Light text color for suggestion items */
 }
 
-[data-theme="dark"] .suggestion-item:hover {
-    background-color: var(--primary-color-dark-hover, #303f9f); /* Adjust as needed */
-    color: var(--text-color-dark, #fff);
+.dark-theme .suggestions-display-container .suggestions-list .suggestion-item:hover {
+    background-color: #374151; /* Slightly lighter background on hover */
+    color: #ffffff; /* Ensure text remains bright white on hover for clarity */
 }
 
-[data-theme="dark"] .loading-suggestions,
-[data-theme="dark"] .no-suggestions {
-    color: var(--text-color-secondary-dark, #aaa);
-}
-
-[data-theme="dark"] .error-suggestions {
-    color: var(--danger-color-dark, #f87171); /* Lighter red for dark mode */
+.dark-theme .suggestions-display-container .loading-state,
+.dark-theme .suggestions-display-container .error-state,
+.dark-theme .suggestions-display-container .empty-state {
+    color: #94a3b8; /* Lighter text color for status messages */
 }
 
 /* ... existing styles ... */
