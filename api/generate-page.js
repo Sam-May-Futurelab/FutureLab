@@ -508,25 +508,49 @@ function _buildFinalInstructionsPromptPart() {
 }
 
 function constructPrompt(data) {
-    let prompt = '';
+    let prompt = `Please generate a complete, creative, and modern single-page landing page based on the following specifications. Respond with a VALID JSON object: {"html": "YOUR_HTML_CODE_AS_STRING", "css": "YOUR_CSS_CODE_AS_STRING"}. Ensure CSS is self-contained and does not link to external files.\\n\\n`;
 
-    // Add Hero Headline to the prompt context if available
+    prompt += _buildCoreSynthesisPromptPart(data);
+    prompt += _buildColorAndFontPromptPart(data);
+    prompt += _buildHeaderNavPromptPart(data);
+
+    // --- Hero Section Details ---
+    prompt += `--- Hero Section Details ---\\n`;
     if (data.heroHeadline && data.heroHeadline.trim() !== '') {
-        prompt += `--- Hero Section Content ---\n`;
-        prompt += `Hero Headline: "${data.heroHeadline.trim()}"\n`;
-        prompt += `Ensure this headline is prominently displayed in the hero section.
-`;
-        prompt += `--- End Hero Section Content ---\n\n`;
+        prompt += `Hero Headline: "${data.heroHeadline.trim()}"\\n`;
+    } else {
+        prompt += `Hero Headline: Generate a compelling hero headline based on the business description and primary goal.\\n`;
+    }
+    if (data.heroSubheadline && data.heroSubheadline.trim() !== '') {
+        prompt += `Hero Subheadline: "${data.heroSubheadline.trim()}" (This should appear directly below the main headline).\\n`;
+    } else {
+        prompt += `Hero Subheadline: Generate a concise and supportive subheadline that complements the main hero headline (if one is generated or provided).\\n`;
     }
 
-    prompt += _buildHeaderNavPromptPart(data);
-    prompt += _buildCreativeBriefPromptPart(data);
-    prompt += _buildColorAndFontPromptPart(data);
+    if (data.ctaButtonText && data.ctaButtonText.trim() !== '') {
+        prompt += `Hero Call to Action (CTA) Button:\\n`;
+        prompt += `  - Text: "${data.ctaButtonText.trim()}"\\n`;
+        if (data.ctaLink && data.ctaLink.trim() !== '') {
+            prompt += `  - Link Target: "${data.ctaLink.trim()}"\\n`;
+            prompt += `  - Link Formatting Instruction: Interpret the Link Target. If it contains '@' and no spaces, format as 'mailto:LINK_TARGET'. If it consists primarily of digits and may include '+', '(', ')', '-', format as 'tel:LINK_TARGET'. If it starts with '#' treat it as an anchor. Otherwise, assume it's a web URL; if it doesn't start with 'http://' or 'https://', prepend 'https://' to it. Use this formatted value for the button's href attribute.\\n`;
+        } else {
+            prompt += `  - Link Target: "#action" (User provided button text but no link. Use a generic placeholder anchor like #action, #learn-more, or #contact).\\n`;
+            prompt += `  - Link Formatting Instruction: Use the placeholder link directly as the href attribute.\\n`;
+        }
+        prompt += `  - Placement: This button MUST be prominently displayed within the hero section, typically below the hero headline and subheadline.\\n`;
+        prompt += `  - Styling: The button MUST be visually distinct, compelling, and clearly interactive (e.g., using primary or secondary colors, clear button shape, hover effects). Ensure high contrast between button background and text for accessibility.\\n`;
+        prompt += `  - Editable ID: Assign a 'data-editable-id' to the button text, e.g., 'hero-cta-button'.\\n`;
+    } else {
+        prompt += `Hero Call to Action (CTA) Button: No specific CTA button text provided by the user. Based on the page's primary goal and business description, if a CTA is highly appropriate for the hero section, you MAY generate one. If so, create compelling text, link it to a relevant placeholder anchor (e.g., '#learn-more', '#contact-us'), and style it prominently.\\n`;
+    }
+    prompt += `--- End Hero Section Details ---\\n\\n`;
+    // End Hero Section Details
+
     prompt += _buildHeroStylePromptPart(data);
+    prompt += _buildAboutUsPromptPart(data);
     prompt += _buildSocialMediaPromptPart(data);
     prompt += _buildTestimonialsPromptPart(data);
     prompt += _buildFaqsPromptPart(data);
-    prompt += _buildAboutUsPromptPart(data);
     prompt += _buildPricingPromptPart(data);
     prompt += _buildContactSectionPromptPart(data);
     prompt += _buildFeaturesBenefitsPromptPart(data);
