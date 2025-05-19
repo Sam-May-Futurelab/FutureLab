@@ -873,7 +873,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         finally {
             getHeroSuggestionsBtn.disabled = false;
-            getHeroSuggestionsBtn.innerHTML = '<i class="fas fa-lightbulb"></i> Get Suggestions';
+            getHeroSuggestionsBtn.innerHTML = '<i class="fas fa-lightbulb"></i> Suggest';
         }
     }
     

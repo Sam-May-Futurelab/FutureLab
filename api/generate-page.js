@@ -510,6 +510,15 @@ function _buildFinalInstructionsPromptPart() {
 function constructPrompt(data) {
     let prompt = '';
 
+    // Add Hero Headline to the prompt context if available
+    if (data.heroHeadline && data.heroHeadline.trim() !== '') {
+        prompt += `--- Hero Section Content ---\n`;
+        prompt += `Hero Headline: "${data.heroHeadline.trim()}"\n`;
+        prompt += `Ensure this headline is prominently displayed in the hero section.
+`;
+        prompt += `--- End Hero Section Content ---\n\n`;
+    }
+
     prompt += _buildHeaderNavPromptPart(data);
     prompt += _buildCreativeBriefPromptPart(data);
     prompt += _buildColorAndFontPromptPart(data);
