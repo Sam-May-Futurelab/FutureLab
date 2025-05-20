@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
                 cancel_url: `${req.headers.origin}/lab.html?payment_cancelled=true`,
             });
 
-            res.status(200).json({ sessionId: session.id });
+            res.status(200).json({ sessionId: session.id, checkoutUrl: session.url }); // Include checkoutUrl
         } catch (error) {
             console.error('Error creating Stripe session:', error);
             res.status(500).json({ error: 'Internal Server Error', message: error.message });

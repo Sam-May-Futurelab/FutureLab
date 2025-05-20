@@ -615,8 +615,8 @@
                         <h4 class="action-group-title">Unlock Downloads</h4>
                         <div class="button-row">
                             <button id="pay-to-unlock-btn" class="btn btn-primary btn-flex">
-                                <i class="fas fa-lock"></i>
-                                <span class="btn-text">Pay £20 to Unlock Downloads</span>
+                                <i class="fas fa-lock-open"></i>
+                                <span class="btn-text">Unlock Your Site</span>
                             </button>
                         </div>
                         <p id="payment-status-message" class="instructions-text small" style="display: none;"></p>
@@ -870,7 +870,7 @@
     <script src="https://js.stripe.com/v3/"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const stripe = Stripe('pk_test_51RQnwpRcEAu8nTFxUfDZNTjHzKBWJ9YBL37e7nYS50rKB4PYV51tMnvxSjYfekx4o5JMoW7UIIentV90lcmbg3Iu00mIf18wfC'); // Replace with your actual publishable key
+            const stripe = Stripe('pk_test_51RQnwpRcEAu8nTFxUfDZNTjHzKBWJ9YBL37e7nYS50rKB4PYV51tMnvxSjYfekx4o5JMoW7UIIentV90lcmbg3Iu00mIf18wfC'); 
             const payButton = document.getElementById('pay-to-unlock-btn');
             const paymentStatusMessage = document.getElementById('payment-status-message');
             const downloadButtons = [
@@ -950,23 +950,39 @@
                         throw new Error(errorData.message || `Server error: ${response.status}`);
                     }
 
-                    const { sessionId } = await response.json();
+                    const { sessionId, checkoutUrl } = await response.json(); // Destructure checkoutUrl
 
-                    const { error } = await stripe.redirectToCheckout({ sessionId });
+                    // const { error } = await stripe.redirectToCheckout({ sessionId }); // Old method
 
-                    if (error) {
-                        console.error('Error redirecting to checkout:', error);
-                        paymentStatusMessage.textContent = 'Error: ' + error.message;
-                        paymentStatusMessage.style.color = 'red';
-                        payButton.disabled = false;
-                        payButton.textContent = 'Pay £20 to Unlock Downloads';
+                    // Open Stripe Checkout in a new tab
+                    if (checkoutUrl) {
+                        window.open(checkoutUrl, '_blank');
+                        // Optionally, provide feedback that the user has been redirected
+                        paymentStatusMessage.textContent = 'Redirecting you to Stripe to complete payment...';
+                        paymentStatusMessage.style.color = '#007bff'; // Or your theme's info color
+                        paymentStatusMessage.style.display = 'block';
+                        // Re-enable the button after a short delay in case the new tab was blocked or closed
+                        setTimeout(() => {
+                            if (localStorage.getItem('paymentCompleted') !== 'true') { // Only if not already paid
+                             payButton.disabled = false;
+                             payButton.textContent = 'Unlock Your Site';
+                             paymentStatusMessage.textContent = 'Click again if you were not redirected.';
+                             paymentStatusMessage.style.color = 'orange';
+                            }
+                        }, 5000); // 5 seconds delay
+                    } else {
+                        throw new Error('Checkout URL not received from server.');
                     }
+
+                    // Since we are opening in a new tab, we don't use stripe.redirectToCheckout here.
+                    // The success/cancel will be handled when the original page (lab.html) reloads or checks status.
+
                 } catch (error) {
                     console.error('Payment handling error:', error);
                     paymentStatusMessage.textContent = 'Error: ' + error.message;
                     paymentStatusMessage.style.color = 'red';
                     payButton.disabled = false;
-                    payButton.textContent = 'Pay £20 to Unlock Downloads';
+                    payButton.textContent = 'Unlock Your Site';
                 }
             }
 
