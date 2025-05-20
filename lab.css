@@ -214,6 +214,68 @@
     color: #94a3b8;
 }
 
+/* Hosting How-To Section */
+#hosting-howto-section {
+    background-color: var(--bg-color-accent); /* Light mode background */
+    padding: 40px 20px;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dark-theme #hosting-howto-section {
+    background-color: var(--bg-color-accent-dark); /* Dark mode background */
+    border-top: 1px solid var(--border-color-dark);
+    border-bottom: 1px solid var(--border-color-dark);
+}
+
+#hosting-howto-section h3 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.dark-theme #hosting-howto-section h3 {
+    color: var(--secondary-color);
+}
+
+#hosting-howto-section p {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 25px auto;
+    line-height: 1.7;
+    color: var(--text-color-light);
+}
+
+.dark-theme #hosting-howto-section p {
+    color: #e9ecef; /* Directly set to a light color for dark mode */
+}
+
+#hosting-howto-section .btn-secondary {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border-color: var(--secondary-color);
+}
+
+.dark-theme #hosting-howto-section .btn-secondary {
+    background-color: var(--primary-color); /* Or a distinct dark mode accent */
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+#hosting-howto-section .btn-secondary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.dark-theme #hosting-howto-section .btn-secondary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
 /* Save Notification Popup */
 .save-notification {
     position: fixed;
@@ -1396,14 +1458,28 @@
     filter: brightness(90%); /* Alternative for darkening */
 }
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    #hosting-howto-section .section-title {
-        font-size: 1.8rem;
-    }
-    #hosting-howto-section .hosting-intro,
-    #hosting-howto-section .hosting-outro,
-    #hosting-howto-section .hosting-options-list li {
-        font-size: 1rem;
-    }
+/* Dark mode styles for #hosting-howto-section */
+.dark-theme #hosting-howto-section {
+    background-color: var(--bg-color-accent-dark); /* Dark mode background */
+    border-top: 1px solid var(--border-color-dark);
+    border-bottom: 1px solid var(--border-color-dark);
+}
+
+.dark-theme #hosting-howto-section h3 {
+    color: var(--secondary-color);
+}
+
+.dark-theme #hosting-howto-section p {
+    color: #e9ecef; /* Directly set to a light color for dark mode */
+}
+
+.dark-theme #hosting-howto-section .btn-secondary {
+    background-color: var(--primary-color); /* Or a distinct dark mode accent */
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+.dark-theme #hosting-howto-section .btn-secondary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
 }

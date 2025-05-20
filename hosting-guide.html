@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hosting Your Web Page - Futurelab</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="lab.css">
+    <link rel="stylesheet" href="css/hosting-guide.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Add link to general styles -->
+    <link rel="stylesheet" href="css/back-to-top.css"> <!-- Link to back-to-top.css -->
+    <script src="js/theme-toggle.js" defer></script> <!-- Theme toggle script -->
+    <script src="js/headerInclude.js" defer></script> <!-- Include header script -->
+    <style>
+        body {
+            font-family: var(--font-secondary, 'Roboto', sans-serif);
+            color: var(--text-color, #333);
+            line-height: 1.7; 
+            background-color: var(--bg-color, #fff);
+            padding-top: 80px; /* Adjust based on fixed header height */
+        }
+        main {
+            padding-bottom: 40px;
+        }
+        .hosting-guide-section {
+            padding: 40px 0;
+        }
+        .hosting-guide-section .container { /* Assuming .container is defined in lab.css */
+            max-width: 900px; /* Or inherit from lab.css */
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        /* section-title should be styled by lab.css */
+        .hosting-guide-section h3 {
+            font-family: var(--font-primary, 'Poppins', sans-serif);
+            color: var(--primary-color);
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-size: 1.7rem;
+            font-weight: 600;
+        }
+         .hosting-guide-section h4 {
+            font-family: var(--font-primary, 'Poppins', sans-serif);
+            color: var(--primary-dark, var(--primary-color));
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+        .hosting-guide-section h5 {
+            font-family: var(--font-primary, 'Poppins', sans-serif);
+            color: var(--text-color, #333);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .hosting-guide-section p, 
+        .hosting-guide-section ul, 
+        .hosting-guide-section ol {
+            margin-bottom: 18px;
+            font-size: 1rem;
+            color: var(--text-color-light, #555);
+        }
+        .hosting-guide-section ul, .hosting-guide-section ol {
+            padding-left: 25px;
+        }
+        .hosting-guide-section li {
+            margin-bottom: 10px;
+        }
+        .hosting-guide-section strong {
+            font-weight: 600;
+        }
+        .hosting-guide-section .code-block {
+            background-color: var(--light-gray, #f4f4f4);
+            padding: 12px 15px;
+            border-radius: var(--border-radius-sm, 4px);
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            margin-bottom: 18px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color, #ddd);
+        }
+        .hosting-guide-section a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .hosting-guide-section a:hover {
+            text-decoration: underline;
+        }
+        .btn-back-container {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        /* .btn, .btn-primary, .btn-secondary should be styled by lab.css */
+    </style>
+</head>
+<body>
+    <div id="header-placeholder-container"></div> <!-- Placeholder for header -->
+
+    <main>
+        <section class="hosting-guide-section section-transition">
+            <div class="container">
+                <h2 class="section-title">So You've Got Your HTML and CSS Files, Now What?</h2>
+                <p>Congratulations on creating your webpage with the Futurelab AI Page Generator! Now that you have your <code>index.html</code> (or your main HTML file) and your <code>styles.css</code> (or your CSS file), the next step is to get them online so everyone can see your creation. This guide will walk you through the most common and recommended ways to host your new website.</p>
+
+                <h3>Understanding Your Files</h3>
+                <p>Typically, the AI generator provides you with:</p>
+                <ul>
+                    <li>An <strong>HTML file</strong> (e.g., <code>generated-page.html</code> or <code>index.html</code>): This file contains the structure and content of your page.</li>
+                    <li>A <strong>CSS file</strong> (e.g., <code>generated-styles.css</code> or <code>lab.css</code>): This file holds all the styling rules that define the appearance of your page.</li>
+                </ul>
+                <p>If you downloaded an "Edited HTML" version, the CSS might be embedded directly within the HTML file. In this case, you'll primarily be uploading a single HTML file. If your CSS is separate, ensure your HTML file correctly links to it (e.g., <code>&lt;link rel="stylesheet" href="styles.css"&gt;</code>). The paths must be relative and correct for the hosting environment.</p>
+
+                <h3>Option 1: Static Hosting Services (Recommended for Simplicity & Performance)</h3>
+                <p>Static hosting services are specifically designed to serve files like HTML, CSS, JavaScript, and images. They are generally very fast, secure, easy to use, and many offer generous free tiers perfect for personal sites or portfolios.</p>
+
+                <h4>A. Netlify</h4>
+                <p>Netlify is a powerhouse for static site hosting. It's incredibly user-friendly with features like drag-and-drop deployment, seamless Git integration (GitHub, GitLab, Bitbucket), automatic HTTPS, custom domains, and continuous deployment (your site updates automatically when you push code changes).</p>
+                <h5>Steps:</h5>
+                <ol>
+                    <li><strong>Sign Up:</strong> Create a free account at <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer">netlify.com</a>.</li>
+                    <li><strong>Deploy Your Site:</strong>
+                        <ul>
+                            <li><strong>Drag & Drop:</strong> On your Netlify dashboard, find the "Sites" section. You can simply drag the folder containing your website files (<code>index.html</code>, CSS file, images folder, etc.) directly into the designated area.</li>
+                            <li><strong>Connect to Git:</strong> Alternatively, click "New site from Git," choose your Git provider, select your repository, and configure the build settings (usually none needed for plain HTML/CSS).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Go Live:</strong> Netlify will instantly deploy your site and provide you with a unique URL (like <code>your-awesome-site.netlify.app</code>). You can easily add a custom domain later.</li>
+                </ol>
+
+                <h4>B. Vercel</h4>
+                <p>Vercel, from the creators of Next.js, is another top-tier platform for deploying static sites and serverless functions. It's renowned for its global edge network, ensuring fast load times worldwide, and its excellent developer experience.</p>
+                <h5>Steps:</h5>
+                <ol>
+                    <li><strong>Sign Up:</strong> Register for a free account at <a href="https://vercel.com/" target="_blank" rel="noopener noreferrer">vercel.com</a>.</li>
+                    <li><strong>Import Project:</strong>
+                        <ul>
+                            <li>Connect your Git account (GitHub, GitLab, Bitbucket).</li>
+                            <li>Select the repository containing your site. Vercel typically auto-detects static HTML/CSS projects.</li>
+                            <li>Click "Deploy."</li>
+                        </ul>
+                    </li>
+                    <li><strong>Access Your Site:</strong> Vercel will deploy your site and give you a live URL. Custom domains and HTTPS are standard.</li>
+                </ol>
+
+                <h4>C. GitHub Pages</h4>
+                <p>If your website code is already hosted on GitHub, GitHub Pages is a fantastic and free way to publish it directly from your repository.</p>
+                <h5>Steps:</h5>
+                <ol>
+                    <li><strong>Prepare Repository:</strong> Ensure your main HTML file is named <code>index.html</code> and is located in the root of your repository or in a <code>/docs</code> folder on your default branch (e.g., <code>main</code>).</li>
+                    <li><strong>Enable GitHub Pages:</strong>
+                        <ul>
+                            <li>Navigate to your repository on GitHub.</li>
+                            <li>Go to "Settings" > "Pages" (in the left sidebar).</li>
+                            <li>Under "Build and deployment," select "Deploy from a branch" as the source.</li>
+                            <li>Choose your branch (e.g., <code>main</code>) and the folder (<code>/(root)</code> or <code>/docs</code>). Click "Save."</li>
+                        </ul>
+                    </li>
+                    <li><strong>Site Published:</strong> After a few moments, your site will be live at <code>http://your-username.github.io/your-repository-name/</code>. You can also set up a custom domain.</li>
+                </ol>
+                
+                <h4>D. Cloudflare Pages</h4>
+                <p>Cloudflare Pages offers robust free static site hosting, leveraging Cloudflare's extensive global network for speed and security. It integrates smoothly with Git workflows.</p>
+                <h5>Steps:</h5>
+                <ol>
+                    <li><strong>Sign Up:</strong> Create a Cloudflare account at <a href="https://www.cloudflare.com/" target="_blank" rel="noopener noreferrer">cloudflare.com</a>.</li>
+                    <li><strong>Create a Project:</strong>
+                        <ul>
+                            <li>Go to "Workers & Pages" in your Cloudflare dashboard.</li>
+                            <li>Select "Create application" > "Pages" > "Connect to Git."</li>
+                            <li>Choose your repository and configure build settings (often, no build command is needed for simple HTML/CSS).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Deploy:</strong> Cloudflare Pages will build and deploy your site, providing a unique <code>*.pages.dev</code> subdomain. Custom domains are easily configurable.</li>
+                </ol>
+
+                <h3>Option 2: Traditional Web Hosting (Using cPanel or FTP)</h3>
+                <p>If you have an existing web hosting plan with a provider like Bluehost, GoDaddy, SiteGround, etc., you can typically upload your files using their control panel (often cPanel) or via an FTP (File Transfer Protocol) client.</p>
+
+                <h4>A. Using cPanel File Manager</h4>
+                <h5>Steps:</h5>
+                <ol>
+                    <li><strong>Log In:</strong> Access your hosting account's cPanel.</li>
+                    <li><strong>File Manager:</strong> Locate and open the "File Manager."</li>
+                    <li><strong>Navigate:</strong> Go to the <code>public_html</code> directory (this is usually the web root for your primary domain). If you're hosting on an addon domain or subdomain, navigate to its specific document root folder.</li>
+                    <li><strong>Upload:</strong> Use the "Upload" functionality within File Manager to upload your <code>index.html</code> file, your CSS file(s), and any image folders. Ensure the file structure is maintained (e.g., if your CSS is in a <code>css</code> folder, upload that folder).</li>
+                    <li><strong>Check Your Site:</strong> Your website should now be accessible via your domain name.</li>
+                </ol>
+
+                <h4>B. Using an FTP Client (e.g., FileZilla)</h4>
+                <h5>Steps:</h5>
+                <ol>
+                    <li><strong>FTP Credentials:</strong> Obtain your FTP server address (hostname), username, and password from your hosting provider.</li>
+                    <li><strong>FTP Client:</strong> Download and install an FTP client like <a href="https://filezilla-project.org/" target="_blank" rel="noopener noreferrer">FileZilla</a> (free and cross-platform).</li>
+                    <li><strong>Connect:</strong> Open FileZilla and use the "Site Manager" or quick connect bar to enter your FTP credentials and connect to your server.</li>
+                    <li><strong>Transfer Files:</strong>
+                        <ul>
+                            <li>The left panel in FileZilla shows your local computer's files. Navigate to your website folder.</li>
+                            <li>The right panel shows your remote server's files. Navigate to your web root directory (e.g., <code>public_html</code>).</li>
+                            <li>Drag your website files and folders from the local panel to the remote panel.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Verify:</strong> Once the upload is complete, visit your domain in a web browser.</li>
+                </ol>
+
+                <h3>Key Things to Double-Check:</h3>
+                <ul>
+                    <li><strong>File Naming:</strong> Your main HTML page should almost always be named <code>index.html</code>. Web servers are typically configured to look for this file by default when a visitor goes to your site's root URL (e.g., <code>www.yourdomain.com</code>).</li>
+                    <li><strong>File Paths:</strong> Ensure all paths in your HTML are correct. For example, if your CSS file is <code>styles.css</code> and it's in the same directory as your <code>index.html</code>, the link in your HTML should be <code>&lt;link rel="stylesheet" href="styles.css"&gt;</code>. If it's in a subfolder like <code>css/styles.css</code>, it should be <code>&lt;link rel="stylesheet" href="css/styles.css"&gt;</code>. Same for images and other assets.</li>
+                    <li><strong>Custom Domain:</strong> All these hosting options allow you to use a custom domain name (e.g., <code>www.yourbrand.com</code>). You'll typically need to purchase a domain from a registrar (like GoDaddy, Namecheap, Google Domains) and then configure DNS settings to point it to your hosting provider.</li>
+                    <li><strong>HTTPS (SSL):</strong> Serving your site over HTTPS is crucial for security and visitor trust. Most modern static hosting providers (Netlify, Vercel, GitHub Pages, Cloudflare Pages) offer free and automatic SSL certificates. For traditional hosting, you might need to enable a free Let's Encrypt SSL certificate via your cPanel or hosting dashboard.</li>
+                </ul>
+
+                <p>Choosing the right hosting option depends on your technical comfort level and specific needs. For most users of the AI Page Generator, static hosting services like Netlify or Vercel offer the best balance of ease of use, performance, and cost (often free for basic needs).</p>
+                
+                <div class="btn-back-container">
+                    <a href="lab.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Lab Page</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Futurelab</div>
+                <div class="footer-tagline">Building digital products for startups, creators, and small businesses.</div>
+                <div class="footer-social">
+                    <a href="https://twitter.com/futurelabweb" target="_blank" aria-label="Twitter" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="https://github.com/futurelab-solutions" target="_blank" aria-label="GitHub" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                    <a href="mailto:hello@futurelab.solutions" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <script>document.write(new Date().getFullYear())</script> Futurelab Solutions. All rights reserved. <a href="privacy-policy.html" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+    
+    <button id="backToTopBtn" class="back-to-top-btn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="js/back-to-top.js"></script>
+    <!-- <script src="js/theme-toggle.js"></script> -->
+
+</body>
+</html>

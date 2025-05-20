@@ -1,0 +1,301 @@
+/* Styles for hosting-guide.html */
+/* Inspired by lab.css and general styles.css */
+
+/* Basic Reset & Root Variables */
+:root {
+    --primary-color: #4361ee; /* Example: Bright Blue */
+    --secondary-color: #4cc9f0; /* Example: Light Blue/Cyan */
+    --primary-color-rgb: 67, 97, 238;
+    --secondary-color-rgb: 76, 201, 240;
+
+    --text-color: #333;
+    --text-color-light: #555;
+    --text-secondary: #6c757d;
+    --bg-color: #ffffff;
+    --bg-color-accent: #f8f9fa; /* Light gray for subtle backgrounds */
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+    --light-gray: #f1f3f5;
+    --dark-gray: #343a40;
+
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+
+    --box-shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+    --box-shadow-md: 0 4px 15px rgba(0,0,0,0.1);
+
+    /* Dark Theme Variables (example, can be expanded) */
+    --text-color-dark: #e9ecef;
+    --text-color-light-dark: #adb5bd;
+    --bg-color-dark: #121212; /* Very dark grey, almost black */
+    --bg-color-accent-dark: #1e1e1e; /* Slightly lighter dark for accents */
+    --card-bg-dark: #1e1e1e;
+    --border-color-dark: #333;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-theme body {
+    color: var(--text-color-dark);
+    background-color: var(--bg-color-dark);
+}
+
+/* Header Placeholder */
+.header-placeholder {
+    background-color: var(--dark-gray);
+    padding: 25px 0;
+    text-align: center;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.dark-theme .header-placeholder {
+    background-color: #000; /* Darker for dark theme */
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.header-placeholder h1 {
+    color: #fff; /* White text on dark background */
+    margin: 0;
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Guide Container */
+.guide-container {
+    max-width: 950px;
+    margin: 40px auto;
+    padding: 35px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow-md);
+    border: 1px solid var(--border-color);
+}
+
+.dark-theme .guide-container {
+    background-color: var(--card-bg-dark);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    border: 1px solid var(--border-color-dark);
+}
+
+.guide-container h2 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-top: 35px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.dark-theme .guide-container h2 {
+    color: var(--secondary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.guide-container h2 i {
+    margin-right: 12px;
+    font-size: 1.8rem; /* Slightly smaller than heading */
+}
+
+.guide-container h2:first-of-type {
+    margin-top: 0;
+}
+
+.guide-container p,
+.guide-container ul {
+    margin-bottom: 22px;
+    font-size: 1.08rem;
+    color: var(--text-color-light);
+}
+
+.dark-theme .guide-container p,
+.dark-theme .guide-container ul {
+    color: var(--text-color-dark); /* Changed from --text-color-light-dark for better readability */
+}
+
+.guide-container ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.guide-container ul li {
+    background-color: var(--bg-color-accent);
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: var(--border-radius-md);
+    border-left: 5px solid var(--primary-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dark-theme .guide-container ul li {
+    background-color: var(--bg-color-accent-dark);
+    border-left-color: var(--secondary-color);
+}
+
+.guide-container ul li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+
+.dark-theme .guide-container ul li:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.guide-container ul li strong {
+    color: var(--primary-color);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.dark-theme .guide-container ul li strong {
+    color: var(--secondary-color);
+}
+
+.guide-container ul li p {
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+.guide-container ul li p:last-child {
+    margin-bottom: 0;
+}
+
+/* Intro Text */
+.guide-container .intro-text {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 35px;
+    padding: 20px;
+    padding-top: 30px; /* Added more padding to the top */
+    background-color: rgba(var(--primary-color-rgb), 0.05); /* Subtle primary color accent */
+    border-radius: var(--border-radius-md);
+    border-left: 5px solid var(--primary-color);
+    border-right: 5px solid var(--primary-color);
+}
+
+.dark-theme .guide-container .intro-text {
+    color: var(--text-color-dark);
+    background-color: var(--card-bg-dark); /* Changed to match the guide-container background in dark mode */
+    border-left-color: var(--secondary-color);
+    border-right-color: var(--secondary-color);
+}
+
+/* Buttons */
+.btn-back {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 14px 30px;
+    text-decoration: none;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1.05rem;
+}
+
+.btn-back:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.dark-theme .btn-back {
+    background-color: var(--primary-color); /* Swapping for dark theme */
+}
+
+.dark-theme .btn-back:hover {
+    background-color: var(--secondary-color);
+}
+
+.btn-back i {
+    margin-right: 8px;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* External Links */
+.external-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.external-link:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.dark-theme .external-link {
+    color: var(--secondary-color);
+}
+
+.dark-theme .external-link:hover {
+    color: var(--primary-color);
+}
+
+.external-link i {
+    font-size: 0.85em;
+    margin-left: 4px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .guide-container {
+        margin: 20px;
+        padding: 25px;
+    }
+    .header-placeholder h1 {
+        font-size: 2.2rem;
+    }
+    .guide-container h2 {
+        font-size: 1.9rem;
+    }
+    .guide-container .intro-text {
+        font-size: 1.15rem;
+        padding: 15px;
+    }
+    .btn-back {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-placeholder h1 {
+        font-size: 1.8rem;
+    }
+    .guide-container h2 {
+        font-size: 1.6rem;
+    }
+    .guide-container h2 i {
+        font-size: 1.4rem;
+        margin-right: 8px;
+    }
+    .guide-container .intro-text {
+        font-size: 1rem;
+    }
+    .guide-container ul li {
+        padding: 15px;
+    }
+}
