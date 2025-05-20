@@ -91,10 +91,10 @@ body {
     color: var(--primary-color);
     font-size: 2.2rem;
     font-weight: 600;
-    margin-top: 35px;
-    margin-bottom: 20px;
+    margin-top: 45px; /* Increased from 35px */
+    margin-bottom: 25px; /* Increased from 20px */
     border-bottom: 2px solid var(--secondary-color);
-    padding-bottom: 12px;
+    padding-bottom: 15px; /* Increased from 12px */
     display: flex;
     align-items: center;
 }
@@ -113,15 +113,41 @@ body {
     margin-top: 0;
 }
 
+.guide-container h3 { /* Added style for h3 */
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 35px;
+    margin-bottom: 18px;
+}
+
+.dark-theme .guide-container h3 { /* Added style for h3 */
+    color: var(--secondary-color);
+}
+
+.guide-container h4 { /* Added style for h4 */
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.dark-theme .guide-container h4 { /* Added style for h4 */
+    color: var(--text-color-dark);
+}
+
 .guide-container p,
-.guide-container ul {
-    margin-bottom: 22px;
+.guide-container ul, /* Combined p and ul for shared properties */
+.guide-container ol { /* Added ol for consistency */
+    margin-bottom: 25px; /* Increased from 22px */
     font-size: 1.08rem;
     color: var(--text-color-light);
 }
 
 .dark-theme .guide-container p,
-.dark-theme .guide-container ul {
+.dark-theme .guide-container ul, /* Combined p and ul for shared properties */
+.dark-theme .guide-container ol { /* Added ol for consistency */
     color: var(--text-color-dark); /* Changed from --text-color-light-dark for better readability */
 }
 
@@ -132,16 +158,49 @@ body {
 
 .guide-container ul li {
     background-color: var(--bg-color-accent);
-    padding: 20px;
-    margin-bottom: 15px;
+    padding: 15px; /* Reduced from 20px */
+    margin-bottom: 10px; /* Reduced from 15px */
     border-radius: var(--border-radius-md);
-    border-left: 5px solid var(--primary-color);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-left: 4px solid var(--primary-color); /* Reduced from 5px */
+    list-style-type: none; /* Ensure no default bullets */
+    position: relative; /* Retain if present, good for advanced styling */
 }
 
 .dark-theme .guide-container ul li {
     background-color: var(--bg-color-accent-dark);
-    border-left-color: var(--secondary-color);
+    border-left-color: var(--secondary-color); /* This will override the color part of the border-left shorthand */
+}
+
+/* Indentation for the nested UL element itself */
+.guide-container li > ul {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 25px; /* Indentation for the entire nested list block */
+}
+
+/* Style for items (LI) within a nested UL (a UL that is a child of any LI) */
+.guide-container li > ul > li {
+    background-color: transparent;
+    padding: 6px 0; /* Vertical padding, no horizontal padding as list-style handles indentation */
+    margin-bottom: 5px;
+    border-left: none;
+    border-radius: 0; /* Reset border-radius from any parent styling */
+    list-style-type: disc; /* Standard disc bullets */
+    color: inherit; /* Ensures text color is properly inherited */
+}
+
+/* Dark theme specific overrides for nested LI if text color doesn't inherit well */
+/* .dark-theme .guide-container li > ul > li { */
+    /* color: var(--text-color-dark); */ /* Usually not needed if body/container sets it */
+/* } */
+
+/* Styling for deeper nested list item markers */
+.guide-container li > ul > li > ul > li {
+    list-style-type: circle; /* Circle bullets for second-level nested ULs */
+}
+
+.guide-container li > ul > li > ul > li > ul > li {
+    list-style-type: square; /* Square bullets for third-level nested ULs */
 }
 
 .guide-container ul li:hover {
@@ -231,6 +290,52 @@ body {
 .button-container {
     text-align: center;
     margin-top: 40px;
+}
+
+/* Code Block Styling */
+.guide-container .code-block {
+    background-color: #f8f9fa; /* Default light background for code blocks */
+    color: #212529; /* Default dark text color */
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius-md);
+    overflow-x: auto;
+}
+
+.guide-container .code-block pre {
+    margin: 0; /* Reset pre margin */
+    padding: 0; /* Reset pre padding */
+    background-color: transparent; /* Ensure pre background is transparent */
+    border: none; /* Reset pre border */
+    color: inherit; /* Inherit text color from .code-block */
+    font-family: var(--font-mono);
+    font-size: 0.9em; /* Consistent font size */
+    text-shadow: none; /* Ensure no text shadow from other rules */
+}
+
+.guide-container .code-block code {
+    background-color: transparent; /* Ensure code background is transparent */
+    color: inherit; /* Inherit text color from .code-block */
+    padding: 0; /* Reset code padding */
+    font-family: inherit; /* Inherit font family from pre */
+    font-size: inherit; /* Inherit font size from pre */
+    text-shadow: none; /* Ensure no text shadow from other rules */
+}
+
+/* Dark Theme Overrides for Code Blocks */
+/* Ensure code blocks have a light background and dark text even in dark mode */
+body.dark-theme .guide-container .code-block {
+    background-color: #f8f9fa !important; /* Light background - FORCED */
+    color: #000000 !important; /* Black text - FORCED */
+    border: 1px solid #ced4da !important; /* Slightly darker border for contrast on light bg */
+}
+
+body.dark-theme .guide-container .code-block pre,
+body.dark-theme .guide-container .code-block code {
+    background-color: transparent !important; /* Still transparent */
+    color: #000000 !important; /* Black text - FORCED */
+    text-shadow: none !important; /* Ensure no text shadow */
 }
 
 /* External Links */

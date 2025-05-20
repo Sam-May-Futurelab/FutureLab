@@ -248,7 +248,7 @@
 }
 
 .dark-theme #hosting-howto-section p {
-    color: #e9ecef; /* Directly set to a light color for dark mode */
+    color: var(--text-color-dark); /* Use variable for dark mode text */
 }
 
 #hosting-howto-section .btn-secondary {
