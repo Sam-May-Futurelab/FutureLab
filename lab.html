@@ -905,22 +905,26 @@
 
                 if (notificationPopup && notificationMessage) {
                     notificationMessage.textContent = 'Payment Successful! Downloads Unlocked. You can now download your HTML and CSS files.';
-                    notificationPopup.style.display = 'block';
+                    
+                    // Add CSS classes to control visibility and styling
+                    notificationPopup.classList.add('show');
+                    notificationPopup.classList.add('success-message'); 
+                    // Ensure display is set to block if not handled by .show or if inline style is too strong
+                    notificationPopup.style.display = 'block'; 
+
                     // Ensure the popup is accessible
                     notificationPopup.setAttribute('aria-hidden', 'false');
                     notificationPopup.setAttribute('tabindex', '-1');
                     notificationPopup.focus();
 
-
-                    // Add event listener for the close button if not already handled globally
-                    // This is a simple one-time listener. If you have a global handler, this might not be needed
-                    // or could be refactored.
                     if (closeNotificationButton && !closeNotificationButton.dataset.listenerAttached) {
                         closeNotificationButton.addEventListener('click', () => {
                             notificationPopup.style.display = 'none';
+                            notificationPopup.classList.remove('show');
+                            notificationPopup.classList.remove('success-message');
                             notificationPopup.setAttribute('aria-hidden', 'true');
                         });
-                        closeNotificationButton.dataset.listenerAttached = 'true'; // Prevent multiple listeners
+                        closeNotificationButton.dataset.listenerAttached = 'true'; 
                     }
                 }
             }
