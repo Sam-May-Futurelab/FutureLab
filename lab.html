@@ -897,6 +897,32 @@
                     paymentStatusMessage.style.color = 'green';
                     paymentStatusMessage.style.display = 'block';
                 }
+
+                // Show a more prominent notification popup
+                const notificationPopup = document.getElementById('save-notification-popup');
+                const notificationMessage = document.getElementById('save-notification-message');
+                const closeNotificationButton = document.getElementById('close-save-notification');
+
+                if (notificationPopup && notificationMessage) {
+                    notificationMessage.textContent = 'Payment Successful! Downloads Unlocked. You can now download your HTML and CSS files.';
+                    notificationPopup.style.display = 'block';
+                    // Ensure the popup is accessible
+                    notificationPopup.setAttribute('aria-hidden', 'false');
+                    notificationPopup.setAttribute('tabindex', '-1');
+                    notificationPopup.focus();
+
+
+                    // Add event listener for the close button if not already handled globally
+                    // This is a simple one-time listener. If you have a global handler, this might not be needed
+                    // or could be refactored.
+                    if (closeNotificationButton && !closeNotificationButton.dataset.listenerAttached) {
+                        closeNotificationButton.addEventListener('click', () => {
+                            notificationPopup.style.display = 'none';
+                            notificationPopup.setAttribute('aria-hidden', 'true');
+                        });
+                        closeNotificationButton.dataset.listenerAttached = 'true'; // Prevent multiple listeners
+                    }
+                }
             }
 
             // Function to handle payment
