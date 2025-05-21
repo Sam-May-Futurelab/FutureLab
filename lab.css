@@ -188,14 +188,14 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
+    /* text-fill-color: transparent; */ /* Fallback, -webkit-text-fill-color is preferred */
 }
 .dark-theme .cta-futurelab-lab .ai-pricing-statement {
      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
+    /* text-fill-color: transparent; */ /* Fallback, -webkit-text-fill-color is preferred */
 }
 
 .cta-futurelab-lab .btn-primary {
