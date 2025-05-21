@@ -822,7 +822,7 @@ h2.section-title {
 
 .dark-theme .btn-outline:hover {
     background-color: var(--accent-color);
-    color: var(--dark-bg-color);
+    color: var,--light-color;
 }
 
 .full-width {
@@ -942,7 +942,7 @@ nav {
 }
 .dark-theme .nav-links a.btn.btn-outline:hover {
     background-color: var(--primary-color);
-    color: var(--light-color);
+    color: var,--light-color;
 }
 
 /* Consolidated Theme Toggle Button */
@@ -3545,3 +3545,153 @@ footer:before {
         display: block !important; 
     }
 }
+
+/* Service Card Link Styling */
+.service-card-link {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit text color from parent */
+    display: block; /* Make the entire card clickable */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.service-card-link:hover {
+    transform: translateY(-5px); /* Slightly raise the card on hover */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* Add a more pronounced shadow on hover */
+}
+
+/* AI Lab Showcase Styling */
+#ai-lab-showcase {
+    padding: 80px 0;
+    background-color: #f9f9f9; /* Light grey background */
+    text-align: center;
+}
+
+#ai-lab-showcase .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+#ai-lab-showcase h2 {
+    font-size: 2.8em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#ai-lab-showcase .subtitle {
+    font-size: 1.2em; /* Adjusted from original if any, or set to a sensible default */
+    color: #555; /* Adjusted from original if any, or set to a sensible default */
+    margin-bottom: 30px; /* Adjusted from original if any, or set to a sensible default */
+}
+
+.showcase-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    text-align: left;
+}
+
+.showcase-text-content { /* Renamed from .showcase-text */
+    flex: 1;
+}
+
+.showcase-text-content h3 { /* Renamed from .showcase-text h3 */
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 20px; /* Increased from 15px */
+}
+
+.showcase-text-content ul { /* Renamed from .showcase-text ul */
+    list-style: none;
+    padding: 0;
+    margin-bottom: 35px; /* Increased from 30px */
+}
+
+.showcase-text-content ul li { /* Renamed from .showcase-text ul li */
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 12px; /* Increased from 10px */
+    position: relative;
+    padding-left: 30px; /* Adjusted padding for icon */
+    line-height: 1.6; /* Added for better readability */
+}
+
+/* Added icon styling for list items */
+.showcase-text-content ul li::before {
+    content: "\f00c"; /* Font Awesome check icon */
+    font-family: "Font Awesome 6 Free"; 
+    font-weight: 900; /* For solid icons */
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%); /* Vertically center icon */
+    color: #28a745; /* Green check icon */
+    font-size: 0.9em; /* Adjust icon size if needed */
+}
+
+.showcase-visual-content { /* Renamed from .showcase-animation */
+    flex: 1;
+    max-width: 400px;
+}
+
+.showcase-visual-content dotlottie-player { /* Renamed from .showcase-animation dotlottie-player */
+    width: 100%;
+    height: auto;
+}
+
+#ai-lab-showcase .btn {
+    margin-top: 20px;
+}
+
+/* Responsive adjustments for AI Lab Showcase */
+@media (max-width: 768px) {
+    .showcase-content-wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .showcase-text-content { /* Renamed from .showcase-text */
+        margin-bottom: 30px;
+    }
+
+    .showcase-text-content ul { /* Renamed from .showcase-text ul */
+        display: inline-block;
+        text-align: left;
+    }
+
+    .showcase-visual-content { /* Renamed from .showcase-animation */
+        max-width: 300px; /* Adjust animation size for smaller screens */
+    }
+
+    #ai-lab-showcase h2 {
+        font-size: 2.4em;
+    }
+
+    #ai-lab-showcase .subtitle {
+        font-size: 1.1em;
+    }
+}
+
+/* Dark Theme for AI Lab Showcase */
+.dark-theme #ai-lab-showcase {
+    background-color: var(--dark-subtle-bg); /* Using a variable from your existing dark theme */
+}
+
+.dark-theme #ai-lab-showcase h2,
+.dark-theme #ai-lab-showcase .showcase-text-content h3 { /* Renamed from .showcase-text h3 */
+    color: var(--dark-heading-color); /* Using a variable for heading text color */
+}
+
+.dark-theme #ai-lab-showcase .subtitle,
+.dark-theme #ai-lab-showcase .showcase-text-content ul li { /* Renamed from .showcase-text ul li */
+    color: var(--dark-text-color); /* Using a variable for body text color */
+}
+
+/* Added dark theme icon styling for list items */
+.dark-theme #ai-lab-showcase .showcase-text-content ul li::before {
+    color: var(--success-color, #28a745); /* Use a variable if available, or keep green */
+}
+
+/* The Font Awesome check icon color in .showcase-text ul li::before is green (#28a745) 
+   and should generally be visible on dark backgrounds. If not, it can be adjusted here. */
