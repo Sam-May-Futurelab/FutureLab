@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8"> <!-- ADDED -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ADDED -->
+    <title>Hiring a Web Designer in 2025? | Futurelab Blog</title> <!-- ADDED -->
+    <meta name="description" content="Learn what to look for (and what to avoid) when hiring a web designer in 2025. A guide from Futurelab on finding the right partner for your business."> <!-- ADDED -->
     <meta name="author" content="FutureLab Solutions">
 
     <!-- Open Graph for link previews -->
@@ -15,7 +19,7 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../animations.css">
     <link rel="stylesheet" href="../blog.css">
-    <link rel="stylesheet" href="../css/back-to-top.css">
+    <!-- <link rel="stylesheet" href="../css/back-to-top.css"> REMOVED -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,12 +34,13 @@
     <meta name="msapplication-TileImage" content="../assets/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#4361ee">
 
-    <script src="../js/headerInclude.js" defer></script>
-    <script src="../js/theme-toggle.js" defer></script>
-    <script src="../js/back-to-top.js" defer></script>
+    <script src="../js/includeElements.js" defer></script> <!-- CHANGED -->
+    <!-- <script src="../js/headerInclude.js" defer></script> REMOVED -->
+    <!-- <script src="../js/theme-toggle.js" defer></script> REMOVED -->
+    <!-- <script src="../js/back-to-top.js" defer></script> REMOVED -->
 </head>
 <body class="header-toggle-adjusted">
-    <!-- Header will be injected by headerInclude.js -->
+    <div id="header-placeholder"></div> <!-- ADDED placeholder -->
 
     <main>
         <article>
@@ -235,59 +240,20 @@
         </article>
     </main>
 
-    <button id="backToTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+    <!-- <button id="backToTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button> REMOVED -->
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h4>Futurelab</h4>
-                    <p>Futurelab - Custom digital products built for forward-thinking brands.</p>
-                </div>
-                <div class="footer-column">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="../index.html">Home</a></li>
-                        <li><a href="../web-design.html">Web Design</a></li>
-                        <li><a href="../ecommerce.html">E-commerce</a></li>
-                        <li><a href="../lab.html">AI Lab</a></li>
-                        <li><a href="../blog.html">Blog</a></li>
-                        <li><a href="../contact.html">Contact</a></li>
-                        <li><a href="../faq.html">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="../privacy-policy.html">Privacy Policy</a></li>
-                        <!-- Add Terms of Service if you have one -->
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Connect</h4>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; <span id="footerYear"></span> Futurelab. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div> <!-- ADDED placeholder -->
+    
     <script>
         // Ensure this script is also present if not already part of a global script file
-        if (document.getElementById('footerYear')) {
-            document.getElementById('footerYear').textContent = new Date().getFullYear();
-        }
-        // Initialize theme toggle if it's not handled globally after header injection
+        // if (document.getElementById(\'footerYear\')) { // REMOVED - Handled by includeElements.js
+        //     document.getElementById(\'footerYear\').textContent = new Date().getFullYear();
+        // }
+        // Initialize theme toggle if it\'s not handled globally after header injection
         // Ensure paths in headerInclude.js are correct for theme-toggle.js from a subdirectory
-        if (typeof initializeThemeToggle === 'function') {
-            initializeThemeToggle(); 
-        }
+        // if (typeof initializeThemeToggle === \'function\') { // REMOVED - Handled by includeElements.js
+        //     initializeThemeToggle(); 
+        // }
 
         // FAQ Accordion Script
         const faqItems = document.querySelectorAll('.faq-item');

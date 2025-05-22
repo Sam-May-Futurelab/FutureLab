@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="animations.css">
     <link rel="stylesheet" href="blog.css"> <!-- New CSS for blog -->
-    <link rel="stylesheet" href="css/back-to-top.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,16 +32,14 @@
     <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#4361ee">
 
-    <script src="js/headerInclude.js" defer></script>
-    <script src="js/theme-toggle.js" defer></script>
-    <script src="js/back-to-top.js" defer></script>
+    <script src="js/includeElements.js" defer></script> <!-- CHANGED -->
 </head>
 <body class="header-toggle-adjusted">
-    <!-- Header will be injected by headerInclude.js -->
+    <div id="header-placeholder"></div> <!-- ADDED placeholder -->
 
     <main>
         <section class="blog-hero section-transition">
-            <div class="container">
+            <div class="container"></div>
                 <h1>Futurelab Blog</h1>
                 <p>News, insights, and updates from our team.</p>
             </div>
@@ -80,65 +77,7 @@
         </section>
     </main>
 
-    <button id="backToTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h4>Futurelab</h4>
-                    <p>Futurelab - Custom digital products built for forward-thinking brands.</p>
-                </div>
-                <div class="footer-column">
-                    <h4>Quick Links</h4>
-                    <div class="footer-links-multicolumn">
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="web-design.html">Web Design</a></li>
-                            <li><a href="ecommerce.html">E-commerce</a></li>
-                            <li><a href="lab.html">AI Lab</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="blog.html" class="active">Blog</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="showcase.html">Showcase</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <!-- Add Terms of Service if you have one -->
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Connect</h4>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; <span id="footerYear"></span> Futurelab. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-    <script>
-        // Ensure this script is also present if not already part of a global script file
-        if (document.getElementById('footerYear')) {
-            document.getElementById('footerYear').textContent = new Date().getFullYear();
-        }
-        // Initialize theme toggle if it's not handled globally after header injection
-        if (typeof initializeThemeToggle === 'function') {
-            initializeThemeToggle();
-        }
-        // Back to top button functionality (if not globally handled)
-        // Ensure backToTop.js is correctly linked and initialized
-    </script>
+    <div id="footer-placeholder"></div> <!-- ADDED placeholder -->
+    
 </body>
 </html>
