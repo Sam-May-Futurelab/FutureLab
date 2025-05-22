@@ -257,46 +257,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (downloadEditedPageBtn) {
-        downloadEditedPageBtn.addEventListener('click', () => {
-            if (hasUnsavedChanges) {
-                alert("You have unsaved changes. Please save your edits before downloading.");
+        downloadEditedPageBtn.addEventListener('click', async () => { // Make async for payment check
+            if (!window.isPaidUser && lastSavedEditedHtml) { // Check if there's content to save before payment
+                sessionStorage.setItem('paymentAttempt_HTML', lastSavedEditedHtml);
+                sessionStorage.setItem('paymentAttempt_CSS', lastSavedCustomCSS); // Save associated CSS
+                sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'edited-page');
+                console.log('Saved EDITED content to sessionStorage before Stripe redirect.');
+                await window.handleUnlockDownloadsClick(); // Use the global function from questionnaire.js
                 return;
             }
             if (lastSavedEditedHtml) {
-                // Ensure lastSavedCustomCSS is defined, even if empty
-                const customCssToEmbed = lastSavedCustomCSS || ''; 
-                if (typeof window.downloadHtmlContent === 'function') {
-                    // Call the global download function with HTML body, custom CSS, filename, and 'not original' flag
-                    window.downloadHtmlContent(lastSavedEditedHtml, customCssToEmbed, 'index.html', false);
-                } else {
-                    alert("Download function (downloadHtmlContent) is not available.");
-                }
+                window.downloadHtmlContent(lastSavedEditedHtml, lastSavedCustomCSS, `${window.lastProjectName || 'edited-page'}.html`, false);
             } else {
-                alert("No saved edits available to download. Please make and save some edits first.");
+                showSaveNotification('No edited content saved to download.');
             }
         });
     }
 
     // New: Event listener for Download Edited CSS button
     if (downloadEditedCssBtn) {
-        downloadEditedCssBtn.addEventListener('click', () => {
-            if (hasUnsavedChanges) {
-                alert("You have unsaved changes. Please save your edits before downloading the CSS.");
+        downloadEditedCssBtn.addEventListener('click', async () => { // Make async for payment check
+            if (!window.isPaidUser && lastSavedCustomCSS) { // Check if there's content to save before payment
+                sessionStorage.setItem('paymentAttempt_HTML', lastSavedEditedHtml); // Also save HTML for context
+                sessionStorage.setItem('paymentAttempt_CSS', lastSavedCustomCSS);
+                sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'edited-page');
+                console.log('Saved EDITED content to sessionStorage before Stripe redirect.');
+                await window.handleUnlockDownloadsClick(); // Use the global function from questionnaire.js
                 return;
             }
             if (lastSavedCustomCSS) {
-                const blob = new Blob([lastSavedCustomCSS], { type: 'text/css' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                const projectName = window.lastProjectName || 'custom-styles';
-                a.href = url;
-                a.download = `${projectName}-edited.css`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+                downloadFile(`${window.lastProjectName || 'edited-styles'}.css`, lastSavedCustomCSS, 'text/css');
             } else {
-                alert("No custom CSS has been saved. Apply some color changes and save your edits first.");
+                showSaveNotification('No edited CSS saved to download.');
             }
         });
     }
@@ -312,6 +304,85 @@ document.addEventListener('DOMContentLoaded', function() {
             window.redoInPageEdit();
         });
     }
+
+    // --- START: Added for payment flow and content restoration ---
+    function checkPaymentStatusAndRestoreContent() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('payment_success') && urlParams.get('payment_success') === 'true') {
+            console.log('Payment successful, session ID:', urlParams.get('session_id'));
+            sessionStorage.setItem('paymentCompleted', 'true');
+            window.isPaidUser = true; // Update global flag
+
+            // Restore content from sessionStorage
+            const savedHtml = sessionStorage.getItem('paymentAttempt_HTML');
+            const savedCss = sessionStorage.getItem('paymentAttempt_CSS');
+            const savedProjectName = sessionStorage.getItem('paymentAttempt_ProjectName');
+
+            if (savedHtml && savedCss) {
+                console.log('Restoring content from sessionStorage after payment.');
+                window.lastGeneratedHTML = savedHtml;
+                window.lastGeneratedCSS = savedCss;
+                if (savedProjectName) window.lastProjectName = savedProjectName;
+
+                // Update the preview iframe
+                if (pagePreviewIframe) {
+                    const previewDoc = pagePreviewIframe.contentDocument || pagePreviewIframe.contentWindow.document;
+                    previewDoc.open();
+                    previewDoc.write(`
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>${savedProjectName || 'Preview'}</title>
+                            <style>
+                                body { margin: 0; padding: 0; }
+                                ${savedCss}
+                            </style>
+                        </head>
+                        <body>${savedHtml}</body>
+                        </html>
+                    `);
+                    previewDoc.close();
+                    console.log('Preview updated with restored content.');
+                }
+                
+                // Update UI elements (e.g., enable download buttons, hide payment prompts)
+                // This part might need more specific logic based on your UI structure
+                if (downloadHtmlBtn) downloadHtmlBtn.disabled = false; // Assuming downloadHtmlBtn is accessible here
+                if (downloadCssBtn) downloadCssBtn.disabled = false; // Assuming downloadCssBtn is accessible here
+                if (downloadEditedPageBtn) downloadEditedPageBtn.disabled = false;
+                if (downloadEditedCssBtn) downloadEditedCssBtn.disabled = false;
+
+                showSaveNotification('Payment successful! You can now download your page.');
+
+                // Clean up sessionStorage items
+                sessionStorage.removeItem('paymentAttempt_HTML');
+                sessionStorage.removeItem('paymentAttempt_CSS');
+                sessionStorage.removeItem('paymentAttempt_ProjectName');
+            } else {
+                console.warn('Payment success detected, but no saved content found in sessionStorage to restore.');
+            }
+
+            // Clean URL
+            const newUrl = window.location.pathname + window.location.hash; // Keep hash if present
+            window.history.replaceState({}, document.title, newUrl);
+
+        } else if (urlParams.has('payment_cancelled') && urlParams.get('payment_cancelled') === 'true') {
+            console.log('Payment cancelled by user.');
+            showSaveNotification('Payment was cancelled. You can try again anytime.');
+            // Clean up sessionStorage items even on cancellation
+            sessionStorage.removeItem('paymentAttempt_HTML');
+            sessionStorage.removeItem('paymentAttempt_CSS');
+            sessionStorage.removeItem('paymentAttempt_ProjectName');
+            // Clean URL
+            const newUrl = window.location.pathname + window.location.hash;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    }
+
+    checkPaymentStatusAndRestoreContent(); // Call on page load
+    // --- END: Added for payment flow and content restoration ---
 
     // Initial button state update
     if (window.updateUndoRedoButtons) window.updateUndoRedoButtons();

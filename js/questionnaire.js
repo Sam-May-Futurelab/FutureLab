@@ -38,6 +38,56 @@ ${bodyHtml || '<!-- No HTML content available -->'}
     console.log(`${isOriginal ? 'Original' : 'Edited'} page download initiated as: ${filename}`);
 };
 
+// --- START: Added for payment flow ---
+// Global flag to track payment status, accessible by lab.js too
+window.isPaidUser = sessionStorage.getItem('paymentCompleted') === 'true';
+
+async function handleUnlockDownloadsClick() {
+    if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
+        sessionStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
+        sessionStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
+        if (window.lastProjectName) {
+            sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName);
+        }
+        console.log('Saved generated content to sessionStorage before Stripe redirect.');
+    } else {
+        alert('Please generate a page first before attempting to unlock downloads.');
+        // Potentially show this message in a less disruptive way
+        const generationOverlay = document.querySelector('.generation-overlay');
+        if (generationOverlay) generationOverlay.classList.remove('active');
+        return;
+    }
+
+    try {
+        const generationOverlay = document.querySelector('.generation-overlay');
+        const generationStep = document.querySelector('.generation-step');
+        if (generationOverlay) generationOverlay.classList.add('active');
+        if (generationStep) generationStep.textContent = 'Redirecting to payment...';
+
+        const response = await fetch('/api/create-checkout-session', { method: 'POST' });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Server error: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data.checkoutUrl) {
+            window.location.href = data.checkoutUrl;
+        } else {
+            throw new Error('Checkout URL not provided by server.');
+        }
+    } catch (error) {
+        console.error('Failed to initiate payment:', error);
+        alert(`Could not start the payment process: ${error.message}`);
+        const generationOverlay = document.querySelector('.generation-overlay');
+        if (generationOverlay) generationOverlay.classList.remove('active');
+        sessionStorage.removeItem('paymentAttempt_HTML');
+        sessionStorage.removeItem('paymentAttempt_CSS');
+        sessionStorage.removeItem('paymentAttempt_ProjectName');
+    }
+}
+// --- END: Added for payment flow ---
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Cache DOM elements
     const form = document.getElementById('ai-questionnaire');
@@ -201,12 +251,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add event listeners for download buttons
         if (downloadHtmlBtn) {
-            downloadHtmlBtn.addEventListener('click', downloadHTML);
-        }
-        if (downloadCssBtn) {
-            downloadCssBtn.addEventListener('click', downloadCSS);
+            downloadHtmlBtn.addEventListener('click', async function() {
+                if (!window.isPaidUser) {
+                    // alert('Payment required to download. Redirecting to payment...'); // Optional alert
+                    await handleUnlockDownloadsClick();
+                } else {
+                    if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
+                        window.downloadHtmlContent(window.lastGeneratedHTML, window.lastGeneratedCSS, `${window.lastProjectName || 'generated-page'}.html`, true);
+                    } else {
+                        alert('No content available to download. Please generate a page first.');
+                    }
+                }
+            });
         }
 
+        if (downloadCssBtn) {
+            downloadCssBtn.addEventListener('click', async function() {
+                if (!window.isPaidUser) {
+                    // alert('Payment required to download. Redirecting to payment...'); // Optional alert
+                    await handleUnlockDownloadsClick();
+                } else {
+                    if (window.lastGeneratedCSS) {
+                        downloadFile(`${window.lastProjectName || 'generated-styles'}.css`, window.lastGeneratedCSS, 'text/css');
+                    } else {
+                        alert('No CSS available to download. Please generate a page first.');
+                    }
+                }
+            });
+        }
+        
         if (ctaSectionCheckbox) {
             ctaSectionCheckbox.addEventListener('change', toggleCTAFieldsVisibility);
         }
