@@ -195,18 +195,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize form
     console.log('[Questionnaire] Calling initializeForm...'); // New log
     try {
-        initializeForm();
+        initializeForm(); // This will call setupEventListeners()
         console.log('[Questionnaire] initializeForm completed.'); // New log
     } catch (e) {
         console.error('[Questionnaire] Error during initializeForm:', e);
-    }
-
-    console.log('[Questionnaire] Calling setupEventListeners...'); // New log
-    try {
-        setupEventListeners();
-        console.log('[Questionnaire] setupEventListeners completed.'); // New log
-    } catch (e) {
-        console.error('[Questionnaire] Error during setupEventListeners:', e);
     }
 
     function initializeForm() {
