@@ -92,12 +92,13 @@ async function handleUnlockDownloadsClick() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Cache DOM elements
+    console.log('[Questionnaire] DOMContentLoaded event fired.'); // New log
+
     const form = document.getElementById('ai-questionnaire');
     const formSteps = document.querySelectorAll('.form-step');
     const progressBar = document.querySelector('.progress-fill');
     const progressSteps = document.querySelectorAll('.progress-step');
-    const questionnaireContainer = document.querySelector('.questionnaire-container'); // Added this line
+    const questionnaireContainer = document.querySelector('.questionnaire-container');
     const nextBtns = document.querySelectorAll('.btn-next');
     const prevBtns = document.querySelectorAll('.btn-prev');
     const generateBtn = document.querySelector('.btn-generate');
@@ -192,9 +193,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Initialize form
-    initializeForm();
-    
+    console.log('[Questionnaire] Calling initializeForm...'); // New log
+    try {
+        initializeForm();
+        console.log('[Questionnaire] initializeForm completed.'); // New log
+    } catch (e) {
+        console.error('[Questionnaire] Error during initializeForm:', e);
+    }
+
+    console.log('[Questionnaire] Calling setupEventListeners...'); // New log
+    try {
+        setupEventListeners();
+        console.log('[Questionnaire] setupEventListeners completed.'); // New log
+    } catch (e) {
+        console.error('[Questionnaire] Error during setupEventListeners:', e);
+    }
+
     function initializeForm() {
+        console.log('[Questionnaire] Inside initializeForm function.'); // New log
         updateProgressBar();
         setupColorPickers();
         setupEventListeners();
@@ -225,14 +241,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function setupEventListeners() {
+        console.log('[Questionnaire] Inside setupEventListeners function.'); // New log
+
         // Next button clicks
-        nextBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                if (validateCurrentStep()) {
-                    goToNextStep();
-                }
+        if (nextBtns && nextBtns.length > 0) {
+            console.log('[Questionnaire] Setting up Next button listeners.');
+            nextBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    console.log('[Questionnaire] Next button clicked.');
+                    if (validateCurrentStep()) {
+                        goToNextStep();
+                    }
+                });
             });
-        });
+        } else {
+            console.warn('[Questionnaire] No Next buttons found to attach listeners.');
+        }
         
         // Previous button clicks
         prevBtns.forEach(btn => {
@@ -257,45 +281,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add event listeners for download buttons
         if (downloadHtmlBtn) {
+            console.log('[Questionnaire] Attaching listener to downloadHtmlBtn.'); // New log
             downloadHtmlBtn.addEventListener('click', async function() {
+                console.log('[Questionnaire] Download HTML button clicked. window.isPaidUser:', window.isPaidUser, 'window.lastGeneratedHTML empty?:', !window.lastGeneratedHTML, 'window.lastGeneratedCSS empty?:', !window.lastGeneratedCSS);
                 if (!window.isPaidUser) {
                     console.log('[Questionnaire] Download HTML button clicked, user NOT paid.');
                     console.log('[Questionnaire] Current state at HTML button click:');
                     console.log('[Questionnaire] window.lastGeneratedHTML (first 100 chars):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 100) : 'EMPTY or NULL');
                     console.log('[Questionnaire] window.lastGeneratedCSS (first 100 chars):', window.lastGeneratedCSS ? window.lastGeneratedCSS.substring(0, 100) : 'EMPTY or NULL');
+                    console.log('[Questionnaire] window.lastProjectName:', window.lastProjectName);
 
-                    if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
-                        console.log('[Questionnaire] Values before localStorage.setItem:');
-                        console.log('[Questionnaire] window.lastGeneratedHTML (first 100 chars):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 100) : 'EMPTY or NULL');
-                        console.log('[Questionnaire] window.lastGeneratedCSS (first 100 chars):', window.lastGeneratedCSS ? window.lastGeneratedCSS.substring(0, 100) : 'EMPTY or NULL');
-                        console.log('[Questionnaire] window.lastProjectName:', window.lastProjectName);
+                    try {
+                        localStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
+                        localStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
+                        localStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-page');
+                        localStorage.setItem('paymentAttempt_Type', 'original');
+                        console.log('[Questionnaire] Successfully called localStorage.setItem for all paymentAttempt items.');
 
-                        try {
-                            localStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
-                            localStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
-                            localStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-page');
-                            localStorage.setItem('paymentAttempt_Type', 'original');
-                            console.log('[Questionnaire] Successfully called localStorage.setItem for all paymentAttempt items.');
-
-                            // Immediately try to retrieve and log one item to verify it was set in this context
-                            const testRetrieveHtml = localStorage.getItem('paymentAttempt_HTML');
-                            console.log('[Questionnaire] Verification: localStorage.getItem(\'paymentAttempt_HTML\') (first 100 chars) immediately after setItem:', testRetrieveHtml ? testRetrieveHtml.substring(0, 100) : 'EMPTY or NULL');
-                            if (!testRetrieveHtml) {
-                                console.error('[Questionnaire] CRITICAL: paymentAttempt_HTML was NOT found in localStorage immediately after setting it!');
-                            }
-
-                        } catch (e) {
-                            console.error('[Questionnaire] Error during localStorage.setItem:', e);
-                            alert('A problem occurred trying to save your page content. Please try again.');
-                            return; // Do not proceed to payment if saving failed
+                        // Immediately try to retrieve and log one item to verify it was set in this context
+                        const testRetrieveHtml = localStorage.getItem('paymentAttempt_HTML');
+                        console.log('[Questionnaire] Verification: localStorage.getItem(\'paymentAttempt_HTML\') (first 100 chars) immediately after setItem:', testRetrieveHtml ? testRetrieveHtml.substring(0, 100) : 'EMPTY or NULL');
+                        if (!testRetrieveHtml) {
+                            console.error('[Questionnaire] CRITICAL: paymentAttempt_HTML was NOT found in localStorage immediately after setting it!');
                         }
-                        
-                        console.log('Saved ORIGINAL HTML/CSS to localStorage for payment. Type: original');
-                        await handleUnlockDownloadsClick();
-                    } else {
-                        console.warn('[Questionnaire] No content (lastGeneratedHTML or lastGeneratedCSS) to save for payment. Variables checked above.');
-                        alert('No content available to download. Please generate a page first.');
+
+                    } catch (e) {
+                        console.error('[Questionnaire] Error during localStorage.setItem:', e);
+                        alert('A problem occurred trying to save your page content. Please try again.');
+                        return; // Do not proceed to payment if saving failed
                     }
+                    
+                    console.log('Saved ORIGINAL HTML/CSS to localStorage for payment. Type: original');
+                    await handleUnlockDownloadsClick();
                 } else {
                     if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
                         window.downloadHtmlContent(window.lastGeneratedHTML, window.lastGeneratedCSS, `${window.lastProjectName || 'generated-page'}.html`, true);
@@ -307,44 +324,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (downloadCssBtn) {
+            console.log('[Questionnaire] Attaching listener to downloadCssBtn.'); // New log
             downloadCssBtn.addEventListener('click', async function() {
+                console.log('[Questionnaire] Download CSS button clicked. window.isPaidUser:', window.isPaidUser, 'window.lastGeneratedHTML empty?:', !window.lastGeneratedHTML, 'window.lastGeneratedCSS empty?:', !window.lastGeneratedCSS);
                 if (!window.isPaidUser) {
                     console.log('[Questionnaire] Download CSS button clicked, user NOT paid.');
                     console.log('[Questionnaire] Current state at CSS button click:');
                     console.log('[Questionnaire] window.lastGeneratedHTML (first 100 chars):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 100) : 'EMPTY or NULL');
                     console.log('[Questionnaire] window.lastGeneratedCSS (first 100 chars):', window.lastGeneratedCSS ? window.lastGeneratedCSS.substring(0, 100) : 'EMPTY or NULL');
+                    console.log('[Questionnaire] window.lastProjectName:', window.lastProjectName);
+                    
+                    try {
+                        localStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
+                        localStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
+                        localStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-style');
+                        localStorage.setItem('paymentAttempt_Type', 'original');
+                        console.log('[Questionnaire] Successfully called localStorage.setItem for all paymentAttempt items (CSS button).');
 
-                    if (window.lastGeneratedHTML && window.lastGeneratedCSS) { // Check for HTML too, as CSS belongs to a page
-                        console.log('[Questionnaire] Values before localStorage.setItem (CSS button):');
-                        console.log('[Questionnaire] window.lastGeneratedHTML (first 100 chars):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 100) : 'EMPTY or NULL');
-                        console.log('[Questionnaire] window.lastGeneratedCSS (first 100 chars):', window.lastGeneratedCSS ? window.lastGeneratedCSS.substring(0, 100) : 'EMPTY or NULL');
-                        console.log('[Questionnaire] window.lastProjectName:', window.lastProjectName);
-                        
-                        try {
-                            localStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
-                            localStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
-                            localStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-style');
-                            localStorage.setItem('paymentAttempt_Type', 'original');
-                            console.log('[Questionnaire] Successfully called localStorage.setItem for all paymentAttempt items (CSS button).');
-
-                            const testRetrieveHtmlCss = localStorage.getItem('paymentAttempt_HTML');
-                            console.log('[Questionnaire] Verification: localStorage.getItem(\'paymentAttempt_HTML\') (first 100 chars) immediately after setItem (CSS button):', testRetrieveHtmlCss ? testRetrieveHtmlCss.substring(0, 100) : 'EMPTY or NULL');
-                            if (!testRetrieveHtmlCss) {
-                                console.error('[Questionnaire] CRITICAL: paymentAttempt_HTML was NOT found in localStorage immediately after setting it (CSS button)!');
-                            }
-
-                        } catch (e) {
-                            console.error('[Questionnaire] Error during localStorage.setItem (CSS button):', e);
-                            alert('A problem occurred trying to save your page content. Please try again.');
-                            return; // Do not proceed to payment if saving failed
+                        const testRetrieveHtmlCss = localStorage.getItem('paymentAttempt_HTML');
+                        console.log('[Questionnaire] Verification: localStorage.getItem(\'paymentAttempt_HTML\') (first 100 chars) immediately after setItem (CSS button):', testRetrieveHtmlCss ? testRetrieveHtmlCss.substring(0, 100) : 'EMPTY or NULL');
+                        if (!testRetrieveHtmlCss) {
+                            console.error('[Questionnaire] CRITICAL: paymentAttempt_HTML was NOT found in localStorage immediately after setting it (CSS button)!');
                         }
 
-                        console.log('Saved ORIGINAL HTML/CSS (for CSS download trigger) to localStorage for payment. Type: original');
-                        await handleUnlockDownloadsClick();
-                    } else {
-                        console.warn('[Questionnaire] No content (lastGeneratedHTML or lastGeneratedCSS) to save for payment (CSS button). Variables checked above.');
-                        alert('No CSS available to download. Please generate a page first.');
+                    } catch (e) {
+                        console.error('[Questionnaire] Error during localStorage.setItem (CSS button):', e);
+                        alert('A problem occurred trying to save your page content. Please try again.');
+                        return; // Do not proceed to payment if saving failed
                     }
+
+                    console.log('Saved ORIGINAL HTML/CSS (for CSS download trigger) to localStorage for payment. Type: original');
+                    await handleUnlockDownloadsClick();
                 } else {
                     if (window.lastGeneratedCSS) {
                         downloadFile(`${window.lastProjectName || 'generated-styles'}.css`, window.lastGeneratedCSS, 'text/css');
@@ -1042,6 +1052,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     async function getAICodeGeneration(formData) {
+        console.log('[Questionnaire] getAICodeGeneration called.'); // Existing log
         generationOverlay.classList.add('active');
         generationStep.textContent = 'Connecting to AI assistant...';
 

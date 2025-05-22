@@ -969,9 +969,9 @@
 
                     // const { error } = await stripe.redirectToCheckout({ sessionId }); // Old method
 
-                    // Open Stripe Checkout in a new tab
+                    // Open Stripe Checkout in the same tab
                     if (checkoutUrl) {
-                        window.open(checkoutUrl, '_blank');
+                        window.location.href = checkoutUrl; // Changed from window.open(checkoutUrl, \'_blank\');
                         // Optionally, provide feedback that the user has been redirected
                         paymentStatusMessage.textContent = 'Redirecting you to Stripe to complete payment...';
                         paymentStatusMessage.style.color = '#007bff'; // Or your theme's info color
