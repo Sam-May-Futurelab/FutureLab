@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initModalFunctionality();
     initProductCardButtons(); // Add functionality to product card buttons
     
-    // FIX HAMBURGER MENU SPECIFICALLY FOR SHOWCASE PAGE MOBILE
+    // REMOVE HAMBURGER MENU FIX FOR SHOWCASE PAGE - Handled by header.html's script
+    /*
     const showcaseHamburger = document.querySelector('.hamburger, .menu-toggle, .mobile-menu-button');
     const showcaseMenu = document.querySelector('.mobile-nav, .nav-links, .main-nav');
     
@@ -63,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
             menu: showcaseMenu ? "Found" : "Not found" 
         });
     }
+    */
     
     // 3D Product Viewer - Simplify and fix
     function initProductViewer() {

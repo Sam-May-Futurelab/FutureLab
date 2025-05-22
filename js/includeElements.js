@@ -104,34 +104,39 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 if (isHeader) {
-                    // Load theme toggle script
+                    // Execute scripts within the fetched header HTML
+                    const headerScripts = placeholder.querySelectorAll('script');
+                    headerScripts.forEach(script => {
+                        if (script.src) { // For external scripts within header.html
+                            // Ensure correct path for scripts sourced from within header.html
+                            let scriptSrc = script.getAttribute('src');
+                            if (basePath && !scriptSrc.startsWith('http') && !scriptSrc.startsWith('/')) {
+                                scriptSrc = basePath + scriptSrc;
+                            }
+                            loadScript(scriptSrc, script.defer, script.type).catch(console.error);
+                        } else { // For inline scripts within header.html
+                            try {
+                                const newScript = document.createElement('script');
+                                newScript.textContent = script.textContent;
+                                document.body.appendChild(newScript); // Re-append to execute
+                            } catch (e) {
+                                console.error('Error evaluating header inline script:', e);
+                            }
+                        }
+                    });
+
+                    // Load and initialize theme toggle script
                     await loadScript(themeToggleScriptPath).catch(console.error);
-                    // Attempt to initialize theme toggle if function exists
                     if (typeof initializeThemeToggle === 'function') {
+                        console.log('includeElements.js: Calling initializeThemeToggle() after header load.');
                         initializeThemeToggle();
+                    } else {
+                        console.error('includeElements.js: initializeThemeToggle function not found after loading script.');
                     }
                     
-                    // Load mobile menu script
-                    // Check if header.html itself contains a script tag for mobile menu logic
-                    const headerInlineScript = placeholder.querySelector('script#mobileMenuLogic'); // Expecting an ID on the script
-                    if (headerInlineScript) {
-                        // If script is inline in header.html, try to execute it
-                        try {
-                            const newScript = document.createElement('script');
-                            newScript.textContent = headerInlineScript.textContent;
-                            document.body.appendChild(newScript); // Re-append to execute
-                        } catch (e) {
-                            console.error('Error evaluating header inline script:', e);
-                        }
-                    } else {
-                        // Otherwise, load external mobile menu script
-                        await loadScript(mobileMenuScriptPath).catch(console.error);
-                    }
-                     // After loading header and its scripts, explicitly initialize menu if a function exists
-                    if (typeof initializeMobileMenu === 'function') { // Assuming a function name
-                        initializeMobileMenu();
-                    }
-
+                    // Load mobile-responsive.js, which might contain general mobile utilities or specific menu helpers
+                    // if not already handled by header.html's own scripts.
+                    await loadScript(mobileMenuScriptPath).catch(e => console.error('Error loading mobile-responsive.js: ' + e.message));
 
                 } else { // Footer loaded
                     // Load Back to Top CSS & JS
@@ -142,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         setupBackToTopButton();
                     }
 
-                    // Re-run the year script if it\'s embedded in footer.html
+                    // Re-run the year script if it's embedded in footer.html
                     const yearScriptElement = placeholder.querySelector('script#footerYearScript'); // Expecting an ID
                     if (yearScriptElement) {
                         try {
