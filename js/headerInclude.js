@@ -1,5 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('header.html')
+    // Determine the correct path to header.html based on the current page's location
+    let headerPath = 'header.html'; // Default for root pages
+    let linkPrefix = ''; // Prefix for relative links in the header
+    const currentPath = window.location.pathname;
+
+    // Check for known subdirectories
+    // Add more conditions here if you have other subdirectories like /products/, /services/, etc.
+    if (currentPath.includes('/blog/')) { 
+        headerPath = '../header.html';
+        linkPrefix = '../';
+    }
+    // Example for deeper subdirectories:
+    // else if (currentPath.includes('/some/other/dir/')) {
+    //     headerPath = '../../header.html';
+    //     linkPrefix = '../../';
+    // }
+
+    fetch(headerPath)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Failed to fetch header: ${response.status} ${response.statusText}`);
@@ -12,6 +29,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const headerElement = doc.querySelector('header');
             const headerStyles = doc.querySelector('style'); // Assuming one main style block in header.html's head or body
             const scriptElements = Array.from(doc.querySelectorAll('script')); // Get all script tags
+
+            if (linkPrefix && headerElement) {
+                const links = headerElement.querySelectorAll('a[href]');
+                links.forEach(link => {
+                    const href = link.getAttribute('href');
+                    // Check if it's a relative path to a page/file, 
+                    // not an external link, mailto, tel, anchor link, or an absolute path starting with '/'
+                    if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:') && !href.startsWith('tel:') && !href.startsWith('/')) {
+                        link.setAttribute('href', linkPrefix + href);
+                    }
+                });
+            }
 
             if (headerStyles) {
                 // Clone the style node before appending to avoid issues if it's already in a document

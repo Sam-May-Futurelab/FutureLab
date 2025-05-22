@@ -340,6 +340,129 @@ footer {
 
 /* End of Footer Styling */
 
+/* Styles for Key Takeaways Table */
+.takeaways-table-container {
+    margin: 30px 0;
+    overflow-x: auto; /* For responsiveness on small screens */
+}
+
+.takeaways-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border-color-light);
+}
+
+.dark-theme .takeaways-table {
+    border: 1px solid var(--border-color-dark);
+}
+
+.takeaways-table th,
+.takeaways-table td {
+    border: 1px solid var(--border-color-light);
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.dark-theme .takeaways-table th,
+.dark-theme .takeaways-table td {
+    border: 1px solid var(--border-color-dark);
+}
+
+.takeaways-table th {
+    background-color: var(--light-bg-subtle);
+    font-weight: 600;
+}
+
+.dark-theme .takeaways-table th {
+    background-color: var(--dark-bg-subtle);
+}
+
+.takeaways-table th i {
+    margin-left: 8px;
+}
+
+/* Styles for FAQ Accordion */
+.faq-accordion {
+    margin: 30px 0;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.dark-theme .faq-item {
+    border-bottom: 1px solid var(--border-color-dark);
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-question {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    text-align: left;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.faq-question i {
+    transition: transform 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.faq-question.active i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0 15px;
+}
+
+.faq-answer p {
+    margin: 0 0 15px 0;
+    line-height: 1.7;
+}
+
+.faq-answer.active {
+    /* max-height will be set by JS, but padding can be defined here */
+    padding: 10px 15px 15px 15px;
+}
+
+/* Divider style */
+.section-divider {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color-light);
+    margin: 40px 0;
+}
+
+.dark-theme .section-divider {
+    background-color: var(--border-color-dark);
+}
+
+/* Ensure variables are defined, or use fallback colors */
+:root {
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    /* Assuming these are defined in styles.css */
+    /* --border-color-light: #e0e0e0; */
+    /* --border-color-dark: #3a3a3a; */
+    /* --light-bg-subtle: #f9f9f9; */
+    /* --dark-bg-subtle: #2c2c2c; */
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .blog-hero h1 {
