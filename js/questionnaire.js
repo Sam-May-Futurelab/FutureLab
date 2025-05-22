@@ -260,7 +260,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         sessionStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
                         sessionStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
                         sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-page');
-                        console.log('Saved ORIGINAL HTML/CSS to sessionStorage for payment.');
+                        sessionStorage.setItem('paymentAttempt_Type', 'original'); // Mark as original
+                        console.log('Saved ORIGINAL HTML/CSS to sessionStorage for payment. Type: original');
                         await handleUnlockDownloadsClick();
                     } else {
                         alert('No content available to download. Please generate a page first.');
@@ -278,12 +279,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (downloadCssBtn) {
             downloadCssBtn.addEventListener('click', async function() {
                 if (!window.isPaidUser) {
-                     // Even for CSS download, save both HTML and CSS as payment unlocks the "page"
-                    if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
+                    if (window.lastGeneratedHTML && window.lastGeneratedCSS) { // Check for HTML too, as CSS belongs to a page
                         sessionStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
                         sessionStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
                         sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-style');
-                        console.log('Saved ORIGINAL HTML/CSS (for CSS download trigger) to sessionStorage for payment.');
+                        sessionStorage.setItem('paymentAttempt_Type', 'original'); // Mark as original
+                        console.log('Saved ORIGINAL HTML/CSS (for CSS download trigger) to sessionStorage for payment. Type: original');
                         await handleUnlockDownloadsClick();
                     } else {
                         alert('No CSS available to download. Please generate a page first.');

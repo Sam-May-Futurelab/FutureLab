@@ -262,7 +262,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 sessionStorage.setItem('paymentAttempt_HTML', lastSavedEditedHtml);
                 sessionStorage.setItem('paymentAttempt_CSS', lastSavedCustomCSS); // Save associated CSS
                 sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'edited-page');
-                console.log('Saved EDITED content to sessionStorage before Stripe redirect.');
+                sessionStorage.setItem('paymentAttempt_Type', 'edited'); // Mark as edited
+                console.log('Saved EDITED content to sessionStorage before Stripe redirect. Type: edited');
                 await window.handleUnlockDownloadsClick(); // Use the global function from questionnaire.js
                 return;
             }
@@ -281,7 +282,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 sessionStorage.setItem('paymentAttempt_HTML', lastSavedEditedHtml); // Also save HTML for context
                 sessionStorage.setItem('paymentAttempt_CSS', lastSavedCustomCSS);
                 sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'edited-page');
-                console.log('Saved EDITED content to sessionStorage before Stripe redirect.');
+                sessionStorage.setItem('paymentAttempt_Type', 'edited'); // Mark as edited
+                console.log('Saved EDITED content (for CSS download trigger) to sessionStorage before Stripe redirect. Type: edited');
                 await window.handleUnlockDownloadsClick(); // Use the global function from questionnaire.js
                 return;
             }
@@ -317,18 +319,31 @@ document.addEventListener('DOMContentLoaded', function() {
             const savedHtml = sessionStorage.getItem('paymentAttempt_HTML');
             const savedCss = sessionStorage.getItem('paymentAttempt_CSS');
             const savedProjectName = sessionStorage.getItem('paymentAttempt_ProjectName');
+            const savedContentType = sessionStorage.getItem('paymentAttempt_Type'); // 'original' or 'edited'
 
             if (savedHtml && savedCss) {
-                console.log('Restoring content from sessionStorage after payment.');
-                window.lastGeneratedHTML = savedHtml;
-                window.lastGeneratedCSS = savedCss;
-                if (savedProjectName) window.lastProjectName = savedProjectName;
+                console.log(`Restoring content from sessionStorage after payment. Type: ${savedContentType}`);
+                
+                // Update the global/module-level variables that hold the content
+                if (savedContentType === 'original') {
+                    window.lastGeneratedHTML = savedHtml; // This is in questionnaire.js scope
+                    window.lastGeneratedCSS = savedCss;
+                    if (savedProjectName) window.lastProjectName = savedProjectName; // questionnaire.js scope
+                    console.log('Updated window.lastGeneratedHTML/CSS with restored original content.');
+                } else if (savedContentType === 'edited') {
+                    lastSavedEditedHtml = savedHtml; // This is in lab.js scope
+                    lastSavedCustomCSS = savedCss;
+                    // window.lastProjectName is global, might be updated if needed, but usually pertains to original generation
+                    if (savedProjectName && window.lastProjectName !== savedProjectName) {
+                        // Potentially update window.lastProjectName if the edited version had a distinct name saved
+                        // For now, assume window.lastProjectName from questionnaire.js is the primary one.
+                    }
+                    console.log('Updated lastSavedEditedHtml/CSS with restored edited content.');
+                }
 
-                // Update the preview iframe
+                // Update the preview iframe using srcdoc for direct HTML/CSS injection
                 if (pagePreviewIframe) {
-                    const previewDoc = pagePreviewIframe.contentDocument || pagePreviewIframe.contentWindow.document;
-                    previewDoc.open();
-                    previewDoc.write(`
+                    const fullHtmlForPreview = `
                         <!DOCTYPE html>
                         <html lang="en">
                         <head>
@@ -342,17 +357,29 @@ document.addEventListener('DOMContentLoaded', function() {
                         </head>
                         <body>${savedHtml}</body>
                         </html>
-                    `);
-                    previewDoc.close();
-                    console.log('Preview updated with restored content.');
+                    `;
+                    pagePreviewIframe.srcdoc = fullHtmlForPreview;
+                    console.log('Preview iframe updated with restored content using srcdoc.');
                 }
                 
                 // Update UI elements (e.g., enable download buttons, hide payment prompts)
-                // This part might need more specific logic based on your UI structure
-                if (downloadHtmlBtn) downloadHtmlBtn.disabled = false; // Assuming downloadHtmlBtn is accessible here
-                if (downloadCssBtn) downloadCssBtn.disabled = false; // Assuming downloadCssBtn is accessible here
+                // This requires access to buttons from both questionnaire.js and lab.js contexts if they are distinct
+                // For simplicity, we assume these IDs are unique and globally accessible for this example
+                const originalDownloadHtmlBtn = document.getElementById('download-html-btn');
+                const originalDownloadCssBtn = document.getElementById('download-css-btn');
+                // downloadEditedPageBtn and downloadEditedCssBtn are already defined in lab.js scope
+
+                if (originalDownloadHtmlBtn) originalDownloadHtmlBtn.disabled = false;
+                if (originalDownloadCssBtn) originalDownloadCssBtn.disabled = false;
                 if (downloadEditedPageBtn) downloadEditedPageBtn.disabled = false;
                 if (downloadEditedCssBtn) downloadEditedCssBtn.disabled = false;
+
+                // If edit mode was active and it was edited content, potentially re-enable edit mode controls
+                if (savedContentType === 'edited' && toggleEditModeBtn && editorActive) {
+                    // May need to re-initialize editor if state was lost, or ensure it picks up new srcdoc content
+                    // For now, just log. A robust solution might re-trigger parts of edit mode setup.
+                    console.log('Restored edited content. Edit mode may need re-initialization if it was active.');
+                }
 
                 showSaveNotification('Payment successful! You can now download your page.');
 
@@ -360,6 +387,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 sessionStorage.removeItem('paymentAttempt_HTML');
                 sessionStorage.removeItem('paymentAttempt_CSS');
                 sessionStorage.removeItem('paymentAttempt_ProjectName');
+                sessionStorage.removeItem('paymentAttempt_Type');
             } else {
                 console.warn('Payment success detected, but no saved content found in sessionStorage to restore.');
             }
@@ -375,6 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sessionStorage.removeItem('paymentAttempt_HTML');
             sessionStorage.removeItem('paymentAttempt_CSS');
             sessionStorage.removeItem('paymentAttempt_ProjectName');
+            sessionStorage.removeItem('paymentAttempt_Type');
             // Clean URL
             const newUrl = window.location.pathname + window.location.hash;
             window.history.replaceState({}, document.title, newUrl);
@@ -382,7 +411,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     checkPaymentStatusAndRestoreContent(); // Call on page load
-    // --- END: Added for payment flow and content restoration ---
 
     // Initial button state update
     if (window.updateUndoRedoButtons) window.updateUndoRedoButtons();
