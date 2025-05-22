@@ -394,6 +394,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('[LabPage] Restored HTML length:', htmlToRestore.length);
                 console.log('[LabPage] Restored CSS length:', (cssToRestore || '').length);
 
+                // Hide placeholder and ensure iframe is visible
+                const previewPlaceholderContainer = document.getElementById('preview-placeholder-container');
+                if (previewPlaceholderContainer) {
+                    previewPlaceholderContainer.style.display = 'none';
+                    console.log('[LabPage] Hid preview placeholder container.');
+                } else {
+                    console.warn('[LabPage] Preview placeholder container not found, could not hide it.');
+                }
+                if (pagePreviewIframe) { // Ensure iframe is visible
+                    pagePreviewIframe.style.display = 'block';
+                }
+
+
                 // Clean up localStorage items
                 localStorage.removeItem('paymentAttempt_HTML');
                 localStorage.removeItem('paymentAttempt_CSS');

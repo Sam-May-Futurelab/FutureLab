@@ -180,9 +180,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Remove these local declarations, as we will use the window properties directly
     // let lastGeneratedHTML = '';
     // let lastGeneratedCSS = '';
-    window.lastGeneratedHTML = ''; // Ensure they are initialized on the window object
-    window.lastGeneratedCSS = ''; // Ensure they are initialized on the window object
-    window.lastProjectName = 'ai-generated-page'; // Initialize on window object
+    window.lastGeneratedHTML = window.lastGeneratedHTML || ''; // Conditionally initialize
+    window.lastGeneratedCSS = window.lastGeneratedCSS || ''; // Conditionally initialize
+    window.lastProjectName = window.lastProjectName || 'ai-generated-page'; // Conditionally initialize
 
     // Change button text
     if (downloadHtmlBtn) {
