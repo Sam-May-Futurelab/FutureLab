@@ -41,19 +41,19 @@ function initializeThemeToggle() {
         
         // Add click event listener to toggle theme
         themeToggle.addEventListener('click', function() {
-            console.log('Theme toggle clicked');
+            console.log('Theme toggle clicked'); // Existing log
             
-            // Toggle dark theme class on body
+            console.log('Body classList BEFORE toggle:', Array.from(document.body.classList).join(' '));
             document.body.classList.toggle('dark-theme');
+            console.log('Body classList AFTER toggle:', Array.from(document.body.classList).join(' '));
             
-            // Update the localStorage preference
             const isDark = document.body.classList.contains('dark-theme');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            console.log(`localStorage theme set to: ${isDark ? 'dark' : 'light'}.`);
             
-            // Update icon based on current theme
             updateThemeIcon(isDark, themeToggle);
+            console.log(`Icon updated. Button should now show: ${isDark ? 'sun (for dark theme)' : 'moon (for light theme)'}.`);
             
-            // Update theme-color meta tag
             const themeColorMeta = document.querySelector('meta[name="theme-color"]');
             if (themeColorMeta) {
                 themeColorMeta.setAttribute('content', isDark ? '#0f172a' : '#4361ee');
