@@ -1250,6 +1250,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Assign to window properties
             window.lastGeneratedHTML = aiOutput.html || '<!-- No HTML generated -->';
             window.lastGeneratedCSS = aiOutput.css || '/* No CSS generated */';
+            window.lastProjectName = projectNameFromForm.toLowerCase().replace(/\s+/g, '-') || 'ai-generated-page'; // Ensure this is also set
 
             console.log('[Questionnaire] Inside getAICodeGeneration, after setting window properties:');
             console.log('[Questionnaire] window.lastGeneratedHTML (first 100 chars):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 100) : 'EMPTY or NULL');
@@ -1308,6 +1309,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (downloadButtonsContainer) downloadButtonsContainer.style.display = 'block';
                 
+                // Enable the pay button once content is generated
+                const payButton = document.getElementById('pay-to-unlock-btn');
+                if (payButton) {
+                    payButton.disabled = false;
+                    console.log('[Questionnaire] Pay to Unlock button has been enabled.');
+                } else {
+                    console.warn('[Questionnaire] Pay to Unlock button not found, cannot enable it.');
+                }
+
                 // MODIFIED SCROLL LOGIC for successful generation
                 if (pagePreview) { // Changed from questionnaireContainer to pagePreview
                     pagePreview.scrollIntoView({ behavior: 'smooth', block: 'start' });

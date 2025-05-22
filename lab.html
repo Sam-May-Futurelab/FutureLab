@@ -614,7 +614,7 @@
                     <div class="action-group" id="payment-actions">
                         <h4 class="action-group-title">Unlock Downloads</h4>
                         <div class="button-row">
-                            <button id="pay-to-unlock-btn" class="btn btn-primary btn-flex">
+                            <button id="pay-to-unlock-btn" class="btn btn-primary btn-flex" disabled>
                                 <i class="fas fa-lock-open"></i>
                                 <span class="btn-text">Unlock Your Site</span>
                             </button>
@@ -971,6 +971,23 @@
 
                     // Open Stripe Checkout in the same tab
                     if (checkoutUrl) {
+                        // Save content to localStorage BEFORE redirecting
+                        console.log('[LabHTML] Attempting to save to localStorage before Stripe redirect.');
+                        console.log('[LabHTML] window.lastGeneratedHTML (first 50):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 50) : 'undefined');
+                        console.log('[LabHTML] window.lastGeneratedCSS (first 50):', window.lastGeneratedCSS ? window.lastGeneratedCSS.substring(0, 50) : 'undefined');
+                        console.log('[LabHTML] window.lastGeneratedProjectName:', window.lastGeneratedProjectName || 'undefined');
+
+                        if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
+                            localStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
+                            localStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
+                            localStorage.setItem('paymentAttempt_projectName', window.lastGeneratedProjectName || 'My AI Page'); // Default if undefined
+                            localStorage.setItem('paymentAttempt_type', 'ai-generated'); // Or whatever type is appropriate
+                            console.log('[LabHTML] Successfully saved HTML, CSS, and project name to localStorage.');
+                        } else {
+                            console.error('[LabHTML] lastGeneratedHTML or lastGeneratedCSS is missing. Cannot save to localStorage.');
+                            // Optionally, display an error to the user or prevent redirect if this data is critical
+                        }
+
                         window.location.href = checkoutUrl; // Changed from window.open(checkoutUrl, \'_blank\');
                         // Optionally, provide feedback that the user has been redirected
                         paymentStatusMessage.textContent = 'Redirecting you to Stripe to complete payment...';
