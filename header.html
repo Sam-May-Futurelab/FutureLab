@@ -87,34 +87,45 @@
         .nav-links li a {
             color: var(--dark-color);
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            position: relative;
-            padding: 5px 3px;
+            font-weight: 500; /* Added for better readability */
+            padding: 5px 0; /* Added for larger click target */
+            position: relative; /* For ::after pseudo-element */
+            transition: color 0.3s ease;
         }
-        
+
         .dark-theme .nav-links li a {
-            color: #e2e8f0;
+            color: var(--light-gray);
         }
         
         .nav-links li a:hover {
             color: var(--primary-color);
         }
+
+        .dark-theme .nav-links li a:hover {
+            color: var(--accent-color-light);
+        }
         
         .nav-links li a.active {
             color: var(--primary-color);
-            font-weight: 600;
+            font-weight: 700;
+        }
+
+        .dark-theme .nav-links li a.active {
+            color: var(--accent-color-light);
         }
         
         .nav-links li a.active::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -5px; /* Adjust as needed */
             left: 0;
             width: 100%;
             height: 2px;
             background-color: var(--primary-color);
-            border-radius: 2px;
+        }
+
+        .dark-theme .nav-links li a.active::after {
+            background-color: var(--accent-color-light);
         }
         
         .nav-links li a.btn {
@@ -452,39 +463,35 @@
     <header>
         <nav class="container">
             <a href="index.html" class="logo-link">
-                <div class="logo">Futurelab</div>
+                <span class="logo">Futurelab</span>
             </a>
-            <!-- Desktop Nav -->
             <ul class="nav-links">
-                <li><a href="index.html" id="nav-home">Home</a></li>
-                <li><a href="ecommerce.html" id="nav-ecommerce">E-Commerce</a></li>
-                <li><a href="web-design.html" id="nav-webdesign">Web Design</a></li>
-                <li><a href="showcase.html" id="nav-showcase">Showcase</a></li>
-                <li><a href="lab.html" id="nav-lab">Lab</a></li>
-                <li><a href="faq.html" id="nav-faq">FAQ</a></li>
-                <li><a href="contact.html" class="btn btn-outline" id="nav-contact">Contact</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="web-design.html">Web Design</a></li>
+                <li><a href="ecommerce.html">E-commerce</a></li>
+                <li><a href="lab.html">AI Lab</a></li>
+                <li><a href="showcase.html">Showcase</a></li> <!-- Added Showcase link -->
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="faq.html">FAQ</a></li>
             </ul>
-            <!-- Mobile Nav (new) -->
-            <ul class="nav-links-mobile">
-                <li><a href="index.html" id="nav-mobile-home">Home</a></li>
-                <li><a href="ecommerce.html" id="nav-mobile-ecommerce">E-Commerce</a></li>
-                <li><a href="web-design.html" id="nav-mobile-webdesign">Web Design</a></li>
-                <li><a href="showcase.html" id="nav-mobile-showcase">Showcase</a></li>
-                <li><a href="lab.html" id="nav-mobile-lab">Lab</a></li>
-                <li><a href="faq.html" id="nav-mobile-faq">FAQ</a></li>
-                <li><a href="contact.html" class="btn btn-outline" id="nav-mobile-contact">Contact</a></li>
-            </ul>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
-                <i class="fas fa-moon"></i> <!-- Default to moon, js will update -->
-                <div class="toggle-glow"></div>
-            </button>
+            <div class="header-actions">
+                <a href="contact.html" class="btn btn-primary">Contact</a> <!-- Adjusted class for size, text already Contact -->
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i> <!-- Icon will be updated by JS -->
+                </button>
+            </div>
             <div class="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-            <div class="mobile-menu-overlay"></div>
         </nav>
+        <!-- Mobile Navigation (will be populated by JS) -->
+        <div class="mobile-menu-overlay">
+            <ul class="nav-links-mobile">
+                <!-- Links will be copied here by JS -->
+            </ul>
+        </div>
     </header>
 
     <script>
@@ -492,38 +499,24 @@
 
         // Set active navigation link based on current page
         function setActiveNavLink() {
-            const currentPath = window.location.pathname;
-            // Ensure pageName defaults to 'index.html' if currentPath is just '/' or empty
-            const pageName = currentPath.split('/').pop() || 'index.html'; 
-            
-            document.querySelectorAll('.nav-links a, .nav-links-mobile a').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            let idSuffix = '';
-            if (pageName === 'index.html') idSuffix = 'home';
-            else if (pageName === 'ecommerce.html') idSuffix = 'ecommerce';
-            else if (pageName === 'web-design.html') idSuffix = 'webdesign';
-            else if (pageName === 'showcase.html') idSuffix = 'showcase';
-            else if (pageName === 'lab.html') idSuffix = 'lab';
-            else if (pageName === 'faq.html') idSuffix = 'faq';
-            // Contact button typically doesn't use the same 'active' link styling
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-links a:not(.btn)'); // Exclude buttons
+            const mobileNavLinks = document.querySelectorAll('.nav-links-mobile a:not(.btn)');
 
-            if (idSuffix) {
-                const desktopLink = document.getElementById(`nav-${idSuffix}`);
-                if (desktopLink) desktopLink.classList.add('active');
-                
-                const mobileLink = document.getElementById(`nav-mobile-${idSuffix}`);
-                if (mobileLink) mobileLink.classList.add('active');
-            }
-            
-            // If on contact.html, you might want to style the contact button differently,
-            // but it usually doesn't get the 'active' class meant for text links.
-            // Example:
-            // if (pageName === 'contact.html') {
-            //     document.getElementById('nav-contact')?.classList.add('current-page-button');
-            //     document.getElementById('nav-mobile-contact')?.classList.add('current-page-button');
-            // }
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            mobileNavLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
         }
         
         // Mobile menu functionality
@@ -533,38 +526,40 @@
         const body = document.body;
 
         if (hamburger && mobileNavLinks) { // Check for mobileNavLinks
-            function toggleMenu(event) {
-                if (event) {
-                     event.preventDefault(); 
-                }
+            hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
-                mobileNavLinks.classList.toggle('active'); // Toggle active on mobileNavLinks
-                
-                if (mobileOverlay) {
-                    mobileOverlay.classList.toggle('active');
+                mobileNavLinks.classList.toggle('active'); // Toggle active on the ul
+                mobileOverlay.classList.toggle('active');
+                body.classList.toggle('no-scroll'); // Prevent scrolling when menu is open
+
+                // Populate mobile menu if it's empty and opening
+                if (mobileNavLinks.classList.contains('active') && mobileNavLinks.innerHTML === '') {
+                    const desktopNavLinks = document.querySelector('.nav-links').cloneNode(true);
+                    // Remove any CTA buttons if they are part of the main nav items to avoid duplication,
+                    // or style them differently for mobile menu.
+                    // For this example, we'll just append all.
+                    desktopNavLinks.childNodes.forEach(node => {
+                        if (node.nodeName === 'LI') {
+                             // Ensure 'active' class is also copied if present
+                            const link = node.querySelector('a');
+                            if (link && link.classList.contains('active')) {
+                                node.classList.add('active'); // Or apply to the 'a' tag directly
+                            }
+                            mobileNavLinks.appendChild(node);
+                        }
+                    });
                 }
-                
-                body.classList.toggle('menu-open', mobileNavLinks.classList.contains('active')); // Check mobileNavLinks for menu-open
-            }
-            
-            hamburger.addEventListener('click', toggleMenu);
-            
-            // Add event listeners to each link in the mobile menu to close the menu on click
-            mobileNavLinks.querySelectorAll('a').forEach(link => { 
-                link.addEventListener('click', function() {
-                    if (mobileNavLinks.classList.contains('active')) { 
-                        toggleMenu(); 
-                    }
-                });
             });
-            
-            if (mobileOverlay) {
-                mobileOverlay.addEventListener('click', function() {
-                     if (mobileNavLinks.classList.contains('active')) { 
-                        toggleMenu(); 
-                    }
-                });
-            }
+
+            // Close mobile menu when a link is clicked
+            mobileNavLinks.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    hamburger.classList.remove('active');
+                    mobileNavLinks.classList.remove('active');
+                    mobileOverlay.classList.remove('active');
+                    body.classList.remove('no-scroll');
+                }
+            });
         }
         
         setActiveNavLink();
