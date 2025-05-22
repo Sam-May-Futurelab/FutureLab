@@ -117,19 +117,37 @@ Your response MUST be ONLY the JSON object itself, without any surrounding text,
 
         let generatedCodeContent = aiResponse.choices[0]?.message?.content;
 
-        // Clean the AI response to remove markdown fences if present
         if (generatedCodeContent && typeof generatedCodeContent === 'string') {
-            const markdownJsonRegex = /^```(?:json)?\\s*([\\s\\S]*?)\\s*```$/;
-            const match = generatedCodeContent.match(markdownJsonRegex);
-            if (match && match[1]) {
-                generatedCodeContent = match[1];
+            // Stage 1: Trim initial whitespace
+            let cleanedContent = generatedCodeContent.trim();
+
+            // Stage 2: Attempt to remove markdown fences
+            // Regex matches ```json ... ``` or ``` ... ```, capturing the content inside
+            const markdownJsonRegex = /^```(?:json)?\s*([\s\S]*?)\s*```$/;
+            const fenceMatch = cleanedContent.match(markdownJsonRegex);
+            if (fenceMatch && fenceMatch[1]) {
+                cleanedContent = fenceMatch[1].trim(); // Use content inside fences and trim it
+            } else if (cleanedContent.startsWith("```") && cleanedContent.endsWith("```")) {
+                // Simpler fallback if regex didn't match but robustly fenced
+                cleanedContent = cleanedContent.substring(3, cleanedContent.length - 3).trim();
             }
-            // Fallback for cases where only ``` is present without 'json'
-            // or if there's leading/trailing whitespace around the fences
-            generatedCodeContent = generatedCodeContent.trim();
-            if (generatedCodeContent.startsWith("```") && generatedCodeContent.endsWith("```")) {
-                 generatedCodeContent = generatedCodeContent.substring(3, generatedCodeContent.length - 3).trim();
+            // At this point, cleanedContent should be what was inside fences (trimmed),
+            // or the original (trimmed) if no fences were detected.
+
+            // Stage 3: Trim again (in case fence stripping left spaces or if no fences were present)
+            // and check for a leading "json" keyword prefix.
+            cleanedContent = cleanedContent.trim();
+            if (cleanedContent.toLowerCase().startsWith('json')) {
+                // Check if the characters immediately following "json" are whitespace or a newline,
+                // leading up to a '{'.
+                const contentAfterJsonKeyword = cleanedContent.substring(4); // Get content after the first 4 chars ("json")
+                if (contentAfterJsonKeyword.trim().startsWith('{')) {
+                    // If, after removing "json" and trimming the rest, it starts with '{',
+                    // then "json" was indeed a prefix to the JSON object.
+                    cleanedContent = contentAfterJsonKeyword.trim();
+                }
             }
+            generatedCodeContent = cleanedContent; // Assign the fully cleaned content back
         }
 
         let parsedCode;
