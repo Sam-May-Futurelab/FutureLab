@@ -26,16 +26,14 @@
     <!-- End Favicon Links -->
 
     <meta name="theme-color" content="#4361ee">
-    <script src="js/headerInclude.js" defer></script>
-    <script src="js/theme-toggle.js" defer></script>
+    <script src="js/includeElements.js" defer></script>
     <script src="js/lab.js" defer></script>
     <script src="js/questionnaire.js" defer></script>
     <script src="js/in-page-editor.js" defer></script>
-    <script src="js/back-to-top.js" defer></script>
-    <!-- <script src="js/simple-menu.js" defer></script> --> <!-- Commented out as file seems to be missing -->
+
 </head>
 <body class="">
-    <!-- The header will be injected here by headerInclude.js -->
+    <div id="header-placeholder"></div>
 
     <main>
         <section class="hero section-transition">
@@ -749,24 +747,10 @@
 
     </main>
 
+    <div id="footer-placeholder"></div>
     <button id="backToTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">Futurelab</div>
-                <div class="footer-tagline">Building digital products for startups, creators, and small businesses.</div>
-                <div class="footer-social">
-                    <a href="https://twitter.com/futurelabweb" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="https://github.com/futurelab-solutions" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="mailto:hello@futurelab.solutions" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                &copy; 2025 Futurelab Solutions. All rights reserved. <a href="privacy-policy.html" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Privacy Policy</a>
-            </div>
-        </div>
-    </footer>
+    
 
     <!-- Color Picker Panel -->
     <div id="editor-controls-container">

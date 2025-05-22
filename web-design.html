@@ -62,17 +62,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/back-to-top.css">
     <meta name="theme-color" content="#4361ee">
-    <script src="js/headerInclude.js"></script>
-    <script src="simple-menu.js" defer></script>
-    <script src="js/theme-toggle.js" defer></script>
+    <script src="js/includeElements.js" defer></script>
     
     <!-- Add theme toggle initialization script -->
     <!-- Removed inline initializeThemeToggle script to avoid conflicts. Relies on js/theme-toggle.js -->
 </head>
 <body>
-    <!-- The header will be dynamically inserted by headerInclude.js -->
+    <div id="header-placeholder"></div>
 
     <main>
         <!-- Hero Section -->
@@ -608,32 +605,9 @@
         </section>
     </main>
 
-    <!-- Back to Top Button -->
-    <button id="backToTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+    <div id="footer-placeholder"></div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">Futurelab</div>
-                <div class="footer-tagline">Custom Digital Solutions for Forward-Thinking Businesses</div>
-                <div class="footer-social">
-                    <a href="https://www.linkedin.com/in/sam-may-/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/ChiefSpuddy/CardWizz" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://instagram.com/futurelab.solutions" target="_blank"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>
-                    &copy; 2025 FutureLab. All rights reserved. | 
-                    <a href="https://futurelab.solutions" class="animated-underline">futurelab.solutions</a> | 
-                    <a href="privacy-policy.html" class="animated-underline">Privacy Policy</a>
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Cookie Consent Banner -->
+    <!-- Cookie Consent Banner (ensure it's included if not globally managed) -->
     <div id="cookie-banner" class="cookie-banner">
         <div class="cookie-content">
             <p>This website uses cookies to ensure you get the best experience. <a href="privacy-policy.html">Learn more</a></p>
@@ -646,12 +620,11 @@
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="utilities.js"></script> <!-- Ensure utilities is loaded before scripts that depend on it -->
-    <script src="mobile-responsive.js"></script> <!-- mobile-responsive.js now uses utilities.js -->
-    <script src="script.js"></script>
     <script src="testimonials.js"></script>
     <script src="analytics-integration.js"></script>
-    <script src="js/back-to-top.js" defer></script>
+    <script src="script.js"></script>
+    <script src="utilities.js"></script>
+    <script src="mobile-responsive.js"></script>
     
     <!-- FAQ toggle functionality is now handled by script.js -->
     <script>

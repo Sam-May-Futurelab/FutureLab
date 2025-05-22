@@ -8,12 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/hosting-guide.css">
     <link rel="stylesheet" href="styles.css"> <!-- Add link to general styles -->
-    <link rel="stylesheet" href="css/back-to-top.css"> <!-- Link to back-to-top.css -->
-    <script src="js/theme-toggle.js" defer></script> <!-- Theme toggle script -->
-    <script src="js/headerInclude.js" defer></script> <!-- Include header script -->
+    <script src="js/includeElements.js" defer></script>
 </head>
 <body class="header-toggle-adjusted">
-    <div id="header-placeholder-container"></div> <!-- Placeholder for header -->
+    <div id="header-placeholder"></div> <!-- Placeholder for header -->
 
     <main>
         <section class="hosting-guide-section section-transition">
@@ -296,33 +294,12 @@
                 <p>Choosing the right hosting option depends on your technical comfort level and specific needs. For most users of the AI Page Generator, <strong>static hosting services like Netlify, Vercel, or GitHub Pages offer the best balance of ease of use, performance, and cost</strong> (often free for basic needs). They also simplify many technical aspects like SSL certificates and deployment workflows.</p>
                 
                 <div class="button-container"> <!-- Changed class for consistency with css/hosting-guide.css -->
-                    <a href="lab.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Lab Page</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">Futurelab</div>
-                <div class="footer-tagline">Building digital products for startups, creators, and small businesses.</div>
-                <div class="footer-social">
-                    <a href="https://twitter.com/futurelabweb" target="_blank" aria-label="Twitter" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
-                    <a href="https://github.com/futurelab-solutions" target="_blank" aria-label="GitHub" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-                    <a href="mailto:hello@futurelab.solutions" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                &copy; <script>document.write(new Date().getFullYear())</script> Futurelab Solutions. All rights reserved. <a href="privacy-policy.html" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Privacy Policy</a>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
     
-    <button id="backToTopBtn" class="back-to-top-btn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
-
-    <script src="js/back-to-top.js"></script>
-    <!-- <script src="js/theme-toggle.js"></script> -->
-
 </body>
 </html>

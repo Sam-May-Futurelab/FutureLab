@@ -37,11 +37,7 @@
     <meta name="theme-color" content="#4361ee">
     <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
     <link rel="manifest" href="assets/favicon/site.webmanifest">
-    <script src="js/headerInclude.js"></script>
-    <script src="simple-menu.js" defer></script>
-    <script src="js/theme-toggle.js" defer></script>
-    <script src="mobile-responsive.js" defer></script>
-    <link rel="stylesheet" href="css/back-to-top.css">
+    <script src="js/includeElements.js" defer></script>
     
     <!-- Add theme toggle initialization script -->
     <!-- Removed inline initializeThemeToggle script to avoid conflicts. Relies on js/theme-toggle.js -->
@@ -774,7 +770,7 @@
     </style>
 </head>
 <body>
-    <!-- The header will be dynamically inserted by headerInclude.js -->
+    <div id="header-placeholder"></div>
 
     <main>
         <!-- Hero Section -->
@@ -931,24 +927,9 @@
         <div class="section-spacer"></div>
     </main>
 
-    <button id="backToTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+    <!-- <button id="backToTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button> REMOVED -->
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">Futurelab</div>
-                <div class="footer-tagline">Building digital products for startups, creators, and small businesses.</div>
-                <div class="footer-social">
-                    <a href="https://www.linkedin.com/in/sam-may-/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/ChiefSpuddy/CardWizz" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="mailto:sam@futurelab.solutions" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                &copy; 2025 Futurelab Solutions. All rights reserved.
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1181,6 +1162,7 @@
     <script src="script.js"></script>
     <script src="testimonials.js"></script>
     <script src="analytics-integration.js"></script>
-    <script src="js/back-to-top.js" defer></script>
+    <script src="utilities.js"></script>
+    <script src="mobile-responsive.js" defer></script>
 </body>
 </html>

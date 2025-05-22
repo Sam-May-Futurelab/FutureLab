@@ -67,13 +67,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/back-to-top.css">
     <meta name="theme-color" content="#4361ee">
-    <script src="js/headerInclude.js"></script>
+    <script src="js/includeElements.js" defer></script>
     <script src="simple-menu.js" defer></script>
-    <script src="js/theme-toggle.js" defer></script>
-    <script src="js/back-to-top.js" defer></script>
 </head>
 <body>
-    <!-- The header will be dynamically inserted by headerInclude.js -->
+    <div id="header-placeholder"></div>
 
     <main>
         <!-- Hero Section -->
@@ -767,6 +765,7 @@
         </section>
     </main>
 
+    <div id="footer-placeholder"></div>
     <a href="#" id="backToTopBtn" class="back-to-top-btn" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a>
 
     <!-- Cookie Banner -->
@@ -780,27 +779,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">Futurelab</div>
-                <div class="footer-tagline">Custom Digital Solutions for Forward-Thinking Businesses</div>
-                <div class="footer-social">
-                    <a href="https://www.linkedin.com/in/sam-may-/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/ChiefSpuddy/CardWizz" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://instagram.com/futurelab.solutions" target="_blank"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>
-                    &copy; 2025 Futurelab. All rights reserved. | 
-                    <a href="https://futurelab.solutions" class="animated-underline">futurelab.solutions</a> | 
-                    <a href="privacy-policy.html" class="animated-underline">Privacy Policy</a>
-                </p>
-            </div>
-        </div>
-    </footer>
+
     <!-- Fix script loading order - KEEP ALL ORIGINAL SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script src="mobile-redirect.js"></script>
