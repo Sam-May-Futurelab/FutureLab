@@ -310,103 +310,122 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- START: Added for payment flow and content restoration ---
     function checkPaymentStatusAndRestoreContent() {
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('payment_success') && urlParams.get('payment_success') === 'true') {
-            console.log('Payment successful, session ID:', urlParams.get('session_id'));
-            sessionStorage.setItem('paymentCompleted', 'true');
-            window.isPaidUser = true; // Update global flag
+        const paymentSuccess = urlParams.get('payment_success');
+        const paymentCancelled = urlParams.get('payment_cancelled');
 
-            // Restore content from sessionStorage
-            const savedHtml = sessionStorage.getItem('paymentAttempt_HTML');
-            const savedCss = sessionStorage.getItem('paymentAttempt_CSS');
-            const savedProjectName = sessionStorage.getItem('paymentAttempt_ProjectName');
-            const savedContentType = sessionStorage.getItem('paymentAttempt_Type'); // 'original' or 'edited'
+        console.log('[LabPage] Checking payment status. URL params:', window.location.search);
 
-            if (savedHtml && savedCss) {
-                console.log(`Restoring content from sessionStorage after payment. Type: ${savedContentType}`);
+        if (paymentSuccess === 'true') {
+            console.log('[LabPage] Payment success detected.');
+            // Display success message to the user - this seems to be working based on your report.
+            // For example:
+            // const successMessageElement = document.getElementById('payment-success-message');
+            // if (successMessageElement) successMessageElement.textContent = 'Payment successful! Your downloads are now unlocked.';
+            
+            window.isPaidUser = true;
+            console.log('[LabPage] window.isPaidUser set to true.');
+
+            // Attempt to enable download buttons (ensure these functions exist and target correct buttons in lab.html)
+            if (typeof enableOriginalDownloadButtons === 'function') enableOriginalDownloadButtons();
+            if (typeof enableEditedDownloadButtons === 'function') enableEditedDownloadButtons();
+
+
+            const htmlToRestore = sessionStorage.getItem('paymentAttempt_HTML');
+            const cssToRestore = sessionStorage.getItem('paymentAttempt_CSS');
+            const projectNameToRestore = sessionStorage.getItem('paymentAttempt_ProjectName');
+            const typeToRestore = sessionStorage.getItem('paymentAttempt_Type');
+
+            console.log('[LabPage] Retrieved from sessionStorage:');
+            console.log('[LabPage] Type:', typeToRestore);
+            console.log('[LabPage] HTML (first 200 chars):', htmlToRestore ? htmlToRestore.substring(0, 200) + (htmlToRestore.length > 200 ? '...' : '') : 'NULL or EMPTY');
+            console.log('[LabPage] CSS (first 200 chars):', cssToRestore ? cssToRestore.substring(0, 200) + (cssToRestore.length > 200 ? '...' : '') : 'NULL or EMPTY');
+            console.log('[LabPage] Project Name:', projectNameToRestore);
+
+            const pagePreviewIframe = document.getElementById('page-preview'); // IMPORTANT: Ensure this ID matches your iframe in lab.html
+
+            if (!pagePreviewIframe) {
+                console.error('[LabPage] CRITICAL: Iframe with ID "page-preview" NOT FOUND. Cannot restore content.');
+            } else {
+                console.log('[LabPage] Iframe with ID "page-preview" found.');
+            }
+
+            if (htmlToRestore && pagePreviewIframe) {
+                console.log('[LabPage] HTML content found in sessionStorage. Attempting to populate iframe.');
                 
-                // Update the global/module-level variables that hold the content
-                if (savedContentType === 'original') {
-                    window.lastGeneratedHTML = savedHtml; // This is in questionnaire.js scope
-                    window.lastGeneratedCSS = savedCss;
-                    if (savedProjectName) window.lastProjectName = savedProjectName; // questionnaire.js scope
-                    console.log('Updated window.lastGeneratedHTML/CSS with restored original content.');
-                } else if (savedContentType === 'edited') {
-                    lastSavedEditedHtml = savedHtml; // This is in lab.js scope
-                    lastSavedCustomCSS = savedCss;
-                    // window.lastProjectName is global, might be updated if needed, but usually pertains to original generation
-                    if (savedProjectName && window.lastProjectName !== savedProjectName) {
-                        // Potentially update window.lastProjectName if the edited version had a distinct name saved
-                        // For now, assume window.lastProjectName from questionnaire.js is the primary one.
-                    }
-                    console.log('Updated lastSavedEditedHtml/CSS with restored edited content.');
+                // Update global JavaScript variables based on the type of content restored
+                // These might be used by other functions in lab.js (e.g., for edited content downloads)
+                if (typeToRestore === 'original') {
+                    window.lastGeneratedHTML = htmlToRestore;
+                    window.lastGeneratedCSS = cssToRestore;
+                    // window.lastProjectName = projectNameToRestore; // This is usually for questionnaire.js context
+                    console.log('[LabPage] Set window.lastGeneratedHTML/CSS for "original" type.');
+                } else if (typeToRestore === 'edited') {
+                    window.lastSavedEditedHtml = htmlToRestore;
+                    window.lastSavedEditedCss = cssToRestore;
+                    // window.lastEditedProjectName = projectNameToRestore; // Or however you store edited project name
+                    console.log('[LabPage] Set window.lastSavedEditedHtml/Css for "edited" type.');
+                } else {
+                    console.warn('[LabPage] Unknown typeToRestore from sessionStorage:', typeToRestore, "- content will be displayed, but related global JS variables might not be set as expected for this type.");
                 }
+                window.currentProjectName = projectNameToRestore; // General project name for the lab page context
 
-                // Update the preview iframe using srcdoc for direct HTML/CSS injection
-                if (pagePreviewIframe) {
-                    const fullHtmlForPreview = `
-                        <!DOCTYPE html>
-                        <html lang="en">
-                        <head>
-                            <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                            <title>${savedProjectName || 'Preview'}</title>
-                            <style>
-                                body { margin: 0; padding: 0; }
-                                ${savedCss}
-                            </style>
-                        </head>
-                        <body>${savedHtml}</body>
-                        </html>
-                    `;
-                    pagePreviewIframe.srcdoc = fullHtmlForPreview;
-                    console.log('Preview iframe updated with restored content using srcdoc.');
-                }
+                const fullHtml = `<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            ${cssToRestore || ''}
+        </style>
+    </head>
+    <body>
+        ${htmlToRestore}
+    </body>
+    </html>`;
                 
-                // Update UI elements (e.g., enable download buttons, hide payment prompts)
-                // This requires access to buttons from both questionnaire.js and lab.js contexts if they are distinct
-                // For simplicity, we assume these IDs are unique and globally accessible for this example
-                const originalDownloadHtmlBtn = document.getElementById('download-html-btn');
-                const originalDownloadCssBtn = document.getElementById('download-css-btn');
-                // downloadEditedPageBtn and downloadEditedCssBtn are already defined in lab.js scope
-
-                if (originalDownloadHtmlBtn) originalDownloadHtmlBtn.disabled = false;
-                if (originalDownloadCssBtn) originalDownloadCssBtn.disabled = false;
-                if (downloadEditedPageBtn) downloadEditedPageBtn.disabled = false;
-                if (downloadEditedCssBtn) downloadEditedCssBtn.disabled = false;
-
-                // If edit mode was active and it was edited content, potentially re-enable edit mode controls
-                if (savedContentType === 'edited' && toggleEditModeBtn && editorActive) {
-                    // May need to re-initialize editor if state was lost, or ensure it picks up new srcdoc content
-                    // For now, just log. A robust solution might re-trigger parts of edit mode setup.
-                    console.log('Restored edited content. Edit mode may need re-initialization if it was active.');
-                }
-
-                showSaveNotification('Payment successful! You can now download your page.');
+                pagePreviewIframe.srcdoc = fullHtml;
+                console.log('[LabPage] Successfully set srcdoc for "page-preview" iframe.');
+                console.log('[LabPage] Restored HTML length:', htmlToRestore.length);
+                console.log('[LabPage] Restored CSS length:', (cssToRestore || '').length);
 
                 // Clean up sessionStorage items
                 sessionStorage.removeItem('paymentAttempt_HTML');
                 sessionStorage.removeItem('paymentAttempt_CSS');
                 sessionStorage.removeItem('paymentAttempt_ProjectName');
                 sessionStorage.removeItem('paymentAttempt_Type');
+                console.log('[LabPage] Cleared paymentAttempt items from sessionStorage.');
+
             } else {
-                console.warn('Payment success detected, but no saved content found in sessionStorage to restore.');
+                console.error('[LabPage] Failed to restore content to iframe. Reasons:');
+                if (!htmlToRestore) {
+                    console.error('[LabPage] - paymentAttempt_HTML from sessionStorage was null or empty.');
+                    alert('Could not restore your page preview because the content was not found. Your payment was successful, and downloads should be unlocked if you generate/edit content again.');
+                }
+                if (!pagePreviewIframe) {
+                    console.error('[LabPage] - Iframe with ID "page-preview" was not found in the document.');
+                     alert('A technical issue occurred: the page preview area is missing. Your payment was successful, and downloads should be unlocked.');
+                }
             }
 
-            // Clean URL
-            const newUrl = window.location.pathname + window.location.hash; // Keep hash if present
-            window.history.replaceState({}, document.title, newUrl);
+            // Clean up URL parameters to avoid reprocessing on refresh
+            const cleanURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({ path: cleanURL }, '', cleanURL);
+            console.log('[LabPage] Cleaned payment status from URL.');
 
-        } else if (urlParams.has('payment_cancelled') && urlParams.get('payment_cancelled') === 'true') {
-            console.log('Payment cancelled by user.');
-            showSaveNotification('Payment was cancelled. You can try again anytime.');
-            // Clean up sessionStorage items even on cancellation
-            sessionStorage.removeItem('paymentAttempt_HTML');
-            sessionStorage.removeItem('paymentAttempt_CSS');
-            sessionStorage.removeItem('paymentAttempt_ProjectName');
-            sessionStorage.removeItem('paymentAttempt_Type');
-            // Clean URL
-            const newUrl = window.location.pathname + window.location.hash;
-            window.history.replaceState({}, document.title, newUrl);
+        } else if (paymentCancelled === 'true') {
+            console.log('[LabPage] Payment was cancelled by the user.');
+            // Display a cancellation message if needed
+            // For example:
+            // const cancelMessageElement = document.getElementById('payment-cancel-message');
+            // if (cancelMessageElement) cancelMessageElement.textContent = 'Payment was cancelled. You can try again anytime.';
+            
+            // Content should still be in sessionStorage if they cancelled.
+            // Clean up URL parameters
+            const cleanURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({ path: cleanURL }, '', cleanURL);
+            console.log('[LabPage] Cleaned payment status from URL for cancelled payment.');
+        } else {
+            console.log('[LabPage] No payment success or cancellation status in URL. Normal page load.');
         }
     }
 
