@@ -1495,6 +1495,6 @@
     positioning it at the true vertical center.
   */
   body #theme-toggle-button {
-    transform: translateY(-50%) !important;
+    transform: translateY(calc(-50% + 25px)) !important;
   }
 }
