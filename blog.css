@@ -248,6 +248,98 @@
     color: var(--dark-blue-primary);
 }
 
+/* Footer Styling - consider moving to styles.css if this becomes global */
+footer {
+    background-color: var(--dark-blue-primary);
+    color: var(--light-gray);
+    padding: 50px 0 20px;
+    font-size: 0.95rem;
+}
+
+.dark-theme footer {
+    background-color: #0b1220; /* Slightly darker than main dark bg */
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-column h4 {
+    font-size: 1.2rem;
+    color: var(--light-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.footer-column p {
+    line-height: 1.7;
+    color: var(--light-gray-secondary);
+    margin-bottom: 10px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li a {
+    color: var(--light-gray-secondary);
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 0;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: var(--accent-color-light);
+    transform: translateX(3px);
+}
+
+.footer-column ul li a.active {
+    color: var(--accent-color-light);
+    font-weight: 600;
+}
+
+.footer-links-multicolumn {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates two columns */
+    gap: 10px; /* Gap between the two columns of links */
+}
+
+.social-links a {
+    color: var(--light-gray-secondary);
+    font-size: 1.3rem;
+    margin-right: 15px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:last-child {
+    margin-right: 0;
+}
+
+.social-links a:hover {
+    color: var(--accent-color-light);
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--dark-blue-secondary);
+    font-size: 0.9rem;
+    color: var(--light-gray-secondary);
+}
+
+.dark-theme .footer-bottom {
+    border-top-color: #1c2941; /* Darker border for dark theme */
+}
+
+/* End of Footer Styling */
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .blog-hero h1 {
