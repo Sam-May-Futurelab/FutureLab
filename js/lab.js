@@ -317,31 +317,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (paymentSuccess === 'true') {
             console.log('[LabPage] Payment success detected.');
-            // Display success message to the user - this seems to be working based on your report.
-            // For example:
-            // const successMessageElement = document.getElementById('payment-success-message');
-            // if (successMessageElement) successMessageElement.textContent = 'Payment successful! Your downloads are now unlocked.';
             
             window.isPaidUser = true;
             console.log('[LabPage] window.isPaidUser set to true.');
 
-            // Attempt to enable download buttons (ensure these functions exist and target correct buttons in lab.html)
             if (typeof enableOriginalDownloadButtons === 'function') enableOriginalDownloadButtons();
             if (typeof enableEditedDownloadButtons === 'function') enableEditedDownloadButtons();
 
 
-            const htmlToRestore = sessionStorage.getItem('paymentAttempt_HTML');
-            const cssToRestore = sessionStorage.getItem('paymentAttempt_CSS');
-            const projectNameToRestore = sessionStorage.getItem('paymentAttempt_ProjectName');
-            const typeToRestore = sessionStorage.getItem('paymentAttempt_Type');
+            // Read from localStorage instead of sessionStorage
+            const htmlToRestore = localStorage.getItem('paymentAttempt_HTML');
+            const cssToRestore = localStorage.getItem('paymentAttempt_CSS');
+            const projectNameToRestore = localStorage.getItem('paymentAttempt_ProjectName');
+            const typeToRestore = localStorage.getItem('paymentAttempt_Type');
 
-            console.log('[LabPage] Retrieved from sessionStorage:');
+            console.log('[LabPage] Retrieved from localStorage:');
             console.log('[LabPage] Type:', typeToRestore);
             console.log('[LabPage] HTML (first 200 chars):', htmlToRestore ? htmlToRestore.substring(0, 200) + (htmlToRestore.length > 200 ? '...' : '') : 'NULL or EMPTY');
             console.log('[LabPage] CSS (first 200 chars):', cssToRestore ? cssToRestore.substring(0, 200) + (cssToRestore.length > 200 ? '...' : '') : 'NULL or EMPTY');
             console.log('[LabPage] Project Name:', projectNameToRestore);
 
-            const pagePreviewIframe = document.getElementById('page-preview'); // IMPORTANT: Ensure this ID matches your iframe in lab.html
+            const pagePreviewIframe = document.getElementById('page-preview');
 
             if (!pagePreviewIframe) {
                 console.error('[LabPage] CRITICAL: Iframe with ID "page-preview" NOT FOUND. Cannot restore content.');
@@ -350,55 +346,51 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (htmlToRestore && pagePreviewIframe) {
-                console.log('[LabPage] HTML content found in sessionStorage. Attempting to populate iframe.');
+                console.log('[LabPage] HTML content found in localStorage. Attempting to populate iframe.');
                 
-                // Update global JavaScript variables based on the type of content restored
-                // These might be used by other functions in lab.js (e.g., for edited content downloads)
                 if (typeToRestore === 'original') {
                     window.lastGeneratedHTML = htmlToRestore;
                     window.lastGeneratedCSS = cssToRestore;
-                    // window.lastProjectName = projectNameToRestore; // This is usually for questionnaire.js context
                     console.log('[LabPage] Set window.lastGeneratedHTML/CSS for "original" type.');
                 } else if (typeToRestore === 'edited') {
                     window.lastSavedEditedHtml = htmlToRestore;
                     window.lastSavedEditedCss = cssToRestore;
-                    // window.lastEditedProjectName = projectNameToRestore; // Or however you store edited project name
                     console.log('[LabPage] Set window.lastSavedEditedHtml/Css for "edited" type.');
                 } else {
-                    console.warn('[LabPage] Unknown typeToRestore from sessionStorage:', typeToRestore, "- content will be displayed, but related global JS variables might not be set as expected for this type.");
+                    console.warn('[LabPage] Unknown typeToRestore from localStorage:', typeToRestore, "- content will be displayed, but related global JS variables might not be set as expected for this type.");
                 }
-                window.currentProjectName = projectNameToRestore; // General project name for the lab page context
+                window.currentProjectName = projectNameToRestore;
 
                 const fullHtml = `<!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            ${cssToRestore || ''}
-        </style>
-    </head>
-    <body>
-        ${htmlToRestore}
-    </body>
-    </html>`;
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        ${cssToRestore || ''}
+    </style>
+</head>
+<body>
+    ${htmlToRestore}
+</body>
+</html>`;
                 
                 pagePreviewIframe.srcdoc = fullHtml;
                 console.log('[LabPage] Successfully set srcdoc for "page-preview" iframe.');
                 console.log('[LabPage] Restored HTML length:', htmlToRestore.length);
                 console.log('[LabPage] Restored CSS length:', (cssToRestore || '').length);
 
-                // Clean up sessionStorage items
-                sessionStorage.removeItem('paymentAttempt_HTML');
-                sessionStorage.removeItem('paymentAttempt_CSS');
-                sessionStorage.removeItem('paymentAttempt_ProjectName');
-                sessionStorage.removeItem('paymentAttempt_Type');
-                console.log('[LabPage] Cleared paymentAttempt items from sessionStorage.');
+                // Clean up localStorage items
+                localStorage.removeItem('paymentAttempt_HTML');
+                localStorage.removeItem('paymentAttempt_CSS');
+                localStorage.removeItem('paymentAttempt_ProjectName');
+                localStorage.removeItem('paymentAttempt_Type');
+                console.log('[LabPage] Cleared paymentAttempt items from localStorage.');
 
             } else {
                 console.error('[LabPage] Failed to restore content to iframe. Reasons:');
                 if (!htmlToRestore) {
-                    console.error('[LabPage] - paymentAttempt_HTML from sessionStorage was null or empty.');
+                    console.error('[LabPage] - paymentAttempt_HTML from localStorage was null or empty.');
                     alert('Could not restore your page preview because the content was not found. Your payment was successful, and downloads should be unlocked if you generate/edit content again.');
                 }
                 if (!pagePreviewIframe) {
@@ -429,7 +421,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    checkPaymentStatusAndRestoreContent(); // Call on page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkPaymentStatusAndRestoreContent);
+    } else {
+        checkPaymentStatusAndRestoreContent();
+    }
 
     // Initial button state update
     if (window.updateUndoRedoButtons) window.updateUndoRedoButtons();

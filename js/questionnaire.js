@@ -257,11 +257,11 @@ document.addEventListener('DOMContentLoaded', function() {
             downloadHtmlBtn.addEventListener('click', async function() {
                 if (!window.isPaidUser) {
                     if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
-                        sessionStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
-                        sessionStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
-                        sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-page');
-                        sessionStorage.setItem('paymentAttempt_Type', 'original'); // Mark as original
-                        console.log('Saved ORIGINAL HTML/CSS to sessionStorage for payment. Type: original');
+                        localStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
+                        localStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
+                        localStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-page');
+                        localStorage.setItem('paymentAttempt_Type', 'original'); // Mark as original
+                        console.log('Saved ORIGINAL HTML/CSS to localStorage for payment. Type: original');
                         await handleUnlockDownloadsClick();
                     } else {
                         alert('No content available to download. Please generate a page first.');
@@ -280,11 +280,11 @@ document.addEventListener('DOMContentLoaded', function() {
             downloadCssBtn.addEventListener('click', async function() {
                 if (!window.isPaidUser) {
                     if (window.lastGeneratedHTML && window.lastGeneratedCSS) { // Check for HTML too, as CSS belongs to a page
-                        sessionStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
-                        sessionStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
-                        sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-style');
-                        sessionStorage.setItem('paymentAttempt_Type', 'original'); // Mark as original
-                        console.log('Saved ORIGINAL HTML/CSS (for CSS download trigger) to sessionStorage for payment. Type: original');
+                        localStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
+                        localStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
+                        localStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-style');
+                        localStorage.setItem('paymentAttempt_Type', 'original'); // Mark as original
+                        console.log('Saved ORIGINAL HTML/CSS (for CSS download trigger) to localStorage for payment. Type: original');
                         await handleUnlockDownloadsClick();
                     } else {
                         alert('No CSS available to download. Please generate a page first.');
