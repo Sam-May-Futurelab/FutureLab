@@ -260,6 +260,10 @@ document.addEventListener('DOMContentLoaded', function() {
             downloadHtmlBtn.addEventListener('click', async function() {
                 if (!window.isPaidUser) {
                     console.log('[Questionnaire] Download HTML button clicked, user NOT paid.');
+                    console.log('[Questionnaire] Current state at HTML button click:');
+                    console.log('[Questionnaire] window.lastGeneratedHTML (first 100 chars):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 100) : 'EMPTY or NULL');
+                    console.log('[Questionnaire] window.lastGeneratedCSS (first 100 chars):', window.lastGeneratedCSS ? window.lastGeneratedCSS.substring(0, 100) : 'EMPTY or NULL');
+
                     if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
                         console.log('[Questionnaire] Values before localStorage.setItem:');
                         console.log('[Questionnaire] window.lastGeneratedHTML (first 100 chars):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 100) : 'EMPTY or NULL');
@@ -289,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log('Saved ORIGINAL HTML/CSS to localStorage for payment. Type: original');
                         await handleUnlockDownloadsClick();
                     } else {
-                        console.warn('[Questionnaire] No content (lastGeneratedHTML or lastGeneratedCSS) to save for payment.');
+                        console.warn('[Questionnaire] No content (lastGeneratedHTML or lastGeneratedCSS) to save for payment. Variables checked above.');
                         alert('No content available to download. Please generate a page first.');
                     }
                 } else {
@@ -306,6 +310,10 @@ document.addEventListener('DOMContentLoaded', function() {
             downloadCssBtn.addEventListener('click', async function() {
                 if (!window.isPaidUser) {
                     console.log('[Questionnaire] Download CSS button clicked, user NOT paid.');
+                    console.log('[Questionnaire] Current state at CSS button click:');
+                    console.log('[Questionnaire] window.lastGeneratedHTML (first 100 chars):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 100) : 'EMPTY or NULL');
+                    console.log('[Questionnaire] window.lastGeneratedCSS (first 100 chars):', window.lastGeneratedCSS ? window.lastGeneratedCSS.substring(0, 100) : 'EMPTY or NULL');
+
                     if (window.lastGeneratedHTML && window.lastGeneratedCSS) { // Check for HTML too, as CSS belongs to a page
                         console.log('[Questionnaire] Values before localStorage.setItem (CSS button):');
                         console.log('[Questionnaire] window.lastGeneratedHTML (first 100 chars):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 100) : 'EMPTY or NULL');
@@ -334,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log('Saved ORIGINAL HTML/CSS (for CSS download trigger) to localStorage for payment. Type: original');
                         await handleUnlockDownloadsClick();
                     } else {
-                        console.warn('[Questionnaire] No content (lastGeneratedHTML or lastGeneratedCSS) to save for payment (CSS button).');
+                        console.warn('[Questionnaire] No content (lastGeneratedHTML or lastGeneratedCSS) to save for payment (CSS button). Variables checked above.');
                         alert('No CSS available to download. Please generate a page first.');
                     }
                 } else {
@@ -1231,6 +1239,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Assign to window properties
             window.lastGeneratedHTML = aiOutput.html || '<!-- No HTML generated -->';
             window.lastGeneratedCSS = aiOutput.css || '/* No CSS generated */';
+
+            console.log('[Questionnaire] Inside getAICodeGeneration, after setting window properties:');
+            console.log('[Questionnaire] window.lastGeneratedHTML (first 100 chars):', window.lastGeneratedHTML ? window.lastGeneratedHTML.substring(0, 100) : 'EMPTY or NULL');
+            console.log('[Questionnaire] window.lastGeneratedCSS (first 100 chars):', window.lastGeneratedCSS ? window.lastGeneratedCSS.substring(0, 100) : 'EMPTY or NULL');
+            console.log('[Questionnaire] window.lastProjectName:', window.lastProjectName);
 
             let previewDocContent = `
                 <!DOCTYPE html>
