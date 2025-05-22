@@ -316,22 +316,18 @@
             }
             /* Keep .header-actions itself visible if it only contains the theme toggle, or adjust if it was meant to be hidden */
             /* If .header-actions is hidden, we need to show .theme-toggle explicitly */
-            .header-actions { /* Hide desktop contact button container, but allow theme toggle to be shown */
-                display: block; /* Or flex, depending on desired layout if other items were there */
-                position: relative; /* Establish positioning context for the theme toggle */
-                width: auto; /* Allow it to be as wide as its content or be constrained by parent */
-                height: 100%; /* Make it as tall as the header nav container */
+            .header-actions { 
+                display: contents; /* Make this container not affect layout directly */
             }
 
-
             .theme-toggle {
-                display: inline-flex !important;
+                display: inline-flex !important; /* Ensure it's visible */
                 position: absolute;
-                right: 20px;
+                right: 20px; 
                 top: 50%;
-                transform: translateY(-50%); /* True vertical center relative to header-actions */
-                margin-left: 0;
-                z-index: 1001;
+                transform: translateY(-50%); /* Vertically center relative to nav.container */
+                margin-left: 0; 
+                z-index: 1001; 
             }
 
             .hamburger {
