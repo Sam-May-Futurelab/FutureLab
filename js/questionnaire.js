@@ -43,19 +43,21 @@ ${bodyHtml || '<!-- No HTML content available -->'}
 window.isPaidUser = sessionStorage.getItem('paymentCompleted') === 'true';
 
 async function handleUnlockDownloadsClick() {
-    if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
-        sessionStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
-        sessionStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
-        if (window.lastProjectName) {
-            sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName);
-        }
-        console.log('Saved generated content to sessionStorage before Stripe redirect.');
-    } else {
-        alert('Please generate a page first before attempting to unlock downloads.');
-        // Potentially show this message in a less disruptive way
+    // CRITICAL CHANGE: This function NO LONGER saves HTML/CSS to sessionStorage.
+    // The caller (e.g., event listeners for download buttons) is responsible for
+    // setting 'paymentAttempt_HTML', 'paymentAttempt_CSS', and 'paymentAttempt_ProjectName'
+    // in sessionStorage BEFORE calling this function.
+
+    if (!sessionStorage.getItem('paymentAttempt_HTML') || !sessionStorage.getItem('paymentAttempt_CSS')) {
+        alert('Content to be unlocked was not properly prepared. Please try generating or saving your content again, or contact support if the issue persists.');
+        console.error('handleUnlockDownloadsClick called without paymentAttempt_HTML or paymentAttempt_CSS in sessionStorage.');
         const generationOverlay = document.querySelector('.generation-overlay');
         if (generationOverlay) generationOverlay.classList.remove('active');
         return;
+    }
+    // Ensure ProjectName is at least defaulted if not set by caller
+    if (!sessionStorage.getItem('paymentAttempt_ProjectName')) {
+        sessionStorage.setItem('paymentAttempt_ProjectName', 'Untitled Page');
     }
 
     try {
@@ -80,6 +82,7 @@ async function handleUnlockDownloadsClick() {
         alert(`Could not start the payment process: ${error.message}`);
         const generationOverlay = document.querySelector('.generation-overlay');
         if (generationOverlay) generationOverlay.classList.remove('active');
+        // Clean up payment attempt items from sessionStorage on error to prevent stale data
         sessionStorage.removeItem('paymentAttempt_HTML');
         sessionStorage.removeItem('paymentAttempt_CSS');
         sessionStorage.removeItem('paymentAttempt_ProjectName');
@@ -253,8 +256,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (downloadHtmlBtn) {
             downloadHtmlBtn.addEventListener('click', async function() {
                 if (!window.isPaidUser) {
-                    // alert('Payment required to download. Redirecting to payment...'); // Optional alert
-                    await handleUnlockDownloadsClick();
+                    if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
+                        sessionStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
+                        sessionStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
+                        sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-page');
+                        console.log('Saved ORIGINAL HTML/CSS to sessionStorage for payment.');
+                        await handleUnlockDownloadsClick();
+                    } else {
+                        alert('No content available to download. Please generate a page first.');
+                    }
                 } else {
                     if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
                         window.downloadHtmlContent(window.lastGeneratedHTML, window.lastGeneratedCSS, `${window.lastProjectName || 'generated-page'}.html`, true);
@@ -268,8 +278,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (downloadCssBtn) {
             downloadCssBtn.addEventListener('click', async function() {
                 if (!window.isPaidUser) {
-                    // alert('Payment required to download. Redirecting to payment...'); // Optional alert
-                    await handleUnlockDownloadsClick();
+                     // Even for CSS download, save both HTML and CSS as payment unlocks the "page"
+                    if (window.lastGeneratedHTML && window.lastGeneratedCSS) {
+                        sessionStorage.setItem('paymentAttempt_HTML', window.lastGeneratedHTML);
+                        sessionStorage.setItem('paymentAttempt_CSS', window.lastGeneratedCSS);
+                        sessionStorage.setItem('paymentAttempt_ProjectName', window.lastProjectName || 'generated-style');
+                        console.log('Saved ORIGINAL HTML/CSS (for CSS download trigger) to sessionStorage for payment.');
+                        await handleUnlockDownloadsClick();
+                    } else {
+                        alert('No CSS available to download. Please generate a page first.');
+                    }
                 } else {
                     if (window.lastGeneratedCSS) {
                         downloadFile(`${window.lastProjectName || 'generated-styles'}.css`, window.lastGeneratedCSS, 'text/css');
