@@ -162,6 +162,13 @@
             color: var(--dark-color);
         }
         
+        /* Styles for the container of header action buttons */
+        .header-actions {
+            display: flex;
+            align-items: center; /* Vertically aligns items (contact button and theme toggle) */
+            gap: 15px; /* Adds a small space between the button and the toggle */
+        }
+        
         /* Theme toggle styling */
         .theme-toggle {
             background: transparent;
@@ -290,172 +297,98 @@
         /* Mobile styling */
         @media (max-width: 768px) {
             header nav.container {
-                display: flex;
-                align-items: center;
-                justify-content: center; /* Ensure logo is centered horizontally */
-                padding: 0 15px;
-                position: relative;
-                height: 70px;
+                padding: 15px 0; /* Adjusted padding for mobile */
+                height: 70px; /* Adjusted height for mobile */
             }
 
-            .logo-link {
-                display: inline-block; /* Treat as a simple block for centering */
-                position: static !important; /* Override other positioning */
-                margin: 0 !important; /* Reset margins */
-                padding: 0 !important; /* Reset paddings */
-                line-height: 1; /* Adjust if necessary for vertical alignment */
-                /* transform/transition/animation none !important are already applied below */
+            .nav-links, /* Hide desktop nav links */
+            .header-actions { /* Hide desktop contact button and theme toggle container */
+                display: none !important; 
             }
-            
+
+            .hamburger {
+                display: flex; /* Show hamburger */
+                /* Ensure hamburger styling is sufficient for visibility and interaction */
+            }
+
             .logo {
-                font-size: 1.6rem; /* Slightly smaller logo on mobile */
-                position: static !important; /* Override base relative positioning */
-                margin: 0 !important; /* Reset margins */
-                padding: 0 !important; /* Reset paddings */
-                display: inline; /* Behave like simple text content */
-                vertical-align: middle; /* Helps with inline vertical alignment */
-            }
-
-            /* Prevent logo animation on mobile - this block should be reviewed to ensure it's not redundant */
-            .logo-link, .logo {
-                transform: none !important;
-                transition: none !important;
-                animation: none !important;
+                font-size: 1.6rem; /* Slightly smaller logo for mobile */
             }
             
-            header nav.container > .hamburger { /* Increased specificity */
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                left: 15px; /* Position hamburger on the left */
-                z-index: 1001;
-            }
-            
-            header nav.container > .theme-toggle { /* Increased specificity */
-                position: absolute;
-                top: 50%;
-                right: 15px; /* Position theme toggle on the right */
-                transform: translateY(-50%);
-                margin-left: 0; /* Override desktop margin-left */
-                margin-top: 25px; /* Default margin, works for index, etc. */
-                z-index: 1001; /* Ensure it's on top */
-                /* Base styles for theme-toggle (width, height, display:inline-flex etc.) should ensure icon is centered */
-            }
-
-            /* Adjustment for specific pages where the default 25px is too much */
-            body.header-toggle-adjusted header nav.container > .theme-toggle {
-                margin-top: 0px; /* Adjusted margin for lab, hosting-guide */
-            }
-
-            /* Adjustment for FAQ page specifically */
-            body.header-toggle-faq header nav.container > .theme-toggle {
-                margin-top: 25px !important; /* Adjusted margin for faq page, forced */
-            }
-            
-            .nav-links { /* This is the main ul for desktop nav links */
-                display: none !important; /* Hide on mobile, !important to override potential specificity issues */
-            }
-
-            .nav-links-mobile { /* Styles for the separate mobile menu list */
-                display: none; /* Initially hidden */
-                list-style: none; margin: 0; padding: 0; /* Base reset */
+            .mobile-menu-overlay {
                 position: fixed;
-                top: 70px; /* Below the header */
+                top: 70px; /* Match adjusted header height */
                 left: 0;
                 width: 100%;
-                background-color: rgba(255, 255, 255, 0.98); /* Light theme mobile menu background */
+                height: calc(100vh - 70px);
+                background-color: rgba(255, 255, 255, 0.98);
                 backdrop-filter: blur(5px);
                 -webkit-backdrop-filter: blur(5px);
-                padding: 20px 0;
-                flex-direction: column;
-                align-items: center;
-                gap: 15px; /* Adjusted gap */
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                z-index: 999; /* Below hamburger/theme-toggle but above content */
-                max-height: calc(100vh - 70px);
+                z-index: 999; /* Ensure it's above other content but can be below a modal if any */
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+                padding-top: 20px;
                 overflow-y: auto;
             }
 
-            .dark-theme .nav-links-mobile {
-                background-color: rgba(15, 23, 42, 0.98); /* Dark theme mobile menu background */
+            .dark-theme .mobile-menu-overlay {
+                background-color: rgba(15, 23, 42, 0.98);
             }
 
-            .nav-links-mobile.active { /* When mobile menu is open */
-                display: flex; /* Show it */
+            .mobile-menu-overlay.active {
+                transform: translateX(0);
+            }
+
+            .nav-links-mobile {
+                list-style: none;
+                padding: 0 20px;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links-mobile li {
+                width: 100%;
+                text-align: center;
             }
 
             .nav-links-mobile li a {
-                font-size: 1.1rem;
-                padding: 10px 20px;
-                width: 100%;
-                text-align: center;
-                color: var(--dark-color); 
+                display: block;
+                padding: 15px 0;
+                font-size: 1.2rem; /* Readable font size for mobile menu */
+                color: var(--dark-color);
                 text-decoration: none;
-                transition: background-color 0.2s ease, color 0.2s ease;
+                font-weight: 500;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+                transition: background-color 0.2s ease;
             }
             .dark-theme .nav-links-mobile li a {
-                color: #e2e8f0; 
+                color: var(--light-gray);
+                border-bottom-color: rgba(255,255,255,0.1);
             }
             .nav-links-mobile li a:hover {
-                background-color: rgba(0,0,0,0.05);
+                background-color: rgba(0,0,0,0.03);
             }
             .dark-theme .nav-links-mobile li a:hover {
                 background-color: rgba(255,255,255,0.05);
             }
-            .nav-links-mobile li a.active {
-                color: var(--primary-color);
-                font-weight: 600;
-            }
-            .dark-theme .nav-links-mobile li a.active {
-                 color: var(--secondary-color); /* Or your preferred dark theme active color */
-            }
-
-
-            .nav-links-mobile li a.btn-outline {
-                 color: var(--primary-color);
-                 background: transparent;
-                 border: 2px solid var(--primary-color);
-                 padding: 10px 20px;
-                 border-radius: var(--border-radius-sm);
-                 margin: 5px auto; 
-                 display: inline-block; 
-                 width: auto; /* Override 100% width for button */
-            }
-            .dark-theme .nav-links-mobile li a.btn-outline {
-                color: var(--secondary-color);
-                border-color: var(--secondary-color);
-            }
-             .nav-links-mobile li a.btn-outline:hover {
-                background: var(--primary-color);
-                color: white;
-            }
-            .dark-theme .nav-links-mobile li a.btn-outline:hover {
-                background: var(--secondary-color);
-                color: var(--dark-color);
-            }
-
-            .logo {
-                font-size: 1.6rem; /* Slightly smaller logo on mobile */
-            }
-
-            /* Prevent logo animation on mobile */
-            .logo-link, .logo {
-                transform: none !important;
-                transition: none !important;
-                animation: none !important;
+            .nav-links-mobile li:last-child a {
+                border-bottom: none;
             }
         }
         
         @media (min-width: 769px) {
-            .nav-links-mobile {
-                display: none !important; /* Hide mobile nav on desktop */
+            .mobile-menu-overlay, .hamburger { /* Hide mobile elements on desktop */
+                display: none !important;
+            }
+            .nav-links, .header-actions { /* Ensure desktop elements are shown */
+                display: flex !important; 
             }
         }
-        
+
         @media (max-width: 400px) {
+            /* Further adjustments for very small screens if needed */
         }
     </style>
 </head>
@@ -475,9 +408,9 @@
                 <li><a href="faq.html">FAQ</a></li>
             </ul>
             <div class="header-actions">
-                <a href="contact.html" class="btn btn-primary">Contact</a> <!-- Adjusted class for size, text already Contact -->
+                <a href="contact.html" class="btn btn-primary">Contact</a>
                 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <i class="fas fa-moon"></i> <!-- Icon will be updated by JS -->
+                    <i class="fas fa-moon"></i>
                 </button>
             </div>
             <div class="hamburger">
@@ -486,11 +419,8 @@
                 <span></span>
             </div>
         </nav>
-        <!-- Mobile Navigation (will be populated by JS) -->
         <div class="mobile-menu-overlay">
-            <ul class="nav-links-mobile">
-                <!-- Links will be copied here by JS -->
-            </ul>
+            <ul class="nav-links-mobile"></ul>
         </div>
     </header>
 
@@ -500,62 +430,86 @@
         // Set active navigation link based on current page
         function setActiveNavLink() {
             const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            const navLinks = document.querySelectorAll('.nav-links a:not(.btn)'); // Exclude buttons
-            const mobileNavLinks = document.querySelectorAll('.nav-links-mobile a:not(.btn)');
+            const navLinks = document.querySelectorAll('header .nav-links a:not(.btn)'); // Desktop links
+            // Mobile links active state is handled during population primarily
 
             navLinks.forEach(link => {
+                link.classList.remove('active');
                 if (link.getAttribute('href') === currentPage) {
                     link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-            mobileNavLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
                 }
             });
         }
         
-        // Mobile menu functionality
         const hamburger = document.querySelector('.hamburger');
-        const mobileNavLinks = document.querySelector('.nav-links-mobile'); // Target the new mobile nav list
+        const mobileNavLinksUl = document.querySelector('.nav-links-mobile');
         const mobileOverlay = document.querySelector('.mobile-menu-overlay');
         const body = document.body;
+        const themeToggleDesktopButton = document.getElementById('theme-toggle'); // Get the desktop theme toggle
 
-        if (hamburger && mobileNavLinks) { // Check for mobileNavLinks
+        if (hamburger && mobileNavLinksUl && mobileOverlay) {
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
-                mobileNavLinks.classList.toggle('active'); // Toggle active on the ul
-                mobileOverlay.classList.toggle('active');
-                body.classList.toggle('no-scroll'); // Prevent scrolling when menu is open
+                mobileOverlay.classList.toggle('active'); // This controls the visibility of the overlay
+                body.classList.toggle('no-scroll');
 
-                // Populate mobile menu if it's empty and opening
-                if (mobileNavLinks.classList.contains('active') && mobileNavLinks.innerHTML === '') {
-                    const desktopNavLinks = document.querySelector('.nav-links').cloneNode(true);
-                    // Remove any CTA buttons if they are part of the main nav items to avoid duplication,
-                    // or style them differently for mobile menu.
-                    // For this example, we'll just append all.
-                    desktopNavLinks.childNodes.forEach(node => {
-                        if (node.nodeName === 'LI') {
-                             // Ensure 'active' class is also copied if present
-                            const link = node.querySelector('a');
-                            if (link && link.classList.contains('active')) {
-                                node.classList.add('active'); // Or apply to the 'a' tag directly
+                // Populate mobile menu if it's empty AND the menu is being opened
+                if (mobileOverlay.classList.contains('active') && mobileNavLinksUl.innerHTML === '') {
+                    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                    
+                    // Clone main navigation links
+                    const desktopNavLinks = document.querySelector('header .nav-links');
+                    if (desktopNavLinks) {
+                        desktopNavLinks.querySelectorAll('li a:not(.btn)').forEach(link => {
+                            const li = document.createElement('li');
+                            const newLink = link.cloneNode(true);
+                            newLink.classList.remove('active'); // Clear desktop active state
+                            if (newLink.getAttribute('href') === currentPage) {
+                                newLink.classList.add('active'); // Set active for mobile
                             }
-                            mobileNavLinks.appendChild(node);
+                            li.appendChild(newLink);
+                            mobileNavLinksUl.appendChild(li);
+                        });
+                    }
+
+                    // Add Contact link
+                    const contactButtonDesktop = document.querySelector('header .header-actions a.btn.btn-primary[href="contact.html"]');
+                    if (contactButtonDesktop) {
+                        const contactLi = document.createElement('li');
+                        const contactLinkMobile = document.createElement('a');
+                        contactLinkMobile.href = contactButtonDesktop.href;
+                        contactLinkMobile.textContent = contactButtonDesktop.textContent.trim() || 'Contact';
+                        if (contactLinkMobile.getAttribute('href') === currentPage) {
+                            contactLinkMobile.classList.add('active');
                         }
-                    });
+                        contactLi.appendChild(contactLinkMobile);
+                        mobileNavLinksUl.appendChild(contactLi);
+                    }
+
+                    // Add Theme Toggle option
+                    if (themeToggleDesktopButton) {
+                        const themeLi = document.createElement('li');
+                        const themeToggleMobileLink = document.createElement('a');
+                        themeToggleMobileLink.href = '#'; // Prevent page jump
+                        themeToggleMobileLink.textContent = 'Toggle Theme'; 
+                        // You can add an icon here too if desired, e.g., by setting innerHTML
+                        // themeToggleMobileLink.innerHTML = '<i class="fas fa-adjust"></i> Toggle Theme';
+                        themeToggleMobileLink.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            themeToggleDesktopButton.click(); // Trigger the original theme toggle
+                            // Optionally close the menu after action
+                            // hamburger.click(); 
+                        });
+                        themeLi.appendChild(themeToggleMobileLink);
+                        mobileNavLinksUl.appendChild(themeLi);
+                    }
                 }
             });
 
-            // Close mobile menu when a link is clicked
-            mobileNavLinks.addEventListener('click', (e) => {
-                if (e.target.tagName === 'A') {
+            // Close mobile menu when a link inside it is clicked (if it's a navigation link)
+            mobileNavLinksUl.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A' && e.target.getAttribute('href') !== '#') {
                     hamburger.classList.remove('active');
-                    mobileNavLinks.classList.remove('active');
                     mobileOverlay.classList.remove('active');
                     body.classList.remove('no-scroll');
                 }
@@ -563,9 +517,8 @@
         }
         
         setActiveNavLink();
-
-        // Theme toggle JS is handled by initializeThemeToggle from js/theme-toggle.js,
-        // called by headerInclude.js after this header is injected.
+        // Theme toggle JS (initializeThemeToggle) is expected to be in js/theme-toggle.js
+        // and called by headerInclude.js or globally.
     </script>
 </body>
 </html>
