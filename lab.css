@@ -1483,18 +1483,3 @@
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
 }
-
-@media (max-width: 768px) {
-  /*
-    Corrective style for the theme toggle button on the lab.html page.
-    The theme toggle is styled in header.html to be 25px below
-    the true vertical center of the mobile header via 'transform: translateY(calc(-50% + 25px))'.
-    On lab.html, an additional unexplained downward shift was observed.
-    This rule adjusts the transform to 'translateY(-50%)'
-    to move the button up by an additional 25px specifically on lab.html for mobile views,
-    positioning it at the true vertical center.
-  */
-  body #theme-toggle-button {
-    transform: translateY(calc(-50% + 25px)) !important;
-  }
-}
