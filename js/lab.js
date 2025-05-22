@@ -348,18 +348,32 @@ document.addEventListener('DOMContentLoaded', function() {
             if (htmlToRestore && pagePreviewIframe) {
                 console.log('[LabPage] HTML content found in localStorage. Attempting to populate iframe.');
                 
+                // THIS IS THE CRITICAL CHANGE:
+                // Ensure global variables are updated REGARDLESS of 'typeToRestore' if content exists.
+                // The 'typeToRestore' was coming back null from localStorage sometimes.
+                // If htmlToRestore and cssToRestore exist, they are the most current generated/edited state.
+                window.lastGeneratedHTML = htmlToRestore;
+                window.lastGeneratedCSS = cssToRestore;
+                window.lastProjectName = projectNameToRestore || 'ai-generated-page'; // Use restored or default
+                console.log('[LabPage] Updated window.lastGeneratedHTML/CSS/ProjectName with restored content.');
+
+
+                // The original logic for typeToRestore can be kept for more specific handling if ever needed,
+                // but the above ensures the primary global variables are set for download buttons.
                 if (typeToRestore === 'original') {
-                    window.lastGeneratedHTML = htmlToRestore;
-                    window.lastGeneratedCSS = cssToRestore;
-                    console.log('[LabPage] Set window.lastGeneratedHTML/CSS for "original" type.');
+                    // window.lastGeneratedHTML = htmlToRestore; // Already set above
+                    // window.lastGeneratedCSS = cssToRestore; // Already set above
+                    console.log('[LabPage] Confirmed: Restored content was of type "original".');
                 } else if (typeToRestore === 'edited') {
-                    window.lastSavedEditedHtml = htmlToRestore;
-                    window.lastSavedEditedCss = cssToRestore;
-                    console.log('[LabPage] Set window.lastSavedEditedHtml/Css for "edited" type.');
+                    // For edited content, you might have different variables, e.g., window.lastSavedEditedHtml.
+                    // However, for the "Download Original HTML" button to work after payment,
+                    // it relies on window.lastGeneratedHTML. So, we ensure it's populated.
+                    // If you have a separate flow for "Download Edited", that would use its own vars.
+                    console.log('[LabPage] Confirmed: Restored content was of type "edited".');
                 } else {
-                    console.warn('[LabPage] Unknown typeToRestore from localStorage:', typeToRestore, "- content will be displayed, but related global JS variables might not be set as expected for this type.");
+                    console.warn('[LabPage] Unknown or NULL typeToRestore from localStorage:', typeToRestore, "- relying on direct assignment to window.lastGeneratedHTML/CSS.");
                 }
-                window.currentProjectName = projectNameToRestore;
+                // window.currentProjectName = projectNameToRestore; // This was an old variable, ensure lastProjectName is used
 
                 const fullHtml = `<!DOCTYPE html>
 <html>
