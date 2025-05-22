@@ -299,6 +299,7 @@
             header nav.container {
                 padding: 15px 0; /* Adjusted padding for mobile */
                 height: 70px; /* Adjusted height for mobile */
+                position: relative; /* Ensure this is a positioning context for absolute children */
             }
 
             .nav-links, /* Hide desktop nav links */
@@ -307,8 +308,15 @@
             }
 
             .hamburger {
-                display: flex; /* Show hamburger */
-                /* Ensure hamburger styling is sufficient for visibility and interaction */
+                display: flex; /* Still needed for internal span alignment */
+                position: absolute;
+                right: 20px; /* Position from the right edge of nav.container */
+                top: 50%;
+                transform: translateY(-50%);
+                width: 30px;  /* Explicitly define width */
+                height: 25px; /* Explicitly define height */
+                /* z-index: 1001; is inherited from base .hamburger style */
+                /* flex-direction, justify-content, background, border, cursor, padding are inherited */
             }
 
             .logo {
