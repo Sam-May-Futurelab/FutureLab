@@ -1,10 +1,299 @@
 /* Styles for hosting-guide.html */
-/* Inspired by lab.css and general styles.css */
+/* Aligning with global styles.css */
 
-/* Basic Reset & Root Variables */
+/* Root variables from styles.css should take precedence. */
+/* Remove redundant :root variable declarations if they are identical to styles.css */
+/* For instance, --primary-color, --secondary-color, text colors, bg colors, etc., should come from styles.css */
+
+body {
+    /* font-family, color, background-color, line-height should be inherited from styles.css */
+    /* Remove specific body styles here if covered by global styles.css */
+    margin: 0; /* Retain if not in global body or if specific reset needed */
+    padding: 0; /* Retain if not in global body */
+}
+
+/* .dark-theme body adjustments should also be primarily handled by styles.css */
+
+/* Header Placeholder - If this is for a unique header style on this page, keep. Otherwise, rely on global header. */
+/* .header-placeholder { ... } */
+/* .dark-theme .header-placeholder { ... } */
+/* .header-placeholder h1 { ... } */
+
+
+/* Guide Container - Updated for wider layout and alignment with global styles */
+.guide-container {
+    max-width: 1100px; /* Increased width */
+    margin: 40px auto; /* Standard centering */
+    padding: 40px;    /* Adjusted padding */
+    background-color: var(--light-color); /* Use global variable */
+    border-radius: var(--border-radius-lg, 12px); /* Use global or fallback */
+    box-shadow: var(--box-shadow, 0 10px 30px rgba(0, 30, 80, 0.08)); /* Use global or fallback */
+    border: 1px solid var(--light-gray, #e9ecef); /* Use global or fallback */
+}
+
+.dark-theme .guide-container {
+    background-color: var(--dark-card-bg, #1e293b); /* Use global */
+    box-shadow: var(--dark-box-shadow, 0 10px 30px rgba(0, 0, 0, 0.2)); /* Use global */
+    border: 1px solid var(--dark-border-color, #334155); /* Use global */
+}
+
+/* Headings - Align with global styles.css */
+.guide-container h2 {
+    /* font-size, font-weight, color, margin-top, margin-bottom should align with .section-title or similar from styles.css */
+    color: var(--dark-color); /* From styles.css */
+    font-size: 2.2rem; /* Example, adjust to match global */
+    font-weight: 700;  /* Example, adjust to match global */
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-color); /* Or use :after pseudo-element like global .section-title */
+    display: block; /* Ensure it takes full width for border-bottom */
+}
+
+.dark-theme .guide-container h2 {
+    color: var(--dark-heading-color); /* From styles.css */
+    border-bottom-color: var(--accent-color); /* Example for dark theme */
+}
+
+.guide-container h2:first-of-type {
+    margin-top: 0;
+}
+
+.guide-container h3 {
+    color: var(--dark-color);
+    font-size: 1.8rem; /* Example, adjust */
+    font-weight: 600; /* Example, adjust */
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.dark-theme .guide-container h3 {
+    color: var(--dark-heading-color);
+}
+
+.guide-container h4 {
+    color: var(--dark-color);
+    font-size: 1.5rem; /* Example, adjust */
+    font-weight: 600; /* Example, adjust */
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.dark-theme .guide-container h4 {
+    color: var(--dark-heading-color);
+}
+
+/* Paragraphs and Lists - Align with global styles.css */
+.guide-container p,
+.guide-container ul,
+.guide-container ol {
+    margin-bottom: 1.25rem; /* Consistent spacing */
+    font-size: 1rem;    /* Base font size, adjust as per global */
+    line-height: 1.7;   /* Improved readability */
+    color: var(--dark-color); /* Match global text color */
+}
+
+.dark-theme .guide-container p,
+.dark-theme .guide-container ul,
+.dark-theme .guide-container ol {
+    color: var(--dark-text-color); /* Match global dark theme text color */
+}
+
+/* List Styling - Simplified and aligned */
+.guide-container ul,
+.guide-container ol {
+    padding-left: 20px; /* Standard indentation for lists */
+}
+
+.guide-container ul li,
+.guide-container ol li {
+    /* Removed background, border-left, custom padding from original guide CSS */
+    margin-bottom: 0.5rem; /* Spacing between list items */
+    list-style-position: outside; /* Ensure bullets/numbers are outside the text flow */
+}
+
+.guide-container ul {
+    list-style-type: disc; /* Standard disc bullets */
+}
+.guide-container ol {
+    list-style-type: decimal; /* Standard numbers */
+}
+
+/* Nested lists */
+.guide-container ul ul, .guide-container ol ul {
+    list-style-type: circle;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.guide-container ul ul ul, .guide-container ol ul ul {
+    list-style-type: square;
+}
+.guide-container ol ol, .guide-container ul ol {
+    list-style-type: lower-alpha;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.guide-container ol ol ol, .guide-container ul ol ol {
+    list-style-type: lower-roman;
+}
+
+
+/* Remove hover effects from list items if not a global pattern */
+/* .guide-container ul li:hover { ... } */
+/* .dark-theme .guide-container ul li:hover { ... } */
+
+.guide-container ul li strong,
+.guide-container ol li strong {
+    color: var(--primary-color); /* Or inherit if strong tags are globally styled */
+    font-weight: 600; /* Or use global strong/b styling */
+    /* display: block; */ /* Remove if not needed, can affect flow */
+    /* margin-bottom: 8px; */ /* Adjust spacing as needed */
+}
+
+.dark-theme .guide-container ul li strong,
+.dark-theme .guide-container ol li strong {
+    color: var(--accent-color); /* Or inherit */
+}
+
+/* .guide-container ul li p { ... } */ /* These might be overly specific, rely on general p styling */
+
+/* Intro Text - Revised for better integration */
+.guide-container .intro-text {
+    font-size: 1.15rem; /* Slightly larger than normal text */
+    font-weight: 400;
+    color: var(--dark-color);
+    text-align: left; /* Changed from center for a more standard guide look */
+    margin-top: 0; /* If it's the first element */
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: var(--light-gray, #e9ecef); /* Subtle background */
+    border-radius: var(--border-radius-md, 8px);
+    border-left: 4px solid var(--primary-color);
+    /* border-right: none; */ /* Removed right border for a cleaner look */
+}
+
+.dark-theme .guide-container .intro-text {
+    color: var(--dark-text-color);
+    background-color: var(--dark-subtle-bg, #1a2438); /* Subtle dark background */
+    border-left-color: var(--accent-color);
+}
+
+/* Buttons - Ensure they use global .btn styles */
+/* .btn-back { ... } */ /* If this is a custom button, try to adapt to .btn or .btn-secondary */
+/* .dark-theme .btn-back { ... } */
+/* .btn-back i { ... } */
+/* .button-container { ... } */ /* Standardize margin if used for call-to-action buttons */
+
+/* Code Block Styling - Enhanced */
+.guide-container .code-block {
+    background-color: #f5f5f5; /* Light background for code */
+    color: #333; /* Dark text for code */
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    padding: 1rem;
+    margin-top: 1rem; /* Added margin-top */
+    margin-bottom: 1.5rem; /* Consistent spacing */
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius-sm, 6px);
+    overflow-x: auto;
+    font-size: 0.9em; /* Slightly smaller for code */
+    line-height: 1.5;
+}
+
+.guide-container .code-block pre {
+    margin: 0;
+    padding: 0;
+    background-color: transparent; /* Ensure pre background is transparent */
+    white-space: pre-wrap; /* Wrap long lines that are not code, but allow pre for code structure */
+    word-wrap: break-word; /* Break long words */
+}
+
+.guide-container .code-block code {
+    background-color: transparent !important; /* Override any inline or other styles */
+    color: inherit !important; /* Inherit from .code-block */
+    padding: 0 !important;
+    font-size: inherit !important; /* Inherit from .code-block */
+    border-radius: 0 !important;
+    white-space: pre-wrap; /* Allow wrapping within code tag as well */
+    word-wrap: break-word;
+}
+
+/* Dark Theme Overrides for Code Blocks */
+.dark-theme .guide-container .code-block {
+    background-color: #2a2a2a; /* Dark background for code */
+    color: #ccc; /* Light text for code */
+    border-color: #444;
+}
+
+/* Inline code styling */
+.guide-container p code,
+.guide-container li code {
+    background-color: rgba(var(--primary-color-rgb, 58, 134, 255), 0.1);
+    color: var(--primary-color, #3a86ff);
+    padding: 0.2em 0.4em;
+    margin: 0 0.1em;
+    font-size: 0.85em;
+    border-radius: var(--border-radius-sm, 4px);
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+}
+
+.dark-theme .guide-container p code,
+.dark-theme .guide-container li code {
+    background-color: rgba(var(--rgb-accent-color, 76, 201, 240), 0.15);
+    color: var(--accent-color, #4cc9f0);
+}
+
+
+/* External Links - Align with global styles if possible */
+.external-link {
+    color: var(--primary-color);
+    /* text-decoration: underline; */ /* Optional: if global links are not underlined */
+}
+.external-link:hover {
+    color: var(--secondary-color, #4361ee); /* Use global or fallback */
+    text-decoration: underline;
+}
+.dark-theme .external-link {
+    color: var(--accent-color);
+}
+.dark-theme .external-link:hover {
+    color: var(--primary-color); /* Or a lighter shade of accent */
+}
+.external-link i {
+    margin-left: 4px;
+    font-size: 0.85em;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .guide-container {
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .guide-container h2 {
+        font-size: 1.8rem; /* Adjust for mobile */
+    }
+    .guide-container h3 {
+        font-size: 1.5rem; /* Adjust for mobile */
+    }
+    .guide-container h4 {
+        font-size: 1.3rem; /* Adjust for mobile */
+    }
+    .guide-container .intro-text {
+        font-size: 1rem;
+    }
+}
+
+/* Remove or comment out styles that are now handled by styles.css */
+/* For example, if :root variables for colors, fonts, etc., are defined in styles.css,
+   they don't need to be repeated here unless specifically overriding for this page. */
+
+/* Commenting out the original :root block from hosting-guide.css as an example,
+   assuming these are now globally managed by styles.css */
+/*
 :root {
-    --primary-color: #4361ee; /* Example: Bright Blue */
-    --secondary-color: #4cc9f0; /* Example: Light Blue/Cyan */
+    --primary-color: #4361ee;
+    --secondary-color: #4cc9f0;
     --primary-color-rgb: 67, 97, 238;
     --secondary-color-rgb: 76, 201, 240;
 
@@ -12,7 +301,7 @@
     --text-color-light: #555;
     --text-secondary: #6c757d;
     --bg-color: #ffffff;
-    --bg-color-accent: #f8f9fa; /* Light gray for subtle backgrounds */
+    --bg-color-accent: #f8f9fa;
     --card-bg: #ffffff;
     --border-color: #dee2e6;
     --light-gray: #f1f3f5;
@@ -25,382 +314,11 @@
     --box-shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
     --box-shadow-md: 0 4px 15px rgba(0,0,0,0.1);
 
-    /* Dark Theme Variables (example, can be expanded) */
     --text-color-dark: #e9ecef;
     --text-color-light-dark: #adb5bd;
-    --bg-color-dark: #121212; /* Very dark grey, almost black */
-    --bg-color-accent-dark: #1e1e1e; /* Slightly lighter dark for accents */
+    --bg-color-dark: #121212;
+    --bg-color-accent-dark: #1e1e1e;
     --card-bg-dark: #1e1e1e;
     --border-color-dark: #333;
 }
-
-body {
-    font-family: 'Poppins', sans-serif;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.dark-theme body {
-    color: var(--text-color-dark);
-    background-color: var(--bg-color-dark);
-}
-
-/* Header Placeholder */
-.header-placeholder {
-    background-color: var(--dark-gray);
-    padding: 25px 0;
-    text-align: center;
-    border-bottom: 2px solid var(--primary-color);
-}
-
-.dark-theme .header-placeholder {
-    background-color: #000; /* Darker for dark theme */
-    border-bottom: 2px solid var(--secondary-color);
-}
-
-.header-placeholder h1 {
-    color: #fff; /* White text on dark background */
-    margin: 0;
-    font-size: 2.8rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-/* Guide Container */
-.guide-container {
-    max-width: 950px;
-    margin: 40px auto;
-    padding: 35px;
-    background-color: var(--card-bg);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--box-shadow-md);
-    border: 1px solid var(--border-color);
-}
-
-.dark-theme .guide-container {
-    background-color: var(--card-bg-dark);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-    border: 1px solid var(--border-color-dark);
-}
-
-.guide-container h2 {
-    color: var(--primary-color);
-    font-size: 2.2rem;
-    font-weight: 600;
-    margin-top: 45px; /* Increased from 35px */
-    margin-bottom: 25px; /* Increased from 20px */
-    border-bottom: 2px solid var(--secondary-color);
-    padding-bottom: 15px; /* Increased from 12px */
-    display: flex;
-    align-items: center;
-}
-
-.dark-theme .guide-container h2 {
-    color: var(--secondary-color);
-    border-bottom-color: var(--primary-color);
-}
-
-.guide-container h2 i {
-    margin-right: 12px;
-    font-size: 1.8rem; /* Slightly smaller than heading */
-}
-
-.guide-container h2:first-of-type {
-    margin-top: 0;
-}
-
-.guide-container h3 { /* Added style for h3 */
-    color: var(--primary-color);
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-top: 35px;
-    margin-bottom: 18px;
-}
-
-.dark-theme .guide-container h3 { /* Added style for h3 */
-    color: var(--secondary-color);
-}
-
-.guide-container h4 { /* Added style for h4 */
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    color: var(--text-color);
-}
-
-.dark-theme .guide-container h4 { /* Added style for h4 */
-    color: var(--text-color-dark);
-}
-
-.guide-container p,
-.guide-container ul, /* Combined p and ul for shared properties */
-.guide-container ol { /* Added ol for consistency */
-    margin-bottom: 25px; /* Increased from 22px */
-    font-size: 1.08rem;
-    color: var(--text-color-light);
-}
-
-.dark-theme .guide-container p,
-.dark-theme .guide-container ul, /* Combined p and ul for shared properties */
-.dark-theme .guide-container ol { /* Added ol for consistency */
-    color: var(--text-color-dark); /* Changed from --text-color-light-dark for better readability */
-}
-
-.guide-container ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.guide-container ul li {
-    background-color: var(--bg-color-accent);
-    padding: 15px; /* Reduced from 20px */
-    margin-bottom: 10px; /* Reduced from 15px */
-    border-radius: var(--border-radius-md);
-    border-left: 4px solid var(--primary-color); /* Reduced from 5px */
-    list-style-type: none; /* Ensure no default bullets */
-    position: relative; /* Retain if present, good for advanced styling */
-}
-
-.dark-theme .guide-container ul li {
-    background-color: var(--bg-color-accent-dark);
-    border-left-color: var(--secondary-color); /* This will override the color part of the border-left shorthand */
-}
-
-/* Indentation for the nested UL element itself */
-.guide-container li > ul {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-left: 25px; /* Indentation for the entire nested list block */
-}
-
-/* Style for items (LI) within a nested UL (a UL that is a child of any LI) */
-.guide-container li > ul > li {
-    background-color: transparent;
-    padding: 6px 0; /* Vertical padding, no horizontal padding as list-style handles indentation */
-    margin-bottom: 5px;
-    border-left: none;
-    border-radius: 0; /* Reset border-radius from any parent styling */
-    list-style-type: disc; /* Standard disc bullets */
-    color: inherit; /* Ensures text color is properly inherited */
-}
-
-/* Dark theme specific overrides for nested LI if text color doesn't inherit well */
-/* .dark-theme .guide-container li > ul > li { */
-    /* color: var(--text-color-dark); */ /* Usually not needed if body/container sets it */
-/* } */
-
-/* Styling for deeper nested list item markers */
-.guide-container li > ul > li > ul > li {
-    list-style-type: circle; /* Circle bullets for second-level nested ULs */
-}
-
-.guide-container li > ul > li > ul > li > ul > li {
-    list-style-type: square; /* Square bullets for third-level nested ULs */
-}
-
-.guide-container ul li:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-}
-
-.dark-theme .guide-container ul li:hover {
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-.guide-container ul li strong {
-    color: var(--primary-color);
-    font-weight: 600;
-    display: block;
-    margin-bottom: 8px;
-}
-
-.dark-theme .guide-container ul li strong {
-    color: var(--secondary-color);
-}
-
-.guide-container ul li p {
-    margin-bottom: 8px;
-    font-size: 1rem;
-}
-.guide-container ul li p:last-child {
-    margin-bottom: 0;
-}
-
-/* Intro Text */
-.guide-container .intro-text {
-    font-size: 1.25rem;
-    font-weight: 400;
-    color: var(--text-color);
-    text-align: center;
-    margin-bottom: 35px;
-    padding: 20px;
-    padding-top: 30px; /* Added more padding to the top */
-    background-color: rgba(var(--primary-color-rgb), 0.05); /* Subtle primary color accent */
-    border-radius: var(--border-radius-md);
-    border-left: 5px solid var(--primary-color);
-    border-right: 5px solid var(--primary-color);
-}
-
-.dark-theme .guide-container .intro-text {
-    color: var(--text-color-dark);
-    background-color: var(--card-bg-dark); /* Changed to match the guide-container background in dark mode */
-    border-left-color: var(--secondary-color);
-    border-right-color: var(--secondary-color);
-}
-
-/* Buttons */
-.btn-back {
-    display: inline-block;
-    background-color: var(--secondary-color);
-    color: #fff;
-    padding: 14px 30px;
-    text-decoration: none;
-    border-radius: var(--border-radius-sm);
-    font-weight: 600;
-    text-align: center;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    border: none;
-    cursor: pointer;
-    font-size: 1.05rem;
-}
-
-.btn-back:hover {
-    background-color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.dark-theme .btn-back {
-    background-color: var(--primary-color); /* Swapping for dark theme */
-}
-
-.dark-theme .btn-back:hover {
-    background-color: var(--secondary-color);
-}
-
-.btn-back i {
-    margin-right: 8px;
-}
-
-.button-container {
-    text-align: center;
-    margin-top: 40px;
-}
-
-/* Code Block Styling */
-.guide-container .code-block {
-    background-color: #f8f9fa; /* Default light background for code blocks */
-    color: #212529; /* Default dark text color */
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid #dee2e6;
-    border-radius: var(--border-radius-md);
-    overflow-x: auto;
-}
-
-.guide-container .code-block pre {
-    margin: 0; /* Reset pre margin */
-    padding: 0; /* Reset pre padding */
-    background-color: transparent; /* Ensure pre background is transparent */
-    border: none; /* Reset pre border */
-    color: inherit; /* Inherit text color from .code-block */
-    font-family: var(--font-mono);
-    font-size: 0.9em; /* Consistent font size */
-    text-shadow: none; /* Ensure no text shadow from other rules */
-}
-
-.guide-container .code-block code {
-    background-color: transparent; /* Ensure code background is transparent */
-    color: inherit; /* Inherit text color from .code-block */
-    padding: 0; /* Reset code padding */
-    font-family: inherit; /* Inherit font family from pre */
-    font-size: inherit; /* Inherit font size from pre */
-    text-shadow: none; /* Ensure no text shadow from other rules */
-}
-
-/* Dark Theme Overrides for Code Blocks */
-/* Ensure code blocks have a light background and dark text even in dark mode */
-body.dark-theme .guide-container .code-block {
-    background-color: #f8f9fa !important; /* Light background - FORCED */
-    color: #000000 !important; /* Black text - FORCED */
-    border: 1px solid #ced4da !important; /* Slightly darker border for contrast on light bg */
-}
-
-body.dark-theme .guide-container .code-block pre,
-body.dark-theme .guide-container .code-block code {
-    background-color: transparent !important; /* Still transparent */
-    color: #000000 !important; /* Black text - FORCED */
-    text-shadow: none !important; /* Ensure no text shadow */
-}
-
-/* External Links */
-.external-link {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s ease;
-}
-
-.external-link:hover {
-    color: var(--secondary-color);
-    text-decoration: underline;
-}
-
-.dark-theme .external-link {
-    color: var(--secondary-color);
-}
-
-.dark-theme .external-link:hover {
-    color: var(--primary-color);
-}
-
-.external-link i {
-    font-size: 0.85em;
-    margin-left: 4px;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .guide-container {
-        margin: 20px;
-        padding: 25px;
-    }
-    .header-placeholder h1 {
-        font-size: 2.2rem;
-    }
-    .guide-container h2 {
-        font-size: 1.9rem;
-    }
-    .guide-container .intro-text {
-        font-size: 1.15rem;
-        padding: 15px;
-    }
-    .btn-back {
-        padding: 12px 25px;
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .header-placeholder h1 {
-        font-size: 1.8rem;
-    }
-    .guide-container h2 {
-        font-size: 1.6rem;
-    }
-    .guide-container h2 i {
-        font-size: 1.4rem;
-        margin-right: 8px;
-    }
-    .guide-container .intro-text {
-        font-size: 1rem;
-    }
-    .guide-container ul li {
-        padding: 15px;
-    }
-}
+*/
