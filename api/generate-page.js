@@ -117,6 +117,21 @@ Your response MUST be ONLY the JSON object itself, without any surrounding text,
 
         let generatedCodeContent = aiResponse.choices[0]?.message?.content;
 
+        // Clean the AI response to remove markdown fences if present
+        if (generatedCodeContent && typeof generatedCodeContent === 'string') {
+            const markdownJsonRegex = /^```(?:json)?\\s*([\\s\\S]*?)\\s*```$/;
+            const match = generatedCodeContent.match(markdownJsonRegex);
+            if (match && match[1]) {
+                generatedCodeContent = match[1];
+            }
+            // Fallback for cases where only ``` is present without 'json'
+            // or if there's leading/trailing whitespace around the fences
+            generatedCodeContent = generatedCodeContent.trim();
+            if (generatedCodeContent.startsWith("```") && generatedCodeContent.endsWith("```")) {
+                 generatedCodeContent = generatedCodeContent.substring(3, generatedCodeContent.length - 3).trim();
+            }
+        }
+
         let parsedCode;
         try {
             // Suggestion 5: Catch malformed AI responses more tightly
