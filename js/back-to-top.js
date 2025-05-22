@@ -1,5 +1,10 @@
-document.addEventListener('DOMContentLoaded', function() {
+window.initializeBackToTop = function() {
     const backToTopButton = document.getElementById('backToTopBtn');
+
+    if (!backToTopButton) {
+        console.warn('BackToTopButton not found. Skipping initialization.');
+        return;
+    }
 
     // Function to show or hide the button based on scroll position
     function toggleBackToTopButton() {
@@ -23,11 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listeners
-    if (backToTopButton) { // Check if the button exists
-        window.addEventListener('scroll', toggleBackToTopButton);
-        backToTopButton.addEventListener('click', scrollToTop);
+    window.addEventListener('scroll', toggleBackToTopButton);
+    backToTopButton.addEventListener('click', scrollToTop);
 
-        // Initial check in case the page is already scrolled down
-        toggleBackToTopButton();
-    }
-});
+    // Initial check in case the page is already scrolled down
+    toggleBackToTopButton();
+};
