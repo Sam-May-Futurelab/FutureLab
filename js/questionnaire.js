@@ -176,8 +176,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let currentStep = 1;
     const totalSteps = formSteps.length;
-    let lastGeneratedHTML = '';
-    let lastGeneratedCSS = '';
+    // Remove these local declarations, as we will use the window properties directly
+    // let lastGeneratedHTML = '';
+    // let lastGeneratedCSS = '';
+    window.lastGeneratedHTML = ''; // Ensure they are initialized on the window object
+    window.lastGeneratedCSS = ''; // Ensure they are initialized on the window object
     window.lastProjectName = 'ai-generated-page'; // Initialize on window object
 
     // Change button text
@@ -1224,9 +1227,10 @@ document.addEventListener('DOMContentLoaded', function() {
             clearInterval(messageInterval);
             // --- END: Clear interval on success ---
             generationStep.textContent = 'Finalizing your page...';
-            
-            lastGeneratedHTML = aiOutput.html || '<!-- No HTML generated -->';
-            lastGeneratedCSS = aiOutput.css || '/* No CSS generated */';
+
+            // Assign to window properties
+            window.lastGeneratedHTML = aiOutput.html || '<!-- No HTML generated -->';
+            window.lastGeneratedCSS = aiOutput.css || '/* No CSS generated */';
 
             let previewDocContent = `
                 <!DOCTYPE html>
