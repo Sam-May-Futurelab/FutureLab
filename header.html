@@ -303,8 +303,24 @@
             }
 
             .nav-links, /* Hide desktop nav links */
-            .header-actions { /* Hide desktop contact button and theme toggle container */
+            .header-actions .btn.btn-primary { /* Specifically hide the contact button within header-actions */
                 display: none !important; 
+            }
+            /* Keep .header-actions itself visible if it only contains the theme toggle, or adjust if it was meant to be hidden */
+            /* If .header-actions is hidden, we need to show .theme-toggle explicitly */
+            .header-actions { /* Hide desktop contact button container, but allow theme toggle to be shown */
+                display: block; /* Or flex, depending on desired layout if other items were there */
+            }
+
+
+            .theme-toggle {
+                display: inline-flex !important; /* Ensure it's visible */
+                position: absolute;
+                right: 70px; /* Position to the left of the hamburger (hamburger is 30px wide, at right: 20px, add 20px gap) */
+                top: 50%;
+                transform: translateY(-50%);
+                margin-left: 0; /* Override desktop margin */
+                /* z-index is inherited and should be fine */
             }
 
             .hamburger {
@@ -494,23 +510,7 @@
                         mobileNavLinksUl.appendChild(contactLi);
                     }
 
-                    // Add Theme Toggle option
-                    if (themeToggleDesktopButton) {
-                        const themeLi = document.createElement('li');
-                        const themeToggleMobileLink = document.createElement('a');
-                        themeToggleMobileLink.href = '#'; // Prevent page jump
-                        themeToggleMobileLink.textContent = 'Toggle Theme'; 
-                        // You can add an icon here too if desired, e.g., by setting innerHTML
-                        // themeToggleMobileLink.innerHTML = '<i class="fas fa-adjust"></i> Toggle Theme';
-                        themeToggleMobileLink.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            themeToggleDesktopButton.click(); // Trigger the original theme toggle
-                            // Optionally close the menu after action
-                            // hamburger.click(); 
-                        });
-                        themeLi.appendChild(themeToggleMobileLink);
-                        mobileNavLinksUl.appendChild(themeLi);
-                    }
+                    // Removed the "Toggle Theme" text link from mobile menu
                 }
             });
 
