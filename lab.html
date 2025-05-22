@@ -993,7 +993,7 @@
                         paymentStatusMessage.textContent = 'Redirecting you to Stripe to complete payment...';
                         paymentStatusMessage.style.color = '#007bff'; // Or your theme's info color
                         paymentStatusMessage.style.display = 'block';
-                        // Re-enable the button after a short delay in case the new tab was blocked or closed
+                        // Re-enable the button after a short delay in case the NEW tab was blocked or closed
                         setTimeout(() => {
                             if (localStorage.getItem('paymentCompleted') !== 'true') { // Only if not already paid
                              payButton.disabled = false;
