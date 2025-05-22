@@ -307,39 +307,45 @@
                 left: 50%;
                 top: 50%;
                 transform: translate(-50%, -50%);
-                z-index: 1; /* Ensure logo is above background but below controls if necessary */
+                z-index: 1002; /* Ensure logo is above .header-actions if it had a background, and generally well-placed */
             }
 
             .nav-links, /* Hide desktop nav links */
             .header-actions .btn.btn-primary { /* Specifically hide the contact button within header-actions */
-                display: none !important; 
+                display: none !important;
             }
-            /* Keep .header-actions itself visible if it only contains the theme toggle, or adjust if it was meant to be hidden */
-            /* If .header-actions is hidden, we need to show .theme-toggle explicitly */
-            .header-actions { 
-                display: contents; /* Make this container not affect layout directly */
+
+            .header-actions {
+                /* This div will now solely contain the theme toggle on mobile */
+                display: flex !important; /* Use flex to center its child, ensure it overrides desktop 'flex' if any different props were there */
+                align-items: center !important; /* Vertical centering for the theme toggle */
+                justify-content: flex-end; /* Aligns theme toggle to the right of this container if it had width */
+                position: absolute !important;
+                top: 0 !important;
+                right: 0 !important; /* Position this container to the far right of nav.container */
+                width: auto; /* Let it be as wide as its content + padding */
+                height: 100% !important; /* Make it full height of nav.container (70px) */
+                padding-right: 20px !important; /* Space from the very edge of the screen for the toggle */
+                z-index: 1000; /* Behind hamburger if they overlap, but positions its content */
+                /* Remove display: contents from previous attempts */
             }
 
             .theme-toggle {
-                display: inline-flex !important; /* Ensure it's visible */
-                position: absolute;
-                right: 20px; 
-                top: 50%;
-                transform: translateY(-50%); /* Vertically center relative to nav.container */
-                margin-left: 0; 
-                z-index: 1001; 
+                display: inline-flex !important; /* Ensure it's visible and behaves as a flex item */
+                /* position: absolute, top, right, transform, margin-left are removed or reset by flex context */
+                margin-left: 0; /* Ensure no inherited margin pushes it */
+                /* z-index is relative to .header-actions, 'auto' should be fine */
             }
 
             .hamburger {
                 display: flex; /* Still needed for internal span alignment */
                 position: absolute;
                 left: 20px; /* Positioned on the far left */
-                /* right: 70px; */ /* Removed previous right positioning */
                 top: 50%;
                 transform: translateY(-50%);
                 width: 30px;  /* Explicitly define width */
                 height: 25px; /* Explicitly define height */
-                z-index: 1001; /* Ensure it's above logo if overlap occurs */
+                z-index: 1001; /* Ensure it's above .header-actions container */
             }
 
             .logo {
