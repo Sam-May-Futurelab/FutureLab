@@ -714,11 +714,33 @@
                         0 0 15px rgba(67, 97, 238, 0.4);
         }
 
-        /* Make sure the title maintains proper layout if it's a block element */
+        /* Make sure the title maintains proper layout if it\'s a block element */
         .ecommerce-hero-content h1.gradient-title {
             display: block;
             width: 100%;
             margin-bottom: 25px;
+        }
+
+        /* Custom pricing section styling (from web-design.html) */
+        .custom-pricing {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(67, 97, 238, 0.05);
+            border-radius: var(--border-radius);
+        }
+        
+        .dark-theme .custom-pricing {
+            background: rgba(76, 201, 240, 0.05);
+        }
+        
+        .custom-pricing h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .custom-pricing .btn {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -1041,15 +1063,16 @@
                             <a href="#contact" class="btn btn-primary full-width">Get Started</a>
                         </div>
                     </div>
-                </div>
-                
+                </div> <!-- closing pricing-table -->
+
                 <div class="custom-pricing">
                     <h3>Need a Custom Solution?</h3>
                     <p>Every business is unique. Contact us for a personalized quote tailored to your specific requirements and goals.</p>
                     <a href="#contact" class="btn btn-secondary">Request a Custom Quote</a>
                 </div>
-            </div>
-        </section>
+                
+            </div> <!-- closing container of pricing section -->
+        </section> <!-- closing ecommerce-pricing section -->
 
         <!-- FAQ Section -->
         <section id="faq" class="faq section-transition">
