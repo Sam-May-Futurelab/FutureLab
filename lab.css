@@ -1432,7 +1432,7 @@
 #hosting-howto-section .hosting-options-list li {
     font-size: 1rem;
     line-height: 1.6;
-    color: #333;
+    color: var(--text-color, #333); /* Use variable with fallback for better dark mode support */
     margin-bottom: 15px;
     padding-left: 0; /* Reset padding, or set to a small value like 5px if needed */
     position: relative; /* This can likely be removed if no other absolute positioning is needed */
@@ -1441,6 +1441,15 @@
 #hosting-howto-section .hosting-options-list li strong {
     color: var(--primary-color); /* Highlight the service type */
     font-weight: 600;
+}
+
+/* Dark theme styles for hosting options list */
+.dark-theme #hosting-howto-section .hosting-options-list li {
+    color: var(--text-color-dark, #e2e8f0); /* Lighter text for dark mode readability */
+}
+
+.dark-theme #hosting-howto-section .hosting-options-list li strong {
+    color: var(--secondary-color, #4cc9f0); /* Use secondary color in dark mode for better contrast */
 }
 
 #hosting-howto-section .btn-secondary {
@@ -1482,4 +1491,33 @@
 .dark-theme #hosting-howto-section .btn-secondary:hover {
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
+}
+
+/* Step-by-Step Hosting Guide Button Styling */
+.btn.btn-secondary#hosting-step-by-step-btn,
+body #hosting-howto-section .btn.btn-secondary#hosting-step-by-step-btn {
+    border-radius: 30px !important; /* More rounded corners */
+    padding: 14px 30px !important;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.15);
+}
+
+.btn.btn-secondary#hosting-step-by-step-btn:hover,
+body #hosting-howto-section .btn.btn-secondary#hosting-step-by-step-btn:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 15px rgba(67, 97, 238, 0.25) !important;
+}
+
+body.dark-theme .btn.btn-secondary#hosting-step-by-step-btn,
+body.dark-theme #hosting-howto-section .btn.btn-secondary#hosting-step-by-step-btn {
+    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.2) !important;
+}
+
+body.dark-theme .btn.btn-secondary#hosting-step-by-step-btn:hover,
+body.dark-theme #hosting-howto-section .btn.btn-secondary#hosting-step-by-step-btn:hover {
+    box-shadow: 0 6px 15px rgba(76, 201, 240, 0.3) !important;
 }
