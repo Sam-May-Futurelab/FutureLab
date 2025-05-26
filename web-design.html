@@ -458,11 +458,23 @@
 
     <!-- Footer will be injected here -->
     <div id="footer-placeholder"></div>    <script src="js/includeElements.js"></script>
-    <script src="js/theme-toggle.js"></script>
     <script src="js/animations.js"></script>
     <script>
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize theme toggle after a brief delay to ensure header is loaded
+            function initThemeToggleWithRetry() {
+                if (window.initializeThemeToggle && document.querySelector('.theme-toggle')) {
+                    window.initializeThemeToggle();
+                } else {
+                    // Retry after 200ms if header/theme toggle not ready
+                    setTimeout(initThemeToggleWithRetry, 200);
+                }
+            }
+            
+            // Start theme toggle initialization
+            initThemeToggleWithRetry();
+            
             // Portfolio filtering functionality
             const filterButtons = document.querySelectorAll('.filter-btn');
             const portfolioItems = document.querySelectorAll('.portfolio-item');
