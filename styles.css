@@ -3782,3 +3782,12 @@ footer {
     border-top-color: #1c2941; /* Darker border for dark theme */
 }
 /* End of Footer Styling */
+
+/* Theme-aware text that changes color in dark mode */
+.theme-aware-text {
+    color: var(--dark-color);
+}
+
+.dark-theme .theme-aware-text {
+    color: var(--dark-heading-color);
+}
