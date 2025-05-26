@@ -1501,7 +1501,8 @@
 .breadcrumb-nav {
     background: var(--light-color);
     border-bottom: 1px solid #e2e8f0;
-    padding: 16px 0;
+    padding: 24px 0;
+    margin-top: 20px;
     margin-bottom: 0;
 }
 
