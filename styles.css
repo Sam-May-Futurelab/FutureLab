@@ -1912,6 +1912,8 @@ body:not(.dark-theme) .cookie-banner {
   }
 }
 
+
+
 /* Improved portfolio image positioning for mobile */
 @media (max-width: 768px) {
     .portfolio-item .portfolio-image {
@@ -2316,6 +2318,8 @@ body:not(.dark-theme) .cookie-banner {
     margin-bottom: 0;
 }
 
+
+
 /* Portfolio Section */
 .portfolio {
     padding: 120px 0;
@@ -2470,6 +2474,8 @@ body:not(.dark-theme) .cookie-banner {
 .dark-theme .portfolio-features li:before {
     background: var(--accent-color) !important;
 }
+
+
 
 /* NEW STYLING FOR POKESPUD AND MPFILMS MOCKUP IMAGES */
 .portfolio-item img[src*="pokespud-mockup"],
@@ -3245,6 +3251,157 @@ footer:before {
     color: var(--dark-text-color) !important;
 }
 
+/* Expert Web Design Section Styling */
+#web-design-focus {
+    position: relative;
+    padding: 80px 0;
+}
+
+#web-design-focus .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.web-design-content {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.web-design-text p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.web-design-text h3 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.process-list {
+    list-style: none;
+    counter-reset: process-counter;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.process-list li {
+    counter-increment: process-counter;
+    position: relative;
+    padding: 20px 20px 20px 80px;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.process-list li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.process-list li::before {
+    content: counter(process-counter);
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px;
+    height: 35px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.process-list li strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+#web-design-focus .btn-primary {
+    display: block;
+    width: fit-content;
+    margin: 2.5rem auto 0;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    box-shadow: 0 8px 25px rgba(45, 102, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+#web-design-focus .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(45, 102, 255, 0.4);
+}
+
+/* Dark theme support for web design section */
+.dark-theme .web-design-content {
+    background: rgba(30, 42, 71, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .web-design-text p {
+    color: #e0e6ed;
+}
+
+.dark-theme .process-list li {
+    background: linear-gradient(135deg, #1e2a47 0%, #2a3855 100%);
+    color: #e0e6ed;
+}
+
+.dark-theme .process-list li strong {
+    color: var(--accent-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #web-design-focus {
+        padding: 60px 0;
+    }
+
+    #web-design-focus .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .web-design-content {
+        margin: 0 20px;
+        padding: 30px 25px;
+        border-radius: 15px;
+    }
+    
+    .process-list li {
+        padding: 15px 15px 15px 65px;
+    }
+    
+    .process-list li::before {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+}
+
 /* Comparison Section Styling */
 .comparison {
     padding: 80px 0;
@@ -3667,6 +3824,8 @@ footer:before {
     }
 }
 
+
+
 /* Dark Theme for AI Lab Showcase */
 .dark-theme #ai-lab-showcase {
     background-color: var(--dark-subtle-bg); /* Using a variable from your existing dark theme */
@@ -3790,4 +3949,5 @@ footer {
 
 .dark-theme .theme-aware-text {
     color: var(--dark-heading-color);
+
 }
