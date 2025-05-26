@@ -123,8 +123,104 @@
             background-color: var(--primary-color);
         }
 
-        .dark-theme .nav-links li a.active::after {
+        .dark-theme        .nav-links li a.active::after {
             background-color: var(--accent-color-light);
+        }
+
+        /* Dropdown menu styling */
+        .nav-links .dropdown {
+            position: relative;
+        }        .nav-links .dropdown .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            min-width: 200px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius-sm);
+            padding: 10px 0;
+            z-index: 1000;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            margin-top: 5px;
+        }
+
+        /* Add a bridge area to prevent dropdown from disappearing */
+        .nav-links .dropdown::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: transparent;
+            z-index: 999;
+        }
+
+        .dark-theme .nav-links .dropdown .dropdown-content {
+            background-color: rgba(15, 23, 42, 0.98);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }        .nav-links .dropdown:hover .dropdown-content,
+        .nav-links .dropdown:hover::before {
+            display: block;
+            animation: dropdownFadeIn 0.3s ease-out;
+        }
+
+        /* Ensure dropdown stays visible when hovering over content */
+        .nav-links .dropdown .dropdown-content:hover {
+            display: block;
+        }
+
+        @keyframes dropdownFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }        .nav-links .dropdown .dropdown-content a {
+            color: var(--dark-color) !important;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border-bottom: none;
+        }
+
+        .dark-theme .nav-links .dropdown .dropdown-content a {
+            color: var(--light-gray) !important;
+        }
+
+        .nav-links .dropdown .dropdown-content a:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color) !important;
+            padding-left: 25px;
+            font-weight: 600;
+        }
+
+        .dark-theme .nav-links .dropdown .dropdown-content a:hover {
+            background-color: rgba(67, 97, 238, 0.2);
+            color: var(--accent-color-light) !important;
+        }
+
+        .nav-links .dropdown > a::after {
+            content: '\f107';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            margin-left: 5px;
+            font-size: 0.8em;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links .dropdown:hover > a::after {
+            transform: rotate(180deg);
         }
         
         .nav-links li a.btn {
@@ -408,9 +504,19 @@
             }
             .dark-theme .nav-links-mobile li a:hover {
                 background-color: rgba(255,255,255,0.05);
-            }
-            .nav-links-mobile li:last-child a {
+            }            .nav-links-mobile li:last-child a {
                 border-bottom: none;
+            }
+
+            /* Mobile dropdown styling */
+            .nav-links-mobile li a[style*="color: var(--primary-color)"] {
+                background-color: rgba(67, 97, 238, 0.1);
+                margin-bottom: 5px;
+                border-radius: 5px;
+            }
+
+            .dark-theme .nav-links-mobile li a[style*="color: var(--primary-color)"] {
+                background-color: rgba(67, 97, 238, 0.2);
             }
         }
         
@@ -433,13 +539,18 @@
         <nav class="container">
             <a href="index.html" class="logo-link">
                 <span class="logo">Futurelab</span>
-            </a>
-            <ul class="nav-links">
+            </a>            <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="web-design.html">Web Design</a></li>
-                <li><a href="ecommerce.html">E-commerce</a></li>
+                <li class="dropdown">
+                    <a href="#" onclick="return false;">Services</a>
+                    <div class="dropdown-content">
+                        <a href="custom-web-design.html">Custom Web Design</a>
+                        <a href="ecommerce.html">E-commerce</a>
+                    </div>
+                </li>
                 <li><a href="lab.html">AI Lab</a></li>
-                <li><a href="showcase.html">Showcase</a></li> <!-- Added Showcase link -->
+                <li><a href="showcase.html">Showcase</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="faq.html">FAQ</a></li>
             </ul>
@@ -487,24 +598,56 @@
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 mobileOverlay.classList.toggle('active'); // This controls the visibility of the overlay
-                body.classList.toggle('no-scroll');
-
-                // Populate mobile menu if it's empty AND the menu is being opened
+                body.classList.toggle('no-scroll');                // Populate mobile menu if it's empty AND the menu is being opened
                 if (mobileOverlay.classList.contains('active') && mobileNavLinksUl.innerHTML === '') {
                     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
                     
                     // Clone main navigation links
                     const desktopNavLinks = document.querySelector('header .nav-links');
                     if (desktopNavLinks) {
-                        desktopNavLinks.querySelectorAll('li a:not(.btn)').forEach(link => {
-                            const li = document.createElement('li');
-                            const newLink = link.cloneNode(true);
-                            newLink.classList.remove('active'); // Clear desktop active state
-                            if (newLink.getAttribute('href') === currentPage) {
-                                newLink.classList.add('active'); // Set active for mobile
+                        desktopNavLinks.querySelectorAll('li').forEach(navItem => {
+                            // Handle dropdown items
+                            if (navItem.classList.contains('dropdown')) {
+                                // Add Services header (non-clickable)
+                                const servicesHeaderLi = document.createElement('li');
+                                const servicesHeader = document.createElement('a');
+                                servicesHeader.href = '#';
+                                servicesHeader.textContent = 'Services';
+                                servicesHeader.style.fontWeight = '600';
+                                servicesHeader.style.color = 'var(--primary-color)';
+                                servicesHeader.addEventListener('click', (e) => e.preventDefault());
+                                servicesHeaderLi.appendChild(servicesHeader);
+                                mobileNavLinksUl.appendChild(servicesHeaderLi);
+
+                                // Add dropdown items (Custom Web Design and E-commerce)
+                                const dropdownContent = navItem.querySelector('.dropdown-content');
+                                if (dropdownContent) {
+                                    dropdownContent.querySelectorAll('a').forEach(dropdownLink => {
+                                        const li = document.createElement('li');
+                                        const newLink = dropdownLink.cloneNode(true);
+                                        newLink.classList.remove('active');
+                                        newLink.style.paddingLeft = '30px'; // Indent dropdown items
+                                        if (newLink.getAttribute('href') === currentPage) {
+                                            newLink.classList.add('active');
+                                        }
+                                        li.appendChild(newLink);
+                                        mobileNavLinksUl.appendChild(li);
+                                    });
+                                }
+                            } else {
+                                // Handle regular navigation items (including Web Design as main item)
+                                const link = navItem.querySelector('a:not(.btn)');
+                                if (link) {
+                                    const li = document.createElement('li');
+                                    const newLink = link.cloneNode(true);
+                                    newLink.classList.remove('active');
+                                    if (newLink.getAttribute('href') === currentPage) {
+                                        newLink.classList.add('active');
+                                    }
+                                    li.appendChild(newLink);
+                                    mobileNavLinksUl.appendChild(li);
+                                }
                             }
-                            li.appendChild(newLink);
-                            mobileNavLinksUl.appendChild(li);
                         });
                     }
 
