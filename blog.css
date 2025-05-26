@@ -47,6 +47,69 @@
     gap: 30px;
 }
 
+/* Featured post styling */
+.blog-post-card.featured {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--primary-color-ultra-light, #f0f5ff);
+    border-left: 4px solid var(--primary-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.dark-theme .blog-post-card.featured {
+    background-color: var(--dark-blue-secondary);
+    border-left: 4px solid var(--accent-color-light);
+}
+
+.blog-post-card.featured:before {
+    content: "Featured";
+    position: absolute;
+    top: 12px;
+    right: -32px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 40px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transform: rotate(45deg);
+    z-index: 10;
+}
+
+.dark-theme .blog-post-card.featured:before {
+    background-color: var(--accent-color-light);
+    color: var(--dark-blue-primary);
+}
+
+.blog-post-card.featured img {
+    width: 40%;
+    object-fit: cover;
+    height: auto;
+    max-height: 100%;
+    border-radius: 0;
+}
+
+.blog-post-card.featured .blog-post-card-content {
+    width: 60%;
+    padding: 30px;
+}
+
+.blog-post-card.featured h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.blog-post-card.featured .blog-post-excerpt {
+    font-size: 1.1rem;
+}
+
+.blog-post-card.featured .btn {
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
 .blog-post-card {
     background-color: var(--light-color);
     border-radius: 8px;
@@ -75,6 +138,17 @@
     width: 100%;
     height: 200px;
     object-fit: cover;
+}
+
+.blog-post-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.blog-post-card:hover .blog-post-image {
+    transform: scale(1.05);
 }
 
 .blog-post-card-content {
@@ -385,4 +459,131 @@
     .blog-post-content {
         padding: 0 15px;
     }
+    
+    /* Responsive adjustments for featured posts */
+    .blog-post-card.featured {
+        flex-direction: column;
+    }
+    
+    .blog-post-card.featured img {
+        width: 100%;
+        height: 220px;
+    }
+    
+    .blog-post-card.featured .blog-post-card-content {
+        width: 100%;
+    }
+}
+
+/* Web Design Category Styling */
+.blog-post-card[data-category="web-design"] .blog-post-meta:before,
+.blog-post-card.featured[data-category="web-design"] .blog-post-meta:before {
+    content: "Web Design";
+    display: inline-block;
+    background-color: var(--primary-color, #4361ee);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-right: 8px;
+    font-weight: 500;
+}
+
+.dark-theme .blog-post-card[data-category="web-design"] .blog-post-meta:before,
+.dark-theme .blog-post-card.featured[data-category="web-design"] .blog-post-meta:before {
+    background-color: var(--accent-color-light, #7b9cff);
+    color: var(--dark-blue-primary, #1a1a2e);
+}
+
+.blog-post-card[data-category="case-study"] .blog-post-meta:before,
+.blog-post-card.featured[data-category="case-study"] .blog-post-meta:before {
+    content: "Case Study";
+    display: inline-block;
+    background-color: var(--secondary-color, #ff6b6b);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-right: 8px;
+    font-weight: 500;
+}
+
+.dark-theme .blog-post-card[data-category="case-study"] .blog-post-meta:before,
+.dark-theme .blog-post-card.featured[data-category="case-study"] .blog-post-meta:before {
+    background-color: var(--secondary-color-light, #ff9f43);
+    color: var(--dark-blue-primary, #1a1a2e);
+}
+
+/* Enhance CTA styling */
+.cta-section {
+    background-color: var(--primary-color-ultra-light, #f0f5ff);
+    border-radius: 12px;
+    padding: 30px;
+    margin: 40px 0;
+    border-left: 4px solid var(--primary-color, #4361ee);
+}
+
+.dark-theme .cta-section {
+    background-color: var(--dark-blue-secondary, #262640);
+    border-left: 4px solid var(--accent-color-light, #7b9cff);
+}
+
+.cta-section h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: var(--primary-color, #4361ee);
+}
+
+.dark-theme .cta-section h3 {
+    color: var(--accent-color-light, #7b9cff);
+}
+
+.cta-section .btn {
+    margin-top: 15px;
+}
+
+/* Blog post grid improvements */
+.blog-post-card h3 {
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.blog-post-card h3:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--primary-color, #4361ee);
+}
+
+.blog-post-card[data-category="case-study"] h3:after {
+    background-color: var(--secondary-color, #ff6b6b);
+}
+
+/* Enhanced image styling */
+.post-image img {
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 30, 80, 0.15);
+}
+
+/* New post indicator */
+.blog-post-card .blog-post-meta:after {
+    content: "New";
+    display: inline-block;
+    background-color: var(--secondary-color, #ff6b6b);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    margin-left: 8px;
+    font-weight: 600;
+    vertical-align: middle;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.blog-post-card[data-new="true"] .blog-post-meta:after {
+    opacity: 1;
 }
