@@ -260,48 +260,145 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Portfolio Preview Section -->
+        </section>        <!-- Portfolio Preview Section -->
         <section class="portfolio-preview">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">Recent Work</h2>
-                    <p class="section-subtitle">See what we've created for our clients</p>
-                </div>                <div class="portfolio-grid">
-                    <div class="portfolio-item">
+                    <p class="section-subtitle">Discover our latest digital masterpieces and success stories</p>
+                </div>
+                
+                <!-- Portfolio Categories Filter -->
+                <div class="portfolio-filters">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="ecommerce">E-commerce</button>
+                    <button class="filter-btn" data-filter="corporate">Corporate</button>
+                    <button class="filter-btn" data-filter="webapp">Web Apps</button>
+                </div>
+
+                <div class="portfolio-grid">
+                    <div class="portfolio-item" data-category="ecommerce">
                         <div class="portfolio-image">
                             <img src="assets/elume-mockup.png" alt="Elume skincare e-commerce website design">
-                            <div class="portfolio-overlay">
+                            <div class="portfolio-badges">
+                                <span class="portfolio-badge">E-commerce</span>
+                                <span class="portfolio-badge">Mobile First</span>
+                            </div>
+                            <div class="portfolio-info">
                                 <h4>Elume Skincare</h4>
-                                <p>Premium e-commerce platform with advanced features</p>
-                                <a href="showcase.html" class="portfolio-link">View Project</a>
+                                <span class="portfolio-category">Premium Beauty Brand</span>
+                            </div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-content">
+                                    <h4>Elume Skincare</h4>
+                                    <p class="portfolio-description">Premium e-commerce platform featuring advanced product filtering, subscription management, and personalized skincare recommendations.</p>
+                                    <div class="portfolio-stats">
+                                        <div class="stat-item">
+                                            <span class="stat-number">+150%</span>
+                                            <span class="stat-label">Sales Increase</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-number">4.9/5</span>
+                                            <span class="stat-label">User Rating</span>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-actions">
+                                        <a href="showcase.html" class="portfolio-link primary">View Project</a>
+                                        <a href="#" class="portfolio-link secondary">Live Site</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="portfolio-item">
+                    
+                    <div class="portfolio-item" data-category="corporate">
                         <div class="portfolio-image">
                             <img src="assets/mpfilms-mockup.png" alt="MP Films corporate website design">
-                            <div class="portfolio-overlay">
+                            <div class="portfolio-badges">
+                                <span class="portfolio-badge">Corporate</span>
+                                <span class="portfolio-badge">Video</span>
+                            </div>
+                            <div class="portfolio-info">
                                 <h4>MP Films</h4>
-                                <p>Creative agency website with video integration</p>
-                                <a href="showcase.html" class="portfolio-link">View Project</a>
+                                <span class="portfolio-category">Creative Agency</span>
+                            </div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-content">
+                                    <h4>MP Films</h4>
+                                    <p class="portfolio-description">Cinematic website featuring seamless video integration, dynamic portfolio galleries, and immersive storytelling experiences.</p>
+                                    <div class="portfolio-stats">
+                                        <div class="stat-item">
+                                            <span class="stat-number">85%</span>
+                                            <span class="stat-label">Engagement</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-number">3.2s</span>
+                                            <span class="stat-label">Load Time</span>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-actions">
+                                        <a href="showcase.html" class="portfolio-link primary">View Project</a>
+                                        <a href="#" class="portfolio-link secondary">Live Site</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="portfolio-item">
+                    
+                    <div class="portfolio-item" data-category="webapp">
                         <div class="portfolio-image">
                             <img src="assets/cardwizz-mockup.png" alt="CardWizz application interface design">
-                            <div class="portfolio-overlay">
+                            <div class="portfolio-badges">
+                                <span class="portfolio-badge">Web App</span>
+                                <span class="portfolio-badge">Interactive</span>
+                            </div>
+                            <div class="portfolio-info">
                                 <h4>CardWizz</h4>
-                                <p>Modern web application with interactive features</p>
-                                <a href="showcase.html" class="portfolio-link">View Project</a>
+                                <span class="portfolio-category">Financial Technology</span>
+                            </div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-content">
+                                    <h4>CardWizz</h4>
+                                    <p class="portfolio-description">Advanced financial management platform with real-time analytics, smart categorization, and intuitive expense tracking features.</p>
+                                    <div class="portfolio-stats">
+                                        <div class="stat-item">
+                                            <span class="stat-number">10K+</span>
+                                            <span class="stat-label">Active Users</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-number">99.9%</span>
+                                            <span class="stat-label">Uptime</span>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-actions">
+                                        <a href="showcase.html" class="portfolio-link primary">View Project</a>
+                                        <a href="#" class="portfolio-link secondary">Live Site</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="portfolio-cta">
-                    <a href="showcase.html" class="btn btn-outline btn-large">View All Projects</a>
+                    <div class="portfolio-stats-summary">
+                        <div class="summary-stat">
+                            <span class="summary-number">50+</span>
+                            <span class="summary-label">Projects Completed</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="summary-number">98%</span>
+                            <span class="summary-label">Client Satisfaction</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="summary-number">24/7</span>
+                            <span class="summary-label">Support Available</span>
+                        </div>
+                    </div>
+                    <a href="showcase.html" class="btn btn-outline btn-large">
+                        <i class="fas fa-eye"></i>
+                        View All Projects
+                    </a>
                 </div>
             </div>
         </section>
@@ -360,14 +457,56 @@
     </main>
 
     <!-- Footer will be injected here -->
-    <div id="footer-placeholder"></div>
-
-    <script src="js/includeElements.js"></script>
+    <div id="footer-placeholder"></div>    <script src="js/includeElements.js"></script>
     <script src="js/theme-toggle.js"></script>
     <script src="js/animations.js"></script>
     <script>
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
+            // Portfolio filtering functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+
+                    portfolioItems.forEach(item => {
+                        const itemCategory = item.getAttribute('data-category');
+                        
+                        if (filterValue === 'all' || itemCategory === filterValue) {
+                            item.classList.remove('filtered-out');
+                        } else {
+                            item.classList.add('filtered-out');
+                        }
+                    });
+                });
+            });
+
+            // Enhanced portfolio item interactions
+            portfolioItems.forEach(item => {
+                const overlay = item.querySelector('.portfolio-overlay');
+                const image = item.querySelector('.portfolio-image img');
+                
+                item.addEventListener('mouseenter', function() {
+                    // Add subtle parallax effect
+                    if (image) {
+                        image.style.transform = 'scale(1.08) translateZ(0)';
+                    }
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    if (image) {
+                        image.style.transform = 'scale(1) translateZ(0)';
+                    }
+                });
+            });
+
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
@@ -382,7 +521,7 @@
                 });
             });
 
-            // Add scroll animations
+            // Add scroll animations with improved observer
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
@@ -392,13 +531,30 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('animate-in');
+                        
+                        // Special animation for portfolio items
+                        if (entry.target.classList.contains('portfolio-item')) {
+                            setTimeout(() => {
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0)';
+                            }, Math.random() * 200);
+                        }
                     }
                 });
             }, observerOptions);
 
-            // Observe all sections
-            document.querySelectorAll('section').forEach(section => {
-                observer.observe(section);
+            // Observe all sections and portfolio items
+            document.querySelectorAll('section, .portfolio-item').forEach(element => {
+                observer.observe(element);
+            });
+
+            // Add loading state for portfolio images
+            const portfolioImages = document.querySelectorAll('.portfolio-image img');
+            portfolioImages.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                    this.parentElement.classList.add('loaded');
+                });
             });
         });
     </script>
