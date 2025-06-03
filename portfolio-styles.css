@@ -732,10 +732,41 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     
     .carousel-wrapper {
         height: 500px;
+        perspective: none; /* Disable 3D perspective on mobile */
+    }
+    
+    .carousel-track {
+        transform-style: flat; /* Disable 3D transforms on mobile */
     }
     
     .carousel-slide {
         padding: 0 1rem;
+        transform-style: flat; /* Disable 3D transforms on mobile */
+        transform: scale(0.9); /* Simplified transform for mobile */
+        filter: none; /* Remove blur on mobile */
+    }
+    
+    .carousel-slide.active {
+        transform: scale(1); /* Simplified active state */
+        filter: none;
+        z-index: 10;
+    }
+    
+    .carousel-slide.next,
+    .carousel-slide.prev {
+        transform: scale(0.95); /* Simplified adjacent slides */
+        filter: none;
+        z-index: 5;
+    }
+    
+    .project-card {
+        transform-style: flat; /* Disable 3D transforms on mobile */
+    }
+    
+    .carousel-slide.active .project-card,
+    .carousel-slide.next .project-card,
+    .carousel-slide.prev .project-card {
+        transform: none; /* Remove all 3D rotations on mobile */
     }
     
     .project-info {
