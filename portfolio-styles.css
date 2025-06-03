@@ -723,10 +723,10 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     75% { transform: translateX(5px); }
 }
 
-/* Responsive Design - Consolidated */
+/* Responsive Design - Mobile-First Card Layout */
 @media (max-width: 768px) {
     .hero {
-        padding: 120px 0 60px;
+        padding: 120px 0 30px;
     }
     
     .hero-title {
@@ -738,66 +738,97 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         align-items: center;
     }
     
+    .portfolio-section {
+        padding: 20px 0 60px;
+    }
+    
+    /* Override the 3D carousel for mobile - use simple card layout */
     .carousel-wrapper {
-        height: 500px;
-        perspective: none !important; /* Force disable 3D perspective on mobile */
+        height: auto !important;
+        perspective: none !important;
         overflow: visible !important;
     }
     
     .carousel-track {
-        transform-style: flat !important; /* Force disable 3D transforms on mobile */
-        transform: translateX(0) !important; /* Reset any complex transforms */
+        display: flex !important;
+        width: 100% !important;
+        height: auto !important;
+        transform-style: flat !important;
+        transform: none !important;
+        position: relative !important;
+        transition: none !important;
     }
     
     .carousel-slide {
-        padding: 0 1rem;
-        transform-style: flat !important; /* Force disable 3D transforms on mobile */
-        transform: scale(0.9) !important; /* Force simplified transform for mobile */
-        filter: none !important; /* Force remove blur on mobile */
-        opacity: 0.7 !important; /* Ensure visibility */
-        display: block !important; /* Force display */
-        visibility: visible !important; /* Force visibility */
-    }
-    
-    .carousel-slide.active {
-        transform: scale(1) !important; /* Force simplified active state */
+        width: 100% !important;
+        height: auto !important;
+        padding: 0 1rem !important;
+        transform-style: flat !important;
+        transform: none !important;
         filter: none !important;
-        z-index: 10;
         opacity: 1 !important;
-        display: block !important;
+        display: none !important;
         visibility: visible !important;
+        position: relative !important;
     }
     
+    /* Show only the active slide on mobile */
+    .carousel-slide.active {
+        display: block !important;
+        opacity: 1 !important;
+        z-index: 10;
+        transform: none !important;
+        filter: none !important;
+    }
+    
+    /* Hide adjacent slides on mobile */
     .carousel-slide.next,
     .carousel-slide.prev {
-        transform: scale(0.95) !important; /* Force simplified adjacent slides */
-        filter: none !important;
-        z-index: 5;
-        opacity: 0.8 !important;
-        display: block !important;
-        visibility: visible !important;
+        display: none !important;
     }
     
+    /* Card-style project layout for mobile */
     .project-card {
-        transform-style: flat !important; /* Force disable 3D transforms on mobile */
-        transform: none !important; /* Remove all transforms */
+        background: white !important;
+        border-radius: 20px !important;
+        overflow: hidden !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+        transform-style: flat !important;
+        transform: none !important;
         display: block !important;
+        height: auto !important;
         visibility: visible !important;
+        max-width: 400px !important;
+        margin: 0 auto !important;
+    }
+    
+    .dark-theme .project-card {
+        background: var(--dark-card-bg) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     }
     
     .carousel-slide.active .project-card,
     .carousel-slide.next .project-card,
     .carousel-slide.prev .project-card {
-        transform: none !important; /* Force remove all 3D rotations on mobile */
+        transform: none !important;
         display: block !important;
         visibility: visible !important;
     }
     
+    /* Large mockup area for mobile */
     .mockup-container {
         display: block !important;
         visibility: visible !important;
-        position: relative; /* Change from absolute on mobile */
-        height: 300px; /* Set explicit height on mobile */
+        position: relative !important;
+        height: 280px !important;
+        width: 100% !important;
+        overflow: hidden !important;
+        border-radius: 20px 20px 0 0 !important;
+        background: #f8fafc !important;
+    }
+    
+    .dark-theme .mockup-container {
+        background: var(--dark-subtle-bg) !important;
     }
     
     .mockup-image {
@@ -805,53 +836,149 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         visibility: visible !important;
         opacity: 1 !important;
         transform: none !important;
-        position: relative;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90% !important;
+        height: 90% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        border-radius: 8px !important;
     }
     
-    /* Navigation Controls Styling */
-    .carousel-controls {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin: 1.5rem 0;
-    }
-    
+    /* Project info as card bottom section */
     .project-info {
-        padding: 1.5rem;
-        transform: translateY(50%);
-        position: relative; /* Change from absolute on mobile */
-        background: rgba(255, 255, 255, 0.95);
-        margin-top: 1rem;
+        padding: 2rem 1.5rem !important;
+        transform: none !important;
+        position: relative !important;
+        background: white !important;
+        margin-top: 0 !important;
+        border-radius: 0 0 20px 20px !important;
+        display: block !important;
+        backdrop-filter: none !important;
+        border: none !important;
+    }
+    
+    .dark-theme .project-info {
+        background: var(--dark-card-bg) !important;
+        color: var(--dark-text-color) !important;
     }
     
     .project-title {
-        font-size: 1.5rem;
+        font-size: 1.6rem !important;
+        font-weight: 700 !important;
+        margin-bottom: 0.5rem !important;
+        color: var(--text-primary) !important;
+    }
+    
+    .dark-theme .project-title {
+        color: var(--dark-heading-color) !important;
+    }
+    
+    .project-category {
+        font-size: 0.9rem !important;
+        color: var(--primary-color) !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .dark-theme .project-category {
+        color: var(--accent-color) !important;
     }
     
     .project-description {
-        font-size: 0.9rem;
-        opacity: 1 !important; /* Always visible on mobile */
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        color: var(--text-secondary) !important;
+        opacity: 1 !important;
         transform: none !important;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .dark-theme .project-description {
+        color: var(--dark-text-color) !important;
     }
     
     .project-tags {
-        opacity: 1 !important; /* Always visible on mobile */
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+        margin-bottom: 1.5rem !important;
+        opacity: 1 !important;
         transform: none !important;
+    }
+    
+    .tag {
+        background: rgba(99, 102, 241, 0.1) !important;
+        color: var(--primary-color) !important;
+        padding: 0.4rem 0.8rem !important;
+        border-radius: 20px !important;
+        font-size: 0.8rem !important;
+        font-weight: 500 !important;
+        border: 1px solid rgba(99, 102, 241, 0.2) !important;
+    }
+    
+    .dark-theme .tag {
+        background: rgba(76, 201, 240, 0.15) !important;
+        color: var(--accent-color) !important;
+        border-color: rgba(76, 201, 240, 0.3) !important;
     }
     
     .view-project-btn {
-        opacity: 1 !important; /* Always visible on mobile */
+        width: 100% !important;
+        padding: 1rem 2rem !important;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        opacity: 1 !important;
         transform: none !important;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
+    }
+    
+    .dark-theme .view-project-btn {
+        background: linear-gradient(135deg, #4cc9f0, #4895ef) !important;
+        box-shadow: 0 4px 15px rgba(76, 201, 240, 0.25) !important;
+    }
+    
+    .view-project-btn:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4) !important;
+    }
+    
+    .dark-theme .view-project-btn:hover {
+        box-shadow: 0 8px 25px rgba(76, 201, 240, 0.4) !important;
+    }
+    
+    /* Hide tap hint on mobile since it's always card format */
+    .tap-hint {
+        display: none !important;
+    }
+    
+    /* Navigation Controls - Position below cards */
+    .carousel-controls {
+        display: flex !important;
+        gap: 1rem !important;
+        justify-content: center !important;
+        margin: 2rem 0 1rem 0 !important;
+        flex-wrap: wrap !important;
     }
     
     .swipe-indicators {
-        opacity: 1;
-        margin-top: 1rem;
+        opacity: 1 !important;
+        margin-top: 1rem !important;
     }
     
+    /* Stats section adjustments */
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
@@ -875,6 +1002,10 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     }
     
     .container {
+        padding: 0 1rem;
+    }
+    
+    .carousel-container {
         padding: 0 1rem;
     }
 }
