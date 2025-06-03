@@ -485,9 +485,17 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
 
 /* Simplified Navigation */
 .carousel-nav {
-    margin-top: 3rem;
+    margin-top: 1rem;
     display: flex;
     justify-content: center;
+}
+
+/* Navigation Controls */
+.carousel-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0 1rem 0;
 }
 
 .nav-dots {
@@ -732,46 +740,91 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     
     .carousel-wrapper {
         height: 500px;
-        perspective: none; /* Disable 3D perspective on mobile */
+        perspective: none !important; /* Force disable 3D perspective on mobile */
+        overflow: visible !important;
     }
     
     .carousel-track {
-        transform-style: flat; /* Disable 3D transforms on mobile */
+        transform-style: flat !important; /* Force disable 3D transforms on mobile */
+        transform: translateX(0) !important; /* Reset any complex transforms */
     }
     
     .carousel-slide {
         padding: 0 1rem;
-        transform-style: flat; /* Disable 3D transforms on mobile */
-        transform: scale(0.9); /* Simplified transform for mobile */
-        filter: none; /* Remove blur on mobile */
+        transform-style: flat !important; /* Force disable 3D transforms on mobile */
+        transform: scale(0.9) !important; /* Force simplified transform for mobile */
+        filter: none !important; /* Force remove blur on mobile */
+        opacity: 0.7 !important; /* Ensure visibility */
+        display: block !important; /* Force display */
+        visibility: visible !important; /* Force visibility */
     }
     
     .carousel-slide.active {
-        transform: scale(1); /* Simplified active state */
-        filter: none;
+        transform: scale(1) !important; /* Force simplified active state */
+        filter: none !important;
         z-index: 10;
+        opacity: 1 !important;
+        display: block !important;
+        visibility: visible !important;
     }
     
     .carousel-slide.next,
     .carousel-slide.prev {
-        transform: scale(0.95); /* Simplified adjacent slides */
-        filter: none;
+        transform: scale(0.95) !important; /* Force simplified adjacent slides */
+        filter: none !important;
         z-index: 5;
+        opacity: 0.8 !important;
+        display: block !important;
+        visibility: visible !important;
     }
     
     .project-card {
-        transform-style: flat; /* Disable 3D transforms on mobile */
+        transform-style: flat !important; /* Force disable 3D transforms on mobile */
+        transform: none !important; /* Remove all transforms */
+        display: block !important;
+        visibility: visible !important;
     }
     
     .carousel-slide.active .project-card,
     .carousel-slide.next .project-card,
     .carousel-slide.prev .project-card {
-        transform: none; /* Remove all 3D rotations on mobile */
+        transform: none !important; /* Force remove all 3D rotations on mobile */
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    .mockup-container {
+        display: block !important;
+        visibility: visible !important;
+        position: relative; /* Change from absolute on mobile */
+        height: 300px; /* Set explicit height on mobile */
+    }
+    
+    .mockup-image {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    
+    /* Navigation Controls Styling */
+    .carousel-controls {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin: 1.5rem 0;
     }
     
     .project-info {
         padding: 1.5rem;
         transform: translateY(50%);
+        position: relative; /* Change from absolute on mobile */
+        background: rgba(255, 255, 255, 0.95);
+        margin-top: 1rem;
     }
     
     .project-title {
@@ -780,10 +833,23 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     
     .project-description {
         font-size: 0.9rem;
+        opacity: 1 !important; /* Always visible on mobile */
+        transform: none !important;
+    }
+    
+    .project-tags {
+        opacity: 1 !important; /* Always visible on mobile */
+        transform: none !important;
+    }
+    
+    .view-project-btn {
+        opacity: 1 !important; /* Always visible on mobile */
+        transform: none !important;
     }
     
     .swipe-indicators {
         opacity: 1;
+        margin-top: 1rem;
     }
     
     .stats-grid {
