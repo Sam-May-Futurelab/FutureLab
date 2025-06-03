@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore our innovative web design portfolio featuring interactive 3D showcases of custom websites, e-commerce platforms, and creative digital solutions.">
+    <meta name="keywords" content="web design portfolio, 3D showcase, website mockups, interactive portfolio, custom web development, UI UX design">    <title>Interactive Portfolio | 3D Web Design Showcase | Futurelab</title>
+    <link rel="canonical" href="https://futurelab.solutions/portfolio">
+    
+    <!-- Favicon links -->
+    <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="assets/favicon/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="assets/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/favicon/favicon-96x96.png" sizes="96x96" type="image/png">
+    
+    <!-- Android icons -->
+    <link rel="icon" href="assets/favicon/android-icon-36x36.png" sizes="36x36" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-48x48.png" sizes="48x48" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-72x72.png" sizes="72x72" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-96x96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-144x144.png" sizes="144x144" type="image/png">
+    <link rel="icon" href="assets/favicon/android-icon-192x192.png" sizes="192x192" type="image/png">
+    
+    <!-- Apple touch icons -->
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-57x57.png" sizes="57x57">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-60x60.png" sizes="60x60">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-76x76.png" sizes="76x76">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-114x114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-144x144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-180x180.png" sizes="180x180">
+    
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    
+    <link rel="stylesheet" href="portfolio-styles.css">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Interactive Portfolio | 3D Web Design Showcase">
+    <meta property="og:description" content="Experience our web design portfolio in an innovative 3D carousel. Swipe through our latest projects and see design come to life.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://futurelab.solutions/portfolio">
+    <meta property="og:image" content="https://futurelab.solutions/assets/portfolio-preview.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Interactive Portfolio | 3D Web Design Showcase">
+    <meta name="twitter:description" content="Experience our web design portfolio in an innovative 3D carousel.">
+    <meta name="twitter:image" content="https://futurelab.solutions/assets/portfolio-preview.jpg">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Our <span class="gradient-text">Interactive</span> Portfolio
+                </h1>
+                <p class="hero-description">
+                    Explore our latest projects in an immersive 3D experience. 
+                    Navigate through our portfolio using the carousel or swipe on mobile devices.
+                </p>
+                <div class="hero-controls">
+                    <button class="control-btn" id="prevBtn">← Previous</button>
+                    <button class="control-btn primary" id="nextBtn">Next →</button>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-arrow"></div>
+                <span>Scroll to explore</span>
+            </div>
+        </section>
+
+        <!-- Portfolio Carousel Section -->
+        <section class="portfolio-section">
+            <div class="carousel-container">
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="carouselTrack">
+                          <!-- Project 1: Elume -->
+                        <div class="carousel-slide active" data-project="elume">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/elume-mockup.png" alt="Elume website mockup showing modern blog design" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>                                <div class="project-info">
+                                    <h3 class="project-title">Elume</h3>
+                                    <p class="project-category">Skincare Brand</p>
+                                    <p class="project-description">
+                                        Skincare for the luminous you — powered by science, perfected by nature. Elume blends cutting-edge ingredients 
+                                        with gentle care, offering products like Dew Serum, Night Veil, and Halo Drops. Trusted by thousands for 
+                                        real, visible results and a natural glow.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">Clean Beauty</span>
+                                        <span class="tag">Cruelty Free</span>
+                                        <span class="tag">Science-Backed</span>
+                                        <span class="tag">E-commerce</span>
+                                    </div>
+                                    <button class="view-project-btn">View Live Site</button>
+                                </div>
+                            </div>
+                        </div>                        <!-- Project 2: MP Films -->
+                        <div class="carousel-slide" data-project="mpfilms">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/mpfilms-mockup.png" alt="MP Films website mockup showing marine protective films and yacht protection solutions" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>                                <div class="project-info">
+                                    <h3 class="project-title">MP Films</h3>
+                                    <p class="project-category">Marine Protection</p>
+                                    <p class="project-description">
+                                        Marine protective films for vessels of all sizes, built on 100+ years of advanced adhesive innovation. 
+                                        Partnering with Nitto for premium surface protection, specialized tapes, and sealing materials.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">Marine Protection</span>
+                                        <span class="tag">Surface Films</span>
+                                        <span class="tag">Yacht Solutions</span>
+                                        <span class="tag">Premium Materials</span>
+                                    </div>
+                                    <button class="view-project-btn">View Live Site</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 3: CardWizz -->
+                        <div class="carousel-slide" data-project="cardwizz">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/cardwizz-mockup.png" alt="CardWizz iOS app mockup showing Pokémon card collection management interface" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>                                <div class="project-info">
+                                    <h3 class="project-title">CardWizz</h3>
+                                    <p class="project-category">iOS Trading Card App</p>
+                                    <p class="project-description">
+                                        The most powerful Pokémon card collection manager with real-time prices, portfolio tracking, 
+                                        and market analytics. Track 10K+ cards with smart collection tools and never miss market opportunities.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">iOS App</span>
+                                        <span class="tag">Swift</span>
+                                        <span class="tag">Real-time Data</span>
+                                        <span class="tag">Portfolio Tracking</span>
+                                    </div>
+                                    <button class="view-project-btn">Download App</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 4: PokeSpud -->
+                        <div class="carousel-slide" data-project="pokespud">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/pokespud-mockup.png" alt="PokeSpud website mockup showing Pokemon-themed gaming interface" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>
+                                <div class="project-info">
+                                    <h3 class="project-title">PokeSpud</h3>
+                                    <p class="project-category">Interactive Game</p>
+                                    <p class="project-description">
+                                        A playful Pokemon-inspired web application featuring interactive gameplay mechanics, 
+                                        character collections, and engaging animations that bring the gaming experience to life.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">Interactive Gaming</span>
+                                        <span class="tag">Character Animation</span>
+                                        <span class="tag">API Integration</span>
+                                        <span class="tag">Progressive Web App</span>
+                                    </div>
+                                    <button class="view-project-btn">View Live Site</button>
+                                </div>
+                            </div>
+                        </div>                        <!-- Project 5: Proper Plushies -->
+                        <div class="carousel-slide" data-project="proper-plushies">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/proper-plushies-mockup.png" alt="Proper Plushies website mockup showing e-commerce toy store design" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>
+                                <div class="project-info">
+                                    <h3 class="project-title">Proper Plushies</h3>
+                                    <p class="project-category">E-commerce Store</p>
+                                    <p class="project-description">
+                                        A delightful e-commerce platform for premium plush toys featuring smooth shopping experience, 
+                                        detailed product showcases, and secure payment integration with family-friendly design.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">E-commerce</span>
+                                        <span class="tag">Payment Integration</span>
+                                        <span class="tag">Product Showcase</span>
+                                        <span class="tag">Mobile Commerce</span>
+                                    </div>
+                                    <button class="view-project-btn">View Live Site</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 6: OIR FC -->
+                        <div class="carousel-slide" data-project="oirfc">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/oirfc-mockup.png" alt="OIR FC website mockup showing grassroots football club site" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>
+                                <div class="project-info">
+                                    <h3 class="project-title">OIR FC</h3>
+                                    <p class="project-category">Sports Club Website</p>
+                                    <p class="project-description">
+                                        Grassroots football club site with team stats, fixtures, news & shop. Built from Pro Clubs origins to real-world champions across 3 leagues with integrated player profiles, results hub, and dynamic merchandise store.
+                                    </p>                                    <div class="project-tags">
+                                        <span class="tag">Sports Management</span>
+                                        <span class="tag">Team Stats</span>
+                                        <span class="tag">E-commerce Shop</span>
+                                        <span class="tag">Fixture System</span>
+                                    </div>
+                                    <button class="view-project-btn">View Live Site</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 7: JoeFix Plumbing -->
+                        <div class="carousel-slide" data-project="joefix">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/joefix-mockup.png" alt="JoeFix Plumbing website mockup showing 24/7 plumbing business site" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>
+                                <div class="project-info">
+                                    <h3 class="project-title">JoeFix Plumbing</h3>
+                                    <p class="project-category">Local Service Business</p>
+                                    <p class="project-description">
+                                        Responsive site for 24/7 plumbing business with strong local SEO. Highlights emergency callouts, trust badges, and real reviews with optimised contact flow featuring quote form, service area map & call buttons.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">Local SEO</span>
+                                        <span class="tag">Emergency Services</span>
+                                        <span class="tag">Quote System</span>
+                                        <span class="tag">Trust Building</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 8: Frostline -->
+                        <div class="carousel-slide" data-project="frostline">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/frostline-mockup.png" alt="Frostline website mockup showing snowboard brand e-commerce site" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>
+                                <div class="project-info">
+                                    <h3 class="project-title">Frostline</h3>
+                                    <p class="project-category">Sports E-commerce</p>
+                                    <p class="project-description">
+                                        Bold eCommerce build for a high-performance snowboard brand. Custom product cards with specs, reviews & scroll-triggered visuals with emphasis on brand story, rider testimonials, and global reach.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">Sports Brand</span>
+                                        <span class="tag">Product Reviews</span>
+                                        <span class="tag">Scroll Animations</span>
+                                        <span class="tag">Global Commerce</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 9: Sparkling Clean -->
+                        <div class="carousel-slide" data-project="sparkling-clean">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/sparkling-clean-mockup.png" alt="Sparkling Clean website mockup showing cleaning service site" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>
+                                <div class="project-info">
+                                    <h3 class="project-title">Sparkling Clean</h3>
+                                    <p class="project-category">Service Business</p>
+                                    <p class="project-description">
+                                        Professional cleaning site with pricing calculator and booking flow. Eco-friendly branding with modern service cards and packages featuring scroll-based animation and high-trust positioning for local services.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">Pricing Calculator</span>
+                                        <span class="tag">Booking System</span>
+                                        <span class="tag">Eco-Friendly</span>
+                                        <span class="tag">Local Services</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 10: Luma Lens -->
+                        <div class="carousel-slide" data-project="luma-lens">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/luma-lens-mockup.png" alt="Luma Lens website mockup showing wedding photography site" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>
+                                <div class="project-info">
+                                    <h3 class="project-title">Luma Lens</h3>
+                                    <p class="project-category">Photography Portfolio</p>
+                                    <p class="project-description">
+                                        Cinematic photography/videography site for UK weddings. Soft scroll animations and visual-first layout with client stories including services, portfolio, and a relaxed personal brand touch.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">Wedding Photography</span>
+                                        <span class="tag">Cinematic Design</span>
+                                        <span class="tag">Visual Portfolio</span>
+                                        <span class="tag">Personal Branding</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 11: L&D Consulting -->
+                        <div class="carousel-slide" data-project="ld-consulting">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/ld-consulting-mockup.png" alt="L&D Consulting website mockup showing training consultant site" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>
+                                <div class="project-info">
+                                    <h3 class="project-title">L&D Consulting</h3>
+                                    <p class="project-category">Business Consulting</p>
+                                    <p class="project-description">
+                                        Clean, conversion-focused site for startup training consultant. Landing page highlights onboarding fixes & scalable systems with smart callouts, Notion system visuals, and "Book a Call" flow.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">Consulting</span>
+                                        <span class="tag">Conversion Focused</span>
+                                        <span class="tag">Training Systems</span>
+                                        <span class="tag">Call Booking</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 12: Codevault HQ -->
+                        <div class="carousel-slide" data-project="codevault">
+                            <div class="project-card">
+                                <div class="mockup-container">
+                                    <img src="assets/codevault-mockup.png" alt="Codevault HQ website mockup showing developer platform" class="mockup-image" loading="lazy" width="800" height="500">
+                                    <div class="mockup-shadow"></div>
+                                    <div class="tap-hint">
+                                        <span class="tap-icon">👆</span>
+                                        <span class="tap-text">Tap for details</span>
+                                    </div>
+                                </div>
+                                <div class="project-info">
+                                    <h3 class="project-title">Codevault HQ</h3>
+                                    <p class="project-category">Developer Platform</p>
+                                    <p class="project-description">
+                                        Developer-centric platform to showcase & share code snippets. Modern design with categories, tags, and real-time interactivity featuring custom-built animated previews and searchable snippet gallery.
+                                    </p>
+                                    <div class="project-tags">
+                                        <span class="tag">Code Snippets</span>
+                                        <span class="tag">Developer Tools</span>
+                                        <span class="tag">Real-time Search</span>
+                                        <span class="tag">Interactive Previews</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>                <!-- Carousel Navigation -->
+                <div class="carousel-nav">
+                    <div class="nav-dots">
+                        <button class="nav-dot active" data-slide="0"></button>
+                        <button class="nav-dot" data-slide="1"></button>
+                        <button class="nav-dot" data-slide="2"></button>
+                        <button class="nav-dot" data-slide="3"></button>
+                        <button class="nav-dot" data-slide="4"></button>
+                        <button class="nav-dot" data-slide="5"></button>
+                        <button class="nav-dot" data-slide="6"></button>
+                        <button class="nav-dot" data-slide="7"></button>
+                        <button class="nav-dot" data-slide="8"></button>
+                        <button class="nav-dot" data-slide="9"></button>
+                        <button class="nav-dot" data-slide="10"></button>
+                        <button class="nav-dot" data-slide="11"></button>
+                    </div>
+                </div>
+
+                <!-- Touch/Swipe Indicators for Mobile -->
+                <div class="swipe-indicators">
+                    <div class="swipe-hint">
+                        <span class="swipe-icon">👈</span>
+                        <span class="swipe-text">Swipe to explore projects</span>
+                        <span class="swipe-icon">👉</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Stats Section -->
+        <section class="stats-section">
+            <div class="container">
+                <h2 class="section-title">Portfolio Highlights</h2>
+                <div class="stats-grid">                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Featured Projects</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Mobile Responsive</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3D</div>
+                        <div class="stat-label">Interactive Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Creative Possibilities</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2 class="cta-title">Ready to Create Something Amazing?</h2>
+                    <p class="cta-description">
+                        Let's discuss your project and bring your vision to life with innovative design and cutting-edge technology.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="custom-web-design.html" class="cta-btn primary">Start Your Project</a>
+                        <a href="web-design.html" class="cta-btn secondary">View Our Services</a>
+                    </div>
+                </div>
+            </div>        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/includeElements.js"></script>
+    <script src="assets/js/portfolio.js"></script>
+</body>
+</html>
