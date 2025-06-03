@@ -736,10 +736,22 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     .hero-controls {
         flex-direction: column;
         align-items: center;
+    }    .portfolio-section {
+        padding: 20px 0 60px;
     }
     
-    .portfolio-section {
-        padding: 20px 0 60px;
+    /* Make carousel container flex to control order on mobile */
+    .carousel-container {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    /* Move swipe indicators above carousel on mobile */
+    .swipe-indicators {
+        opacity: 1 !important;
+        margin-top: 0 !important;
+        margin-bottom: 2rem !important;
+        order: -1 !important;
     }
     
     /* Override the 3D carousel for mobile - use simple card layout */
@@ -963,19 +975,13 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     .tap-hint {
         display: none !important;
     }
-    
-    /* Navigation Controls - Position below cards */
+      /* Navigation Controls - Position below cards */
     .carousel-controls {
         display: flex !important;
         gap: 1rem !important;
         justify-content: center !important;
         margin: 2rem 0 1rem 0 !important;
         flex-wrap: wrap !important;
-    }
-    
-    .swipe-indicators {
-        opacity: 1 !important;
-        margin-top: 1rem !important;
     }
     
     /* Stats section adjustments */
