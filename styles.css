@@ -3959,5 +3959,17 @@ footer {
 
 .dark-theme .theme-aware-text {
     color: var(--dark-heading-color);
+}
 
+/* Lab Animation Styles */
+.lab-animation {
+    width: 100%; 
+    max-width: 450px; 
+    height: auto;
+}
+
+.lab-cta-btn {
+    display: block; 
+    margin-top: 20px; 
+    text-align: center;
 }
