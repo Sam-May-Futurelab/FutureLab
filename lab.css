@@ -913,16 +913,7 @@
     border-color: var(--btn-outline-hover-border-color-dark, #343a40);
 }
 
-/* General button dark theme overrides if not covered by specific panel styles */
-.dark-theme .btn-primary {
-    background-color: var(--primary-color-dark, #0056b3); /* Example */
-    border-color: var(--primary-color-dark, #0056b3);
-    color: var(--btn-text-color-dark, #fff);
-}
-.dark-theme .btn-primary:hover {
-    background-color: var(--primary-color-hover-dark, #004085);
-    border-color: var(--primary-color-hover-dark, #004085);
-}
+/* Note: .btn-primary styles consolidated in main styles.css - using specific overrides only where needed */
 
 .dark-theme .btn-secondary {
     background-color: var(--secondary-color-dark, #5a6268); /* Example */

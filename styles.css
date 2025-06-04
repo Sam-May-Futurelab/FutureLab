@@ -1732,6 +1732,23 @@ body:not(.dark-theme) .cookie-banner {
   opacity: 1;
 }
 
+/* Specific styling for client-logo-image class */
+.client-logo-image {
+  max-height: 40px;
+  max-width: 150px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 10px 20px;
+  vertical-align: middle;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.client-logo-image:hover {
+  opacity: 1;
+}
+
 /* Ensure container has proper spacing and alignment */
 .client-logos,
 .brand-logos,
@@ -1751,6 +1768,12 @@ body:not(.dark-theme) .cookie-banner {
   .brand-logos img,
   .trusted-brands img,
   .partners img {
+    max-height: 30px;
+    max-width: 120px;
+    margin: 8px 15px;
+  }
+  
+  .client-logo-image {
     max-height: 30px;
     max-width: 120px;
     margin: 8px 15px;
@@ -2936,85 +2959,7 @@ div:has(> img[src*="mpfilms-mockup"]) {
   color: var(--dark-text-color);
 }
 
-/* Footer */
-footer {
-    padding: 80px 0 40px;
-    background-color: var(--dark-color);
-    color: white;
-    position: relative;
-    overflow: hidden;
-}
-
-footer:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: var(--gradient-1);
-}
-
-.footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 50px;
-    position: relative;
-    z-index: 2;
-}
-
-.footer-logo {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    background: linear-gradient(90deg, #fff 0%, #d6e0ff 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.footer-tagline {
-    color: var(--light-gray);
-    margin-bottom: 30px;
-    font-size: 1.1rem;
-}
-
-.footer-social {
-    display: flex;
-    gap: 20px;
-}
-
-.footer-social a {
-    width: 45px;
-    height: 45px;
-    background-color: rgba(255, 255, 255, 0.05);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-    font-size: 1.2rem;
-}
-
-.footer-social a:hover {
-    background: var(--gradient-1);
-    transform: translateY(-5px);
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid var(--dark-blue-secondary); /* Ensure this variable is defined */
-    font-size: 0.9rem;
-    color: var(--light-gray-secondary); /* Ensure this variable is defined */
-}
-
-.dark-theme .footer-bottom {
-    border-top-color: #1c2941; /* Darker border for dark theme */
-}
+/* Footer styles moved to unified footer section below */
 
 /* Responsive Design */
 @media (max-width: 1200px) {
