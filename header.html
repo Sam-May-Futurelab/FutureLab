@@ -536,27 +536,26 @@
 </head>
 <body>
     <header>
-        <nav class="container">
-            <a href="index.html" class="logo-link">
+        <nav class="container">            <a href="/" class="logo-link">
                 <span class="logo">Futurelab</span>
             </a>            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="web-design.html">Web Design</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/web-design">Web Design</a></li>
+                <li><a href="/portfolio">Portfolio</a></li>
                 <li class="dropdown">
                     <a href="#" onclick="return false;">Services</a>
                     <div class="dropdown-content">
-                        <a href="custom-web-design.html">Custom Web Design</a>
-                        <a href="ecommerce.html">E-commerce</a>
+                        <a href="/custom-web-design">Custom Web Design</a>
+                        <a href="/ecommerce">E-commerce</a>
                     </div>
                 </li>
-                <li><a href="lab.html">AI Lab</a></li>
-                <li><a href="showcase.html">Showcase</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="/lab">AI Lab</a></li>
+                <li><a href="/showcase">Showcase</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/faq">FAQ</a></li>
             </ul>
             <div class="header-actions">
-                <a href="contact.html" class="btn btn-primary">Contact</a>
+                <a href="/contact" class="btn btn-primary">Contact</a>
                 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -573,11 +572,9 @@
     </header>
 
     <script>
-        // Script executes when injected by includeElements.js
-
-        // Set active navigation link based on current page
+        // Script executes when injected by includeElements.js        // Set active navigation link based on current page
         function setActiveNavLink() {
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const currentPage = window.location.pathname.split('/').pop() || 'index';
             const navLinks = document.querySelectorAll('header .nav-links a:not(.btn)'); // Desktop links
             // Mobile links active state is handled during population primarily
 
@@ -601,7 +598,7 @@
                 mobileOverlay.classList.toggle('active'); // This controls the visibility of the overlay
                 body.classList.toggle('no-scroll');                // Populate mobile menu if it's empty AND the menu is being opened
                 if (mobileOverlay.classList.contains('active') && mobileNavLinksUl.innerHTML === '') {
-                    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                    const currentPage = window.location.pathname.split('/').pop() || 'index';
                     
                     // Clone main navigation links
                     const desktopNavLinks = document.querySelector('header .nav-links');
@@ -650,10 +647,8 @@
                                 }
                             }
                         });
-                    }
-
-                    // Add Contact link
-                    const contactButtonDesktop = document.querySelector('header .header-actions a.btn.btn-primary[href="contact.html"]');
+                    }                    // Add Contact link
+                    const contactButtonDesktop = document.querySelector('header .header-actions a.btn.btn-primary[href="/contact"]');
                     if (contactButtonDesktop) {
                         const contactLi = document.createElement('li');
                         const contactLinkMobile = document.createElement('a');

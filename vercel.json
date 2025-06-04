@@ -3,6 +3,179 @@
     {
       "source": "/api/generate-page",
       "destination": "/api/generate-page.js"
+    },
+    {
+      "source": "/web-design",
+      "destination": "/web-design.html"
+    },
+    {
+      "source": "/portfolio",
+      "destination": "/portfolio.html"
+    },
+    {
+      "source": "/custom-web-design",
+      "destination": "/custom-web-design.html"
+    },
+    {
+      "source": "/lab",
+      "destination": "/lab.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog.html"
+    },
+    {
+      "source": "/faq",
+      "destination": "/faq.html"
+    },
+    {
+      "source": "/showcase",
+      "destination": "/showcase.html"
+    },
+    {
+      "source": "/hosting-guide",
+      "destination": "/hosting-guide.html"
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy-policy.html"
+    },
+    {
+      "source": "/ecommerce",
+      "destination": "/ecommerce.html"
+    },
+    {
+      "source": "/blog/web-design-trends-2025",
+      "destination": "/blog/web-design-trends-2025.html"
+    },
+    {
+      "source": "/blog/truth-about-website-builders",
+      "destination": "/blog/truth-about-website-builders.html"
+    },
+    {
+      "source": "/blog/landing-page-vs-full-website",
+      "destination": "/blog/landing-page-vs-full-website.html"
+    },
+    {
+      "source": "/blog/hiring-a-web-designer-2025",
+      "destination": "/blog/hiring-a-web-designer-2025.html"
+    },
+    {
+      "source": "/blog/shopify-conversion-fix",
+      "destination": "/blog/shopify-conversion-fix.html"
+    },
+    {
+      "source": "/blog/fastest-landing-page-2025",
+      "destination": "/blog/fastest-landing-page-2025.html"
+    },
+    {
+      "source": "/blog/elume-skincare-case-study",
+      "destination": "/blog/elume-skincare-case-study.html"
+    },
+    {
+      "source": "/blog/custom-vs-templates-2025",
+      "destination": "/blog/custom-vs-templates-2025.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/web-design.html",
+      "destination": "/web-design",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio.html",
+      "destination": "/portfolio",
+      "permanent": true
+    },
+    {
+      "source": "/custom-web-design.html",
+      "destination": "/custom-web-design",
+      "permanent": true
+    },
+    {
+      "source": "/lab.html",
+      "destination": "/lab",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/faq.html",
+      "destination": "/faq",
+      "permanent": true
+    },
+    {
+      "source": "/showcase.html",
+      "destination": "/showcase",
+      "permanent": true
+    },
+    {
+      "source": "/hosting-guide.html",
+      "destination": "/hosting-guide",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy.html",
+      "destination": "/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/ecommerce.html",
+      "destination": "/ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/blog/web-design-trends-2025.html",
+      "destination": "/blog/web-design-trends-2025",
+      "permanent": true
+    },
+    {
+      "source": "/blog/truth-about-website-builders.html",
+      "destination": "/blog/truth-about-website-builders",
+      "permanent": true
+    },
+    {
+      "source": "/blog/landing-page-vs-full-website.html",
+      "destination": "/blog/landing-page-vs-full-website",
+      "permanent": true
+    },
+    {
+      "source": "/blog/hiring-a-web-designer-2025.html",
+      "destination": "/blog/hiring-a-web-designer-2025",
+      "permanent": true
+    },
+    {
+      "source": "/blog/shopify-conversion-fix.html",
+      "destination": "/blog/shopify-conversion-fix",
+      "permanent": true
+    },
+    {
+      "source": "/blog/fastest-landing-page-2025.html",
+      "destination": "/blog/fastest-landing-page-2025",
+      "permanent": true
+    },
+    {
+      "source": "/blog/elume-skincare-case-study.html",
+      "destination": "/blog/elume-skincare-case-study",
+      "permanent": true
+    },
+    {
+      "source": "/blog/custom-vs-templates-2025.html",
+      "destination": "/blog/custom-vs-templates-2025",
+      "permanent": true
     }
   ]
 }
