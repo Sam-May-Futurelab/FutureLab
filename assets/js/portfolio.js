@@ -345,8 +345,7 @@ class PortfolioCarousel {    constructor() {
             this.startAutoplay();
         }
     }
-    
-    handleViewProject(e) {
+      handleViewProject(e) {
         const button = e.target;
         const slide = button.closest('.carousel-slide');
         const projectName = slide?.dataset.project;
@@ -354,10 +353,7 @@ class PortfolioCarousel {    constructor() {
         // Add ripple effect
         this.createRippleEffect(button, e);
         
-        // Simulate project view (you can replace with actual navigation)
-        setTimeout(() => {
-            alert(`Opening ${projectName} project... (This would navigate to the actual project)`);
-        }, 300);
+        // Note: Project navigation is handled by onclick attributes in HTML
     }
     
     createRippleEffect(button, e) {
