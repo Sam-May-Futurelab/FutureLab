@@ -27,9 +27,20 @@
     --dark-gradient-1: linear-gradient(135deg, #3a86ff 0%, #4361ee 100%);
     --dark-gradient-2: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%);
     --dark-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    --dark-box-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.3);
-    --rgb-primary-color: 58, 134, 255;
+    --dark-box-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.3);    --rgb-primary-color: 58, 134, 255;
     --rgb-accent-color: 76, 201, 240;
+    
+    /* Additional color variations */
+    --primary-color-light: #e6f0ff;
+    --primary-color-ultra-light: #f0f5ff;
+    --accent-color-light: #7b9cff;
+    --secondary-color-light: #ff9f43;
+    --text-muted: #6c757d;
+    --dark-gray: #495057;
+    --light-gray-secondary: #adb5bd;
+    --dark-blue-primary: #1a1a2e;
+    --dark-blue-secondary: #262640;
+    --dark-blue-tertiary: #2c2f48;
 }
 
 /* At the top, add these global smooth scrolling styles */
