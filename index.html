@@ -125,7 +125,7 @@
     <link rel="apple-touch-icon" href="assets/favicon/apple-icon-180x180.png" sizes="180x180">
     
     <link rel="manifest" href="assets/favicon/site.webmanifest">
-    
+      <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="testimonials.css">
     <link rel="stylesheet" href="animations.css">
@@ -185,32 +185,7 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- AI Lab Showcase Section -->
-        <section id="ai-lab-showcase" class="ai-lab-showcase section-transition">
-            <div class="animated-gradient-bg"></div>
-            <div class="container">
-                <h2 class="section-title gradient-text">Explore the Futurelab AI</h2>
-                <div class="showcase-content-wrapper">
-                    <div class="showcase-text-content">
-                        <p class="subtitle">Unleash the power of Artificial Intelligence with our AI Page Generator. Create stunning, high-converting landing pages in minutes, no coding required. Perfect for startups, marketers, and creators looking to launch quickly and effectively.</p>
-                        <ul class="showcase-features">
-                            <li><i class="fas fa-magic"></i> AI-Powered Design: Get unique, professional designs tailored to your brand.</li>
-                            <li><i class="fas fa-tachometer-alt"></i> Blazing Fast: Generates optimized pages that load in under a second.</li>
-                            <li><i class="fas fa-edit"></i> Intuitive Visual Editor: Customize every detail with ease.</li>
-                            <li><i class="fas fa-mobile-alt"></i> Fully Responsive: Looks perfect on all devices, automatically.</li>
-                        </ul>
-                        
-                    </div>
-                    <div class="showcase-visual-content">                        <dotlottie-player src="assets/animations/lab-animation.json" background="transparent" speed="1" style="width: 100%; max-width: 450px; height: auto;" loop autoplay></dotlottie-player>
-                        <a href="/lab" class="btn btn-primary btn-lg" style="display: block; margin-top: 20px; text-align: center;">Discover the AI Lab</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Services Section -->
+        </section>        <!-- Services Section -->
         <section id="services" class="services section-transition">
             <div class="animated-gradient-bg"></div>
             <div class="container">                <h2 class="section-title">Our Web Design & Development Services</h2>
@@ -300,6 +275,202 @@
             </div>
         </section>
 
+        <!-- Premium Portfolio Section -->
+        <section id="portfolio" class="py-24 bg-gray-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Header -->
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-white mb-4">
+                        Our Web Design 
+                        <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Portfolio</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        Discover our latest digital masterpieces - custom websites that combine stunning design with exceptional performance and user experience.
+                    </p>
+                </div>
+
+                <!-- Featured Portfolio Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                    <!-- Featured Project 1: Elume -->
+                    <div class="group relative bg-gray-800 rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-500">
+                        <div class="aspect-video relative overflow-hidden">
+                            <img src="assets/elume-mockup.png" alt="Elume Skincare Website Design" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
+                            <!-- Hover Overlay -->
+                            <div class="absolute inset-0 bg-blue-600 bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                                <div class="transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                    <a href="https://elumelab.com" target="_blank" 
+                                       class="bg-white text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200 inline-flex items-center space-x-2">
+                                        <span>View Live Site</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-2xl font-bold text-white">Elume Skincare</h3>
+                                <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">Featured</span>
+                            </div>
+                            <p class="text-gray-300 mb-4 leading-relaxed">
+                                A premium website design for a science-backed skincare brand with an elegant layout that showcases product effectiveness and customer testimonials.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-lg text-sm">Beauty Brand</span>
+                                <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-lg text-sm">Web Design</span>
+                                <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-lg text-sm">E-commerce</span>
+                                <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-lg text-sm">UX/UI</span>
+                            </div>
+                            <ul class="text-gray-400 space-y-2">
+                                <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>Modern, Luxury Brand Aesthetic</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>Before/After Results Showcase</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>Mobile-Optimised Design</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Featured Project 2: Proper Plushies -->
+                    <div class="group relative bg-gray-800 rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-500">
+                        <div class="aspect-video relative overflow-hidden">
+                            <img src="assets/proper-plushies-mockup.png" alt="Proper Plushies E-commerce Website" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
+                            <!-- Hover Overlay -->
+                            <div class="absolute inset-0 bg-purple-600 bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                                <div class="transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                    <a href="https://properplushies.com/" target="_blank" 
+                                       class="bg-white text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200 inline-flex items-center space-x-2">
+                                        <span>View Live Site</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-2xl font-bold text-white">Proper Plushies</h3>
+                                <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">E-commerce</span>
+                            </div>
+                            <p class="text-gray-300 mb-4 leading-relaxed">
+                                A beautifully designed Shopify e-commerce store offering unique and colourful plushies with mobile optimisation and strong branding.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-lg text-sm">E-commerce</span>
+                                <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-lg text-sm">Shopify</span>
+                                <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-lg text-sm">Brand Design</span>
+                                <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-lg text-sm">SEO</span>
+                            </div>
+                            <ul class="text-gray-400 space-y-2">
+                                <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>Shopify E-commerce Platform</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>Unique & Colourful Branding</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>SEO Optimised</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                    <!-- CardWizz -->
+                    <div class="group bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="aspect-video relative overflow-hidden">
+                            <img src="assets/cardwizz-mockup.png" alt="CardWizz Mobile App" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-40"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">CardWizz</h3>
+                            <p class="text-gray-400 text-sm mb-3">A Pokémon card scanner & collection tracker with real-time search and custom collection builder.</p>
+                            <div class="flex flex-wrap gap-1 mb-4">
+                                <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Mobile App</span>
+                                <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">API Integration</span>
+                            </div>
+                            <a href="https://cardwizz.com/" target="_blank" 
+                               class="text-blue-400 hover:text-blue-300 text-sm font-medium inline-flex items-center space-x-1">
+                                <span>View Project</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- MP Films -->
+                    <div class="group bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="aspect-video relative overflow-hidden">
+                            <img src="assets/mpfilms-mockup.png" alt="Marine Protective Films Website" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-40"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Marine Protective Films</h3>
+                            <p class="text-gray-400 text-sm mb-3">A bespoke website for specialist marine industry supplier with premium design and improved SEO.</p>
+                            <div class="flex flex-wrap gap-1 mb-4">
+                                <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Web Design</span>
+                                <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">SEO</span>
+                            </div>
+                            <a href="https://mpfilms.co.uk/" target="_blank" 
+                               class="text-blue-400 hover:text-blue-300 text-sm font-medium inline-flex items-center space-x-1">
+                                <span>View Project</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- PokeSpud -->
+                    <div class="group bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="aspect-video relative overflow-hidden">
+                            <img src="assets/pokespud-mockup.png" alt="PokeSpud E-commerce Website" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-40"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">PokeSpud</h3>
+                            <p class="text-gray-400 text-sm mb-3">An e-commerce platform for Pokémon trading cards with streamlined shopping experience.</p>
+                            <div class="flex flex-wrap gap-1 mb-4">
+                                <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">E-commerce</span>
+                                <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Brand Design</span>
+                            </div>
+                            <a href="https://pokespud.com/" target="_blank" 
+                               class="text-blue-400 hover:text-blue-300 text-sm font-medium inline-flex items-center space-x-1">
+                                <span>View Project</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Stats & CTA -->
+                <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-center">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div>
+                            <div class="text-3xl font-bold text-white mb-2">50+</div>
+                            <div class="text-blue-100">Projects Completed</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-white mb-2">98%</div>
+                            <div class="text-blue-100">Client Satisfaction</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-white mb-2">24/7</div>
+                            <div class="text-blue-100">Support Available</div>
+                        </div>
+                    </div>
+                    <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+                        <a href="web-design.html" 
+                           class="bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200 inline-flex items-center space-x-2">
+                            <i class="fas fa-briefcase"></i>
+                            <span>View Full Portfolio</span>
+                        </a>
+                        <a href="#contact" 
+                           class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-all duration-200 inline-flex items-center space-x-2">
+                            <i class="fas fa-rocket"></i>
+                            <span>Start Your Project</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Web Design Focus Section -->
         <section id="web-design-focus" class="section-transition">
             <div class="animated-gradient-bg"></div>
@@ -320,106 +491,7 @@
                         <a href="/web-design" class="btn btn-primary">Learn More About Our Web Design Services</a>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Portfolio Section -->
-        <section id="portfolio" class="portfolio section-transition">
-            <div class="container">                <h2 class="section-title">Our Web Design Portfolio</h2>                <div class="portfolio-grid">                    <div class="portfolio-item">
-                        <div class="portfolio-image">
-                            <img src="assets/elume-mockup.png" alt="Elume Skincare Website Design" style="max-width: 95%; height: auto; margin-left: auto; margin-right: auto; display: block; box-shadow: 0 10px 30px rgba(0, 30, 80, 0.15); border-radius: 12px; padding-left: 20px;">
-                        </div>
-                        <div class="portfolio-content">
-                            <h3>Elume Skincare Website</h3>
-                            <p class="portfolio-tags">Beauty Brand • Web Design • Branding • UX/UI</p>
-                            <p>A premium website design for a science-backed skincare brand with an elegant layout that showcases product effectiveness and customer testimonials. Features smooth animations and a clean, luxurious aesthetic.</p>
-                            <ul class="portfolio-features">
-                                <li>Modern, Luxury Brand Aesthetic</li>
-                                <li>Before/After Results Showcase</li>
-                                <li>Product Catalog with E-commerce Integration</li>                            <li>Mobile-Optimised, Responsive Design</li>
-                            </ul>
-                            <a href="https://elumelab.com" class="btn btn-sm" target="_blank">View Project</a>
-                        </div>
-                    </div>
-
-                    <div class="portfolio-item">
-                        <div class="portfolio-image">
-                            <img src="assets/proper-plushies-mockup.png" alt="Proper Plushies Website" style="max-width: 80%; height: auto; padding-left: 20px; margin-left: auto; margin-right: auto; display: block;">
-                        </div>
-                        <div class="portfolio-content">
-                            <h3>Proper Plushies</h3>
-                            <p class="portfolio-tags">E-commerce • Shopify • Brand Design • SEO</p>
-                            <p>A beautifully designed Shopify e-commerce store offering unique and colourful plushies. Features mobile optimisation, strong branding, and SEO.</p>
-                            <ul class="portfolio-features">
-                                <li>Shopify E-commerce Platform</li>
-                                <li>Unique & Colourful Branding</li>
-                                <li>Mobile-Optimised Design</li>
-                                <li>SEO Optimised for Discoverability</li>
-                            </ul>
-                            <a href="https://properplushies.com/" class="btn btn-sm" target="_blank">View Project</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-image">
-                            <img src="assets/cardwizz-mockup.png" alt="CardWizz App" style="max-width: 80%; height: auto; padding-left: 20px; margin-left: auto; margin-right: auto; display: block;">
-                        </div>
-                        <div class="portfolio-content">
-                            <h3>CardWizz</h3>
-                            <p class="portfolio-tags">Mobile App • API Integration • UI/UX Design</p>
-                            <p>A Pokémon card scanner & collection tracker that makes it easy for collectors to scan, search, and save cards to their personal collection.</p>
-                            <ul class="portfolio-features">
-                                <li>Fast card scanning with image recognition</li>
-                                <li>Real-time search using the official Pokémon TCG API</li>
-                                <li>Custom collection builder to track cards</li>
-                                <li>GBP-based pricing for UK collectors</li>
-                            </ul>
-                            <a href="https://cardwizz.com/" class="btn btn-sm" target="_blank">View Project</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-image">
-                            <img src="assets/mpfilms-mockup.png" alt="Marine Protective Films Website">
-                        </div>
-                        <div class="portfolio-content">
-                            <h3>Marine Protective Films</h3>
-                            <p class="portfolio-tags">Web Design • SEO • Technical Content</p>
-                            <p>A bespoke brochure-style website for a specialist supplier of surface protection films and tapes in the marine industry. Designed to reflect their premium offering and improve discoverability.</p>
-                            <ul class="portfolio-features">
-                                <li>Fully custom HTML/CSS site</li>
-                                <li>Detailed product pages with restructured technical content</li>
-                                <li>Mobile-friendly layout with responsive animations</li>
-                                <li>Improved SEO, metadata & keyword targeting</li>
-                            </ul>
-                            <a href="https://mpfilms.co.uk/" class="btn btn-sm" target="_blank">View Project</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-item reverse">
-                        <div class="portfolio-image">
-                            <img src="assets/pokespud-mockup.png" alt="PokeSpud Website" style="max-width: 80%; height: auto; padding-right: 20px; margin-left: auto; margin-right: auto; display: block;">
-                        </div>
-                        <div class="portfolio-content">
-                            <h3>PokeSpud</h3>
-                            <p class="portfolio-tags">E-commerce • Web Development • Brand Design</p>
-                            <p>An e-commerce platform for Pokémon trading card enthusiasts to purchase cards, packs, and accessories with a streamlined shopping experience.</p>
-                            <ul class="portfolio-features">
-                                <li>Mobile-responsive e-commerce platform</li>
-                                <li>Product catalog with filtering options</li>
-                                <li>Secure payment processing</li>
-                                <li>Customer account management</li>
-                            </ul>
-                            <a href="https://pokespud.com/" class="btn btn-sm" target="_blank">View Project</a>
-                        </div>
-                    </div>                </div>
-                
-                <!-- View Portfolio Button -->
-                <div style="text-align: center; margin-top: 40px;">
-                    <a href="web-design.html" class="btn btn-primary">
-                        <i class="fas fa-briefcase"></i>
-                        View Portfolio
-                    </a>
-                </div>
-            </div>
-        </section>
+            </div>        </section>
 
         <!-- Testimonial Section -->
         <section class="testimonials section-transition">
@@ -459,6 +531,28 @@
                         <button class="next" aria-label="Next testimonial"><i class="fas fa-chevron-right"></i></button>
                     </div>
                     <!-- Indicators will be added by JavaScript -->
+                </div>
+            </div>        </section>
+
+        <!-- AI Lab Showcase Section -->
+        <section id="ai-lab-showcase" class="ai-lab-showcase section-transition">
+            <div class="animated-gradient-bg"></div>
+            <div class="container">
+                <h2 class="section-title gradient-text">Explore the Futurelab AI</h2>
+                <div class="showcase-content-wrapper">
+                    <div class="showcase-text-content">
+                        <p class="subtitle">Unleash the power of Artificial Intelligence with our AI Page Generator. Create stunning, high-converting landing pages in minutes, no coding required. Perfect for startups, marketers, and creators looking to launch quickly and effectively.</p>
+                        <ul class="showcase-features">
+                            <li><i class="fas fa-magic"></i> AI-Powered Design: Get unique, professional designs tailored to your brand.</li>
+                            <li><i class="fas fa-tachometer-alt"></i> Blazing Fast: Generates optimized pages that load in under a second.</li>
+                            <li><i class="fas fa-edit"></i> Intuitive Visual Editor: Customize every detail with ease.</li>
+                            <li><i class="fas fa-mobile-alt"></i> Fully Responsive: Looks perfect on all devices, automatically.</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="showcase-visual-content">                        <dotlottie-player src="assets/animations/lab-animation.json" background="transparent" speed="1" style="width: 100%; max-width: 450px; height: auto;" loop autoplay></dotlottie-player>
+                        <a href="/lab" class="btn btn-primary btn-lg" style="display: block; margin-top: 20px; text-align: center;">Discover the AI Lab</a>
+                    </div>
                 </div>
             </div>
         </section>
