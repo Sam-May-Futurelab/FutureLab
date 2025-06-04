@@ -176,52 +176,7 @@
     border-color: rgba(255, 255, 255, 0.7);
     color: white;
   }
-  
-  /* Center client logos - override for mobile */
-  .hero .clients {
-    opacity: 0;
-    animation: mobile-fade-in 1s ease forwards 2s;
-    margin-bottom: -140px; /* MODIFIED: Was 100px - Add space below client logos for floating icons */
-    position: relative; /* Create positioning context for icons */
-  }
-  
-  .hero .client-logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin: 0 auto;
-  }
-  
-  .hero .client-logos img {
-    height: auto;
-    max-width: 80px; /* Smaller size on mobile */
-    animation: pulse-glow 3s ease-in-out infinite alternate;
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
-    opacity: 0.9;
-  }
-  
-  .hero .client-logos img:nth-child(2) {
-    animation-delay: 0.5s;
-  }
-  
-  .hero .client-logos img:nth-child(3) {
-    animation-delay: 1s;
-  }
-  
-  @keyframes pulse-glow {
-    0% {
-      transform: scale(1);
-      filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
-    }
-    100% {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-    }
-  }
-  
-  /* IMPROVED: Fun floating icons positioned below client logos */
+    /* Floating icons for mobile */
   .mobile-floating-icon {
     position: absolute;
     display: flex;
@@ -239,30 +194,30 @@
     transition: all 0.3s ease;
   }
   
-  /* Reposition icons to the space below client logos */
+  /* Position floating icons */
   .mobile-icon-code {
-    bottom: -20px; /* MODIFIED: Was -80px - Position below the client logos */
+    bottom: 20px;
     right: 25%;
     animation-delay: 0s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(220,240,255,0.95));
   }
   
   .mobile-icon-mobile {
-    bottom: 0px; /* MODIFIED: Was -60px */
+    bottom: 40px;
     left: 20%;
     animation-delay: 1s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(220,255,240,0.95));
   }
   
   .mobile-icon-design {
-    bottom: -30px; /* MODIFIED: Was -90px */
+    bottom: 10px;
     left: 55%;
     animation-delay: 2s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,220,255,0.95));
   }
   
   .mobile-icon-web {
-    bottom: -10px; /* MODIFIED: Was -70px */
+    bottom: 30px;
     right: 15%;
     animation-delay: 3s;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,240,220,0.95));
@@ -322,26 +277,5 @@
                 rgba(0,0,0,0.1) 40%,
                 rgba(0,0,0,0.1) 60%,
                 rgba(0,0,0,0.4) 100%);
-    z-index: 1;
-  }
-}
-
-/* Desktop client logo sizing - bigger logos */
-.hero .client-logos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin: 20px auto;
-}
-
-.hero .client-logos img {
-  height: auto;
-  max-width: 120px; /* Larger size on desktop */
-  transition: transform 0.3s ease;
-}
-
-.hero .client-logos img:hover {
-  transform: scale(1.05);
+    z-index: 1;  }
 }
