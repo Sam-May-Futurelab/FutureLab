@@ -304,6 +304,11 @@ section.intro-section,
     margin-top: 10px;
 }
 
+/* Override for specific portfolio section spacing */
+section#portfolio.pt-64 {
+    padding-top: 16rem !important;
+}
+
 /* Adjust spacing for section titles in the portfolio area */
 .portfolio .section-title, 
 #portfolio .section-title {
@@ -403,8 +408,7 @@ section.services,
   .clients {
     margin-bottom: 10px;
   }
-  
-  section.services,
+    section.services,
   #services,
   .services {
     padding-top: 30px;
@@ -414,6 +418,11 @@ section.services,
   #portfolio {
     padding-top: 30px;
     margin-top: 10px;
+  }
+  
+  /* Override for specific portfolio section spacing */
+  section#portfolio.pt-64 {
+    padding-top: 14rem !important;
   }
 }
 
@@ -428,11 +437,15 @@ section.services,
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
   }
-  
-  .portfolio,
+    .portfolio,
   section#portfolio {
     padding-top: 20px !important;
     margin-top: 0 !important;
+  }
+  
+  /* Override for specific portfolio section spacing on mobile */
+  section#portfolio.pt-64 {
+    padding-top: 12rem !important;
   }
   
   section.testimonials {
@@ -2241,29 +2254,19 @@ body:not(.dark-theme) .cookie-banner {
     font-weight: 600;
 }
 
-/* Add specific styling for price card bullet points */
-.price-card ul.price-features {
-    list-style: disc;
-    padding-left: 20px;
-    text-align: left;
-    margin-top: 15px;
+/* Add specific CSS rules to override the conflicting portfolio padding styles */
+#portfolio {
+    padding-top: 8rem !important; /* 128px - pt-32 equivalent */
 }
 
-.price-card ul.price-features li {
-    margin-bottom: 10px;
-    color: var(--gray-color);
+/* Responsive portfolio spacing */
+@media (max-width: 768px) {
+    #portfolio {
+        padding-top: 4rem !important; /* 64px for mobile */
+    }
 }
 
-.dark-theme .price-card ul.price-features li {
-    color: #cbd5e1;
-}
-
-/* Ensure the list items have proper spacing */
-.price-card ul.price-features li:last-child {
-    margin-bottom: 0;
-}
-
-
+/* Add any additional overrides or adjustments below this line */
 
 /* Portfolio Section */
 .portfolio {
@@ -2306,6 +2309,7 @@ body:not(.dark-theme) .cookie-banner {
     overflow: hidden;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
+    border: 1px solid rgba(230, 230, 250, 0.7);
 }
 
 .dark-theme .portfolio-item {
@@ -3806,7 +3810,6 @@ footer {
 .dark-theme .footer-bottom {
     border-top-color: #1c2941;
 }
-/* End of Footer Styling */
 
 /* Theme-aware text that changes color in dark mode */
 .theme-aware-text {
@@ -3817,15 +3820,14 @@ footer {
     color: var(--dark-heading-color);
 }
 
-/* Lab Animation Styles */
-.lab-animation {
-    width: 100%; 
-    max-width: 450px; 
-    height: auto;
+/* Portfolio section spacing override - force proper padding */
+#portfolio {
+    padding-top: 8rem !important; /* 128px - pt-32 equivalent */
 }
 
-.lab-cta-btn {
-    display: block; 
-    margin-top: 20px; 
-    text-align: center;
+/* Responsive portfolio spacing */
+@media (max-width: 768px) {
+    #portfolio {
+        padding-top: 4rem !important; /* 64px for mobile */
+    }
 }
