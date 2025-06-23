@@ -1282,6 +1282,13 @@ body:not(.dark-theme) .cookie-banner {
     overflow: hidden;
 }
 
+/* Mobile hero padding override */
+@media (max-width: 768px) {
+    .hero {
+        padding: 100px 0 80px;
+    }
+}
+
 .dark-theme .hero {
     background: var(--dark-bg-color);
 }
