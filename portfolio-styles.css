@@ -737,6 +737,29 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         padding: 20px 0 60px;
     }
     
+    /* Force dark theme colors on mobile */
+    body.dark-theme .project-card {
+        background: #1e293b !important;
+        color: #cbd5e1 !important;
+    }
+    
+    body.dark-theme .project-info {
+        background: #1e293b !important;
+        color: #cbd5e1 !important;
+    }
+    
+    body.dark-theme .project-title {
+        color: #f1f5f9 !important;
+    }
+    
+    body.dark-theme .project-description {
+        color: #cbd5e1 !important;
+    }
+    
+    body.dark-theme .mockup-container {
+        background: #1a2438 !important;
+    }
+    
     /* Make carousel container flex to control order on mobile */
     .carousel-container {
         display: flex !important;
