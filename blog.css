@@ -45,6 +45,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
+    min-height: auto;
+    height: auto;
+    max-height: none;
+    grid-auto-rows: max-content;
 }
 
 /* Featured post styling */
