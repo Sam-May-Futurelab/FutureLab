@@ -787,8 +787,7 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     .carousel-slide.prev {
         display: none !important;
     }
-    
-    /* Card-style project layout for mobile */
+      /* Card-style project layout for mobile */
     .project-card {
         background: white !important;
         border-radius: 20px !important;
@@ -803,7 +802,8 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         margin: 0 auto !important;
     }
     
-    .dark-theme .project-card {
+    /* Dark theme override with higher specificity */
+    body.dark-theme .project-card {
         background: var(--dark-card-bg) !important;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     }
@@ -815,8 +815,7 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         display: block !important;
         visibility: visible !important;
     }
-    
-    /* Large mockup area for mobile */
+      /* Large mockup area for mobile */
     .mockup-container {
         display: block !important;
         visibility: visible !important;
@@ -828,7 +827,8 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         background: #f8fafc !important;
     }
     
-    .dark-theme .mockup-container {
+    /* Dark theme override with higher specificity */
+    body.dark-theme .mockup-container {
         background: var(--dark-subtle-bg) !important;
     }
     
@@ -847,8 +847,7 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         object-position: center !important;
         border-radius: 8px !important;
     }
-    
-    /* Project info as card bottom section */
+      /* Project info as card bottom section */
     .project-info {
         padding: 2rem 1.5rem !important;
         transform: none !important;
@@ -861,23 +860,23 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         border: none !important;
     }
     
-    .dark-theme .project-info {
+    /* Dark theme override with higher specificity */
+    body.dark-theme .project-info {
         background: var(--dark-card-bg) !important;
         color: var(--dark-text-color) !important;
     }
-    
-    .project-title {
+      .project-title {
         font-size: 1.6rem !important;
         font-weight: 700 !important;
         margin-bottom: 0.5rem !important;
         color: var(--text-primary) !important;
     }
     
-    .dark-theme .project-title {
+    /* Dark theme override with higher specificity */
+    body.dark-theme .project-title {
         color: var(--dark-heading-color) !important;
     }
-    
-    .project-category {
+      .project-category {
         font-size: 0.9rem !important;
         color: var(--primary-color) !important;
         font-weight: 600 !important;
@@ -886,11 +885,11 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         margin-bottom: 1rem !important;
     }
     
-    .dark-theme .project-category {
+    /* Dark theme override with higher specificity */
+    body.dark-theme .project-category {
         color: var(--accent-color) !important;
     }
-    
-    .project-description {
+      .project-description {
         font-size: 0.95rem !important;
         line-height: 1.6 !important;
         color: var(--text-secondary) !important;
@@ -899,7 +898,8 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         margin-bottom: 1.5rem !important;
     }
     
-    .dark-theme .project-description {
+    /* Dark theme override with higher specificity */
+    body.dark-theme .project-description {
         color: var(--dark-text-color) !important;
     }
     
@@ -911,8 +911,7 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         opacity: 1 !important;
         transform: none !important;
     }
-    
-    .tag {
+      .tag {
         background: rgba(99, 102, 241, 0.1) !important;
         color: var(--primary-color) !important;
         padding: 0.4rem 0.8rem !important;
@@ -922,13 +921,13 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         border: 1px solid rgba(99, 102, 241, 0.2) !important;
     }
     
-    .dark-theme .tag {
+    /* Dark theme override with higher specificity */
+    body.dark-theme .tag {
         background: rgba(76, 201, 240, 0.15) !important;
         color: var(--accent-color) !important;
         border-color: rgba(76, 201, 240, 0.3) !important;
     }
-    
-    .view-project-btn {
+      .view-project-btn {
         width: 100% !important;
         padding: 1rem 2rem !important;
         background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
@@ -946,7 +945,8 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
     }
     
-    .dark-theme .view-project-btn {
+    /* Dark theme override with higher specificity */
+    body.dark-theme .view-project-btn {
         background: linear-gradient(135deg, #4cc9f0, #4895ef) !important;
         box-shadow: 0 4px 15px rgba(76, 201, 240, 0.25) !important;
     }
@@ -956,7 +956,8 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4) !important;
     }
     
-    .dark-theme .view-project-btn:hover {
+    /* Dark theme hover override with higher specificity */
+    body.dark-theme .view-project-btn:hover {
         box-shadow: 0 8px 25px rgba(76, 201, 240, 0.4) !important;
     }
     
