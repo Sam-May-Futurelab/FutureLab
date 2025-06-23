@@ -24,6 +24,14 @@
     --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Dark theme variable overrides */
+body.dark-theme {
+    --text-primary: var(--dark-heading-color);
+    --text-secondary: var(--dark-text-color);
+    --bg-primary: var(--dark-card-bg);
+    --bg-secondary: var(--dark-subtle-bg);
+}
+
 /* Base Body Styles */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -786,10 +794,9 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     .carousel-slide.next,
     .carousel-slide.prev {
         display: none !important;
-    }
-      /* Card-style project layout for mobile */
+    }    /* Card-style project layout for mobile */
     .project-card {
-        background: white !important;
+        background: var(--bg-primary);
         border-radius: 20px !important;
         overflow: hidden !important;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
@@ -802,20 +809,13 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         margin: 0 auto !important;
     }
     
-    /* Dark theme override with higher specificity */
-    body.dark-theme .project-card {
-        background: var(--dark-card-bg) !important;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
-    }
-    
     .carousel-slide.active .project-card,
     .carousel-slide.next .project-card,
     .carousel-slide.prev .project-card {
         transform: none !important;
         display: block !important;
         visibility: visible !important;
-    }
-      /* Large mockup area for mobile */
+    }    /* Large mockup area for mobile */
     .mockup-container {
         display: block !important;
         visibility: visible !important;
@@ -824,12 +824,7 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         width: 100% !important;
         overflow: hidden !important;
         border-radius: 20px 20px 0 0 !important;
-        background: #f8fafc !important;
-    }
-    
-    /* Dark theme override with higher specificity */
-    body.dark-theme .mockup-container {
-        background: var(--dark-subtle-bg) !important;
+        background: var(--bg-secondary);
     }
     
     .mockup-image {
@@ -846,61 +841,37 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         object-fit: contain !important;
         object-position: center !important;
         border-radius: 8px !important;
-    }
-      /* Project info as card bottom section */
+    }    /* Project info as card bottom section */
     .project-info {
         padding: 2rem 1.5rem !important;
         transform: none !important;
         position: relative !important;
-        background: white !important;
+        background: var(--bg-primary);
         margin-top: 0 !important;
         border-radius: 0 0 20px 20px !important;
         display: block !important;
         backdrop-filter: none !important;
         border: none !important;
-    }
-    
-    /* Dark theme override with higher specificity */
-    body.dark-theme .project-info {
-        background: var(--dark-card-bg) !important;
-        color: var(--dark-text-color) !important;
-    }
-      .project-title {
+        color: var(--text-primary);
+    }    .project-title {
         font-size: 1.6rem !important;
         font-weight: 700 !important;
         margin-bottom: 0.5rem !important;
-        color: var(--text-primary) !important;
-    }
-    
-    /* Dark theme override with higher specificity */
-    body.dark-theme .project-title {
-        color: var(--dark-heading-color) !important;
-    }
-      .project-category {
+        color: var(--text-primary);
+    }    .project-category {
         font-size: 0.9rem !important;
-        color: var(--primary-color) !important;
+        color: var(--primary-color);
         font-weight: 600 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
         margin-bottom: 1rem !important;
-    }
-    
-    /* Dark theme override with higher specificity */
-    body.dark-theme .project-category {
-        color: var(--accent-color) !important;
-    }
-      .project-description {
+    }    .project-description {
         font-size: 0.95rem !important;
         line-height: 1.6 !important;
-        color: var(--text-secondary) !important;
+        color: var(--text-secondary);
         opacity: 1 !important;
         transform: none !important;
         margin-bottom: 1.5rem !important;
-    }
-    
-    /* Dark theme override with higher specificity */
-    body.dark-theme .project-description {
-        color: var(--dark-text-color) !important;
     }
     
     .project-tags {
@@ -910,27 +881,18 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         margin-bottom: 1.5rem !important;
         opacity: 1 !important;
         transform: none !important;
-    }
-      .tag {
-        background: rgba(99, 102, 241, 0.1) !important;
-        color: var(--primary-color) !important;
+    }    .tag {
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--primary-color);
         padding: 0.4rem 0.8rem !important;
         border-radius: 20px !important;
         font-size: 0.8rem !important;
         font-weight: 500 !important;
-        border: 1px solid rgba(99, 102, 241, 0.2) !important;
-    }
-    
-    /* Dark theme override with higher specificity */
-    body.dark-theme .tag {
-        background: rgba(76, 201, 240, 0.15) !important;
-        color: var(--accent-color) !important;
-        border-color: rgba(76, 201, 240, 0.3) !important;
-    }
-      .view-project-btn {
+        border: 1px solid rgba(99, 102, 241, 0.2);
+    }    .view-project-btn {
         width: 100% !important;
         padding: 1rem 2rem !important;
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
         color: white !important;
         border: none !important;
         border-radius: 12px !important;
@@ -942,23 +904,12 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         transition: all 0.3s ease !important;
         opacity: 1 !important;
         transform: none !important;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
-    }
-    
-    /* Dark theme override with higher specificity */
-    body.dark-theme .view-project-btn {
-        background: linear-gradient(135deg, #4cc9f0, #4895ef) !important;
-        box-shadow: 0 4px 15px rgba(76, 201, 240, 0.25) !important;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
     }
     
     .view-project-btn:hover {
         transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4) !important;
-    }
-    
-    /* Dark theme hover override with higher specificity */
-    body.dark-theme .view-project-btn:hover {
-        box-shadow: 0 8px 25px rgba(76, 201, 240, 0.4) !important;
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
     }
     
     /* Hide tap hint on mobile since it's always card format */
