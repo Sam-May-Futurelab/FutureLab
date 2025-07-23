@@ -519,6 +519,9 @@ body.dark-theme {
     background: var(--bg-primary);
     position: relative;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .dark-theme .portfolio-section {
@@ -530,6 +533,9 @@ body.dark-theme {
     margin: 0 auto;
     padding: 0 2rem;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Simplified Carousel Wrapper */
@@ -538,14 +544,21 @@ body.dark-theme {
     overflow: visible;
     height: 600px;
     position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.carousel-track {    display: flex;
+.carousel-track {
+    display: flex;
     width: 1300%;
     height: 100%;
     transform-style: preserve-3d;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Simplified Carousel Slides */
@@ -1111,6 +1124,8 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     .carousel-container {
         display: flex !important;
         flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
     
     /* Move swipe indicators above carousel on mobile */
@@ -1126,6 +1141,9 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         height: auto !important;
         perspective: none !important;
         overflow: visible !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
     
     .carousel-track {
@@ -1135,6 +1153,8 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
         transform-style: flat !important;
         transform: none !important;
         position: relative !important;
+        justify-content: center !important;
+        align-items: center !important;
         transition: none !important;
     }
     
@@ -1324,6 +1344,9 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     
     .carousel-container {
         padding: 0 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -1334,6 +1357,9 @@ body:not(.dark-theme) .project-card:hover .mockup-image {
     
     .carousel-wrapper {
         height: 450px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     
     .stats-grid {
