@@ -52,18 +52,41 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
     
+    <!-- Critical CSS inline for above-the-fold content -->
+    <style>
+        .hero{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:100px 0;text-align:center}
+        .btn{padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;transition:all 0.3s ease}
+        .btn-primary{background:#4361ee;color:#fff}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+        .section-title{font-size:2.5rem;font-weight:700;margin-bottom:2rem;text-align:center}
+    </style>
+    
+    <!-- Load Tailwind CSS asynchronously -->
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script" onload="this.onload=null;this.rel='script'">
+    <script>
+        // Only load Tailwind if not already loaded
+        if(!document.querySelector('script[src*="tailwindcss"]')){
+            const script = document.createElement('script');
+            script.src = 'https://cdn.tailwindcss.com';
+            script.async = true;
+            document.head.appendChild(script);
+        }
+    </script>
+    
     <!-- Favicon -->
     <link rel="icon" href="../assets/favicon/favicon.ico" sizes="any">
     <link rel="icon" href="../assets/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../animations.css">
+    <link rel="stylesheet" href="../testimonials.css">
+    <link rel="stylesheet" href="../mobile-hero.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/back-to-top.css">
     <meta name="theme-color" content="#4361ee">
     <script src="../js/includeElements.js" defer></script>
 </head>
