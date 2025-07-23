@@ -15,8 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let animationsCssPath = 'animations.css';
 
     const isBlogPage = window.location.pathname.includes('/blog/');
+    const isLocationPage = window.location.pathname.includes('/locations/');
 
-    if (isBlogPage) {
+    if (isBlogPage || isLocationPage) {
         basePath = '../';
         headerPath = basePath + 'header.html';
         footerPath = basePath + 'footer.html';
@@ -163,14 +164,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (pathValue && !pathValue.startsWith('http') && !pathValue.startsWith('/') && 
                             !pathValue.startsWith('#') && !pathValue.startsWith('mailto:') && 
                             !pathValue.startsWith('data:')) {
-                            // Apply basePath if isBlogPage and path doesn't already reflect it
-                            if (isBlogPage && !pathValue.startsWith('../')) {
+                            // Apply basePath if isBlogPage/isLocationPage and path doesn't already reflect it
+                            if ((isBlogPage || isLocationPage) && !pathValue.startsWith('../')) {
                                 el.setAttribute(attributeName, basePath + pathValue);
-                            } else if (!isBlogPage && pathValue.startsWith('../')) {
+                            } else if (!isBlogPage && !isLocationPage && pathValue.startsWith('../')) {
                                 // This case should ideally not happen if paths are consistent
-                                console.warn(`WARN: Path ${pathValue} in ${url} on a non-blog page starts with ../. Check consistency.`);
+                                console.warn(`WARN: Path ${pathValue} in ${url} on a non-blog/non-location page starts with ../. Check consistency.`);
                             }
-                            // For non-blog pages, direct relative paths are assumed correct from root.
+                            // For non-blog/non-location pages, direct relative paths are assumed correct from root.
                         }
                     }
                 });
@@ -183,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     for (const script of headerExternalScripts) {
                         let scriptSrc = script.getAttribute('src');
                         // Path adjustment for external scripts from header.html was already here, ensure it's correct
-                         if (isBlogPage && scriptSrc && !scriptSrc.startsWith('http') && !scriptSrc.startsWith('/') && !scriptSrc.startsWith('../')) {
+                         if ((isBlogPage || isLocationPage) && scriptSrc && !scriptSrc.startsWith('http') && !scriptSrc.startsWith('/') && !scriptSrc.startsWith('../')) {
                             scriptSrc = basePath + scriptSrc;
                         }
                         console.log(`INFO: Loading external script from header: ${scriptSrc}`);
