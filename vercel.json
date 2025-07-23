@@ -97,6 +97,10 @@
       "destination": "/industries/estate-agents.html"
     },
     {
+      "source": "/industries/gyms-fitness",
+      "destination": "/industries/gyms-fitness.html"
+    },
+    {
       "source": "/blog/web-design-trends-2025",
       "destination": "/blog/web-design-trends-2025.html"
     },
