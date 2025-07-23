@@ -127,31 +127,39 @@
               "@type": "Service",
               "name": "Shopify Development"
             }
-          }
         ]
       }
+    }
+    </script>
+
+    <!-- FAQ Schema for Featured Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
         {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Web Design",
-            "description": "Custom, responsive websites that convert visitors into customers"
+          "@type": "Question",
+          "name": "How long does a typical web design project take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Basic websites take 1–2 weeks, e-commerce sites take 2–4 weeks, and app MVPs take 3–6 weeks depending on features. Timelines depend on scope, content readiness, and feedback loops."
           }
         },
         {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "E-commerce Development",
-            "description": "Online stores with seamless shopping experiences"
+          "@type": "Question", 
+          "name": "What's included in a web design quote?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every quote includes custom design, responsive build, basic SEO setup, testing across devices, and setup of essential tools like analytics and email forms."
           }
         },
         {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Mobile App Development",
-            "description": "Native and cross-platform mobile applications"
+          "@type": "Question",
+          "name": "Do you offer responsive web design?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, all our websites are built with a mobile-first, responsive design approach ensuring they look perfect on all devices from smartphones to desktop computers."
           }
         }
       ]
@@ -184,7 +192,29 @@
     <link rel="apple-touch-icon" href="assets/favicon/apple-icon-180x180.png" sizes="180x180">
     
     <link rel="manifest" href="assets/favicon/site.webmanifest">
-      <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+    
+    <!-- Critical CSS inline for above-the-fold content -->
+    <style>
+        .hero{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:100px 0;text-align:center}
+        .btn{padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;transition:all 0.3s ease}
+        .btn-primary{background:#4361ee;color:#fff}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    </style>
+    
+    <!-- Load Tailwind CSS asynchronously -->
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script" onload="this.onload=null;this.rel='script'">
+    <script>
+        // Only load Tailwind if not already loaded
+        if(!document.querySelector('script[src*="tailwindcss"]')){
+            const script = document.createElement('script');
+            script.src = 'https://cdn.tailwindcss.com';
+            script.async = true;
+            document.head.appendChild(script);
+        }
+    </script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="testimonials.css">
     <link rel="stylesheet" href="animations.css">
@@ -505,7 +535,7 @@
                 <h2 class="section-title">Expert Web Design for UK Businesses</h2>
                 <div class="web-design-content">
                     <div class="web-design-text">
-                        <p>At Futurelab, web design isn't just about creating pretty websites, it's about crafting effective digital tools that help your business grow.</p>
+                        <p>At Futurelab, web design isn't just about creating pretty websites, it's about crafting effective digital tools that help your business grow. Our <a href="/locations/manchester" class="internal-link">Manchester web design services</a> and <a href="/locations/birmingham" class="internal-link">Birmingham web design expertise</a> help local businesses stand out online.</p>
                         <h3>Our Web Design Process</h3>
                         <ol class="process-list">
                             <li><strong>Discovery:</strong> We understand your business, goals, and target audience</li>
