@@ -1,7 +1,7 @@
 // Portfolio 3D Carousel and Swipe Interactions
 class PortfolioCarousel {    constructor() {
         this.currentSlide = 0;
-        this.totalSlides = 13;
+        this.totalSlides = 14;
         this.isTransitioning = false;
         this.touchStartX = 0;
         this.touchEndX = 0;
