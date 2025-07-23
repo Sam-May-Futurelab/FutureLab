@@ -49,6 +49,10 @@
       "destination": "/ecommerce.html"
     },
     {
+      "source": "/landing-page-design",
+      "destination": "/landing-page-design.html"
+    },
+    {
       "source": "/seo-services",
       "destination": "/seo-services.html"
     },
@@ -139,6 +143,11 @@
     {
       "source": "/ecommerce.html",
       "destination": "/ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/landing-page-design.html",
+      "destination": "/landing-page-design",
       "permanent": true
     },
     {
