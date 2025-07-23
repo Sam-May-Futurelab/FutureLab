@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8E854NCS56"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8E854NCS56');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Web Design Services | Menu Integration & Online Booking | Futurelab</title>
@@ -73,14 +83,37 @@
         }
     </script>
     
-    <!-- Favicon -->
+    <!-- Favicon links -->
     <link rel="icon" href="../assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="../assets/favicon/favicon-16x16.png" sizes="16x16" type="image/png">
     <link rel="icon" href="../assets/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="../assets/favicon/favicon-96x96.png" sizes="96x96" type="image/png">
+    
+    <!-- Android icons -->
+    <link rel="icon" href="../assets/favicon/android-icon-36x36.png" sizes="36x36" type="image/png">
+    <link rel="icon" href="../assets/favicon/android-icon-48x48.png" sizes="48x48" type="image/png">
+    <link rel="icon" href="../assets/favicon/android-icon-72x72.png" sizes="72x72" type="image/png">
+    <link rel="icon" href="../assets/favicon/android-icon-96x96.png" sizes="96x96" type="image/png">
+    <link rel="icon" href="../assets/favicon/android-icon-144x144.png" sizes="144x144" type="image/png">
+    <link rel="icon" href="../assets/favicon/android-icon-192x192.png" sizes="192x192" type="image/png">
+    
+    <!-- Apple touch icons -->
+    <link rel="apple-touch-icon" href="../assets/favicon/apple-icon-57x57.png" sizes="57x57">
+    <link rel="apple-touch-icon" href="../assets/favicon/apple-icon-60x60.png" sizes="60x60">
+    <link rel="apple-touch-icon" href="../assets/favicon/apple-icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="../assets/favicon/apple-icon-76x76.png" sizes="76x76">
+    <link rel="apple-touch-icon" href="../assets/favicon/apple-icon-114x114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="../assets/favicon/apple-icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="../assets/favicon/apple-icon-144x144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="../assets/favicon/apple-icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="../assets/favicon/apple-icon-180x180.png" sizes="180x180">
+    
+    <link rel="manifest" href="../assets/favicon/site.webmanifest">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="../animations.css">
     <link rel="stylesheet" href="../testimonials.css">
+    <link rel="stylesheet" href="../animations.css">
     <link rel="stylesheet" href="../mobile-hero.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -418,9 +451,25 @@
     </main>
 
     <div id="footer-placeholder"></div>
+    <a href="#" id="backToTopBtn" class="back-to-top-btn" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-content">
+            <p>We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.</p>
+            <div class="cookie-buttons">
+                <button id="accept-cookies" class="btn btn-primary">Accept</button>
+                <button id="decline-cookies" class="btn btn-secondary">Decline</button>
+            </div>
+        </div>
+    </div>
     
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="../mobile-responsive.js"></script>
     <script src="../script.js"></script>
+    <script src="../testimonials.js"></script>
     <script src="../placeholder.js"></script>
+    <script src="../analytics-integration.js"></script>
 </body>
 </html>

@@ -16,8 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const isBlogPage = window.location.pathname.includes('/blog/');
     const isLocationPage = window.location.pathname.includes('/locations/');
+    const isIndustryPage = window.location.pathname.includes('/industries/');
 
-    if (isBlogPage || isLocationPage) {
+    if (isBlogPage || isLocationPage || isIndustryPage) {
         basePath = '../';
         headerPath = basePath + 'header.html';
         footerPath = basePath + 'footer.html';
