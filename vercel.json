@@ -49,6 +49,10 @@
       "destination": "/ecommerce.html"
     },
     {
+      "source": "/seo-services",
+      "destination": "/seo-services.html"
+    },
+    {
       "source": "/blog/web-design-trends-2025",
       "destination": "/blog/web-design-trends-2025.html"
     },
@@ -135,6 +139,11 @@
     {
       "source": "/ecommerce.html",
       "destination": "/ecommerce",
+      "permanent": true
+    },
+    {
+      "source": "/seo-services.html",
+      "destination": "/seo-services",
       "permanent": true
     },
     {
