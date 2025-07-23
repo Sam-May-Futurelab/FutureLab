@@ -77,6 +77,14 @@
       "destination": "/seo-services.html"
     },
     {
+      "source": "/industries",
+      "destination": "/industries/industries.html"
+    },
+    {
+      "source": "/industries/restaurants",
+      "destination": "/industries/restaurants"
+    },
+    {
       "source": "/blog/web-design-trends-2025",
       "destination": "/blog/web-design-trends-2025.html"
     },
@@ -183,6 +191,16 @@
     {
       "source": "/seo-services.html",
       "destination": "/seo-services",
+      "permanent": true
+    },
+    {
+      "source": "/industries.html",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/restaurants.html",
+      "destination": "/industries/restaurants",
       "permanent": true
     },
     {
