@@ -232,6 +232,82 @@
         .nav-links .dropdown:hover > a::after {
             transform: rotate(180deg);
         }
+
+        /* Nested dropdown styling for Locations submenu */
+        .dropdown-nested {
+            position: relative;
+        }
+
+        .dropdown-nested .dropdown-parent {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dropdown-nested .dropdown-parent i {
+            font-size: 0.7em;
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-content-nested {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            min-width: 180px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius-sm);
+            padding: 10px 0;
+            z-index: 1001;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            margin-left: 5px;
+        }
+
+        .dark-theme .dropdown-content-nested {
+            background-color: rgba(15, 23, 42, 0.98);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .dropdown-nested:hover .dropdown-content-nested {
+            display: block;
+            animation: dropdownFadeIn 0.3s ease-out;
+        }
+
+        .dropdown-nested:hover .dropdown-parent i {
+            transform: rotate(90deg);
+        }
+
+        .dropdown-content-nested a {
+            color: var(--dark-color) !important;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .dark-theme .dropdown-content-nested a {
+            color: var(--light-gray) !important;
+        }
+
+        .dropdown-content-nested a:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color) !important;
+            padding-left: 25px;
+            font-weight: 600;
+        }
+
+        .dark-theme .dropdown-content-nested a:hover {
+            background-color: rgba(67, 97, 238, 0.2);
+            color: var(--accent-color-light) !important;
+        }
         
         .nav-links li a.btn {
             color: white;
@@ -560,11 +636,15 @@
                         <a href="/ecommerce">Shopify Development</a>
                         <a href="/seo-services">SEO Services</a>
                         <div class="dropdown-divider"></div>
-                        <a href="/locations">Locations</a>
-                        <a href="/locations/london" style="padding-left: 20px;">→ London</a>
-                        <a href="/locations/manchester" style="padding-left: 20px;">→ Manchester</a>
-                        <a href="/locations/birmingham" style="padding-left: 20px;">→ Birmingham</a>
-                        <a href="/locations/leeds" style="padding-left: 20px;">→ Leeds</a>
+                        <div class="dropdown-nested">
+                            <a href="/locations" class="dropdown-parent">Locations <i class="fas fa-chevron-right"></i></a>
+                            <div class="dropdown-content-nested">
+                                <a href="/locations/london">London</a>
+                                <a href="/locations/manchester">Manchester</a>
+                                <a href="/locations/birmingham">Birmingham</a>
+                                <a href="/locations/leeds">Leeds</a>
+                            </div>
+                        </div>
                     </div>
                 </li>
                 <li><a href="/lab">AI Lab</a></li>
@@ -634,10 +714,11 @@
                                 servicesHeaderLi.appendChild(servicesHeader);
                                 mobileNavLinksUl.appendChild(servicesHeaderLi);
 
-                                // Add dropdown items (Custom Web Design and E-commerce)
+                                // Add dropdown items (services and nested locations)
                                 const dropdownContent = navItem.querySelector('.dropdown-content');
                                 if (dropdownContent) {
-                                    dropdownContent.querySelectorAll('a').forEach(dropdownLink => {
+                                    // Add regular service items
+                                    dropdownContent.querySelectorAll('a:not(.dropdown-parent)').forEach(dropdownLink => {
                                         const li = document.createElement('li');
                                         const newLink = dropdownLink.cloneNode(true);
                                         newLink.classList.remove('active');
@@ -648,6 +729,40 @@
                                         li.appendChild(newLink);
                                         mobileNavLinksUl.appendChild(li);
                                     });
+
+                                    // Handle nested locations dropdown
+                                    const nestedDropdown = dropdownContent.querySelector('.dropdown-nested');
+                                    if (nestedDropdown) {
+                                        // Add Locations header
+                                        const locationsHeaderLi = document.createElement('li');
+                                        const locationsHeader = document.createElement('a');
+                                        locationsHeader.href = '/locations';
+                                        locationsHeader.textContent = 'Locations';
+                                        locationsHeader.style.paddingLeft = '30px';
+                                        locationsHeader.style.fontWeight = '600';
+                                        locationsHeader.style.color = 'var(--primary-color)';
+                                        if (locationsHeader.getAttribute('href') === currentPage) {
+                                            locationsHeader.classList.add('active');
+                                        }
+                                        locationsHeaderLi.appendChild(locationsHeader);
+                                        mobileNavLinksUl.appendChild(locationsHeaderLi);
+
+                                        // Add individual location links
+                                        const nestedContent = nestedDropdown.querySelector('.dropdown-content-nested');
+                                        if (nestedContent) {
+                                            nestedContent.querySelectorAll('a').forEach(locationLink => {
+                                                const li = document.createElement('li');
+                                                const newLink = locationLink.cloneNode(true);
+                                                newLink.classList.remove('active');
+                                                newLink.style.paddingLeft = '50px'; // Double indent for nested items
+                                                if (newLink.getAttribute('href') === currentPage) {
+                                                    newLink.classList.add('active');
+                                                }
+                                                li.appendChild(newLink);
+                                                mobileNavLinksUl.appendChild(li);
+                                            });
+                                        }
+                                    }
                                 }
                             } else {
                                 // Handle regular navigation items (including Web Design as main item)
