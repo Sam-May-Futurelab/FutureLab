@@ -89,6 +89,10 @@
       "destination": "/industries/solicitors.html"
     },
     {
+      "source": "/industries/healthcare",
+      "destination": "/industries/healthcare.html"
+    },
+    {
       "source": "/blog/web-design-trends-2025",
       "destination": "/blog/web-design-trends-2025.html"
     },
