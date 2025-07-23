@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8E854NCS56"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8E854NCS56');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO-optimized title and meta tags for locations overview -->
+    <title>Web Design Services Across the UK | London, Manchester, Birmingham | Futurelab</title>
+    <meta name="description" content="Professional web design and landing page services across major UK cities. Serving London, Manchester, Birmingham, Leeds, and more with local expertise and custom solutions.">
+    <meta name="keywords" content="web design uk, landing page design uk, web designer london manchester birmingham, uk web design services, local web design">
+    <meta name="author" content="Futurelab Solutions">
+    
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="Web Design Services Across the UK | Futurelab">
+    <meta property="og:description" content="Professional web design and landing page services across major UK cities. Local expertise, custom solutions.">
+    <meta property="og:image" content="https://futurelab.solutions/assets/uk-locations-preview.png">
+    <meta property="og:url" content="https://futurelab.solutions/locations">
+    <meta property="og:type" content="website">
+    
+    <!-- UK Service Areas Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Futurelab Solutions",
+      "image": "https://futurelab.solutions/assets/futurelab-logo.png",
+      "description": "Professional web design and landing page services across the UK",
+      "url": "https://futurelab.solutions",
+      "telephone": "+447806946463",
+      "priceRange": "££-£££",
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "London",
+          "addressCountry": "GB"
+        },
+        {
+          "@type": "City", 
+          "name": "Manchester",
+          "addressCountry": "GB"
+        },
+        {
+          "@type": "City",
+          "name": "Birmingham", 
+          "addressCountry": "GB"
+        },
+        {
+          "@type": "City",
+          "name": "Leeds",
+          "addressCountry": "GB"
+        },
+        {
+          "@type": "City",
+          "name": "Liverpool",
+          "addressCountry": "GB"
+        },
+        {
+          "@type": "City",
+          "name": "Bristol",
+          "addressCountry": "GB"
+        }
+      ],
+      "serviceType": ["Web Design", "Landing Page Design", "SEO Services", "E-commerce Development"]
+    }
+    </script>
+    
+    <!-- Favicon links -->
+    <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="assets/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon/apple-icon-180x180.png">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="testimonials.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="mobile-hero.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#4361ee">
+    <script src="js/includeElements.js" defer></script>
+    
+    <!-- Locations page specific styles -->
+    <style>
+        .locations-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin: 80px 0;
+        }
+        
+        .location-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark-theme .location-card {
+            background: #1e293b;
+        }
+        
+        .location-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .location-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .location-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .location-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(67, 97, 238, 0.05);
+            border-radius: var(--border-radius);
+        }
+        
+        .dark-theme .location-stats {
+            background: rgba(67, 97, 238, 0.1);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        .coverage-map {
+            background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%);
+            padding: 80px 0;
+            margin: 80px 0;
+            border-radius: var(--border-radius);
+        }
+        
+        .dark-theme .coverage-map {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        
+        .coverage-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .coverage-stat {
+            text-align: center;
+        }
+        
+        .coverage-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .primary-locations {
+            background: white;
+            padding: 60px 0;
+            margin: 80px 0;
+        }
+        
+        .dark-theme .primary-locations {
+            background: #0f172a;
+        }
+        
+        @media (max-width: 768px) {
+            .locations-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .location-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="locations-hero">
+            <div class="container">
+                <h1>Web Design Services Across the UK</h1>
+                <p style="font-size: 1.2rem; margin: 30px 0; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Professional web design and landing page services with local expertise in major UK cities. 
+                    Custom solutions that understand your local market.
+                </p>
+                <div style="margin-top: 40px;">
+                    <a href="#locations" class="btn btn-primary" style="margin-right: 20px;">View Locations</a>
+                    <a href="#contact" class="btn btn-secondary">Get Started</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Primary Locations -->
+        <section class="section-transition" id="locations">
+            <div class="container">
+                <h2 class="section-title">Our Service Locations</h2>
+                <p class="section-subtitle">Local expertise in major UK cities with custom web design solutions for every market</p>
+                
+                <div class="locations-grid">
+                    <!-- London -->
+                    <div class="location-card">
+                        <div class="location-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <h3>London</h3>
+                        <p>The heart of UK business. Serving the City, Canary Wharf, and all London boroughs with premium web design services.</p>
+                        
+                        <div class="location-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">9M+</div>
+                                <div class="stat-label">Population</div>
+                            </div>
+                        </div>
+                        
+                        <ul style="text-align: left; margin: 20px 0;">
+                            <li>✓ Financial district expertise</li>
+                            <li>✓ Startup-friendly solutions</li>
+                            <li>✓ Premium business services</li>
+                            <li>✓ Fast turnaround times</li>
+                        </ul>
+                        
+                        <a href="/locations/london" class="btn btn-primary full-width">View London Services</a>
+                    </div>
+                    
+                    <!-- Manchester -->
+                    <div class="location-card">
+                        <div class="location-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h3>Manchester</h3>
+                        <p>The Northern Powerhouse. Expert web design for Manchester's thriving business community and tech sector.</p>
+                        
+                        <div class="location-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">30+</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">2.7M+</div>
+                                <div class="stat-label">Population</div>
+                            </div>
+                        </div>
+                        
+                        <ul style="text-align: left; margin: 20px 0;">
+                            <li>✓ Tech startup focus</li>
+                            <li>✓ Creative industry expertise</li>
+                            <li>✓ Northern Quarter specialists</li>
+                            <li>✓ Competitive pricing</li>
+                        </ul>
+                        
+                        <a href="/locations/manchester" class="btn btn-primary full-width">View Manchester Services</a>
+                    </div>
+                    
+                    <!-- Birmingham -->
+                    <div class="location-card">
+                        <div class="location-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Birmingham</h3>
+                        <p>The UK's second city. Comprehensive web design services for Birmingham's diverse business landscape.</p>
+                        
+                        <div class="location-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">25+</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">2.9M+</div>
+                                <div class="stat-label">Population</div>
+                            </div>
+                        </div>
+                        
+                        <ul style="text-align: left; margin: 20px 0;">
+                            <li>✓ Manufacturing focus</li>
+                            <li>✓ Business district expertise</li>
+                            <li>✓ Midlands market knowledge</li>
+                            <li>✓ Value-driven solutions</li>
+                        </ul>
+                        
+                        <a href="/locations/birmingham" class="btn btn-primary full-width">View Birmingham Services</a>
+                    </div>
+                    
+                    <!-- Leeds -->
+                    <div class="location-card">
+                        <div class="location-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3>Leeds</h3>
+                        <p>Yorkshire's business hub. Professional web design services for Leeds' financial and legal sectors.</p>
+                        
+                        <div class="location-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">20+</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">1.9M+</div>
+                                <div class="stat-label">Population</div>
+                            </div>
+                        </div>
+                        
+                        <ul style="text-align: left; margin: 20px 0;">
+                            <li>✓ Financial services focus</li>
+                            <li>✓ Legal sector expertise</li>
+                            <li>✓ Yorkshire business culture</li>
+                            <li>✓ Professional solutions</li>
+                        </ul>
+                        
+                        <a href="/locations/leeds" class="btn btn-primary full-width">View Leeds Services</a>
+                    </div>
+                    
+                    <!-- Liverpool -->
+                    <div class="location-card">
+                        <div class="location-icon">
+                            <i class="fas fa-ship"></i>
+                        </div>
+                        <h3>Liverpool</h3>
+                        <p>Maritime heritage meets modern business. Web design services for Liverpool's growing digital economy.</p>
+                        
+                        <div class="location-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">15+</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">1.4M+</div>
+                                <div class="stat-label">Population</div>
+                            </div>
+                        </div>
+                        
+                        <ul style="text-align: left; margin: 20px 0;">
+                            <li>✓ Creative industry focus</li>
+                            <li>✓ Tourism sector expertise</li>
+                            <li>✓ Maritime business knowledge</li>
+                            <li>✓ Cultural sensitivity</li>
+                        </ul>
+                        
+                        <a href="/locations/liverpool" class="btn btn-primary full-width">View Liverpool Services</a>
+                    </div>
+                    
+                    <!-- Bristol -->
+                    <div class="location-card">
+                        <div class="location-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Bristol</h3>
+                        <p>Tech and aerospace innovation hub. Modern web design solutions for Bristol's cutting-edge businesses.</p>
+                        
+                        <div class="location-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">12+</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">700K+</div>
+                                <div class="stat-label">Population</div>
+                            </div>
+                        </div>
+                        
+                        <ul style="text-align: left; margin: 20px 0;">
+                            <li>✓ Tech startup expertise</li>
+                            <li>✓ Aerospace industry focus</li>
+                            <li>✓ Innovation-driven solutions</li>
+                            <li>✓ Future-ready designs</li>
+                        </ul>
+                        
+                        <a href="/locations/bristol" class="btn btn-primary full-width">View Bristol Services</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coverage Map Section -->
+        <section class="coverage-map">
+            <div class="container">
+                <h2 class="section-title">Nationwide Coverage</h2>
+                <p class="section-subtitle">Serving businesses across the UK with remote and on-site services</p>
+                
+                <div class="coverage-stats">
+                    <div class="coverage-stat">
+                        <div class="coverage-number">150+</div>
+                        <h4>Projects Completed</h4>
+                        <p>Successful web design projects across the UK</p>
+                    </div>
+                    <div class="coverage-stat">
+                        <div class="coverage-number">25+</div>
+                        <h4>Cities Served</h4>
+                        <p>Major UK cities and surrounding areas</p>
+                    </div>
+                    <div class="coverage-stat">
+                        <div class="coverage-number">98%</div>
+                        <h4>Client Satisfaction</h4>
+                        <p>Happy clients across all locations</p>
+                    </div>
+                    <div class="coverage-stat">
+                        <div class="coverage-number">48hr</div>
+                        <h4>Response Time</h4>
+                        <p>Fast response times nationwide</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Overview -->
+        <section class="primary-locations">
+            <div class="container">
+                <h2 class="section-title">What We Offer in Every Location</h2>
+                <p class="section-subtitle">Consistent quality and expertise across all UK locations</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin: 50px 0;">
+                    <div style="text-align: center;">
+                        <div style="width: 60px; height: 60px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h4>Custom Web Design</h4>
+                        <p>Bespoke websites tailored to your local market and business needs</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 60px; height: 60px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h4>Landing Pages</h4>
+                        <p>High-converting landing pages optimized for your target location</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 60px; height: 60px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h4>Local SEO</h4>
+                        <p>Search optimization targeting your specific city and region</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 60px; height: 60px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h4>E-commerce</h4>
+                        <p>Online stores optimized for your local customer base</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="animated-gradient-bg"></div>
+            <div class="container">
+                <h2 class="section-title">Ready to Start Your Project?</h2>
+            
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <p>Get in touch to discuss your web design needs. We'll connect you with local expertise that understands your market.</p>
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:sam@futurelab.solutions">sam@futurelab.solutions</a>
+                            </div>
+                            <div class="contact-method">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+447806946463">+44 7806 946463</a>
+                            </div>
+                            <div class="contact-method">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Serving the entire UK</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form" action="https://formspree.io/f/xldjpewg" method="POST">
+                        <input type="hidden" name="_subject" value="Location Services Inquiry from Futurelab">
+                        <input type="hidden" name="page_source" value="locations">
+                        
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Your Location</label>
+                            <select id="location" name="location" required>
+                                <option value="" disabled selected>Choose your city</option>
+                                <option value="london">London</option>
+                                <option value="manchester">Manchester</option>
+                                <option value="birmingham">Birmingham</option>
+                                <option value="leeds">Leeds</option>
+                                <option value="liverpool">Liverpool</option>
+                                <option value="bristol">Bristol</option>
+                                <option value="other">Other UK Location</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="service-type">Service Needed</label>
+                            <select id="service-type" name="service-type" required>
+                                <option value="" disabled selected>What do you need?</option>
+                                <option value="web-design">Custom Web Design</option>
+                                <option value="landing-page">Landing Page Design</option>
+                                <option value="ecommerce">E-commerce Website</option>
+                                <option value="seo">SEO Services</option>
+                                <option value="consultation">Free Consultation</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="message">Project Details</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Tell us about your project and local market requirements" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary full-width">
+                            <i class="fas fa-paper-plane"></i> Get Started
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="script.js"></script>
+    <script src="utilities.js"></script>
+</body>
+</html>

@@ -29,6 +29,26 @@
       "destination": "/blog.html"
     },
     {
+      "source": "/locations",
+      "destination": "/locations.html"
+    },
+    {
+      "source": "/locations/london",
+      "destination": "/locations/london.html"
+    },
+    {
+      "source": "/locations/manchester",
+      "destination": "/locations/manchester.html"
+    },
+    {
+      "source": "/locations/birmingham",
+      "destination": "/locations/birmingham.html"
+    },
+    {
+      "source": "/locations/leeds",
+      "destination": "/locations/leeds.html"
+    },
+    {
       "source": "/faq",
       "destination": "/faq.html"
     },
@@ -90,6 +110,16 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/landing-page-design",
+      "destination": "/locations/london",
+      "permanent": true
+    },
+    {
+      "source": "/landing-page-design.html",
+      "destination": "/locations/london",
+      "permanent": true
+    },
     {
       "source": "/web-design.html",
       "destination": "/web-design",

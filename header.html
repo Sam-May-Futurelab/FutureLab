@@ -210,6 +210,16 @@
             color: var(--accent-color-light) !important;
         }
 
+        .dropdown-divider {
+            height: 1px;
+            background-color: rgba(0, 0, 0, 0.1);
+            margin: 8px 0;
+        }
+
+        .dark-theme .dropdown-divider {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
         .nav-links .dropdown > a::after {
             content: '\f107';
             font-family: 'Font Awesome 5 Free';
@@ -549,6 +559,12 @@
                         <a href="/landing-page-design">Landing Pages</a>
                         <a href="/ecommerce">Shopify Development</a>
                         <a href="/seo-services">SEO Services</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="/locations">Locations</a>
+                        <a href="/locations/london" style="padding-left: 20px;">→ London</a>
+                        <a href="/locations/manchester" style="padding-left: 20px;">→ Manchester</a>
+                        <a href="/locations/birmingham" style="padding-left: 20px;">→ Birmingham</a>
+                        <a href="/locations/leeds" style="padding-left: 20px;">→ Leeds</a>
                     </div>
                 </li>
                 <li><a href="/lab">AI Lab</a></li>
