@@ -97,6 +97,10 @@
       "destination": "/industries/gyms.html"
     },
     {
+      "source": "/industries/beauty",
+      "destination": "/industries/beauty.html"
+    },
+    {
       "source": "/industries/estate-agents",
       "destination": "/industries/estate-agents.html"
     },
@@ -222,6 +226,11 @@
     {
       "source": "/industries/gyms.html",
       "destination": "/industries/gyms",
+      "permanent": true
+    },
+    {
+      "source": "/industries/beauty.html",
+      "destination": "/industries/beauty",
       "permanent": true
     },
     {
