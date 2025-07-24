@@ -93,12 +93,12 @@
       "destination": "/industries/healthcare.html"
     },
     {
-      "source": "/industries/estate-agents",
-      "destination": "/industries/estate-agents.html"
-    },
-    {
       "source": "/industries/gyms-fitness",
       "destination": "/industries/gyms-fitness.html"
+    },
+    {
+      "source": "/industries/estate-agents",
+      "destination": "/industries/estate-agents.html"
     },
     {
       "source": "/blog/web-design-trends-2025",
