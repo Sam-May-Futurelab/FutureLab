@@ -93,8 +93,8 @@
       "destination": "/industries/healthcare.html"
     },
     {
-      "source": "/industries/gyms-fitness",
-      "destination": "/industries/gyms-fitness.html"
+      "source": "/industries/gyms",
+      "destination": "/industries/gyms.html"
     },
     {
       "source": "/industries/estate-agents",
@@ -220,8 +220,8 @@
       "permanent": true
     },
     {
-      "source": "/industries/gyms-fitness.html",
-      "destination": "/industries/gyms-fitness",
+      "source": "/industries/gyms.html",
+      "destination": "/industries/gyms",
       "permanent": true
     },
     {
