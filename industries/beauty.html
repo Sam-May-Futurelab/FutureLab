@@ -47,20 +47,42 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
     
+    <!-- Critical CSS inline for above-the-fold content -->
+    <style>
+        .hero{background:linear-gradient(135deg,#ec4899 0%,#8b5cf6 100%);color:#fff;padding:100px 0;text-align:center}
+        .btn{padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;transition:all 0.3s ease}
+        .btn-primary{background:#ec4899;color:#fff}
+        .btn-secondary{background:transparent;color:#fff;border:2px solid #fff}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+        .section-title{font-size:2.5rem;font-weight:700;margin-bottom:2rem;text-align:center}
+        .gradient-text{background:linear-gradient(135deg,#fff 0%,#f9fafb 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    </style>
+    
+    <!-- Load Tailwind CSS asynchronously -->
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script" onload="this.onload=null;this.rel='script'">
+    <script>
+        // Only load Tailwind if not already loaded
+        if(!document.querySelector('script[src*="tailwindcss"]')){
+            const script = document.createElement('script');
+            script.src = 'https://cdn.tailwindcss.com';
+            script.async = true;
+            document.head.appendChild(script);
+        }
+    </script>
+    
     <!-- Favicon -->
-    <link rel="icon" href="../assets/favicon/favicon.ico" sizes="any">
-    <link rel="icon" href="../assets/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/assets/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="../animations.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="theme-color" content="#4361ee">
-    <script src="../js/includeElements.js" defer></script>
+    <script src="/js/includeElements.js" defer></script>
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -71,12 +93,17 @@
             <div class="animated-gradient-bg"></div>
             <div class="container">
                 <div class="hero-content text-center">
-                    <div class="mb-6">
-                        <i class="fas fa-spa text-6xl text-pink-500 mb-4"></i>
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="w-20 h-20 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-spa text-pink-600 text-3xl"></i>
+                        </div>
+                        <h1 class="animate-in gradient-text text-left">
+                            Beauty & Skincare Web Design<br>
+                            <span class="text-2xl">That Showcases Your Expertise</span>
+                        </h1>
                     </div>
-                    <h1 class="animate-in gradient-text">Beauty & Skincare<br>Website Design</h1>
-                    <p class="animate-in stagger-1 text-xl">Elegant websites for beauty salons, spas, and skincare clinics. Online booking, treatment galleries, and e-commerce integration that showcases your expertise and attracts new clients.</p>
-                    <div class="hero-buttons animate-in stagger-2">
+                    <p class="animate-in stagger-1 text-xl max-w-3xl mx-auto">Elegant websites for beauty salons, spas, and skincare clinics. Online booking, treatment galleries, and e-commerce integration that showcases your expertise and attracts new clients.</p>
+                    <div class="hero-buttons animate-in stagger-2" style="justify-content: center;">
                         <a href="#features" class="btn btn-primary">View Beauty Features</a>
                         <a href="#contact" class="btn btn-secondary">Get Beauty Quote</a>
                     </div>
@@ -350,7 +377,7 @@
     <div id="footer-placeholder"></div>
     
     <!-- Scripts -->
-    <script src="../script.js"></script>
-    <script src="../placeholder.js"></script>
+    <script src="/script.js"></script>
+    <script src="/placeholder.js"></script>
 </body>
 </html>
