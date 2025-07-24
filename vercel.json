@@ -220,6 +220,11 @@
       "permanent": true
     },
     {
+      "source": "/industries/gyms-fitness.html",
+      "destination": "/industries/gyms-fitness",
+      "permanent": true
+    },
+    {
       "source": "/blog/web-design-trends-2025.html",
       "destination": "/blog/web-design-trends-2025",
       "permanent": true
