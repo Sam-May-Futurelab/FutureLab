@@ -67,8 +67,25 @@
         .hero{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:100px 0;text-align:center}
         .btn{padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;transition:all 0.3s ease}
         .btn-primary{background:#4361ee;color:#fff}
+        .btn-secondary{background:#fff;color:#4361ee;border:1px solid #4361ee;}
+        .btn-secondary:hover{background:#f3f4f6;color:#222;}
         .container{max-width:1200px;margin:0 auto;padding:0 20px}
         .section-title{font-size:2.5rem;font-weight:700;margin-bottom:2rem;text-align:center}
+        /* Remove previous !important overrides to allow Tailwind dark: classes to work */
+        /* Card backgrounds and text colors should be handled by Tailwind classes */
+        .rounded-xl, .rounded-2xl { box-shadow: 0 2px 16px 0 rgba(0,0,0,0.07); }
+        /* Back-to-top button dark mode fix */
+        .back-to-top-btn { background: #fff; color: #4361ee; border: 1px solid #4361ee; }
+        .back-to-top-btn:hover { background: #4361ee; color: #fff; }
+        @media (prefers-color-scheme: dark) {
+          .back-to-top-btn { background: #23272f; color: #fff; border: 1px solid #fff; }
+          .back-to-top-btn:hover { background: #fff; color: #4361ee; }
+        }
+        /* Cookie banner contrast */
+        .cookie-banner { background: #fff; color: #222; }
+        @media (prefers-color-scheme: dark) {
+          .cookie-banner { background: #23272f; color: #e5e7eb; }
+        }
     </style>
     
     <!-- Load Tailwind CSS asynchronously -->
@@ -238,7 +255,7 @@
                         </div>
                     </div>
                     
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
                         <div class="space-y-6">
                             <h4 class="text-2xl font-bold text-center">Restaurant Website Essentials</h4>
                             <div class="grid grid-cols-2 gap-4 text-sm">
@@ -297,7 +314,7 @@
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
                         <div class="flex items-center mb-6">
                             <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mr-4">
                                 <i class="fas fa-pizza-slice text-orange-600 text-2xl"></i>
@@ -324,7 +341,7 @@
                         <p class="mt-6 text-gray-600 dark:text-gray-300 italic">"Our new website with online ordering has been a game-changer. We're busier than ever and customers love being able to book tables online."</p>
                     </div>
                     
-                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
                         <div class="flex items-center mb-6">
                             <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mr-4">
                                 <i class="fas fa-leaf text-green-600 text-2xl"></i>
@@ -426,7 +443,7 @@
         <!-- CTA Section -->
         <section class="py-20">
             <div class="container">
-                <div class="bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl p-12 text-center text-white">
+                <div class="bg-gradient-to-r from-orange-500 to-red-600 dark:from-orange-700 dark:to-red-900 rounded-2xl p-12 text-center text-white">
                     <h2 class="text-4xl font-bold mb-4">Ready to Fill More Tables?</h2>
                     <p class="text-xl mb-8 opacity-90">Get a restaurant website that showcases your cuisine and converts hungry visitors into loyal customers.</p>
                     <div class="space-x-4">
@@ -445,7 +462,7 @@
 
         <!-- Contact Section -->
         <section id="contact" class="contact">
-            <div class="animated-gradient-bg"></div>
+            <div class="animated-gradient-bg dark:bg-gray-900"></div>
             <div class="container">
                 <h2 class="section-title">Get Your Restaurant Website Quote</h2>
                 <p class="text-center text-xl mb-8">Tell us about your restaurant and we'll create a custom website solution.</p>
