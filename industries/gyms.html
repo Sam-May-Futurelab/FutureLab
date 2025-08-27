@@ -721,62 +721,38 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20" style="background: var(--gradient-1);">
+        <section id="contact" class="py-20 bg-gray-900 dark:bg-black">
             <div class="container">
                 <div class="text-center mb-12">
                     <h2 class="text-4xl font-bold mb-4 text-white">
                         Get Your Fitness Website Quote
                     </h2>
                     <p class="text-xl text-white opacity-90 max-w-3xl mx-auto">
-                        Tell us about your fitness business and we'll create a custom website solution that drives membership growth and streamlines operations.
+                        Ready to transform your fitness business online? Let's create a website that drives results.
                     </p>
                 </div>
 
-                <div class="max-w-4xl mx-auto">
+                <div class="max-w-2xl mx-auto">
                     <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl">
                         <form class="space-y-6" action="/submit-fitness-quote" method="POST">
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <!-- Business Name -->
-                                <div>
-                                    <label for="business-name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                        Fitness Business Name *
-                                    </label>
-                                    <input type="text" id="business-name" name="business_name" required
-                                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                                           placeholder="Your gym or studio name">
-                                </div>
-
-                                <!-- Contact Name -->
-                                <div>
-                                    <label for="contact-name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                        Your Name *
-                                    </label>
-                                    <input type="text" id="contact-name" name="contact_name" required
-                                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                                           placeholder="Your full name">
-                                </div>
+                            <!-- Name -->
+                            <div>
+                                <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Your Name *
+                                </label>
+                                <input type="text" id="name" name="name" required
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                                       placeholder="Your full name">
                             </div>
 
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <!-- Email -->
-                                <div>
-                                    <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                        Email Address *
-                                    </label>
-                                    <input type="email" id="email" name="email" required
-                                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                                           placeholder="your@email.com">
-                                </div>
-
-                                <!-- Phone -->
-                                <div>
-                                    <label for="phone" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                        Phone Number
-                                    </label>
-                                    <input type="tel" id="phone" name="phone"
-                                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                                           placeholder="Your phone number">
-                                </div>
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Email Address *
+                                </label>
+                                <input type="email" id="email" name="email" required
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                                       placeholder="your@email.com">
                             </div>
 
                             <!-- Business Type -->
@@ -787,87 +763,32 @@
                                 <select id="business-type" name="business_type" required
                                         class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
                                     <option value="">Select your business type</option>
-                                    <option value="independent-gym">Independent Gym</option>
-                                    <option value="fitness-chain">Fitness Chain</option>
-                                    <option value="personal-training">Personal Training Studio</option>
-                                    <option value="group-fitness">Group Fitness Classes</option>
-                                    <option value="martial-arts">Martial Arts/Boxing Gym</option>
+                                    <option value="gym">Gym</option>
+                                    <option value="personal-training">Personal Training</option>
+                                    <option value="fitness-classes">Fitness Classes</option>
                                     <option value="yoga-studio">Yoga/Pilates Studio</option>
-                                    <option value="crossfit">CrossFit Box</option>
-                                    <option value="health-club">Health & Wellness Club</option>
-                                    <option value="sports-club">Sports Club</option>
-                                    <option value="online-fitness">Online Fitness Platform</option>
+                                    <option value="martial-arts">Martial Arts</option>
+                                    <option value="crossfit">CrossFit</option>
                                     <option value="other">Other</option>
                                 </select>
                             </div>
 
-                            <!-- Key Features -->
+                            <!-- Message -->
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                                    Which features are most important for your website? (Select all that apply)
+                                <label for="message" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Project Details
                                 </label>
-                                <div class="grid md:grid-cols-2 gap-3">
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" name="features[]" value="class-booking" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="text-gray-700 dark:text-gray-300">Class Booking System</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" name="features[]" value="member-portal" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="text-gray-700 dark:text-gray-300">Member Portal</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" name="features[]" value="online-payments" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="text-gray-700 dark:text-gray-300">Online Payments</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" name="features[]" value="virtual-training" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="text-gray-700 dark:text-gray-300">Virtual Training</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" name="features[]" value="progress-tracking" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="text-gray-700 dark:text-gray-300">Progress Tracking</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" name="features[]" value="mobile-app" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="text-gray-700 dark:text-gray-300">Mobile App Integration</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Project Description -->
-                            <div>
-                                <label for="project-description" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    Tell us about your project goals
-                                </label>
-                                <textarea id="project-description" name="project_description" rows="4"
+                                <textarea id="message" name="message" rows="4"
                                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                                          placeholder="Describe your fitness business, current challenges, and what you'd like to achieve with your new website..."></textarea>
-                            </div>
-
-                            <!-- Timeline -->
-                            <div>
-                                <label for="timeline" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    Project Timeline
-                                </label>
-                                <select id="timeline" name="timeline"
-                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
-                                    <option value="">When do you need this completed?</option>
-                                    <option value="asap">As soon as possible</option>
-                                    <option value="1-month">Within 1 month</option>
-                                    <option value="2-3-months">2-3 months</option>
-                                    <option value="flexible">Flexible timeline</option>
-                                </select>
+                                          placeholder="Tell us about your fitness business and website goals..."></textarea>
                             </div>
 
                             <!-- Submit Button -->
                             <div class="text-center pt-4">
                                 <button type="submit" class="px-8 py-4 font-bold text-white rounded-full transition-all hover:shadow-lg transform hover:scale-105 inline-flex items-center space-x-2" style="background: var(--gradient-1);">
-                                    <i class="fas fa-paper-plane"></i>
-                                    <span>Get My Fitness Website Quote</span>
+                                    <i class="fas fa-dumbbell"></i>
+                                    <span>Get My Quote</span>
                                 </button>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
-                                    We'll respond within 24 hours with a detailed proposal tailored to your fitness business.
-                                </p>
                             </div>
                         </form>
                     </div>
@@ -882,7 +803,7 @@
                         <div class="text-white">
                             <i class="fas fa-envelope text-2xl mb-3 block"></i>
                             <h3 class="font-semibold mb-2">Email Us</h3>
-                            <p class="opacity-90">fitness@futurelab.co.uk</p>
+                            <p class="opacity-90">hello@futurelab.co.uk</p>
                         </div>
                         <div class="text-white">
                             <i class="fas fa-clock text-2xl mb-3 block"></i>
