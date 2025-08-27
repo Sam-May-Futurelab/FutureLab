@@ -1277,8 +1277,9 @@
     
     .portfolio-metrics {
         flex-wrap: wrap;
-        padding: 10px 0;
-        gap: 10px;
+        padding: 5px 0;
+        gap: 8px;
+        margin-bottom: 10px;
     }
     
     .metric {
