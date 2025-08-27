@@ -83,6 +83,60 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="theme-color" content="#4361ee">
     <script src="/js/includeElements.js" defer></script>
+    
+    <style>
+        /* Hero Animation Styles */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        /* Counter Animation */
+        .hero .counter {
+            display: inline-block;
+        }
+        
+        /* Enhanced hover effects */
+        .hero-buttons a {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-buttons a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .hero-buttons a:hover::before {
+            left: 100%;
+        }
+    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -92,25 +146,53 @@
         <section class="hero min-h-screen flex items-center relative overflow-hidden">
             <div class="absolute inset-0" style="background: var(--gradient-1);"></div>
             <div class="absolute inset-0 bg-black/40"></div>
+            
+            <!-- Animated Background Elements -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+                <div class="absolute top-40 right-20 w-24 h-24 bg-blue-300/20 rounded-full blur-lg animate-bounce" style="animation-delay: 0.5s; animation-duration: 3s;"></div>
+                <div class="absolute bottom-32 left-1/4 w-20 h-20 bg-purple-300/15 rounded-full blur-lg animate-pulse" style="animation-delay: 1s;"></div>
+                <div class="absolute bottom-20 right-1/3 w-28 h-28 bg-blue-200/10 rounded-full blur-xl animate-bounce" style="animation-delay: 1.5s; animation-duration: 4s;"></div>
+            </div>
+
             <div class="container relative z-10">
                 <div class="hero-content text-center">
                     <div class="mb-8">
-                        <div class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6 hover:scale-110 transition-transform duration-300">
                             <i class="fas fa-graduation-cap text-white text-3xl"></i>
                         </div>
                         <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white">
-                            School & Education Web Design
-                            <span class="block text-3xl md:text-4xl mt-4 text-white">That Inspires Learning</span>
+                            <span class="inline-block animate-fade-in-up">School & Education</span>
+                            <span class="inline-block animate-fade-in-up" style="animation-delay: 0.2s;">Web Design</span>
+                            <span class="block text-3xl md:text-4xl mt-4 text-white animate-fade-in-up" style="animation-delay: 0.4s;">That Inspires Learning</span>
                         </h1>
                     </div>
-                    <p class="text-white text-xl leading-relaxed mb-10 max-w-4xl mx-auto">Professional school and education websites with student portals, online learning platforms, admissions systems, and parent communication tools. Transform your educational institution's digital presence into a powerful engagement and learning platform.</p>
-                    <div class="hero-buttons flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="#features" class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-100 transition-colors inline-flex items-center space-x-2">
-                            <i class="fas fa-book text-black"></i>
+                    
+                    <!-- Dynamic Stats -->
+                    <div class="flex justify-center space-x-8 mb-8 animate-fade-in-up" style="animation-delay: 0.6s;">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-white" id="schools-counter">500+</div>
+                            <div class="text-sm text-white/80">Schools Helped</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-white" id="students-counter">50k+</div>
+                            <div class="text-sm text-white/80">Students Reached</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-white" id="satisfaction-counter">98%</div>
+                            <div class="text-sm text-white/80">Satisfaction Rate</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-white text-xl leading-relaxed mb-10 max-w-4xl mx-auto animate-fade-in-up" style="animation-delay: 0.8s;">Professional school and education websites with student portals, online learning platforms, admissions systems, and parent communication tools. Transform your educational institution's digital presence into a powerful engagement and learning platform.</p>
+                    
+                    <div class="hero-buttons flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style="animation-delay: 1s;">
+                        <a href="#features" class="group px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-100 transition-all duration-300 inline-flex items-center space-x-2 hover:scale-105 hover:shadow-2xl">
+                            <i class="fas fa-book text-black group-hover:rotate-12 transition-transform"></i>
                             <span class="text-black">View Education Features</span>
                         </a>
-                        <a href="#contact" class="px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-black transition-colors inline-flex items-center space-x-2">
-                            <i class="fas fa-comment"></i>
+                        <a href="#contact" class="group px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-black transition-all duration-300 inline-flex items-center space-x-2 hover:scale-105 hover:shadow-2xl">
+                            <i class="fas fa-comment group-hover:rotate-12 transition-transform"></i>
                             <span>Get Education Quote</span>
                         </a>
                     </div>
@@ -1370,6 +1452,40 @@
                 icon.style.transform = 'rotate(0deg)';
             }
         }
+    </script>
+
+    <script>
+        // Animated Counter Function
+        function animateCounter(element, target, duration = 2000) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                if (element.id === 'satisfaction-counter') {
+                    element.textContent = Math.floor(current) + '%';
+                } else if (element.id === 'students-counter') {
+                    element.textContent = Math.floor(current / 1000) + 'k+';
+                } else {
+                    element.textContent = Math.floor(current) + '+';
+                }
+            }, 16);
+        }
+        
+        // Start counter animations when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                animateCounter(document.getElementById('schools-counter'), 500, 1500);
+                animateCounter(document.getElementById('students-counter'), 50000, 2000);
+                animateCounter(document.getElementById('satisfaction-counter'), 98, 1800);
+            }, 1000); // Start after 1 second delay
+        });
     </script>
 </body>
 </html>
