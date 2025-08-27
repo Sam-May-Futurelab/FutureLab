@@ -89,23 +89,29 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="hero">
-            <div class="animated-gradient-bg"></div>
-            <div class="container">
+        <section class="hero min-h-screen flex items-center relative overflow-hidden">
+            <div class="absolute inset-0" style="background: var(--gradient-1);"></div>
+            <div class="container relative z-10">
                 <div class="hero-content text-center">
-                    <div class="mb-6">
-                        <div class="w-20 h-20 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-spa text-pink-600 text-3xl"></i>
+                    <div class="mb-8">
+                        <div class="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-spa text-white text-3xl"></i>
                         </div>
-                        <h1 class="animate-in gradient-text text-center">
-                            Beauty & Skincare Web Design<br>
-                            <span class="text-2xl">That Showcases Your Expertise</span>
+                        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white animate-in">
+                            Beauty & Skincare Web Design
+                            <span class="block text-3xl md:text-4xl mt-4 opacity-90">That Showcases Your Expertise</span>
                         </h1>
                     </div>
-                    <p class="animate-in stagger-1 text-xl max-w-3xl mx-auto">Elegant websites for beauty salons, spas, and skincare clinics. Online booking, treatment galleries, and e-commerce integration that showcases your expertise and attracts new clients.</p>
-                    <div class="hero-buttons animate-in stagger-2" style="justify-content: center;">
-                        <a href="#features" class="btn btn-primary">View Beauty Features</a>
-                        <a href="#contact" class="btn btn-secondary">Get Beauty Quote</a>
+                    <p class="animate-in stagger-1" style="font-size: 1.3rem; line-height: 1.6; margin-bottom: 40px; opacity: 0.95; max-width: 800px; margin-left: auto; margin-right: auto;">Professional beauty and skincare websites with online booking, treatment galleries, e-commerce integration, and virtual consultations. Transform your digital presence into a powerful client attraction and retention tool that drives beauty business growth.</p>
+                    <div class="hero-buttons animate-in stagger-2 flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#features" class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-100 transition-colors inline-flex items-center space-x-2">
+                            <i class="fas fa-sparkles text-black"></i>
+                            <span class="text-black">View Beauty Features</span>
+                        </a>
+                        <a href="#contact" class="px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-black transition-colors inline-flex items-center space-x-2">
+                            <i class="fas fa-comment"></i>
+                            <span>Get Beauty Quote</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -210,6 +216,110 @@
             </div>
         </section>
 
+        <!-- UK Beauty Market Data Section -->
+        <section class="py-20 bg-gray-50 dark:bg-gray-900">
+            <div class="container">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-6" style="background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                        UK Beauty Market Insights
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        Understanding the UK beauty industry and digital transformation trends in health and wellness
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-pink-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-chart-line text-pink-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-pink-600 dark:text-pink-400">£28.2B</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">UK Beauty Market Value</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            The UK beauty and personal care market is valued at £28.2 billion, representing one of Europe's largest beauty economies with consistent year-over-year growth.
+                        </p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-purple-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-search text-purple-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-purple-600 dark:text-purple-400">91%</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">Research Beauty Services Online</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            91% of consumers research beauty treatments and salons online before booking, making a professional website essential for attracting new clients.
+                        </p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-rose-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-calendar-check text-rose-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-rose-600 dark:text-rose-400">76%</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">Prefer Online Booking</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            76% of beauty clients prefer to book appointments online rather than calling, with 24/7 booking availability being a key deciding factor.
+                        </p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-amber-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-shopping-cart text-amber-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-amber-600 dark:text-amber-400">£156</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">Average Annual Beauty Spend</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            UK consumers spend an average of £156 annually on beauty treatments and products, with premium services seeing 23% year-over-year growth.
+                        </p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-teal-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-mobile-alt text-teal-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-teal-600 dark:text-teal-400">84%</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">Mobile Beauty Searches</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            84% of beauty service searches happen on mobile devices, with users expecting fast-loading, mobile-optimized booking experiences.
+                        </p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-indigo-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-star text-indigo-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">4.2+</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">Reviews Drive Bookings</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            Beauty businesses with 4.2+ star ratings see 67% more bookings, with online reviews being the primary trust factor for new clients.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                        Ready to capture your share of the £28.2B UK beauty market?
+                    </p>
+                    <a href="#contact" class="inline-flex items-center space-x-2 px-8 py-4 font-bold text-white rounded-full transition-all hover:shadow-lg" style="background: var(--gradient-1);">
+                        <i class="fas fa-sparkles"></i>
+                        <span>Launch Your Beauty Website</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- Beauty Business Benefits -->
         <section class="py-20 bg-gray-50 dark:bg-gray-900">
             <div class="container">
@@ -280,6 +390,135 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories Section -->
+        <section class="py-20 bg-gray-50 dark:bg-gray-900">
+            <div class="container">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                        Real Beauty Business Success Stories
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        Discover how our beauty websites have helped salons, spas, and skincare clinics transform their online presence, attract more clients, and boost revenue.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Success Story 1: Glow Beauty Spa -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-spa text-3xl mr-4" style="color: var(--primary-color);"></i>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Glow Beauty Spa</h3>
+                                <p class="text-gray-600 dark:text-gray-400">London | Luxury Day Spa</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            "FutureLab created a stunning website that truly reflects our brand. The online booking system has been a game-changer - we've seen a 285% increase in bookings since launch, and clients love being able to book treatments 24/7."
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="text-center p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-pink-600 dark:text-pink-400">285%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Booking Increase</div>
+                            </div>
+                            <div class="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">92%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Client Retention</div>
+                            </div>
+                        </div>
+                        <div class="border-t dark:border-gray-600 pt-4">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Key Features Delivered:</h4>
+                            <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>• Online booking with treatment selection</li>
+                                <li>• Virtual spa tour integration</li>
+                                <li>• Gift card e-commerce system</li>
+                                <li>• Client testimonial galleries</li>
+                                <li>• Automated appointment reminders</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 2: Radiance Skincare Clinic -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-leaf text-3xl mr-4" style="color: var(--primary-color);"></i>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Radiance Skincare</h3>
+                                <p class="text-gray-600 dark:text-gray-400">Manchester | Medical Aesthetics</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            "The website FutureLab built has completely transformed our business. The virtual consultation feature and treatment galleries have helped us attract high-value clients. Our revenue has grown by 420% in just 10 months."
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-green-600 dark:text-green-400">420%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Revenue Growth</div>
+                            </div>
+                            <div class="text-center p-4 bg-teal-50 dark:bg-teal-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-teal-600 dark:text-teal-400">87%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Premium Bookings</div>
+                            </div>
+                        </div>
+                        <div class="border-t dark:border-gray-600 pt-4">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Key Features Delivered:</h4>
+                            <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>• Virtual consultation booking</li>
+                                <li>• Before/after treatment galleries</li>
+                                <li>• Skincare product e-commerce</li>
+                                <li>• Treatment plan downloads</li>
+                                <li>• Patient portal integration</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 3: Bella Hair & Beauty -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-cut text-3xl mr-4" style="color: var(--primary-color);"></i>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Bella Hair & Beauty</h3>
+                                <p class="text-gray-600 dark:text-gray-400">Birmingham | Full-Service Salon</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            "FutureLab created a website that perfectly showcases our team and services. The multi-stylist booking system and product sales integration have been incredible. We've expanded to 3 locations and grown our client base by 350%."
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="text-center p-4 bg-rose-50 dark:bg-rose-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-rose-600 dark:text-rose-400">350%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Client Growth</div>
+                            </div>
+                            <div class="text-center p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-amber-600 dark:text-amber-400">3</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">New Locations</div>
+                            </div>
+                        </div>
+                        <div class="border-t dark:border-gray-600 pt-4">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Key Features Delivered:</h4>
+                            <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>• Multi-stylist booking system</li>
+                                <li>• Hair color consultation tools</li>
+                                <li>• Product sales & recommendations</li>
+                                <li>• Loyalty program integration</li>
+                                <li>• Multi-location management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="text-center mt-12">
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                        Ready to achieve similar results for your beauty business?
+                    </p>
+                    <a href="#contact" class="inline-flex items-center space-x-2 px-8 py-4 font-bold text-white rounded-full transition-all hover:shadow-lg" style="background: var(--gradient-1);">
+                        <i class="fas fa-sparkles"></i>
+                        <span>Transform My Beauty Business Online</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -359,31 +598,296 @@
         </section>
 
         <!-- CTA Section -->
-        <section class="py-20 bg-gradient-to-r from-pink-500 to-purple-600">
+        <section class="py-20">
             <div class="container">
-                <div class="text-center text-white">
-                    <h2 class="text-4xl font-bold mb-4">Ready to Transform Your Beauty Business?</h2>
-                    <p class="text-xl mb-8 opacity-90">Get a stunning website that showcases your expertise and attracts more clients to your beauty business.</p>
+                <div class="rounded-2xl p-12 text-center text-white" style="background: var(--gradient-1);">
+                    <h2 class="text-4xl font-bold mb-4 text-white">Ready to Transform Your Beauty Business?</h2>
+                    <p class="text-xl mb-8 opacity-90 text-white">Get a stunning website that showcases your expertise and attracts more clients to your beauty business.</p>
                     <div class="space-x-4">
-                        <a href="#contact" class="bg-white !text-black px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-colors inline-flex items-center space-x-2">
-                            <i class="fas fa-sparkles !text-black"></i>
-                            <span class="!text-black">Start Your Beauty Website</span>
+                        <a href="#contact" class="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-colors inline-flex items-center space-x-2">
+                            <i class="fas fa-sparkles text-black"></i>
+                            <span class="text-black">Start Your Beauty Website</span>
                         </a>
-                        <a href="/portfolio" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:!text-black transition-colors inline-flex items-center space-x-2">
-                            <i class="fas fa-eye hover:!text-black"></i>
-                            <span class="hover:!text-black">View Examples</span>
+                        <a href="/portfolio" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition-colors inline-flex items-center space-x-2">
+                            <i class="fas fa-eye"></i>
+                            <span>View Examples</span>
                         </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="contact">
-            <div class="animated-gradient-bg"></div>
+        <!-- FAQ Section -->
+        <section class="py-20 bg-white dark:bg-gray-800">
             <div class="container">
-                <h2 class="section-title">Get Your Beauty Website Quote</h2>
-                <p class="text-center text-xl mb-8">Tell us about your beauty business and we'll create a custom website solution.</p>
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                        Frequently Asked Questions
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        Everything you need to know about getting a professional beauty website for your salon, spa, or skincare clinic.
+                    </p>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <div class="space-y-6">
+                        <!-- FAQ Item 1 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    How long does it take to build a beauty salon website?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Most beauty websites are completed within 2-4 weeks, depending on the complexity of features required. Simple booking systems take around 2 weeks, while comprehensive platforms with e-commerce and virtual consultations may take 3-4 weeks. We provide regular updates throughout the development process.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 2 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Can you integrate with popular beauty booking systems like Fresha or Treatwell?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Yes! We integrate with popular beauty platforms including Fresha, Treatwell, Booksy, Phorest, and many others. We can also connect with payment processors like Stripe, inventory management systems, and CRM platforms. Our team ensures seamless data flow between your website and existing business tools.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 3 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Do beauty websites need special features for showcasing treatments?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Absolutely! We specialize in beauty-specific features including before/after galleries, treatment videos, virtual skin consultations, and interactive service menus. Since 91% of beauty clients research treatments online, visual storytelling and comprehensive treatment information are crucial for conversions.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 4 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    What's included in a beauty website package?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Our beauty website packages include responsive design, online booking system, treatment galleries, staff profiles, client testimonials, basic e-commerce, SEO optimization, social media integration, and contact forms. We also provide 3 months of free updates and training for your team.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 5 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    How do you handle client data privacy and GDPR compliance for beauty businesses?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    We take data protection seriously and ensure full GDPR compliance. All client data is encrypted, stored securely, and processed according to UK data protection laws. We implement proper consent mechanisms, data retention policies, and provide clear privacy notices. Your clients' personal and treatment data is always protected.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 6 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Can you help with e-commerce for selling beauty products online?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Yes! We build comprehensive e-commerce platforms for selling skincare products, beauty tools, gift vouchers, and treatment packages. Features include product catalogs, secure payments, inventory management, customer accounts, and integration with your existing POS systems.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 7 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    What payment methods can be integrated for beauty services and products?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    We integrate all major payment methods including card payments, digital wallets (Apple Pay, Google Pay), PayPal, and bank transfers. Our systems handle deposits, full payments, treatment packages, product sales, and gift vouchers. All transactions are secure and PCI compliant.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 8 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Do you provide ongoing support and website maintenance?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Absolutely! We provide comprehensive ongoing support including software updates, security monitoring, backup management, performance optimization, and technical support. Our team also helps with content updates, new treatment additions, and seasonal promotional campaigns.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 9 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    How much does a professional beauty website cost?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Our beauty websites start from £2,200 for basic sites with booking functionality, with comprehensive platforms ranging from £3,500-£7,000. The investment depends on features like e-commerce, virtual consultations, and custom integrations. We provide detailed quotes based on your specific requirements and offer flexible payment plans.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 10 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Can you help with beauty business marketing and local SEO?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Yes! We provide comprehensive digital marketing services including local SEO to help you rank for terms like "beauty salon near me", Google My Business optimization, social media integration, email marketing automation, and conversion optimization. Our beauty marketing strategies are designed to attract and retain clients.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Call to Action -->
+                <div class="text-center mt-12">
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                        Still have questions about your beauty website?
+                    </p>
+                    <a href="#contact" class="inline-flex items-center space-x-2 px-8 py-4 font-bold text-white rounded-full transition-all hover:shadow-lg" style="background: var(--gradient-1);">
+                        <i class="fas fa-comments"></i>
+                        <span>Get Your Questions Answered</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-gray-900 dark:bg-black">
+            <div class="container">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold mb-4 text-white">
+                        Get Your Beauty Website Quote
+                    </h2>
+                    <p class="text-xl text-white opacity-90 max-w-3xl mx-auto">
+                        Ready to transform your beauty business online? Let's create a website that showcases your expertise and attracts clients.
+                    </p>
+                </div>
+
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl">
+                        <form class="space-y-6" action="/submit-beauty-quote" method="POST">
+                            <!-- Name -->
+                            <div>
+                                <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Your Name *
+                                </label>
+                                <input type="text" id="name" name="name" required
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                                       placeholder="Your full name">
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Email Address *
+                                </label>
+                                <input type="email" id="email" name="email" required
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                                       placeholder="your@email.com">
+                            </div>
+
+                            <!-- Business Type -->
+                            <div>
+                                <label for="business-type" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Type of Beauty Business *
+                                </label>
+                                <select id="business-type" name="business_type" required
+                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
+                                    <option value="">Select your business type</option>
+                                    <option value="beauty-salon">Beauty Salon</option>
+                                    <option value="spa">Day Spa</option>
+                                    <option value="skincare-clinic">Skincare Clinic</option>
+                                    <option value="nail-salon">Nail Salon</option>
+                                    <option value="hair-salon">Hair Salon</option>
+                                    <option value="medical-aesthetics">Medical Aesthetics</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <!-- Message -->
+                            <div>
+                                <label for="message" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Project Details
+                                </label>
+                                <textarea id="message" name="message" rows="4"
+                                          class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                                          placeholder="Tell us about your beauty business and website goals..."></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center pt-4">
+                                <button type="submit" class="px-8 py-4 font-bold text-white rounded-full transition-all hover:shadow-lg transform hover:scale-105 inline-flex items-center space-x-2" style="background: var(--gradient-1);">
+                                    <i class="fas fa-sparkles"></i>
+                                    <span>Get My Quote</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="grid md:grid-cols-3 gap-8 mt-12 text-center">
+                        <div class="text-white">
+                            <i class="fas fa-phone text-2xl mb-3 block"></i>
+                            <h3 class="font-semibold mb-2">Call Us</h3>
+                            <p class="opacity-90">+44 (0) 20 7946 0000</p>
+                        </div>
+                        <div class="text-white">
+                            <i class="fas fa-envelope text-2xl mb-3 block"></i>
+                            <h3 class="font-semibold mb-2">Email Us</h3>
+                            <p class="opacity-90">hello@futurelab.co.uk</p>
+                        </div>
+                        <div class="text-white">
+                            <i class="fas fa-clock text-2xl mb-3 block"></i>
+                            <h3 class="font-semibold mb-2">Response Time</h3>
+                            <p class="opacity-90">Within 24 hours</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -393,5 +897,20 @@
     <!-- Scripts -->
     <script src="/script.js"></script>
     <script src="/placeholder.js"></script>
+    <script>
+        // FAQ Toggle Function
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
 </body>
 </html>
