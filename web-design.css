@@ -1137,6 +1137,22 @@
     .metric span:not(strong) {
         font-size: 0.75rem;
     }
+    
+    /* Fix portfolio stats summary on mobile */
+    .portfolio-stats-summary {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        margin: 20px 15px 30px;
+    }
+    
+    .summary-number {
+        font-size: 1.8rem;
+    }
+    
+    .summary-label {
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 480px) {
