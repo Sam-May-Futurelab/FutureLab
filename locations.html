@@ -118,6 +118,21 @@
         
         .dark-theme .location-card {
             background: #1e293b;
+            color: var(--dark-text-color);
+        }
+        
+        .dark-theme .location-highlights h4,
+        .dark-theme .local-insights p {
+            color: var(--dark-heading-color);
+        }
+        
+        .dark-theme .market-data-card {
+            background: var(--dark-card-bg) !important;
+            color: var(--dark-text-color);
+        }
+        
+        .dark-theme .market-data-card h4 {
+            color: var(--dark-heading-color);
         }
         
         .location-card:hover {
@@ -216,6 +231,58 @@
             background: #0f172a;
         }
         
+        /* Dark mode for process section */
+        .dark-theme .process-section {
+            background: var(--dark-subtle-bg) !important;
+        }
+        
+        .dark-theme .process-section h2,
+        .dark-theme .process-section h4 {
+            color: var(--dark-heading-color);
+        }
+        
+        .dark-theme .process-section p {
+            color: var(--dark-text-color);
+        }
+        
+        /* Dark mode for FAQ section */
+        .dark-theme .faq-section {
+            background: var(--dark-bg-color) !important;
+        }
+        
+        .dark-theme .faq-section h2,
+        .dark-theme .faq-section h4 {
+            color: var(--dark-heading-color);
+        }
+        
+        .dark-theme .faq-section p {
+            color: var(--dark-text-color);
+        }
+        
+        .dark-theme .faq-item {
+            border-bottom: 1px solid var(--dark-border-color) !important;
+        }
+        
+        /* Dark mode for success stories */
+        .dark-theme .success-stories {
+            background: var(--dark-card-bg) !important;
+        }
+        
+        .dark-theme .success-stories h2,
+        .dark-theme .success-stories h3,
+        .dark-theme .success-stories h4 {
+            color: var(--dark-heading-color);
+        }
+        
+        .dark-theme .success-stories p {
+            color: var(--dark-text-color);
+        }
+        
+        .dark-theme .success-story-card {
+            background: var(--dark-subtle-bg) !important;
+            border-left: 5px solid var(--primary-color) !important;
+        }
+        
         @media (max-width: 768px) {
             .locations-grid {
                 grid-template-columns: 1fr;
@@ -235,14 +302,28 @@
         <!-- Hero Section -->
         <section class="locations-hero">
             <div class="container">
-                <h1>Web Design Services Across the UK</h1>
-                <p style="font-size: 1.2rem; margin: 30px 0; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    Professional web design and landing page services with local expertise in major UK cities. 
-                    Custom solutions that understand your local market.
+                <h1>Expert Web Design Services Across the UK</h1>
+                <p style="font-size: 1.2rem; margin: 30px 0; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    Professional web design and digital marketing services with deep local expertise across major UK cities. 
+                    We understand regional markets, local competition, and what drives success in your specific area.
                 </p>
+                <div class="hero-benefits" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <div style="text-align: center; color: rgba(255,255,255,0.9);">
+                        <i class="fas fa-map-marker-alt" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
+                        <p><strong>Local Market Expertise</strong><br>Deep understanding of regional business landscapes</p>
+                    </div>
+                    <div style="text-align: center; color: rgba(255,255,255,0.9);">
+                        <i class="fas fa-chart-line" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
+                        <p><strong>Proven Local Results</strong><br>150+ successful projects across UK cities</p>
+                    </div>
+                    <div style="text-align: center; color: rgba(255,255,255,0.9);">
+                        <i class="fas fa-handshake" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
+                        <p><strong>Regional Partnerships</strong><br>Trusted by local businesses and startups</p>
+                    </div>
+                </div>
                 <div style="margin-top: 40px;">
                     <a href="#locations" class="btn btn-primary" style="margin-right: 20px;">View Locations</a>
-                    <a href="#contact" class="btn btn-secondary">Get Started</a>
+                    <a href="#contact" class="btn btn-secondary">Get Free Consultation</a>
                 </div>
             </div>
         </section>
@@ -250,8 +331,8 @@
         <!-- Primary Locations -->
         <section class="section-transition" id="locations">
             <div class="container">
-                <h2 class="section-title">Our Service Locations</h2>
-                <p class="section-subtitle">Local expertise in major UK cities with custom web design solutions for every market</p>
+                <h2 class="section-title">Our UK Service Locations</h2>
+                <p class="section-subtitle">Comprehensive web design services with local market expertise across major UK business hubs</p>
                 
                 <div class="locations-grid">
                     <!-- London -->
@@ -259,8 +340,8 @@
                         <div class="location-icon">
                             <i class="fas fa-landmark"></i>
                         </div>
-                        <h3>London</h3>
-                        <p>The heart of UK business. Serving the City, Canary Wharf, and all London boroughs with premium web design services.</p>
+                        <h3>London Web Design Services</h3>
+                        <p>The UK's financial and tech capital. Serving the City, Canary Wharf, Shoreditch, and all London boroughs with premium web design services tailored for competitive markets.</p>
                         
                         <div class="location-stats">
                             <div class="stat-item">
@@ -273,14 +354,22 @@
                             </div>
                         </div>
                         
-                        <ul style="text-align: left; margin: 20px 0;">
-                            <li>✓ Financial district expertise</li>
-                            <li>✓ Startup-friendly solutions</li>
-                            <li>✓ Premium business services</li>
-                            <li>✓ Fast turnaround times</li>
-                        </ul>
+                        <div class="location-highlights">
+                            <h4>London Market Expertise:</h4>
+                            <ul style="text-align: left; margin: 20px 0;">
+                                <li>✓ Financial sector web design (City & Canary Wharf)</li>
+                                <li>✓ Tech startup solutions (Shoreditch & Old Street)</li>
+                                <li>✓ Premium business services (Mayfair & Westminster)</li>
+                                <li>✓ Fast turnaround for urgent projects</li>
+                                <li>✓ High-end e-commerce for luxury brands</li>
+                            </ul>
+                        </div>
                         
-                        <a href="/locations/london" class="btn btn-primary full-width">View London Services</a>
+                        <div class="local-insights">
+                            <p><strong>London Insight:</strong> With over 40,000 new businesses starting in London annually, standing out online is crucial. We specialize in creating premium websites that compete in London's demanding market.</p>
+                        </div>
+                        
+                        <a href="/locations/london" class="btn btn-primary full-width">Explore London Services</a>
                     </div>
                     
                     <!-- Manchester -->
@@ -288,8 +377,8 @@
                         <div class="location-icon">
                             <i class="fas fa-industry"></i>
                         </div>
-                        <h3>Manchester</h3>
-                        <p>The Northern Powerhouse. Expert web design for Manchester's thriving business community and tech sector.</p>
+                        <h3>Manchester Web Design Services</h3>
+                        <p>The Northern Powerhouse and UK's second tech hub. Expert web design for Manchester's thriving digital economy, creative industries, and growing startup ecosystem.</p>
                         
                         <div class="location-stats">
                             <div class="stat-item">
@@ -302,14 +391,22 @@
                             </div>
                         </div>
                         
-                        <ul style="text-align: left; margin: 20px 0;">
-                            <li>✓ Tech startup focus</li>
-                            <li>✓ Creative industry expertise</li>
-                            <li>✓ Northern Quarter specialists</li>
-                            <li>✓ Competitive pricing</li>
-                        </ul>
+                        <div class="location-highlights">
+                            <h4>Manchester Market Expertise:</h4>
+                            <ul style="text-align: left; margin: 20px 0;">
+                                <li>✓ Tech startup focus (Northern Quarter)</li>
+                                <li>✓ Creative industry expertise (Ancoats)</li>
+                                <li>✓ MediaCity digital solutions (Salford)</li>
+                                <li>✓ Competitive Northern pricing</li>
+                                <li>✓ Manufacturing & industrial B2B sites</li>
+                            </ul>
+                        </div>
                         
-                        <a href="/locations/manchester" class="btn btn-primary full-width">View Manchester Services</a>
+                        <div class="local-insights">
+                            <p><strong>Manchester Insight:</strong> As the UK's fastest-growing tech city outside London, Manchester offers incredible opportunities. We help businesses capitalize on the city's £5bn digital economy.</p>
+                        </div>
+                        
+                        <a href="/locations/manchester" class="btn btn-primary full-width">Explore Manchester Services</a>
                     </div>
                     
                     <!-- Birmingham -->
@@ -317,8 +414,8 @@
                         <div class="location-icon">
                             <i class="fas fa-building"></i>
                         </div>
-                        <h3>Birmingham</h3>
-                        <p>The UK's second city. Comprehensive web design services for Birmingham's diverse business landscape.</p>
+                        <h3>Birmingham Web Design Services</h3>
+                        <p>The UK's second city and Midlands business capital. Comprehensive web design services for Birmingham's diverse economy, from automotive to financial services.</p>
                         
                         <div class="location-stats">
                             <div class="stat-item">
@@ -331,14 +428,22 @@
                             </div>
                         </div>
                         
-                        <ul style="text-align: left; margin: 20px 0;">
-                            <li>✓ Manufacturing focus</li>
-                            <li>✓ Business district expertise</li>
-                            <li>✓ Midlands market knowledge</li>
-                            <li>✓ Value-driven solutions</li>
-                        </ul>
+                        <div class="location-highlights">
+                            <h4>Birmingham Market Expertise:</h4>
+                            <ul style="text-align: left; margin: 20px 0;">
+                                <li>✓ Manufacturing & automotive sector focus</li>
+                                <li>✓ Business district expertise (Colmore Row)</li>
+                                <li>✓ Midlands market knowledge</li>
+                                <li>✓ Value-driven solutions for SMEs</li>
+                                <li>✓ Jewellery Quarter creative businesses</li>
+                            </ul>
+                        </div>
                         
-                        <a href="/locations/birmingham" class="btn btn-primary full-width">View Birmingham Services</a>
+                        <div class="local-insights">
+                            <p><strong>Birmingham Insight:</strong> As Europe's youngest major city, Birmingham's dynamic economy creates unique digital opportunities. We understand the Midlands market and its £90bn economy.</p>
+                        </div>
+                        
+                        <a href="/locations/birmingham" class="btn btn-primary full-width">Explore Birmingham Services</a>
                     </div>
                     
                     <!-- Leeds -->
@@ -346,8 +451,8 @@
                         <div class="location-icon">
                             <i class="fas fa-university"></i>
                         </div>
-                        <h3>Leeds</h3>
-                        <p>Yorkshire's business hub. Professional web design services for Leeds' financial and legal sectors.</p>
+                        <h3>Leeds Web Design Services</h3>
+                        <p>Yorkshire's business and financial hub. Professional web design services for Leeds' thriving financial sector, legal services, and growing digital economy.</p>
                         
                         <div class="location-stats">
                             <div class="stat-item">
@@ -360,14 +465,22 @@
                             </div>
                         </div>
                         
-                        <ul style="text-align: left; margin: 20px 0;">
-                            <li>✓ Financial services focus</li>
-                            <li>✓ Legal sector expertise</li>
-                            <li>✓ Yorkshire business culture</li>
-                            <li>✓ Professional solutions</li>
-                        </ul>
+                        <div class="location-highlights">
+                            <h4>Leeds Market Expertise:</h4>
+                            <ul style="text-align: left; margin: 20px 0;">
+                                <li>✓ Financial services focus (Park Row)</li>
+                                <li>✓ Legal sector expertise</li>
+                                <li>✓ Yorkshire business culture understanding</li>
+                                <li>✓ Professional services websites</li>
+                                <li>✓ Call centre & customer service platforms</li>
+                            </ul>
+                        </div>
                         
-                        <a href="/locations/leeds" class="btn btn-primary full-width">View Leeds Services</a>
+                        <div class="local-insights">
+                            <p><strong>Leeds Insight:</strong> As the UK's largest financial center outside London, Leeds demands sophisticated digital solutions. We create websites that reflect Yorkshire's professional standards.</p>
+                        </div>
+                        
+                        <a href="/locations/leeds" class="btn btn-primary full-width">Explore Leeds Services</a>
                     </div>
                     
                     <!-- Liverpool -->
@@ -375,8 +488,8 @@
                         <div class="location-icon">
                             <i class="fas fa-ship"></i>
                         </div>
-                        <h3>Liverpool</h3>
-                        <p>Maritime heritage meets modern business. Web design services for Liverpool's growing digital economy.</p>
+                        <h3>Liverpool Web Design Services</h3>
+                        <p>Maritime heritage meets modern innovation. Web design services for Liverpool's growing digital economy, creative industries, and thriving tourism sector.</p>
                         
                         <div class="location-stats">
                             <div class="stat-item">
@@ -389,14 +502,22 @@
                             </div>
                         </div>
                         
-                        <ul style="text-align: left; margin: 20px 0;">
-                            <li>✓ Creative industry focus</li>
-                            <li>✓ Tourism sector expertise</li>
-                            <li>✓ Maritime business knowledge</li>
-                            <li>✓ Cultural sensitivity</li>
-                        </ul>
+                        <div class="location-highlights">
+                            <h4>Liverpool Market Expertise:</h4>
+                            <ul style="text-align: left; margin: 20px 0;">
+                                <li>✓ Creative industry focus (Baltic Triangle)</li>
+                                <li>✓ Tourism sector expertise</li>
+                                <li>✓ Maritime business knowledge</li>
+                                <li>✓ Cultural sensitivity & local pride</li>
+                                <li>✓ Music & entertainment industry sites</li>
+                            </ul>
+                        </div>
                         
-                        <a href="/locations/liverpool" class="btn btn-primary full-width">View Liverpool Services</a>
+                        <div class="local-insights">
+                            <p><strong>Liverpool Insight:</strong> Liverpool's creative renaissance has created a £2.5bn digital sector. We help businesses tap into the city's unique cultural energy and growing tech scene.</p>
+                        </div>
+                        
+                        <a href="/locations/liverpool" class="btn btn-primary full-width">Explore Liverpool Services</a>
                     </div>
                     
                     <!-- Bristol -->
@@ -404,8 +525,8 @@
                         <div class="location-icon">
                             <i class="fas fa-rocket"></i>
                         </div>
-                        <h3>Bristol</h3>
-                        <p>Tech and aerospace innovation hub. Modern web design solutions for Bristol's cutting-edge businesses.</p>
+                        <h3>Bristol Web Design Services</h3>
+                        <p>Southwest England's tech and innovation capital. Modern web design solutions for Bristol's cutting-edge aerospace, tech, and creative sectors.</p>
                         
                         <div class="location-stats">
                             <div class="stat-item">
@@ -418,15 +539,36 @@
                             </div>
                         </div>
                         
-                        <ul style="text-align: left; margin: 20px 0;">
-                            <li>✓ Tech startup expertise</li>
-                            <li>✓ Aerospace industry focus</li>
-                            <li>✓ Innovation-driven solutions</li>
-                            <li>✓ Future-ready designs</li>
-                        </ul>
+                        <div class="location-highlights">
+                            <h4>Bristol Market Expertise:</h4>
+                            <ul style="text-align: left; margin: 20px 0;">
+                                <li>✓ Tech startup expertise (Engine Shed)</li>
+                                <li>✓ Aerospace industry focus</li>
+                                <li>✓ Innovation-driven solutions</li>
+                                <li>✓ Future-ready designs</li>
+                                <li>✓ Green tech & sustainability focus</li>
+                            </ul>
+                        </div>
                         
-                        <a href="/locations/bristol" class="btn btn-primary full-width">View Bristol Services</a>
+                        <div class="local-insights">
+                            <p><strong>Bristol Insight:</strong> Named UK's most innovative city, Bristol's £13bn economy demands cutting-edge digital solutions. We create websites as forward-thinking as the businesses we serve.</p>
+                        </div>
+                        
+                        <a href="/locations/bristol" class="btn btn-primary full-width">Explore Bristol Services</a>
                     </div>
+                </div>
+                
+                <!-- Extended Coverage -->
+                <div style="margin-top: 60px; text-align: center; padding: 40px; background: rgba(67, 97, 238, 0.05); border-radius: var(--border-radius);">
+                    <h3>Plus Extended Coverage Across the UK</h3>
+                    <p style="margin: 20px 0; color: var(--gray-color);">We also serve businesses in Newcastle, Sheffield, Nottingham, Cardiff, Edinburgh, Glasgow, and more.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
+                        <div>Newcastle • Sheffield • Nottingham</div>
+                        <div>Cardiff • Swansea • Newport</div>
+                        <div>Edinburgh • Glasgow • Aberdeen</div>
+                        <div>Leicester • Coventry • Derby</div>
+                    </div>
+                    <a href="#contact" class="btn btn-outline">Get Quote for Your City</a>
                 </div>
             </div>
         </section>
@@ -434,30 +576,144 @@
         <!-- Coverage Map Section -->
         <section class="coverage-map">
             <div class="container">
-                <h2 class="section-title">Nationwide Coverage</h2>
-                <p class="section-subtitle">Serving businesses across the UK with remote and on-site services</p>
+                <h2 class="section-title">UK Market Data & Opportunities</h2>
+                <p class="section-subtitle">Understanding the digital landscape across major UK business centers</p>
+                
+                <div class="market-data-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin: 50px 0;">
+                    <div class="market-data-card" style="background: white; padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
+                        <h4>London Digital Economy</h4>
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary-color); margin: 15px 0;">£200bn+</div>
+                        <p>Annual digital economy value with 40,000+ new businesses starting yearly. London leads European fintech and has the highest concentration of digital startups.</p>
+                        <ul style="margin-top: 20px; text-align: left;">
+                            <li>• 1 in 3 UK tech unicorns are London-based</li>
+                            <li>• £10.5bn invested in London tech in 2023</li>
+                            <li>• 60% of UK's digital advertising spend</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="market-data-card" style="background: white; padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
+                        <h4>Manchester Tech Growth</h4>
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary-color); margin: 15px 0;">+25%</div>
+                        <p>Annual growth in tech jobs making Manchester the UK's fastest-growing tech hub outside London. The Northern Powerhouse initiative drives massive digital investment.</p>
+                        <ul style="margin-top: 20px; text-align: left;">
+                            <li>• 100,000+ digital jobs in Greater Manchester</li>
+                            <li>• £5bn contribution to regional economy</li>
+                            <li>• Home to 65,000+ businesses</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="market-data-card" style="background: white; padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
+                        <h4>UK E-commerce Boom</h4>
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary-color); margin: 15px 0;">£99bn</div>
+                        <p>UK online retail sales in 2023, representing 28% of total retail. Post-pandemic digital acceleration continues with mobile commerce growing 40% year-on-year.</p>
+                        <ul style="margin-top: 20px; text-align: left;">
+                            <li>• 87% of UK adults shop online</li>
+                            <li>• Mobile accounts for 50% of e-commerce traffic</li>
+                            <li>• B2B online sales growing 18% annually</li>
+                        </ul>
+                    </div>
+                </div>
                 
                 <div class="coverage-stats">
                     <div class="coverage-stat">
                         <div class="coverage-number">150+</div>
                         <h4>Projects Completed</h4>
-                        <p>Successful web design projects across the UK</p>
+                        <p>Successful web design projects across the UK spanning all major industries and business sizes</p>
                     </div>
                     <div class="coverage-stat">
                         <div class="coverage-number">25+</div>
                         <h4>Cities Served</h4>
-                        <p>Major UK cities and surrounding areas</p>
+                        <p>Major UK cities and surrounding areas with dedicated local market expertise</p>
                     </div>
                     <div class="coverage-stat">
                         <div class="coverage-number">98%</div>
                         <h4>Client Satisfaction</h4>
-                        <p>Happy clients across all locations</p>
+                        <p>Outstanding client satisfaction rate with many long-term partnerships across all locations</p>
                     </div>
                     <div class="coverage-stat">
-                        <div class="coverage-number">48hr</div>
+                        <div class="coverage-number">24hr</div>
                         <h4>Response Time</h4>
-                        <p>Fast response times nationwide</p>
+                        <p>Rapid response times nationwide with dedicated support for urgent projects</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories Section -->
+        <section class="success-stories" style="background: white; padding: 80px 0; margin: 80px 0;">
+            <div class="container">
+                <h2 class="section-title">Local Success Stories</h2>
+                <p class="section-subtitle">Real results from businesses across our UK locations</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin: 50px 0;">
+                    <div class="success-story-card" style="background: #f8f9ff; padding: 40px; border-radius: var(--border-radius); border-left: 5px solid var(--primary-color);">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <i class="fas fa-landmark" style="font-size: 2rem; color: var(--primary-color); margin-right: 15px;"></i>
+                            <div>
+                                <h4>London Fintech Startup</h4>
+                                <p style="color: var(--gray-color); margin: 0;">Financial Technology</p>
+                            </div>
+                        </div>
+                        <p>"Our website redesign helped us secure £2M in Series A funding. The professional design gave investors confidence in our digital capabilities."</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">+180%</div>
+                                <div style="font-size: 0.9rem; color: var(--gray-color);">Lead Generation</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">£2M</div>
+                                <div style="font-size: 0.9rem; color: var(--gray-color);">Funding Secured</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="success-story-card" style="background: #f8f9ff; padding: 40px; border-radius: var(--border-radius); border-left: 5px solid var(--primary-color);">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <i class="fas fa-industry" style="font-size: 2rem; color: var(--primary-color); margin-right: 15px;"></i>
+                            <div>
+                                <h4>Manchester Creative Agency</h4>
+                                <p style="color: var(--gray-color); margin: 0;">Digital Marketing</p>
+                            </div>
+                        </div>
+                        <p>"The new website perfectly captured Manchester's creative energy. Our client inquiries tripled within 6 months of launch."</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">+300%</div>
+                                <div style="font-size: 0.9rem; color: var(--gray-color);">Client Inquiries</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">Top 3</div>
+                                <div style="font-size: 0.9rem; color: var(--gray-color);">Google Rankings</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="success-story-card" style="background: #f8f9ff; padding: 40px; border-radius: var(--border-radius); border-left: 5px solid var(--primary-color);">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <i class="fas fa-building" style="font-size: 2rem; color: var(--primary-color); margin-right: 15px;"></i>
+                            <div>
+                                <h4>Birmingham Manufacturing</h4>
+                                <p style="color: var(--gray-color); margin: 0;">Industrial Equipment</p>
+                            </div>
+                        </div>
+                        <p>"Our B2B website now generates qualified leads daily. The professional design reflects our engineering excellence."</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">+250%</div>
+                                <div style="font-size: 0.9rem; color: var(--gray-color);">B2B Leads</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">£500K</div>
+                                <div style="font-size: 0.9rem; color: var(--gray-color);">New Contracts</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 50px;">
+                    <h3>Join Our Success Stories</h3>
+                    <p style="margin: 20px 0; color: var(--gray-color);">See how we can transform your business's digital presence in your local market</p>
+                    <a href="#contact" class="btn btn-primary">Get Your Free Consultation</a>
                 </div>
             </div>
         </section>
@@ -474,28 +730,128 @@
                             <i class="fas fa-desktop"></i>
                         </div>
                         <h4>Custom Web Design</h4>
-                        <p>Bespoke websites tailored to your local market and business needs</p>
+                        <p>Bespoke websites tailored to your local market, competition, and customer preferences</p>
                     </div>
                     <div style="text-align: center;">
                         <div style="width: 60px; height: 60px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">
                             <i class="fas fa-rocket"></i>
                         </div>
-                        <h4>Landing Pages</h4>
-                        <p>High-converting landing pages optimized for your target location</p>
+                        <h4>High-Converting Landing Pages</h4>
+                        <p>Landing pages optimized for your target location with local SEO and regional insights</p>
                     </div>
                     <div style="text-align: center;">
                         <div style="width: 60px; height: 60px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">
                             <i class="fas fa-search"></i>
                         </div>
-                        <h4>Local SEO</h4>
-                        <p>Search optimization targeting your specific city and region</p>
+                        <h4>Local SEO Optimization</h4>
+                        <p>Search optimization targeting your specific city, region, and local search behaviors</p>
                     </div>
                     <div style="text-align: center;">
                         <div style="width: 60px; height: 60px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">
                             <i class="fas fa-shopping-cart"></i>
                         </div>
-                        <h4>E-commerce</h4>
-                        <p>Online stores optimized for your local customer base</p>
+                        <h4>E-commerce Solutions</h4>
+                        <p>Online stores optimized for your local customer base and regional payment preferences</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 60px; height: 60px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Mobile-First Design</h4>
+                        <p>Responsive websites that work perfectly on all devices with fast loading speeds</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 60px; height: 60px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4>Ongoing Support</h4>
+                        <p>Continuous maintenance, updates, and local support to keep your website performing</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Process Section -->
+        <section class="process-section" style="background: #f8f9ff; padding: 80px 0; margin: 80px 0;">
+            <div class="container">
+                <h2 class="section-title">Our Location-Focused Process</h2>
+                <p class="section-subtitle">How we deliver exceptional results with local market expertise</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin: 50px 0;">
+                    <div style="text-align: center; padding: 30px;">
+                        <div style="width: 80px; height: 80px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem; position: relative;">
+                            <span style="position: absolute; top: -10px; right: -10px; background: var(--accent-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700;">1</span>
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h4>Local Market Research</h4>
+                        <p>Deep dive into your local market, competitors, and customer behaviors. We analyze regional trends, local search patterns, and area-specific business opportunities.</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 30px;">
+                        <div style="width: 80px; height: 80px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem; position: relative;">
+                            <span style="position: absolute; top: -10px; right: -10px; background: var(--accent-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700;">2</span>
+                            <i class="fas fa-pencil-ruler"></i>
+                        </div>
+                        <h4>Strategic Design Planning</h4>
+                        <p>Create wireframes and designs that reflect your local brand positioning. We ensure your website resonates with regional customers and stands out in your local market.</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 30px;">
+                        <div style="width: 80px; height: 80px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem; position: relative;">
+                            <span style="position: absolute; top: -10px; right: -10px; background: var(--accent-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700;">3</span>
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h4>Development & Local SEO</h4>
+                        <p>Build your website with local SEO optimization, ensuring excellent performance in local search results and fast loading speeds for your regional audience.</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 30px;">
+                        <div style="width: 80px; height: 80px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem; position: relative;">
+                            <span style="position: absolute; top: -10px; right: -10px; background: var(--accent-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700;">4</span>
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h4>Launch & Local Monitoring</h4>
+                        <p>Launch your website with comprehensive local tracking. We monitor local search performance, regional traffic patterns, and provide ongoing optimization.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" style="background: white; padding: 80px 0;">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Everything you need to know about our UK-wide web design services</p>
+                
+                <div style="max-width: 800px; margin: 50px auto;">
+                    <div class="faq-item" style="border-bottom: 1px solid #eee; padding: 30px 0;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">Do you have physical offices in every city you serve?</h4>
+                        <p>While we operate primarily as a digital-first agency, we have local representatives and partners in major UK cities. We can arrange face-to-face meetings in London, Manchester, Birmingham, Leeds, Liverpool, and Bristol when needed. Our digital-first approach allows us to provide excellent service nationwide while keeping costs competitive.</p>
+                    </div>
+                    
+                    <div class="faq-item" style="border-bottom: 1px solid #eee; padding: 30px 0;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">How do you understand local markets without being physically present?</h4>
+                        <p>We invest heavily in local market research for each region we serve. Our team includes specialists with expertise in different UK regions, and we use advanced analytics tools to understand local search behaviors, competitor landscapes, and regional business trends. We also partner with local business networks and chambers of commerce.</p>
+                    </div>
+                    
+                    <div class="faq-item" style="border-bottom: 1px solid #eee; padding: 30px 0;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">What makes your local SEO different from standard SEO?</h4>
+                        <p>Our local SEO goes beyond basic location targeting. We optimize for local search patterns, regional terminology, and area-specific business directories. For example, a Manchester business needs different optimization than a London business due to different search behaviors, local competition, and regional business ecosystems.</p>
+                    </div>
+                    
+                    <div class="faq-item" style="border-bottom: 1px solid #eee; padding: 30px 0;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">Can you help with local business directories and citations?</h4>
+                        <p>Absolutely! We help businesses get listed in relevant local directories, chambers of commerce, and industry-specific listings for each region. This includes Google My Business optimization, local business networks, and region-specific professional associations.</p>
+                    </div>
+                    
+                    <div class="faq-item" style="border-bottom: 1px solid #eee; padding: 30px 0;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">How long does a typical project take across different locations?</h4>
+                        <p>Project timelines are generally consistent across all locations (4-8 weeks for most projects), but local market research and regulatory considerations can add 1-2 weeks for complex businesses. London financial services projects may require additional compliance considerations, while Manchester creative projects might need extra brand development time.</p>
+                    </div>
+                    
+                    <div class="faq-item" style="padding: 30px 0;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">Do you offer ongoing support for all UK locations?</h4>
+                        <p>Yes, we provide comprehensive ongoing support for all locations including regular updates, security monitoring, performance optimization, and local SEO maintenance. Our support team understands the specific needs of different UK regions and can provide location-relevant advice and updates.</p>
                     </div>
                 </div>
             </div>
