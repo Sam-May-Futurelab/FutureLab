@@ -1139,11 +1139,16 @@
     }
     
     /* Fix portfolio stats summary on mobile */
+    .portfolio-cta {
+        margin-top: 30px;
+        padding: 20px 0;
+    }
+    
     .portfolio-stats-summary {
         flex-direction: column;
-        gap: 20px;
-        padding: 20px;
-        margin: 20px 15px 30px;
+        gap: 15px;
+        padding: 15px;
+        margin: 10px 15px 20px;
     }
     
     .summary-number {
