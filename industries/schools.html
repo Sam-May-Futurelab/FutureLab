@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School & Education Website Design Services | Educational Institution Web Design | Futurelab</title>
+    <meta name="description" content="Professional school and education website design with student portals, online learning platforms, admissions systems, and mobile optimization. Engaging websites for schools, colleges, and educational institutions.">
+    <meta name="keywords" content="school website design, education website design, university website design, college website design, educational institution web design, school web development, education responsive design">
+    <meta name="author" content="FutureLab Solutions">
+    
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="School & Education Website Design Services | Educational Institution Web Design | Futurelab">
+    <meta property="og:description" content="Professional school and education website design with student portals, online learning platforms, and admissions systems.">
+    <meta property="og:image" content="https://futurelab.solutions/assets/social-share.png">
+    <meta property="og:url" content="https://futurelab.solutions/industries/schools">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://futurelab.solutions/industries/schools">
+    <meta property="twitter:title" content="School & Education Website Design Services | Futurelab">
+    <meta property="twitter:description" content="Professional school and education website design with student portals and online learning platforms.">
+    <meta property="twitter:image" content="https://futurelab.solutions/assets/social-share.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "School & Education Website Design Services",
+      "description": "Professional website design services for schools, colleges, universities, and educational institutions with student portals and online learning features.",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Futurelab Solutions",
+        "url": "https://futurelab.solutions"
+      },
+      "areaServed": "United Kingdom",
+      "serviceType": "Web Design",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Educational Institutions"
+      }
+    }
+    </script>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+    
+    <!-- Critical CSS inline for above-the-fold content -->
+    <style>
+        .hero{background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);color:#fff;padding:100px 0;text-align:center}
+        .btn{padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;transition:all 0.3s ease}
+        .btn-primary{background:#3b82f6;color:#fff}
+        .btn-secondary{background:transparent;color:#fff;border:2px solid #fff}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+        .section-title{font-size:2.5rem;font-weight:700;margin-bottom:2rem;text-align:center}
+        .gradient-text{background:linear-gradient(135deg,#fff 0%,#f9fafb 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    </style>
+    
+    <!-- Load Tailwind CSS asynchronously -->
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script" onload="this.onload=null;this.rel='script'">
+    <script>
+        // Only load Tailwind if not already loaded
+        if(!document.querySelector('script[src*="tailwindcss"]')){
+            const script = document.createElement('script');
+            script.src = 'https://cdn.tailwindcss.com';
+            script.async = true;
+            document.head.appendChild(script);
+        }
+    </script>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/assets/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#4361ee">
+    <script src="/js/includeElements.js" defer></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero min-h-screen flex items-center relative overflow-hidden">
+            <div class="absolute inset-0" style="background: var(--gradient-1);"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="container relative z-10">
+                <div class="hero-content text-center">
+                    <div class="mb-8">
+                        <div class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-graduation-cap text-white text-3xl"></i>
+                        </div>
+                        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white">
+                            School & Education Web Design
+                            <span class="block text-3xl md:text-4xl mt-4 text-white">That Inspires Learning</span>
+                        </h1>
+                    </div>
+                    <p class="text-white text-xl leading-relaxed mb-10 max-w-4xl mx-auto">Professional school and education websites with student portals, online learning platforms, admissions systems, and parent communication tools. Transform your educational institution's digital presence into a powerful engagement and learning platform.</p>
+                    <div class="hero-buttons flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#features" class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-100 transition-colors inline-flex items-center space-x-2">
+                            <i class="fas fa-book text-black"></i>
+                            <span class="text-black">View Education Features</span>
+                        </a>
+                        <a href="#contact" class="px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-black transition-colors inline-flex items-center space-x-2">
+                            <i class="fas fa-comment"></i>
+                            <span>Get Education Quote</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories Section -->
+        <section class="py-20 bg-gray-50 dark:bg-gray-900">
+            <div class="container">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                        Real Educational Institution Success Stories
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        Discover how our education websites have helped schools, colleges, and universities enhance their digital presence, improve student engagement, and streamline administrative processes.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Success Story 1: Greenfield Primary School -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-school text-3xl mr-4" style="color: var(--primary-color);"></i>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Greenfield Primary</h3>
+                                <p class="text-gray-600 dark:text-gray-400">Manchester | Primary School</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            "FutureLab created an amazing website that transformed how we communicate with parents and showcase our school community. The parent portal and online forms have made administration so much easier. Parent engagement has increased by 240% since launch."
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">240%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Parent Engagement</div>
+                            </div>
+                            <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-green-600 dark:text-green-400">89%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Digital Form Usage</div>
+                            </div>
+                        </div>
+                        <div class="border-t dark:border-gray-600 pt-4">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Key Features Delivered:</h4>
+                            <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>• Parent portal with secure login</li>
+                                <li>• Online permission slip forms</li>
+                                <li>• Virtual school tour integration</li>
+                                <li>• News and events calendar</li>
+                                <li>• Mobile-responsive design</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 2: Manchester Technical College -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-university text-3xl mr-4" style="color: var(--primary-color);"></i>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Manchester Tech College</h3>
+                                <p class="text-gray-600 dark:text-gray-400">Manchester | Further Education</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            "The website FutureLab built has completely revolutionized our student experience. The learning management system integration and online applications have made everything seamless. Our enrollment has grown by 385% in just 18 months."
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">385%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Enrollment Growth</div>
+                            </div>
+                            <div class="text-center p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">94%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Online Applications</div>
+                            </div>
+                        </div>
+                        <div class="border-t dark:border-gray-600 pt-4">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Key Features Delivered:</h4>
+                            <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>• Online application system</li>
+                                <li>• Course catalog with filtering</li>
+                                <li>• Student portal integration</li>
+                                <li>• Virtual open day platform</li>
+                                <li>• Career guidance resources</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 3: St. Mary's Independent School -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-chalkboard-teacher text-3xl mr-4" style="color: var(--primary-color);"></i>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">St. Mary's Independent</h3>
+                                <p class="text-gray-600 dark:text-gray-400">Birmingham | Independent School</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            "FutureLab helped us create a website that truly reflects our school's values and excellence. The admissions portal and virtual tours have been incredible for attracting new families. We've seen a 295% increase in admissions inquiries."
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="text-center p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">295%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Inquiry Increase</div>
+                            </div>
+                            <div class="text-center p-4 bg-rose-50 dark:bg-rose-900/20 rounded-lg">
+                                <div class="text-2xl font-bold text-rose-600 dark:text-rose-400">87%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Virtual Tour Views</div>
+                            </div>
+                        </div>
+                        <div class="border-t dark:border-gray-600 pt-4">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Key Features Delivered:</h4>
+                            <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>• Admissions portal with tracking</li>
+                                <li>• Interactive virtual tours</li>
+                                <li>• Alumni network platform</li>
+                                <li>• Event booking system</li>
+                                <li>• Multi-language support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="text-center mt-12">
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                        Ready to achieve similar results for your educational institution?
+                    </p>
+                    <a href="#contact" class="inline-flex items-center space-x-2 px-8 py-4 font-bold text-white rounded-full transition-all hover:shadow-lg" style="background: var(--gradient-1);">
+                        <i class="fas fa-rocket"></i>
+                        <span>Transform My School's Online Presence</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- UK Education Market Data Section -->
+        <section class="py-20 bg-white dark:bg-gray-800">
+            <div class="container">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-6" style="background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                        UK Education Market Insights
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        Understanding the UK education sector and digital transformation trends in learning institutions
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-xl shadow-lg border-l-4 border-blue-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-chart-line text-blue-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-blue-600 dark:text-blue-400">24,400+</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">UK Schools & Colleges</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            The UK has over 24,400 educational institutions, from primary schools to universities, representing a massive market for educational web services.
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-xl shadow-lg border-l-4 border-green-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-users text-green-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-green-600 dark:text-green-400">88%</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">Parents Research Schools Online</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            88% of parents research schools online before choosing, making a professional website crucial for attracting new families and students.
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-xl shadow-lg border-l-4 border-purple-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-laptop text-purple-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-purple-600 dark:text-purple-400">72%</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">Use Digital Learning Tools</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            72% of UK schools now use digital learning platforms, with online portals and virtual classrooms becoming essential educational tools.
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-xl shadow-lg border-l-4 border-red-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-mobile-alt text-red-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-red-600 dark:text-red-400">79%</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">Mobile Education Searches</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            79% of education-related searches happen on mobile devices, making responsive design critical for reaching parents and students.
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-xl shadow-lg border-l-4 border-yellow-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-calendar-check text-yellow-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">65%</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">Prefer Online Applications</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            65% of parents and students prefer online application processes, with digital admissions systems improving enrollment efficiency.
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded-xl shadow-lg border-l-4 border-indigo-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-star text-indigo-500 text-3xl mr-4"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">4.1+</h3>
+                                <p class="text-gray-600 dark:text-gray-300 font-medium">Rating Drives Enrollment</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            Schools with 4.1+ online ratings see 43% more enrollment inquiries, with reputation management being crucial for growth.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                        Ready to connect with the 88% of parents researching schools online?
+                    </p>
+                    <a href="#contact" class="inline-flex items-center space-x-2 px-8 py-4 font-bold text-white rounded-full transition-all hover:shadow-lg" style="background: var(--gradient-1);">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Launch Your School Website</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section id="features" class="py-20 bg-gray-50 dark:bg-gray-900">
+            <div class="container">
+                <h2 class="section-title text-center mb-12 text-gray-900 dark:text-white">Essential Features for School & Education Websites</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-user-graduate text-blue-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Student Portal Integration</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Secure student portals with grade access, assignment submissions, and learning resource libraries.</p>
+                        <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1">
+                            <li>• Grade and progress tracking</li>
+                            <li>• Assignment submissions</li>
+                            <li>• Resource downloads</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-users text-green-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Parent Communication Hub</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Dedicated parent portals with progress reports, event calendars, and direct teacher communication.</p>
+                        <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1">
+                            <li>• Progress reports access</li>
+                            <li>• Event notifications</li>
+                            <li>• Teacher messaging</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-clipboard-list text-purple-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Online Admissions System</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Streamlined application processes with document uploads, status tracking, and automated communications.</p>
+                        <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1">
+                            <li>• Application forms</li>
+                            <li>• Document uploads</li>
+                            <li>• Status tracking</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-calendar-alt text-red-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Event Management</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Comprehensive event calendars with RSVP functionality, automated reminders, and virtual event hosting.</p>
+                        <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1">
+                            <li>• Event calendars</li>
+                            <li>• RSVP management</li>
+                            <li>• Virtual events</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-video text-yellow-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Virtual Tours & Open Days</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Interactive virtual tours, 360° classroom views, and online open day experiences for prospective families.</p>
+                        <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1">
+                            <li>• 360° virtual tours</li>
+                            <li>• Online open days</li>
+                            <li>• Interactive maps</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-newspaper text-indigo-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">News & Achievement Showcase</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Dynamic news feeds, student achievement galleries, and staff accomplishment highlights to build community pride.</p>
+                        <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-1">
+                            <li>• News management</li>
+                            <li>• Achievement galleries</li>
+                            <li>• Staff spotlights</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20">
+            <div class="container">
+                <div class="rounded-2xl p-12 text-center text-white" style="background: var(--gradient-1);">
+                    <h2 class="text-4xl font-bold mb-4 text-white">Ready to Transform Your School's Digital Presence?</h2>
+                    <p class="text-xl mb-8 opacity-90 text-white">Get an educational website that engages students, connects with parents, and showcases your institution's excellence.</p>
+                    <div class="space-x-4">
+                        <a href="#contact" class="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-colors inline-flex items-center space-x-2">
+                            <i class="fas fa-graduation-cap text-black"></i>
+                            <span class="text-black">Start My School Website</span>
+                        </a>
+                        <a href="/portfolio" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition-colors inline-flex items-center space-x-2">
+                            <i class="fas fa-eye"></i>
+                            <span>View Examples</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-20 bg-white dark:bg-gray-800">
+            <div class="container">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                        Frequently Asked Questions
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        Everything you need to know about getting a professional education website for your school, college, or university.
+                    </p>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <div class="space-y-6">
+                        <!-- FAQ Item 1 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    How long does it take to build a school website?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Most school websites are completed within 3-6 weeks, depending on the complexity of features required. Simple informational sites take around 3 weeks, while comprehensive platforms with student portals and learning management integration may take 5-6 weeks. We work around the school calendar to minimize disruption.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 2 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Can you integrate with existing school management systems like SIMS or Bromcom?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Yes! We integrate with popular school management systems including SIMS, Bromcom, Arbor, ScholarPack, and many others. We can also connect with learning platforms like Google Classroom, Microsoft Teams for Education, and Moodle. Our team ensures seamless data flow between your website and existing school systems.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 3 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    How do you ensure student data protection and safeguarding compliance?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    We take child protection seriously and ensure full compliance with UK safeguarding requirements, GDPR, and DfE guidelines. All student data is encrypted, access is role-based, and we implement strict authentication protocols. Our systems include audit trails, consent management, and automatic data retention policies.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 4 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    What's included in a school website package?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Our school website packages include responsive design, content management system, news/events management, photo galleries, contact forms, staff directory, curriculum pages, safeguarding information, and basic SEO optimization. We also provide 6 months of free updates and training for your staff.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 5 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Can you help with online learning platforms and virtual classrooms?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Absolutely! We build comprehensive online learning platforms including virtual classrooms, assignment portals, video lesson libraries, interactive quizzes, and progress tracking systems. Perfect for blended learning environments and remote education delivery.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 6 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Do you provide ongoing support and website maintenance for schools?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Yes! We provide comprehensive ongoing support including software updates, security monitoring, backup management, performance optimization, and technical support. Our team also helps with content updates, new feature additions, and compliance updates to keep your school website secure and current.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 7 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Can you help with school branding and visual identity?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Absolutely! We help schools develop cohesive visual identities including logo design, color schemes, typography, and brand guidelines. We ensure your website reflects your school's values, ethos, and unique character while maintaining professional educational standards.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 8 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    How much does a professional school website cost?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Our school websites start from £2,800 for basic informational sites, with comprehensive educational platforms ranging from £4,500-£9,000. The investment depends on features like student portals, learning management integration, and custom functionality. We provide detailed quotes and offer payment plans to suit school budgets.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 9 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Can you help with accessibility compliance for educational websites?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Yes! We ensure all educational websites meet WCAG 2.1 AA accessibility standards and UK public sector accessibility requirements. This includes screen reader compatibility, keyboard navigation, color contrast compliance, and alternative text for images to ensure equal access for all users.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 10 -->
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-600">
+                            <button class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" onclick="toggleFAQ(this)">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    Do you help with school SEO and local search optimization?
+                                </h3>
+                                <i class="fas fa-chevron-down text-gray-500 transform transition-transform"></i>
+                            </button>
+                            <div class="px-8 pb-6 hidden">
+                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Absolutely! We provide comprehensive SEO services including local search optimization to help your school appear when parents search for "schools near me", Google My Business optimization, content strategy, and reputation management. Our education SEO strategies help attract prospective families in your catchment area.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Call to Action -->
+                <div class="text-center mt-12">
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                        Still have questions about your school website?
+                    </p>
+                    <a href="#contact" class="inline-flex items-center space-x-2 px-8 py-4 font-bold text-white rounded-full transition-all hover:shadow-lg" style="background: var(--gradient-1);">
+                        <i class="fas fa-comments"></i>
+                        <span>Get Your Questions Answered</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-gray-900 dark:bg-black">
+            <div class="container">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold mb-4 text-white">
+                        Get Your School Website Quote
+                    </h2>
+                    <p class="text-xl text-white opacity-90 max-w-3xl mx-auto">
+                        Ready to transform your educational institution online? Let's create a website that engages your community and showcases your excellence.
+                    </p>
+                </div>
+
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl">
+                        <form class="space-y-6" action="/submit-education-quote" method="POST">
+                            <!-- Name -->
+                            <div>
+                                <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Your Name *
+                                </label>
+                                <input type="text" id="name" name="name" required
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                                       placeholder="Your full name">
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Email Address *
+                                </label>
+                                <input type="email" id="email" name="email" required
+                                       class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                                       placeholder="your@email.com">
+                            </div>
+
+                            <!-- Institution Type -->
+                            <div>
+                                <label for="institution-type" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Type of Educational Institution *
+                                </label>
+                                <select id="institution-type" name="institution_type" required
+                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
+                                    <option value="">Select your institution type</option>
+                                    <option value="primary-school">Primary School</option>
+                                    <option value="secondary-school">Secondary School</option>
+                                    <option value="independent-school">Independent School</option>
+                                    <option value="college">College</option>
+                                    <option value="university">University</option>
+                                    <option value="training-provider">Training Provider</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <!-- Message -->
+                            <div>
+                                <label for="message" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Project Details
+                                </label>
+                                <textarea id="message" name="message" rows="4"
+                                          class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                                          placeholder="Tell us about your educational institution and website goals..."></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center pt-4">
+                                <button type="submit" class="px-8 py-4 font-bold text-white rounded-full transition-all hover:shadow-lg transform hover:scale-105 inline-flex items-center space-x-2" style="background: var(--gradient-1);">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>Get My Quote</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="grid md:grid-cols-3 gap-8 mt-12 text-center">
+                        <div class="text-white">
+                            <i class="fas fa-phone text-2xl mb-3 block"></i>
+                            <h3 class="font-semibold mb-2">Call Us</h3>
+                            <p class="opacity-90">+44 (0) 20 7946 0000</p>
+                        </div>
+                        <div class="text-white">
+                            <i class="fas fa-envelope text-2xl mb-3 block"></i>
+                            <h3 class="font-semibold mb-2">Email Us</h3>
+                            <p class="opacity-90">hello@futurelab.co.uk</p>
+                        </div>
+                        <div class="text-white">
+                            <i class="fas fa-clock text-2xl mb-3 block"></i>
+                            <h3 class="font-semibold mb-2">Response Time</h3>
+                            <p class="opacity-90">Within 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <a href="#" id="backToTopBtn" class="back-to-top-btn" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-content">
+            <p>We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.</p>
+            <div class="cookie-buttons">
+                <button id="accept-cookies" class="btn btn-primary">Accept</button>
+                <button id="decline-cookies" class="btn btn-secondary">Decline</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="../mobile-responsive.js"></script>
+    <script src="../script.js"></script>
+    <script src="../testimonials.js"></script>
+    <script src="../placeholder.js"></script>
+    <script src="../analytics-integration.js"></script>
+    <script src="../js/back-to-top.js"></script>
+    <script>
+        // Initialize back to top functionality after page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof window.initializeBackToTop === 'function') {
+                window.initializeBackToTop();
+            }
+        });
+
+        // FAQ Toggle Function
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+</body>
+</html>
