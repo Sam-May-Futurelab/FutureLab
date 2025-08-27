@@ -94,8 +94,22 @@
         .locations-hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 100px 0;
+            padding: 120px 0;
             text-align: center;
+        }
+        
+        .locations-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+        
+        .locations-hero .hero-subtitle {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            opacity: 0.95;
         }
         
         .locations-grid {
@@ -114,6 +128,16 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .location-card .btn {
+            margin-top: auto;
+        }
+        
+        .local-insights {
+            margin-bottom: 30px;
         }
         
         .dark-theme .location-card {
@@ -283,6 +307,92 @@
             border-left: 5px solid var(--primary-color) !important;
         }
         
+        /* FAQ Section Styling */
+        .faq-container {
+            max-width: 800px;
+            margin: 40px auto 0;
+        }
+        
+        .faq-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faq-question {
+            padding: 20px 24px;
+            background: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .faq-question:hover {
+            background: #f1f3f4;
+        }
+        
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .faq-question i {
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 24px;
+            background: white;
+            border-top: 1px solid #f3f4f6;
+        }
+        
+        .faq-answer p {
+            margin: 0;
+            line-height: 1.6;
+            color: #4b5563;
+        }
+        
+        .dark-theme .faq-item {
+            border-color: var(--dark-border-color);
+            background: var(--dark-card-bg);
+        }
+        
+        .dark-theme .faq-question {
+            background: var(--dark-bg);
+            border-bottom-color: var(--dark-border-color);
+        }
+        
+        .dark-theme .faq-question:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .dark-theme .faq-question h3 {
+            color: var(--dark-heading-color);
+        }
+        
+        .dark-theme .faq-answer {
+            background: var(--dark-card-bg);
+            border-top-color: var(--dark-border-color);
+        }
+        
+        .dark-theme .faq-answer p {
+            color: var(--dark-text-color);
+        }
+        
         @media (max-width: 768px) {
             .locations-grid {
                 grid-template-columns: 1fr;
@@ -303,7 +413,7 @@
         <section class="locations-hero">
             <div class="container">
                 <h1>Expert Web Design Services Across the UK</h1>
-                <p style="font-size: 1.2rem; margin: 30px 0; max-width: 700px; margin-left: auto; margin-right: auto;">
+                <p class="hero-subtitle">
                     Professional web design and digital marketing services with deep local expertise across major UK cities. 
                     We understand regional markets, local competition, and what drives success in your specific area.
                 </p>
@@ -332,7 +442,7 @@
         <section class="section-transition" id="locations">
             <div class="container">
                 <h2 class="section-title">Our UK Service Locations</h2>
-                <p class="section-subtitle">Comprehensive web design services with local market expertise across major UK business hubs</p>
+                <p class="section-subtitle" style="text-align: center;">Comprehensive web design services with local market expertise across major UK business hubs</p>
                 
                 <div class="locations-grid">
                     <!-- London -->
@@ -577,7 +687,7 @@
         <section class="coverage-map">
             <div class="container">
                 <h2 class="section-title">UK Market Data & Opportunities</h2>
-                <p class="section-subtitle">Understanding the digital landscape across major UK business centers</p>
+                <p class="section-subtitle" style="text-align: center;">Understanding the digital landscape across major UK business centers</p>
                 
                 <div class="market-data-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin: 50px 0;">
                     <div class="market-data-card" style="background: white; padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
@@ -643,7 +753,7 @@
         <section class="success-stories" style="background: white; padding: 80px 0; margin: 80px 0;">
             <div class="container">
                 <h2 class="section-title">Local Success Stories</h2>
-                <p class="section-subtitle">Real results from businesses across our UK locations</p>
+                <p class="section-subtitle" style="text-align: center;">Real results from businesses across our UK locations</p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin: 50px 0;">
                     <div class="success-story-card" style="background: #f8f9ff; padding: 40px; border-radius: var(--border-radius); border-left: 5px solid var(--primary-color);">
@@ -722,7 +832,7 @@
         <section class="primary-locations">
             <div class="container">
                 <h2 class="section-title">What We Offer in Every Location</h2>
-                <p class="section-subtitle">Consistent quality and expertise across all UK locations</p>
+                <p class="section-subtitle" style="text-align: center;">Consistent quality and expertise across all UK locations</p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin: 50px 0;">
                     <div style="text-align: center;">
@@ -775,7 +885,7 @@
         <section class="process-section" style="background: #f8f9ff; padding: 80px 0; margin: 80px 0;">
             <div class="container">
                 <h2 class="section-title">Our Location-Focused Process</h2>
-                <p class="section-subtitle">How we deliver exceptional results with local market expertise</p>
+                <p class="section-subtitle" style="text-align: center;">How we deliver exceptional results with local market expertise</p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin: 50px 0;">
                     <div style="text-align: center; padding: 30px;">
@@ -818,47 +928,77 @@
         </section>
 
         <!-- FAQ Section -->
-        <section class="faq-section" style="background: white; padding: 80px 0;">
+        <section class="faq-section" style="background: white; padding: 60px 0 40px 0;">
             <div class="container">
                 <h2 class="section-title">Frequently Asked Questions</h2>
-                <p class="section-subtitle">Everything you need to know about our UK-wide web design services</p>
+                <p class="section-subtitle" style="text-align: center;">Everything you need to know about our UK-wide web design services</p>
                 
-                <div style="max-width: 800px; margin: 50px auto;">
-                    <div class="faq-item" style="border-bottom: 1px solid #eee; padding: 30px 0;">
-                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">Do you have physical offices in every city you serve?</h4>
-                        <p>While we operate primarily as a digital-first agency, we have local representatives and partners in major UK cities. We can arrange face-to-face meetings in London, Manchester, Birmingham, Leeds, Liverpool, and Bristol when needed. Our digital-first approach allows us to provide excellent service nationwide while keeping costs competitive.</p>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do you have physical offices in every city you serve?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>While we operate primarily as a digital-first agency, we have local representatives and partners in major UK cities. We can arrange face-to-face meetings in London, Manchester, Birmingham, Leeds, Liverpool, and Bristol when needed. Our digital-first approach allows us to provide excellent service nationwide while keeping costs competitive.</p>
+                        </div>
                     </div>
                     
-                    <div class="faq-item" style="border-bottom: 1px solid #eee; padding: 30px 0;">
-                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">How do you understand local markets without being physically present?</h4>
-                        <p>We invest heavily in local market research for each region we serve. Our team includes specialists with expertise in different UK regions, and we use advanced analytics tools to understand local search behaviors, competitor landscapes, and regional business trends. We also partner with local business networks and chambers of commerce.</p>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How do you understand local markets without being physically present?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We invest heavily in local market research for each region we serve. Our team includes specialists with expertise in different UK regions, and we use advanced analytics tools to understand local search behaviors, competitor landscapes, and regional business trends. We also partner with local business networks and chambers of commerce.</p>
+                        </div>
                     </div>
                     
-                    <div class="faq-item" style="border-bottom: 1px solid #eee; padding: 30px 0;">
-                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">What makes your local SEO different from standard SEO?</h4>
-                        <p>Our local SEO goes beyond basic location targeting. We optimize for local search patterns, regional terminology, and area-specific business directories. For example, a Manchester business needs different optimization than a London business due to different search behaviors, local competition, and regional business ecosystems.</p>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What makes your local SEO different from standard SEO?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our local SEO goes beyond basic location targeting. We optimize for local search patterns, regional terminology, and area-specific business directories. For example, a Manchester business needs different optimization than a London business due to different search behaviors, local competition, and regional business ecosystems.</p>
+                        </div>
                     </div>
                     
-                    <div class="faq-item" style="border-bottom: 1px solid #eee; padding: 30px 0;">
-                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">Can you help with local business directories and citations?</h4>
-                        <p>Absolutely! We help businesses get listed in relevant local directories, chambers of commerce, and industry-specific listings for each region. This includes Google My Business optimization, local business networks, and region-specific professional associations.</p>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can you help with local business directories and citations?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! We help businesses get listed in relevant local directories, chambers of commerce, and industry-specific listings for each region. This includes Google My Business optimization, local business networks, and region-specific professional associations.</p>
+                        </div>
                     </div>
                     
-                    <div class="faq-item" style="border-bottom: 1px solid #eee; padding: 30px 0;">
-                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">How long does a typical project take across different locations?</h4>
-                        <p>Project timelines are generally consistent across all locations (4-8 weeks for most projects), but local market research and regulatory considerations can add 1-2 weeks for complex businesses. London financial services projects may require additional compliance considerations, while Manchester creative projects might need extra brand development time.</p>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How long does a typical project take across different locations?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Project timelines are generally consistent across all locations (4-8 weeks for most projects), but local market research and regulatory considerations can add 1-2 weeks for complex businesses. London financial services projects may require additional compliance considerations, while Manchester creative projects might need extra brand development time.</p>
+                        </div>
                     </div>
                     
-                    <div class="faq-item" style="padding: 30px 0;">
-                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">Do you offer ongoing support for all UK locations?</h4>
-                        <p>Yes, we provide comprehensive ongoing support for all locations including regular updates, security monitoring, performance optimization, and local SEO maintenance. Our support team understands the specific needs of different UK regions and can provide location-relevant advice and updates.</p>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do you offer ongoing support for all UK locations?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we provide comprehensive ongoing support for all locations including regular updates, security monitoring, performance optimization, and local SEO maintenance. Our support team understands the specific needs of different UK regions and can provide location-relevant advice and updates.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="contact">
+        <section id="contact" class="contact" style="padding-top: 60px;">
             <div class="animated-gradient-bg"></div>
             <div class="container">
                 <h2 class="section-title">Ready to Start Your Project?</h2>
