@@ -696,104 +696,112 @@
                 if (mobileOverlay.classList.contains('active') && mobileNavLinksUl.innerHTML === '') {
                     const currentPage = window.location.pathname.split('/').pop() || 'index';
                     
-                    // Clone main navigation links
-                    const desktopNavLinks = document.querySelector('header .nav-links');
-                    if (desktopNavLinks) {
-                        desktopNavLinks.querySelectorAll('li').forEach(navItem => {
-                            // Handle dropdown items
-                            if (navItem.classList.contains('dropdown')) {
-                                // Add Services header (non-clickable)
-                                const servicesHeaderLi = document.createElement('li');
-                                const servicesHeader = document.createElement('a');
-                                servicesHeader.href = '#';
-                                servicesHeader.textContent = 'Services';
-                                servicesHeader.style.fontWeight = '600';
-                                servicesHeader.style.color = 'var(--primary-color)';
-                                servicesHeader.addEventListener('click', (e) => e.preventDefault());
-                                servicesHeaderLi.appendChild(servicesHeader);
-                                mobileNavLinksUl.appendChild(servicesHeaderLi);
+                    // Simple mobile menu with main items and expandable dropdowns
+                    const mobileMenuItems = [
+                        { text: 'Home', href: '/' },
+                        { text: 'Web Design', href: '/web-design' },
+                        { text: 'Portfolio', href: '/portfolio' },
+                        { text: 'Services', href: '#', isDropdown: true },
+                        { text: 'AI Lab', href: '/lab' },
+                        { 
+                            text: 'Locations', 
+                            href: '/locations',
+                            isDropdown: true,
+                            dropdown: [
+                                { text: 'Manchester', href: '/locations/manchester' },
+                                { text: 'London', href: '/locations/london' },
+                                { text: 'Leeds', href: '/locations/leeds' }
+                            ]
+                        },
+                        { 
+                            text: 'Industries', 
+                            href: '/industries',
+                            isDropdown: true,
+                            dropdown: [
+                                { text: 'Restaurants', href: '/industries/restaurants' },
+                                { text: 'Beauty & Skincare', href: '/industries/beauty' },
+                                { text: 'Estate Agents', href: '/industries/estate-agents' },
+                                { text: 'Gyms & Fitness', href: '/industries/gyms-fitness' },
+                                { text: 'Healthcare', href: '/industries/healthcare' }
+                            ]
+                        },
+                        { text: 'Showcase', href: '/showcase' },
+                        { text: 'Blog', href: '/blog' },
+                        { text: 'FAQ', href: '/faq' },
+                        { text: 'Contact', href: '/contact' }
+                    ];
 
-                                // Add dropdown items (services and nested locations)
-                                const dropdownContent = navItem.querySelector('.dropdown-content');
-                                if (dropdownContent) {
-                                    // Add regular service items
-                                    dropdownContent.querySelectorAll('a:not(.dropdown-parent)').forEach(dropdownLink => {
-                                        const li = document.createElement('li');
-                                        const newLink = dropdownLink.cloneNode(true);
-                                        newLink.classList.remove('active');
-                                        newLink.style.paddingLeft = '30px'; // Indent dropdown items
-                                        if (newLink.getAttribute('href') === currentPage) {
-                                            newLink.classList.add('active');
-                                        }
-                                        li.appendChild(newLink);
-                                        mobileNavLinksUl.appendChild(li);
-                                    });
-
-                                    // Handle nested locations dropdown
-                                    const nestedDropdown = dropdownContent.querySelector('.dropdown-nested');
-                                    if (nestedDropdown) {
-                                        // Add Locations header
-                                        const locationsHeaderLi = document.createElement('li');
-                                        const locationsHeader = document.createElement('a');
-                                        locationsHeader.href = '/locations';
-                                        locationsHeader.textContent = 'Locations';
-                                        locationsHeader.style.paddingLeft = '30px';
-                                        locationsHeader.style.fontWeight = '600';
-                                        locationsHeader.style.color = 'var(--primary-color)';
-                                        if (locationsHeader.getAttribute('href') === currentPage) {
-                                            locationsHeader.classList.add('active');
-                                        }
-                                        locationsHeaderLi.appendChild(locationsHeader);
-                                        mobileNavLinksUl.appendChild(locationsHeaderLi);
-
-                                        // Add individual location links
-                                        const nestedContent = nestedDropdown.querySelector('.dropdown-content-nested');
-                                        if (nestedContent) {
-                                            nestedContent.querySelectorAll('a').forEach(locationLink => {
-                                                const li = document.createElement('li');
-                                                const newLink = locationLink.cloneNode(true);
-                                                newLink.classList.remove('active');
-                                                newLink.style.paddingLeft = '50px'; // Double indent for nested items
-                                                if (newLink.getAttribute('href') === currentPage) {
-                                                    newLink.classList.add('active');
-                                                }
-                                                li.appendChild(newLink);
-                                                mobileNavLinksUl.appendChild(li);
-                                            });
-                                        }
-                                    }
-                                }
-                            } else {
-                                // Handle regular navigation items (including Web Design as main item)
-                                const link = navItem.querySelector('a:not(.btn)');
-                                if (link) {
-                                    const li = document.createElement('li');
-                                    const newLink = link.cloneNode(true);
-                                    newLink.classList.remove('active');
-                                    if (newLink.getAttribute('href') === currentPage) {
-                                        newLink.classList.add('active');
-                                    }
-                                    li.appendChild(newLink);
-                                    mobileNavLinksUl.appendChild(li);
-                                }
+                    mobileMenuItems.forEach(item => {
+                        const li = document.createElement('li');
+                        const link = document.createElement('a');
+                        link.href = item.href;
+                        link.textContent = item.text;
+                        
+                        if (item.isDropdown) {
+                            // Make dropdown items expandable
+                            link.innerHTML = `${item.text} <i class="fas fa-chevron-down" style="float: right; transition: transform 0.3s;"></i>`;
+                            link.style.cursor = 'pointer';
+                            
+                            // Create submenu
+                            const submenu = document.createElement('ul');
+                            submenu.style.display = 'none';
+                            submenu.style.paddingLeft = '20px';
+                            submenu.style.borderLeft = '2px solid var(--primary-color)';
+                            submenu.style.marginLeft = '20px';
+                            submenu.style.marginTop = '10px';
+                            
+                            let subItems = [];
+                            
+                            // Check if this is a specific dropdown with predefined items
+                            if (item.dropdown) {
+                                subItems = item.dropdown;
+                            } else if (item.text === 'Services') {
+                                // Services dropdown items
+                                subItems = [
+                                    { text: 'Custom Web Design', href: '/custom-web-design' },
+                                    { text: 'Landing Pages', href: '/landing-page-design' },
+                                    { text: 'Shopify Development', href: '/ecommerce' },
+                                    { text: 'SEO Services', href: '/seo-services' }
+                                ];
                             }
-                        });
-                    }                    // Add Contact link
-                    const contactButtonDesktop = document.querySelector('header .header-actions a.btn.btn-primary[href="/contact"]');
-                    if (contactButtonDesktop) {
-                        const contactLi = document.createElement('li');
-                        const contactLinkMobile = document.createElement('a');
-                        contactLinkMobile.href = contactButtonDesktop.href;
-                        contactLinkMobile.textContent = contactButtonDesktop.textContent.trim() || 'Contact';
-                        if (contactLinkMobile.getAttribute('href') === currentPage) {
-                            contactLinkMobile.classList.add('active');
+                            
+                            subItems.forEach(subItem => {
+                                const subLi = document.createElement('li');
+                                const subLink = document.createElement('a');
+                                subLink.href = subItem.href;
+                                subLink.textContent = subItem.text;
+                                subLink.style.padding = '10px 0';
+                                subLink.style.fontSize = '1rem';
+                                if (subLink.getAttribute('href') === currentPage) {
+                                    subLink.classList.add('active');
+                                }
+                                subLi.appendChild(subLink);
+                                submenu.appendChild(subLi);
+                            });
+                            
+                            li.appendChild(submenu);
+                            
+                            // Toggle submenu on click
+                            link.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                const icon = link.querySelector('i');
+                                if (submenu.style.display === 'none') {
+                                    submenu.style.display = 'block';
+                                    icon.style.transform = 'rotate(180deg)';
+                                } else {
+                                    submenu.style.display = 'none';
+                                    icon.style.transform = 'rotate(0deg)';
+                                }
+                            });
+                        } else {
+                            if (link.getAttribute('href') === currentPage) {
+                                link.classList.add('active');
+                            }
                         }
-                        contactLi.appendChild(contactLinkMobile);
-                        mobileNavLinksUl.appendChild(contactLi);
-                    }
-
-                    // Removed the "Toggle Theme" text link from mobile menu
-                }
+                        
+                        li.appendChild(link);
+                        mobileNavLinksUl.appendChild(li);
+                    });                }
             });
 
             // Close mobile menu when a link inside it is clicked (if it's a navigation link)
