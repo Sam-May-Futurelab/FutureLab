@@ -139,16 +139,6 @@
   ],
   "redirects": [
     {
-      "source": "/landing-page-design",
-      "destination": "/locations/london",
-      "permanent": true
-    },
-    {
-      "source": "/landing-page-design.html",
-      "destination": "/locations/london",
-      "permanent": true
-    },
-    {
       "source": "/web-design.html",
       "destination": "/web-design",
       "permanent": true
