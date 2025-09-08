@@ -1,4 +1,21 @@
 {
+  "redirects": [
+    {
+      "source": "/blog/fastest-landing-page-2025.html",
+      "destination": "/blog/fastest-landing-page-2025",
+      "permanent": true
+    },
+    {
+      "source": "/blog/shopify-conversion-fix.html", 
+      "destination": "/blog/shopify-conversion-fix",
+      "permanent": true
+    },
+    {
+      "source": "/blog/hiring-a-web-designer-2025.html",
+      "destination": "/blog/hiring-a-web-designer-2025", 
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/generate-page",
