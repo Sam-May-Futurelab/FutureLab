@@ -942,3 +942,96 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Related Posts Section Styling */
+.related-posts-section {
+    margin: 50px 0;
+    padding: 40px 0;
+    border-top: 1px solid var(--border-color-light);
+    background-color: var(--light-gray-background);
+}
+
+.dark-theme .related-posts-section {
+    border-top: 1px solid var(--border-color-dark);
+    background-color: var(--dark-blue-secondary);
+}
+
+.related-posts-section h3 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: var(--dark-color);
+}
+
+.dark-theme .related-posts-section h3 {
+    color: var(--light-color);
+}
+
+.related-posts-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.related-post-card {
+    flex: 0 1 300px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color-light);
+}
+
+.dark-theme .related-post-card {
+    background: var(--dark-blue-primary);
+    border: 1px solid var(--border-color-dark);
+    color: var(--light-color);
+}
+
+.related-post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    text-decoration: none;
+    color: inherit;
+}
+
+.dark-theme .related-post-card:hover {
+    color: var(--light-color);
+}
+
+.related-post-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.related-post-card h4 {
+    padding: 20px;
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    color: var(--dark-color);
+}
+
+.dark-theme .related-post-card h4 {
+    color: var(--light-color);
+}
+
+@media (max-width: 768px) {
+    .related-posts-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .related-post-card {
+        flex: none;
+        width: 100%;
+        max-width: 350px;
+    }
+}
