@@ -6,8 +6,6 @@ Sitemap: https://futurelab.solutions/sitemap.xml
 
 # Block access to admin and development files
 Disallow: /api/
-Disallow: /*.js$
-Disallow: /*.json$
 Disallow: /node_modules/
 Disallow: /package.json
 Disallow: /server.js
