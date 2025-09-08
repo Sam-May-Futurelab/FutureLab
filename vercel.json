@@ -1,21 +1,4 @@
 {
-  "redirects": [
-    {
-      "source": "/blog/fastest-landing-page-2025.html",
-      "destination": "/blog/fastest-landing-page-2025",
-      "permanent": true
-    },
-    {
-      "source": "/blog/shopify-conversion-fix.html", 
-      "destination": "/blog/shopify-conversion-fix",
-      "permanent": true
-    },
-    {
-      "source": "/blog/hiring-a-web-designer-2025.html",
-      "destination": "/blog/hiring-a-web-designer-2025", 
-      "permanent": true
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/generate-page",
@@ -180,6 +163,14 @@
     {
       "source": "/blog/custom-vs-templates-2025",
       "destination": "/blog/custom-vs-templates-2025.html"
+    },
+    {
+      "source": "/blog/mpfilms-seo-case-study",
+      "destination": "/blog/mpfilms-seo-case-study.html"
+    },
+    {
+      "source": "/blog/responsive-school-websites-2025",
+      "destination": "/blog/responsive-school-websites-2025.html"
     }
   ]
 }
