@@ -105,6 +105,34 @@
       "destination": "/industries/estate-agents.html"
     },
     {
+      "source": "/industries/schools",
+      "destination": "/industries/schools.html"
+    },
+    {
+      "source": "/index",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/web-design.html"
+    },
+    {
+      "source": "/blog/why-paying-more-website-cheaper-long-run",
+      "destination": "/blog/why-paying-more-website-cheaper-long-run.html"
+    },
+    {
+      "source": "/blog/why-your-website-feels-outdated-2025",
+      "destination": "/blog/why-your-website-feels-outdated-2025.html"
+    },
+    {
+      "source": "/blog/responsive-school-websites-2025",
+      "destination": "/blog/responsive-school-websites-2025.html"
+    },
+    {
+      "source": "/blog/mpfilms-seo-case-study",
+      "destination": "/blog/mpfilms-seo-case-study.html"
+    },
+    {
       "source": "/blog/web-design-trends-2025",
       "destination": "/blog/web-design-trends-2025.html"
     },
