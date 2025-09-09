@@ -603,10 +603,10 @@ document.addEventListener('DOMContentLoaded', function() {
         function updateCalculator() {
             // Updated package pricing to match your real offers
             const websiteTypes = {
-                'starter': 350,      // Starter Website
-                'professional': 750, // Professional Site/Store
-                'ecommerce': 500,    // E-Commerce Starter Store
-                'app': 2000          // App MVP
+                'starter': 499,      // Starter Website
+                'professional': 799, // Professional Site/Store
+                'ecommerce': 799,    // E-Commerce Store
+                'app': 1299          // Enterprise/App Development
             };
             
             // Get values from inputs
