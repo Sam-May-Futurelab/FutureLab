@@ -129,6 +129,64 @@
         }
     }
     </script>
+
+    <!-- FAQ Schema Markup for Rich Snippets -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How long does a typical web design project take?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most web design projects take 4-8 weeks from initial consultation to launch, depending on the complexity and scope of your requirements. Simple brochure websites typically take 3-4 weeks, while complex e-commerce sites or custom applications may take 6-12 weeks. We provide detailed timelines during our discovery phase and keep you updated throughout the process."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What's included in your web design packages?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Our web design packages include custom design, responsive development, SEO optimisation, content management system, SSL certificate, hosting setup, and 3 months of support. We also provide training on how to update your website, Google Analytics setup, and basic on-page SEO implementation. Everything you need for a successful online presence."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do you provide ongoing support after launch?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, we offer comprehensive ongoing support including regular updates, security monitoring, performance optimisation, content updates, and technical assistance. Our support packages range from basic maintenance to full digital marketing support. We're committed to your long-term success, not just the initial launch."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can you redesign my existing website?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely! We specialise in website redesigns and can modernise your existing site while preserving valuable SEO rankings and improving user experience. We analyse your current performance, identify areas for improvement, and create a strategy that enhances both design and functionality while maintaining what's already working well."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do your websites work on mobile devices?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, all our websites are built with a mobile-first approach and are fully responsive. They automatically adapt to work perfectly on smartphones, tablets, and desktop computers. With over 60% of web traffic coming from mobile devices, mobile optimisation is essential for success in today's digital landscape."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What are your pricing options?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Our web design packages start from £499 for basic websites, with custom projects typically ranging from £799-£2,499 depending on complexity and features. We offer transparent pricing with no hidden costs, and all quotes include everything needed for launch. Contact us for a free consultation and detailed quote based on your specific requirements."
+                }
+            }
+        ]
+    }
+    </script>
     
     <!-- Favicon links -->
     <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
@@ -586,6 +644,97 @@
             </div>
         </section>
 
+        <!-- FAQ Section with Schema Markup -->
+        <section class="faq-section" style="padding: 100px 0; background: white;">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: #1e293b;">Frequently Asked Questions</h2>
+                    <p style="font-size: 1.2rem; color: #64748b; max-width: 700px; margin: 0 auto; line-height: 1.6;">
+                        Get answers to the most common questions about our web design services and process.
+                    </p>
+                </div>
+
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div class="faq-item" style="margin-bottom: 30px; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                        <div class="faq-question" style="background: #f8fafc; padding: 25px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1e293b; margin: 0;">How long does a typical web design project take?</h3>
+                            <i class="fas fa-chevron-down" style="color: #64748b; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="faq-answer" style="padding: 0 30px; max-height: 0; overflow: hidden; transition: all 0.3s ease;">
+                            <div style="padding: 25px 0; border-top: 1px solid #e2e8f0;">
+                                <p style="color: #64748b; line-height: 1.6; margin: 0;">Most web design projects take 4-8 weeks from initial consultation to launch, depending on the complexity and scope of your requirements. Simple brochure websites typically take 3-4 weeks, while complex e-commerce sites or custom applications may take 6-12 weeks. We provide detailed timelines during our discovery phase and keep you updated throughout the process.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" style="margin-bottom: 30px; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                        <div class="faq-question" style="background: #f8fafc; padding: 25px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1e293b; margin: 0;">What's included in your web design packages?</h3>
+                            <i class="fas fa-chevron-down" style="color: #64748b; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="faq-answer" style="padding: 0 30px; max-height: 0; overflow: hidden; transition: all 0.3s ease;">
+                            <div style="padding: 25px 0; border-top: 1px solid #e2e8f0;">
+                                <p style="color: #64748b; line-height: 1.6; margin: 0;">Our web design packages include custom design, responsive development, SEO optimisation, content management system, SSL certificate, hosting setup, and 3 months of support. We also provide training on how to update your website, Google Analytics setup, and basic on-page SEO implementation. Everything you need for a successful online presence.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" style="margin-bottom: 30px; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                        <div class="faq-question" style="background: #f8fafc; padding: 25px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1e293b; margin: 0;">Do you provide ongoing support after launch?</h3>
+                            <i class="fas fa-chevron-down" style="color: #64748b; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="faq-answer" style="padding: 0 30px; max-height: 0; overflow: hidden; transition: all 0.3s ease;">
+                            <div style="padding: 25px 0; border-top: 1px solid #e2e8f0;">
+                                <p style="color: #64748b; line-height: 1.6; margin: 0;">Yes, we offer comprehensive ongoing support including regular updates, security monitoring, performance optimisation, content updates, and technical assistance. Our support packages range from basic maintenance to full digital marketing support. We're committed to your long-term success, not just the initial launch.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" style="margin-bottom: 30px; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                        <div class="faq-question" style="background: #f8fafc; padding: 25px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1e293b; margin: 0;">Can you redesign my existing website?</h3>
+                            <i class="fas fa-chevron-down" style="color: #64748b; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="faq-answer" style="padding: 0 30px; max-height: 0; overflow: hidden; transition: all 0.3s ease;">
+                            <div style="padding: 25px 0; border-top: 1px solid #e2e8f0;">
+                                <p style="color: #64748b; line-height: 1.6; margin: 0;">Absolutely! We specialise in website redesigns and can modernise your existing site while preserving valuable SEO rankings and improving user experience. We analyse your current performance, identify areas for improvement, and create a strategy that enhances both design and functionality while maintaining what's already working well.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" style="margin-bottom: 30px; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                        <div class="faq-question" style="background: #f8fafc; padding: 25px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1e293b; margin: 0;">Do your websites work on mobile devices?</h3>
+                            <i class="fas fa-chevron-down" style="color: #64748b; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="faq-answer" style="padding: 0 30px; max-height: 0; overflow: hidden; transition: all 0.3s ease;">
+                            <div style="padding: 25px 0; border-top: 1px solid #e2e8f0;">
+                                <p style="color: #64748b; line-height: 1.6; margin: 0;">Yes, all our websites are built with a mobile-first approach and are fully responsive. They automatically adapt to work perfectly on smartphones, tablets, and desktop computers. With over 60% of web traffic coming from mobile devices, mobile optimisation is essential for success in today's digital landscape.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" style="margin-bottom: 30px; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                        <div class="faq-question" style="background: #f8fafc; padding: 25px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1e293b; margin: 0;">What are your pricing options?</h3>
+                            <i class="fas fa-chevron-down" style="color: #64748b; transition: transform 0.3s ease;"></i>
+                        </div>
+                        <div class="faq-answer" style="padding: 0 30px; max-height: 0; overflow: hidden; transition: all 0.3s ease;">
+                            <div style="padding: 25px 0; border-top: 1px solid #e2e8f0;">
+                                <p style="color: #64748b; line-height: 1.6; margin: 0;">Our web design packages start from £499 for basic websites, with custom projects typically ranging from £799-£2,499 depending on complexity and features. We offer transparent pricing with no hidden costs, and all quotes include everything needed for launch. Contact us for a free consultation and detailed quote based on your specific requirements.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 60px;">
+                    <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 30px;">Still have questions? We're here to help!</p>
+                    <a href="/contact" style="background: #4361ee; color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">Get Free Consultation</a>
+                </div>
+            </div>
+        </section>
+
         <!-- CTA Section -->
         <section class="cta-section" style="padding: 100px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center;">
             <div class="container">
@@ -716,6 +865,60 @@
         background: #4361ee !important;
         color: white !important;
     }
+
+    /* FAQ Section Styling */
+    .faq-section .faq-answer.open {
+        max-height: 200px !important;
+    }
+
+    .faq-question:hover {
+        background: #f1f5f9 !important;
+    }
+
+    .faq-question.active i {
+        transform: rotate(180deg);
+    }
+
+    /* Dark mode for FAQ section */
+    .dark-theme .faq-section {
+        background: #1e293b !important;
+    }
+
+    .dark-theme .faq-section h2 {
+        color: #f1f5f9 !important;
+    }
+
+    .dark-theme .faq-section p {
+        color: #94a3b8 !important;
+    }
+
+    .dark-theme .faq-item {
+        border-color: #334155 !important;
+    }
+
+    .dark-theme .faq-question {
+        background: #0f172a !important;
+    }
+
+    .dark-theme .faq-question h3 {
+        color: #f1f5f9 !important;
+    }
+
+    .dark-theme .faq-question:hover {
+        background: #1e293b !important;
+    }
+
+    .dark-theme .faq-answer {
+        background: #1e293b !important;
+    }
+
+    .dark-theme .faq-answer div {
+        border-color: #334155 !important;
+    }
+
+    .dark-theme .faq-answer p {
+        color: #94a3b8 !important;
+    }
     
     @media (max-width: 768px) {
         .hero-stats {
@@ -753,5 +956,38 @@
         transition: all 0.3s ease;
     }
     </style>
+
+    <script>
+    // FAQ Toggle Functionality
+    function toggleFAQ(element) {
+        const faqItem = element.parentElement;
+        const answer = faqItem.querySelector('.faq-answer');
+        const icon = element.querySelector('i');
+        
+        // Close all other FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            if (item !== faqItem) {
+                const otherAnswer = item.querySelector('.faq-answer');
+                const otherIcon = item.querySelector('.faq-question i');
+                const otherQuestion = item.querySelector('.faq-question');
+                
+                otherAnswer.classList.remove('open');
+                otherIcon.style.transform = 'rotate(0deg)';
+                otherQuestion.classList.remove('active');
+            }
+        });
+        
+        // Toggle current FAQ item
+        if (answer.classList.contains('open')) {
+            answer.classList.remove('open');
+            icon.style.transform = 'rotate(0deg)';
+            element.classList.remove('active');
+        } else {
+            answer.classList.add('open');
+            icon.style.transform = 'rotate(180deg)';
+            element.classList.add('active');
+        }
+    }
+    </script>
 </body>
 </html>
