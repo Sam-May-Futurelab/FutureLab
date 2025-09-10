@@ -55,6 +55,10 @@ app.get('/ecommerce', (req, res) => {
     res.sendFile(path.join(__dirname, 'ecommerce.html'));
 });
 
+app.get('/services', (req, res) => {
+    res.sendFile(path.join(__dirname, 'services.html'));
+});
+
 // Handle blog posts
 app.get('/blog/:slug', (req, res) => {
     const slug = req.params.slug;
