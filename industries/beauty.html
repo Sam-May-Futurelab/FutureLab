@@ -26,6 +26,34 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://futurelab.solutions/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Industries",
+          "item": "https://futurelab.solutions/industries"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Beauty & Skincare",
+          "item": "https://futurelab.solutions/industries/beauty"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Service Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
       "@type": "Service",
       "name": "Beauty & Skincare Web Design Services",
       "description": "Professional website design services for beauty salons, spas, and skincare clinics with online booking and e-commerce features.",
@@ -82,12 +110,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="theme-color" content="#4361ee">
+    
+    <!-- Include web-design.css for breadcrumb styling -->
+    <link rel="stylesheet" href="../web-design.css">
+    
     <script src="/js/includeElements.js" defer></script>
 </head>
 <body>
     <div id="header-placeholder"></div>
 
     <main>
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/industries">Industries</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Beauty & Skincare</li>
+                </ol>
+            </div>
+        </nav>
+
         <!-- Hero Section -->
         <section class="hero min-h-screen flex items-center relative overflow-hidden">
             <div class="absolute inset-0" style="background: var(--gradient-1);"></div>
