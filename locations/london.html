@@ -39,6 +39,34 @@
     <meta property="og:url" content="https://futurelab.solutions/locations/london">
     <meta property="og:type" content="website">
     
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://futurelab.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Locations",
+                "item": "https://futurelab.solutions/locations"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "London",
+                "item": "https://futurelab.solutions/locations/london"
+            }
+        ]
+    }
+    </script>
+    
     <!-- Local Business Schema for London -->
     <script type="application/ld+json">
     {
@@ -78,6 +106,7 @@
     <link rel="apple-touch-icon" href="../assets/favicon/apple-icon-180x180.png">
     
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../web-design.css">
     <link rel="stylesheet" href="../testimonials.css">
     <link rel="stylesheet" href="../animations.css">
     <link rel="stylesheet" href="../mobile-hero.css">
@@ -214,6 +243,17 @@
     <div id="header-placeholder"></div>
 
     <main>
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/locations">Locations</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">London</li>
+                </ol>
+            </div>
+        </nav>
+        
         <!-- Hero Section -->
         <section class="landing-page-hero" style="position: relative; background: linear-gradient(135deg, #4361ee 0%, #7209b7 100%); padding: 120px 0; min-height: 85vh; display: flex; align-items: center; overflow: hidden;">
             <!-- Animated Background Elements -->
