@@ -58,6 +58,34 @@
     }
     </script>
 
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://futurelab.solutions/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Industries",
+          "item": "https://futurelab.solutions/industries/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Estate Agent Web Design",
+          "item": "https://futurelab.solutions/industries/estate-agents"
+        }
+      ]
+    }
+    </script>
+
     <!-- Preload critical resources -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
@@ -111,6 +139,7 @@
     <link rel="manifest" href="../assets/favicon/site.webmanifest">
     
     <!-- Stylesheets -->
+    <link rel="stylesheet" href="../web-design.css">
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../testimonials.css">
     <link rel="stylesheet" href="../animations.css">
@@ -125,6 +154,23 @@
 </head>
 <body>
     <div id="header-placeholder"></div>
+
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="../index.html">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="../industries/">Industries</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Estate Agent Web Design
+                </li>
+            </ol>
+        </div>
+    </nav>
 
     <main>
         <!-- Hero Section -->
