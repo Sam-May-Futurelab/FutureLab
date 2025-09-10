@@ -492,7 +492,7 @@
                 </div>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 60px;">
-                    <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <div class="industry-card" style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                         <div style="background: linear-gradient(135deg, #60a5fa, #3b82f6); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
                             <i class="fas fa-heartbeat" style="color: white; font-size: 20px;"></i>
                         </div>
@@ -500,7 +500,7 @@
                         <p style="color: #64748b; line-height: 1.6; font-size: 0.95rem;">GDPR-compliant websites for clinics, practices, and healthcare providers with patient-focused design and accessibility features.</p>
                     </div>
 
-                    <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <div class="industry-card" style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                         <div style="background: linear-gradient(135deg, #10b981, #059669); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
                             <i class="fas fa-graduation-cap" style="color: white; font-size: 20px;"></i>
                         </div>
@@ -508,7 +508,7 @@
                         <p style="color: #64748b; line-height: 1.6; font-size: 0.95rem;">Engaging educational platforms for schools, universities, and training providers with intuitive learning management features.</p>
                     </div>
 
-                    <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <div class="industry-card" style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                         <div style="background: linear-gradient(135deg, #f59e0b, #d97706); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
                             <i class="fas fa-utensils" style="color: white; font-size: 20px;"></i>
                         </div>
@@ -516,7 +516,7 @@
                         <p style="color: #64748b; line-height: 1.6; font-size: 0.95rem;">Mouth-watering websites for restaurants, hotels, and hospitality businesses with online booking and menu showcases.</p>
                     </div>
 
-                    <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <div class="industry-card" style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                         <div style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
                             <i class="fas fa-balance-scale" style="color: white; font-size: 20px;"></i>
                         </div>
@@ -524,7 +524,7 @@
                         <p style="color: #64748b; line-height: 1.6; font-size: 0.95rem;">Professional, trustworthy websites for law firms, consultancies, and professional service providers across the UK.</p>
                     </div>
 
-                    <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <div class="industry-card" style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                         <div style="background: linear-gradient(135deg, #ef4444, #dc2626); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
                             <i class="fas fa-shopping-cart" style="color: white; font-size: 20px;"></i>
                         </div>
@@ -532,7 +532,7 @@
                         <p style="color: #64748b; line-height: 1.6; font-size: 0.95rem;">High-converting online stores with advanced e-commerce features, inventory management, and seamless checkout experiences.</p>
                     </div>
 
-                    <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <div class="industry-card" style="background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                         <div style="background: linear-gradient(135deg, #06b6d4, #0891b2); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
                             <i class="fas fa-industry" style="color: white; font-size: 20px;"></i>
                         </div>
@@ -697,6 +697,19 @@
     .dark-theme .industries-section > div > div:last-child > div {
         background: #1e293b !important;
         box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+    }
+
+    .dark-theme .industry-card {
+        background: #1e293b !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+    }
+
+    .dark-theme .industry-card h3 {
+        color: #f1f5f9 !important;
+    }
+
+    .dark-theme .industry-card p {
+        color: #94a3b8 !important;
     }
 
     .dark-theme .industries-section a[href="/contact"] {
