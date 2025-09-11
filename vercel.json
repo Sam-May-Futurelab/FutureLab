@@ -1,13 +1,11 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
     {
       "source": "https://www.futurelab.solutions/(.*)",
       "destination": "https://futurelab.solutions/$1",
-      "permanent": true
-    },
-    {
-      "source": "/:slug.html",
-      "destination": "/:slug",
       "permanent": true
     },
     {
