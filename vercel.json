@@ -4,6 +4,16 @@
       "source": "https://www.futurelab.solutions/(.*)",
       "destination": "https://futurelab.solutions/$1",
       "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/(.*).html",
+      "destination": "/$1",
+      "permanent": true
     }
   ],
   "rewrites": [
