@@ -39,8 +39,8 @@ app.get('/faq', (req, res) => {
     res.sendFile(path.join(__dirname, 'faq.html'));
 });
 
-app.get('/showcase', (req, res) => {
-    res.sendFile(path.join(__dirname, 'showcase.html'));
+app.get('/portfolio', (req, res) => {
+    res.sendFile(path.join(__dirname, 'portfolio.html'));
 });
 
 app.get('/hosting-guide', (req, res) => {

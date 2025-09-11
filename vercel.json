@@ -53,10 +53,6 @@
       "destination": "/faq.html"
     },
     {
-      "source": "/showcase",
-      "destination": "/showcase.html"
-    },
-    {
       "source": "/hosting-guide",
       "destination": "/hosting-guide.html"
     },
