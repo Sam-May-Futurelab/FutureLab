@@ -4,6 +4,16 @@
       "source": "https://www.futurelab.solutions/(.*)",
       "destination": "https://futurelab.solutions/$1",
       "permanent": true
+    },
+    {
+      "source": "/:slug.html",
+      "destination": "/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -112,10 +122,6 @@
       "destination": "/industries/schools.html"
     },
     {
-      "source": "/index",
-      "destination": "/index.html"
-    },
-    {
       "source": "/services",
       "destination": "/services.html"
     },
@@ -126,10 +132,6 @@
     {
       "source": "/blog/why-your-website-feels-outdated-2025",
       "destination": "/blog/why-your-website-feels-outdated-2025.html"
-    },
-    {
-      "source": "/blog/responsive-school-websites-2025",
-      "destination": "/blog/responsive-school-websites-2025.html"
     },
     {
       "source": "/blog/mpfilms-seo-case-study",
@@ -166,10 +168,6 @@
     {
       "source": "/blog/custom-vs-templates-2025",
       "destination": "/blog/custom-vs-templates-2025.html"
-    },
-    {
-      "source": "/blog/mpfilms-seo-case-study",
-      "destination": "/blog/mpfilms-case-study.html"
     },
     {
       "source": "/blog/responsive-school-websites-2025",
