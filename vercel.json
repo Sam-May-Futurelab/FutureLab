@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "https://www.futurelab.solutions/(.*)",
+      "destination": "https://futurelab.solutions/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/generate-page",
