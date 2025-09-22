@@ -4,14 +4,6 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/(.*)",
-      "has": [
-        { "type": "host", "value": "www.futurelab.solutions" }
-      ],
-      "destination": "https://futurelab.solutions/$1",
-      "permanent": true
-    },
-    {
       "source": "/:path(.+).html",
       "destination": "/:path",
       "permanent": true
