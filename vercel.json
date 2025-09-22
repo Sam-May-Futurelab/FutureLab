@@ -4,6 +4,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/showcase",
+      "destination": "/portfolio",
+      "permanent": true
+    },
+    {
       "source": "/:path(.+).html",
       "destination": "/:path",
       "permanent": true
