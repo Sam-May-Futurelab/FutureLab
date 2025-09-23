@@ -98,16 +98,16 @@
       "destination": "/ecommerce.html"
     },
     {
-      "source": "/landing-page-design",
-      "destination": "/landing-page-design.html"
-    },
-    {
       "source": "/seo-services",
       "destination": "/seo-services.html"
     },
     {
       "source": "/industries",
       "destination": "/industries.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/services.html"
     },
     {
       "source": "/industries/restaurants",
