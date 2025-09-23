@@ -9,10 +9,6 @@
       "permanent": true
     },
     {
-      "source": "/about",
-      "destination": "/about.html"
-    },
-    {
       "source": "/:path(.+).html",
       "destination": "/:path",
       "permanent": true
@@ -29,6 +25,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
     {
       "source": "/api/generate-page",
       "destination": "/api/generate-page.js"
