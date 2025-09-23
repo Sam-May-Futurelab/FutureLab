@@ -19,6 +19,9 @@
     <meta name="keywords" content="web designer birmingham, website design birmingham, shopify developer birmingham, responsive web design, birmingham web design, custom website design, landing page design birmingham">
     <meta name="author" content="Futurelab Solutions">
     
+    <!-- Cache buster to force CDN refresh -->
+    <meta name="cache-version" content="2025-09-23-v1">
+    
     <!-- Open Graph for social sharing -->
     <meta property="og:title" content="Web Designer Birmingham | Professional Website Design & Shopify | Futurelab">
     <meta property="og:description" content="Professional web designer in Birmingham specialising in custom website design, Shopify development & responsive design. Transform your Birmingham business with high-converting websites.">
@@ -58,37 +61,39 @@
     </script>
     
     <!-- Local Business Schema for Birmingham -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Futurelab Solutions",
-      "image": "https://futurelab.solutions/assets/futurelab-logo.png",
-      "description": "Professional web designer in Birmingham specialising in custom website design and Shopify development",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Birmingham",
-        "addressCountry": "GB"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 52.4862,
-        "longitude": -1.8904
-      },
-      "url": "https://futurelab.solutions",
-      "telephone": "+447806946463",
-      "priceRange": "££",
-      "serviceArea": {
-        "@type": "GeoCircle",
-        "geoMidpoint": {
-          "@type": "GeoCoordinates",
-          "latitude": 52.4862,
-          "longitude": -1.8904
-        },
-        "geoRadius": "50000"
-      }
-    }
-    </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "@id": "https://futurelab.solutions/locations/birmingham#localbusiness",
+            "name": "Futurelab Solutions",
+            "image": "https://futurelab.solutions/assets/futurelab-logo.png",
+            "description": "Professional web designer in Birmingham specialising in custom website design and Shopify development",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Birmingham",
+                "addressRegion": "West Midlands",
+                "addressCountry": "GB"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 52.4862,
+                "longitude": -1.8904
+            },
+            "url": "https://futurelab.solutions/locations/birmingham",
+            "telephone": "+447806946463",
+            "priceRange": "££",
+            "serviceArea": {
+                "@type": "GeoCircle",
+                "geoMidpoint": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 52.4862,
+                    "longitude": -1.8904
+                },
+                "geoRadius": "50000"
+            }
+        }
+        </script>
     
     <!-- Favicon links -->
     <link rel="icon" href="../assets/favicon/favicon.ico" sizes="any">
