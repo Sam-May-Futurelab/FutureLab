@@ -107,7 +107,7 @@
     },
     {
       "source": "/industries",
-      "destination": "/industries/industries.html"
+      "destination": "/industries.html"
     },
     {
       "source": "/industries/restaurants",
