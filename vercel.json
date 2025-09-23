@@ -74,6 +74,10 @@
       "destination": "/locations/leeds.html"
     },
     {
+      "source": "/locations/brighton",
+      "destination": "/locations/brighton.html"
+    },
+    {
       "source": "/faq",
       "destination": "/faq.html"
     },
