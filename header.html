@@ -622,35 +622,41 @@
                         <a href="/landing-page-design">Landing Pages</a>
                         <a href="/ecommerce">Shopify Development</a>
                         <a href="/seo-services">SEO Services</a>
-                        <div class="dropdown-divider"></div>
-                        <div class="dropdown-nested">
-                            <a href="/locations" class="dropdown-parent">Locations <i class="fas fa-chevron-right"></i></a>
-                            <div class="dropdown-content-nested">
-                                <a href="/locations/london">London</a>
-                                <a href="/locations/manchester">Manchester</a>
-                                <a href="/locations/birmingham">Birmingham</a>
-                                <a href="/locations/leeds">Leeds</a>
-                                <a href="/locations/brighton">Brighton</a>
-                            </div>
-                        </div>
-                        <div class="dropdown-nested">
-                            <a href="/industries" class="dropdown-parent">Industries <i class="fas fa-chevron-right"></i></a>
-                            <div class="dropdown-content-nested">
-                                <a href="/industries/restaurants">Restaurants</a>
-                                <a href="/industries/solicitors">Solicitors</a>
-                                <a href="/industries/healthcare">Healthcare</a>
-                                <a href="/industries/estate-agents">Estate Agents</a>
-                                <a href="/industries/gyms">Gyms & Fitness</a>
-                                <a href="/industries/beauty">Beauty & Skincare</a>
-                                <a href="/industries/schools">Schools & Education</a>
-                            </div>
-                        </div>
                     </div>
                 </li>
-                <li><a href="/lab">AI Lab</a></li>
-                <li><a href="/portfolio">Portfolio</a></li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/faq">FAQ</a></li>
+                <li class="dropdown">
+                    <a href="/locations">Locations</a>
+                    <div class="dropdown-content">
+                        <a href="/locations/london">London</a>
+                        <a href="/locations/manchester">Manchester</a>
+                        <a href="/locations/birmingham">Birmingham</a>
+                        <a href="/locations/leeds">Leeds</a>
+                        <a href="/locations/brighton">Brighton</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="/industries">Industries</a>
+                    <div class="dropdown-content">
+                        <a href="/industries/restaurants">Restaurants</a>
+                        <a href="/industries/solicitors">Solicitors</a>
+                        <a href="/industries/healthcare">Healthcare</a>
+                        <a href="/industries/estate-agents">Estate Agents</a>
+                        <a href="/industries/gyms">Gyms & Fitness</a>
+                        <a href="/industries/beauty">Beauty & Skincare</a>
+                        <a href="/industries/schools">Schools & Education</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Resources</a>
+                    <div class="dropdown-content">
+                        <a href="/blog">Blog</a>
+                        <a href="/hosting-guide">Hosting Guide</a>
+                        <a href="/faq">FAQ</a>
+                        <a href="/lab">AI Lab</a>
+                    </div>
+                </li>
+                <!-- Optional: Add About when page exists -->
+                <!-- <li><a href="/about">About</a></li> -->
             </ul>            <div class="header-actions">
                 <a href="/contact" class="btn btn-primary">Contact</a>
                 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
@@ -703,20 +709,20 @@
                         { text: 'Web Design', href: '/web-design' },
                         { text: 'Portfolio', href: '/portfolio' },
                         { text: 'Services', href: '/services', isDropdown: true },
-                        { 
-                            text: 'Locations', 
+                        {
+                            text: 'Locations',
                             href: '/locations',
                             isDropdown: true,
                             dropdown: [
-                                { text: 'Manchester', href: '/locations/manchester' },
                                 { text: 'London', href: '/locations/london' },
+                                { text: 'Manchester', href: '/locations/manchester' },
                                 { text: 'Leeds', href: '/locations/leeds' },
                                 { text: 'Birmingham', href: '/locations/birmingham' },
                                 { text: 'Brighton', href: '/locations/brighton' }
                             ]
                         },
-                        { 
-                            text: 'Industries', 
+                        {
+                            text: 'Industries',
                             href: '/industries',
                             isDropdown: true,
                             dropdown: [
@@ -728,10 +734,17 @@
                                 { text: 'Schools & Education', href: '/industries/schools' }
                             ]
                         },
-                        { text: 'AI Lab', href: '/lab' },
-                        { text: 'Portfolio', href: '/portfolio' },
-                        { text: 'Blog', href: '/blog' },
-                        { text: 'FAQ', href: '/faq' },
+                        {
+                            text: 'Resources',
+                            href: '#',
+                            isDropdown: true,
+                            dropdown: [
+                                { text: 'Blog', href: '/blog' },
+                                { text: 'Hosting Guide', href: '/hosting-guide' },
+                                { text: 'FAQ', href: '/faq' },
+                                { text: 'AI Lab', href: '/lab' }
+                            ]
+                        },
                         { text: 'Contact', href: '/contact' }
                     ];
 
