@@ -71,9 +71,14 @@
     .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
     .value-card { background: #fff; border-radius: var(--border-radius); padding: 22px; box-shadow: var(--box-shadow); }
     .dark-theme .value-card { background: #0f172a; }
-    .about-section { padding: 60px 0; }
+    .about-section { padding: 80px 0; }
     .stat { font-size: 2rem; font-weight: 800; }
     .about-list li { margin-bottom: 6px; }
+    .section-header { text-align: center; margin-bottom: 40px; }
+    .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; color: var(--dark-color); }
+    .section-subtitle { font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    .dark-theme .section-title { color: var(--light-color); }
+    .dark-theme .section-subtitle { color: #94a3b8; }
   </style>
 </head>
 <body>
@@ -103,7 +108,7 @@
 
     <section class="about-section section-transition">
       <div class="container">
-        <div class="two-column" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; align-items:start;">
+        <div class="two-column" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; align-items:start;">
           <div>
             <h2 class="section-title">Hi, I’m Sam — Founder</h2>
             <p>I started Futurelab to help businesses move faster online with websites that are clean, quick, and built to convert. No bloat, no vague promises—just clear strategy, sharp design, and strong execution.</p>
@@ -112,7 +117,7 @@
               <li>Specialising in Web Design, Shopify, and high‑converting Landing Pages</li>
               <li>Obsessed with fast performance and clear messaging</li>
             </ul>
-            <div style="margin-top:14px;">
+            <div style="margin-top:24px;">
               <a href="/web-design" class="btn btn-outline">Web Design</a>
               <a href="/landing-page-design" class="btn btn-outline" style="margin-left:8px;">Landing Pages</a>
             </div>
@@ -127,7 +132,7 @@
                 <li>Clear process and tight feedback loops</li>
               </ul>
             </div>
-            <div class="value-card" style="margin-top:16px;">
+            <div class="value-card" style="margin-top:20px;">
               <h3>Impact</h3>
               <div class="stat">500+ clients</div>
               <p>From local services to growing e‑commerce brands and agencies.</p>
@@ -137,10 +142,13 @@
       </div>
     </section>
 
-    <section class="about-section section-transition">
+    <section class="about-section section-transition" style="background: var(--section-background);">
       <div class="container">
-        <h2 class="section-title">How We Work</h2>
-        <div class="values-grid" style="margin-top: 16px;">
+        <div class="section-header">
+          <h2 class="section-title">How We Work</h2>
+          <p class="section-subtitle" style="text-align: center;">Our proven 4-step process for delivering exceptional results</p>
+        </div>
+        <div class="values-grid" style="margin-top: 40px;">
           <div class="value-card"><h3>1) Discovery</h3><p>We get clear on goals, audience, and the win condition—then map the simplest path.</p></div>
           <div class="value-card"><h3>2) Design</h3><p>Structure and visuals with conversion in mind: messaging hierarchy, sections, and UX.</p></div>
           <div class="value-card"><h3>3) Build</h3><p>Clean, lightweight code—mobile‑first and fast. No bloated page builders.</p></div>
@@ -151,16 +159,21 @@
 
     <section class="about-section section-transition">
       <div class="container">
-        <h2 class="section-title">What We Offer</h2>
-        <ul class="about-list">
-          <li><strong>Web Design:</strong> Custom websites that load fast and feel great.</li>
-          <li><strong>Shopify Development:</strong> Clean, conversion‑ready storefronts.</li>
-          <li><strong>Landing Pages:</strong> High‑converting pages launched in days.</li>
-          <li><strong>SEO Services:</strong> Solid foundations for visibility and growth.</li>
-        </ul>
-        <div style="margin-top:14px;">
-          <a href="/services" class="btn btn-secondary" style="margin-right:10px;">Explore Services</a>
-          <a href="/portfolio" class="btn btn-outline">See Work</a>
+        <div class="section-header">
+          <h2 class="section-title">What We Offer</h2>
+          <p class="section-subtitle" style="text-align: center;">Comprehensive digital solutions to grow your business</p>
+        </div>
+        <div style="max-width: 800px; margin: 40px auto 0;">
+          <ul class="about-list">
+            <li><strong>Web Design:</strong> Custom websites that load fast and feel great.</li>
+            <li><strong>Shopify Development:</strong> Clean, conversion‑ready storefronts.</li>
+            <li><strong>Landing Pages:</strong> High‑converting pages launched in days.</li>
+            <li><strong>SEO Services:</strong> Solid foundations for visibility and growth.</li>
+          </ul>
+          <div style="margin-top:32px; text-align: center;">
+            <a href="/services" class="btn btn-secondary" style="margin-right:10px;">Explore Services</a>
+            <a href="/portfolio" class="btn btn-outline">See Work</a>
+          </div>
         </div>
       </div>
     </section>
@@ -197,11 +210,15 @@
       </div>
     </section>
 
-    <section class="about-section section-transition">
+    <section class="about-section section-transition" style="background: var(--section-background);">
       <div class="container" style="text-align:center;">
-        <h2 class="section-title">Ready to talk?</h2>
-        <p>Tell me about your project—I'll propose the simplest, fastest route to results.</p>
-        <a href="/contact" class="btn btn-primary">Get a Free Consultation</a>
+        <div class="section-header">
+          <h2 class="section-title">Ready to talk?</h2>
+          <p class="section-subtitle">Tell me about your project—I'll propose the simplest, fastest route to results.</p>
+        </div>
+        <div style="margin-top: 32px;">
+          <a href="/contact" class="btn btn-primary">Get a Free Consultation</a>
+        </div>
       </div>
     </section>
 
