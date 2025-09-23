@@ -9,6 +9,10 @@
       "permanent": true
     },
     {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
       "source": "/:path(.+).html",
       "destination": "/:path",
       "permanent": true
