@@ -90,40 +90,138 @@
     <script src="../js/includeElements.js" defer></script>
 
     <style>
+      /* Hero styling (parity with other locations) */
       .landing-page-hero {
-        background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+        position: relative;
+        background: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
         color: #fff;
-        padding: 120px 0 80px;
+        padding: 120px 0;
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        text-align: center;
       }
       .landing-page-hero .hero-badge {
         display: inline-block;
         background: rgba(255,255,255,0.15);
-        padding: 6px 12px;
+        padding: 10px 18px;
         border-radius: 999px;
-        font-size: 0.9rem;
-        margin-bottom: 16px;
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+        border: 1px solid rgba(255,255,255,0.25);
       }
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-14px) rotate(8deg); }
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @media (max-width: 768px) {
+        .landing-page-hero h1 { font-size: 2.4rem !important; line-height: 1.2 !important; }
+        .landing-page-hero p { font-size: 1.15rem !important; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .landing-page-hero * { animation: none !important; transition: none !important; }
+      }
+
+      /* Service comparison cards */
+      .service-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 60px 0; }
+      .service-option { background: #fff; border-radius: var(--border-radius); padding: 40px; box-shadow: var(--box-shadow); text-align: center; position: relative; }
+      .dark-theme .service-option { background: #1e293b; }
+      .service-option.featured { border: 3px solid var(--primary-color); transform: translateY(-4px); }
+      .service-badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary-color); color: #fff; padding: 8px 18px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+      .service-icon { width: 80px; height: 80px; background: rgba(67, 97, 238, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 2rem; color: var(--primary-color); }
+
+      /* City focus (reasons) */
+      .city-focus { background: rgba(67, 97, 238, 0.05); padding: 28px; border-radius: var(--border-radius); border-left: 5px solid var(--primary-color); }
+      .dark-theme .city-focus { background: rgba(67, 97, 238, 0.1); }
+
+      /* AI tool section */
+      .ai-tool-preview { background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%); padding: 60px 0; margin: 60px 0; border-radius: var(--border-radius); }
+      .dark-theme .ai-tool-preview { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+      .tool-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 30px; }
+      .tool-feature { text-align: center; padding: 16px; }
+      .tool-feature i { font-size: 2.2rem; color: var(--primary-color); margin-bottom: 12px; }
+
+      @media (max-width: 768px) { .service-comparison { grid-template-columns: 1fr; gap: 24px; } }
     </style>
 </head>
 <body>
   <div id="header-placeholder"></div>
 
   <main>
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item"><a href="/locations">Locations</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Brighton</li>
+        </ol>
+      </div>
+    </nav>
+
     <!-- Hero -->
     <section class="landing-page-hero section-transition">
+      <!-- Decorative floating shapes -->
+      <div style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0.12; pointer-events:none;">
+        <div style="position:absolute; top:20%; left:10%; width:260px; height:260px; background: rgba(255,255,255,0.15); border-radius:50%; animation: float 6.5s ease-in-out infinite;"></div>
+        <div style="position:absolute; bottom:18%; right:12%; width:180px; height:180px; background: rgba(255,255,255,0.12); border-radius:50%; animation: float 8s ease-in-out infinite reverse;"></div>
+      </div>
+      <div class="container" style="position:relative; z-index:1;">
+        <div style="max-width: 900px; margin: 0 auto;">
+          <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 12px 24px; border-radius: 999px; display:inline-flex; align-items:center; gap:10px; border: 1px solid rgba(255,255,255,0.25); animation: fadeInUp .8s ease-out;">
+            <span style="font-size:1.6rem;">🌊</span>
+            <span style="font-weight:600; letter-spacing:.3px;">Brighton Web Design</span>
+          </div>
+          <h1 style="font-size:3.4rem; font-weight:800; letter-spacing:-.02em; margin: 24px 0 12px; animation: fadeInUp .85s ease-out .1s both; text-shadow: 0 4px 20px rgba(0,0,0,0.18);">Web Designer Brighton – <span style="color:#ffd89b;">Fast Sites that Convert</span></h1>
+          <p style="font-size:1.2rem; color: rgba(255,255,255,0.92); max-width:760px; margin: 0 auto 28px; line-height:1.6; animation: fadeInUp .9s ease-out .2s both;">From independents in The Lanes to growing e‑commerce brands, we design and build high‑performing websites and landing pages for Brighton & Hove—fast.</p>
+          <div style="animation: fadeInUp .95s ease-out .3s both;">
+            <a href="/contact" class="btn btn-primary" style="margin-right: 14px;">Request Free Consultation</a>
+            <a href="/portfolio" class="btn btn-secondary">View Portfolio</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Comparison -->
+    <section class="section-transition">
       <div class="container">
-        <span class="hero-badge"><i class="fas fa-map-marker-alt"></i> Brighton Web Design</span>
-        <h1 class="section-title">Brighton Web Designer for Fast, Conversion-Focused Sites</h1>
-        <p class="section-subtitle" style="max-width: 800px;">We design and build high-performing websites and landing pages for Brighton businesses—fast. From independent shops in The Lanes to growing e‑commerce brands and agencies, get a site that converts visitors into customers.</p>
-        <div style="margin-top: 24px;">
-          <a href="/contact" class="btn btn-primary">Start Your Project</a>
-          <a href="/portfolio" class="btn btn-outline" style="margin-left: 12px;">View Portfolio</a>
+        <h2 class="section-title">Brighton Web Design Services</h2>
+        <p class="section-subtitle">Complete solutions for local brands—built for speed and conversions</p>
+        <div class="service-comparison">
+          <div class="service-option featured">
+            <div class="service-badge">Popular</div>
+            <div class="service-icon"><i class="fas fa-bolt"></i></div>
+            <h3>Landing Page Design</h3>
+            <p>Launch in days with a high‑converting page tailored to your offer. Ideal for promos, events, and lead‑gen.</p>
+            <ul style="text-align:left; margin: 20px 0;">
+              <li>✓ CRO‑driven layout & copy framework</li>
+              <li>✓ Mobile‑first, fast‑loading</li>
+              <li>✓ Brighton‑aware messaging</li>
+            </ul>
+            <a href="/contact" class="btn btn-primary">Start a Landing Page</a>
+          </div>
+          <div class="service-option">
+            <div class="service-icon"><i class="fas fa-layer-group"></i></div>
+            <h3>Full Website Design</h3>
+            <p>Custom multi‑page websites for growing brands, with clear navigation, on‑brand visuals, and SEO‑ready code.</p>
+            <ul style="text-align:left; margin: 20px 0;">
+              <li>✓ Strategy & information architecture</li>
+              <li>✓ Reusable components & sections</li>
+              <li>✓ SEO‑friendly foundation</li>
+            </ul>
+            <a href="/contact" class="btn btn-secondary">Discuss Your Site</a>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Local Proof: Brighton -->
-    <section class="section-transition" style="padding:60px 0;">
+    <section id="brighton-proof" class="section-transition" style="padding:60px 0;">
       <div class="container">
         <h2 class="section-title">Why Brighton Businesses Choose Futurelab</h2>
         <ul class="feature-list">
@@ -135,6 +233,42 @@
           <p>“Futurelab launched our Brighton campaign quickly—and it started converting immediately.”</p>
           <cite>— Local Brighton client</cite>
         </blockquote>
+      </div>
+    </section>
+
+    <!-- Why Choose Futurelab -->
+    <section class="section-transition">
+      <div class="container">
+        <h2 class="section-title">Why Choose Futurelab as Your Brighton Web Designer</h2>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; margin: 40px 0;">
+          <div class="city-focus"><h3>🎯 Local Brighton Expertise</h3><p>We tailor your site for Brighton audiences—from The Lanes to Hove—so it feels local and converts.</p></div>
+          <div class="city-focus"><h3>📱 Mobile‑First</h3><p>Designs that excel on mobile where most local traffic starts. Fast, accessible, and delightful.</p></div>
+          <div class="city-focus"><h3>⚡ Fast Turnaround</h3><p>Move from brief to launch quickly—ideal for events, campaigns, and seasonal demand.</p></div>
+          <div class="city-focus"><h3>🚀 Conversion‑Focused</h3><p>Clear structure, strong CTAs, and CRO best practices baked in from day one.</p></div>
+          <div class="city-focus"><h3>🔧 Ongoing Support</h3><p>Post‑launch updates and refinement so your site keeps performing as you grow.</p></div>
+          <div class="city-focus"><h3>📊 Data‑Driven</h3><p>We track, learn, and iterate—so your site keeps improving against Brighton competitors.</p></div>
+        </div>
+        <div style="text-align:center; margin-top: 10px;">
+          <a href="/contact" class="btn btn-primary" style="margin-right: 12px;">Start a Project</a>
+          <a href="/portfolio" class="btn btn-secondary">See Work</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Tool Preview -->
+    <section class="ai-tool-preview section-transition">
+      <div class="container">
+        <h2 class="section-title">Build Faster with AI</h2>
+        <p class="section-subtitle">Generate a landing page in minutes, then customise and launch</p>
+        <div class="tool-features">
+          <div class="tool-feature"><i class="fas fa-magic"></i><h4>AI‑Generated Layouts</h4><p>Kickstart with proven structures—no bloat, clean HTML/CSS.</p></div>
+          <div class="tool-feature"><i class="fas fa-tachometer-alt"></i><h4>Lightning‑Fast</h4><p>Pages built to be fast on mobile—great for local SEO and UX.</p></div>
+          <div class="tool-feature"><i class="fas fa-pencil-alt"></i><h4>Easy to Edit</h4><p>Customise copy, colours, and sections before exporting.</p></div>
+          <div class="tool-feature"><i class="fas fa-code"></i><h4>Portable Code</h4><p>Export clean files and host anywhere. No lock‑in.</p></div>
+        </div>
+        <div style="text-align:center; margin-top: 24px;">
+          <a href="/lab" class="btn btn-primary">Try the AI Generator</a>
+        </div>
       </div>
     </section>
 
@@ -167,6 +301,5 @@
 
   <div id="footer-placeholder"></div>
   <script src="../script.js" defer></script>
-  <script src="../script.js"></script>
 </body>
 </html>
