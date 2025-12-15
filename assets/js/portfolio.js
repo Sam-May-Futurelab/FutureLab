@@ -1,12 +1,13 @@
 // Portfolio 3D Carousel and Swipe Interactions
 class PortfolioCarousel {    constructor() {
         this.currentSlide = 0;
-        this.totalSlides = 14;
+    this.totalSlides = 0;
         this.isTransitioning = false;
         this.touchStartX = 0;
         this.touchEndX = 0;
         this.minSwipeDistance = 50;
           this.initializeElements();
+    this.totalSlides = this.slides?.length || 0;
         this.bindEvents();
         this.updateCarousel();
         // Autoplay removed for better user experience
@@ -229,6 +230,17 @@ class PortfolioCarousel {    constructor() {
         this.updateCarousel();
     }
       updateCarousel() {
+                if (!this.totalSlides) return;
+
+        // Keep layout in sync with the number of slides (CSS uses fixed percentages)
+        if (this.carouselTrack) {
+            this.carouselTrack.style.width = `${this.totalSlides * 100}%`;
+        }
+        const slideWidth = `${100 / this.totalSlides}%`;
+        this.slides.forEach((slide) => {
+            slide.style.width = slideWidth;
+        });
+
         // Clear any existing transition timeout
         if (this.transitionTimeout) {
             clearTimeout(this.transitionTimeout);
@@ -254,7 +266,7 @@ class PortfolioCarousel {    constructor() {
         this.navDots.forEach((dot, index) => {
             dot.classList.toggle('active', index === this.currentSlide);
         });        // Transform the carousel track
-        const translateX = -this.currentSlide * (100 / this.totalSlides); // 7.692% per slide for 13 slides
+        const translateX = -this.currentSlide * (100 / this.totalSlides);
         this.carouselTrack.style.transform = `translateX(${translateX}%)`;
         
         // Add 3D transformation effects
