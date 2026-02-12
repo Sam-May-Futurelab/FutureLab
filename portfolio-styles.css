@@ -172,7 +172,7 @@ body.dark-theme {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+    background: linear-gradient(135deg, #4f46e5 0%, #8E7CC3 50%, #DCAFD0 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -186,7 +186,7 @@ body.dark-theme {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+    background: linear-gradient(135deg, #4f46e5 0%, #8E7CC3 50%, #DCAFD0 100%);
     opacity: 0.1;
     filter: blur(20px);
     z-index: -1;
@@ -312,7 +312,7 @@ body.dark-theme {
     display: block;
     font-size: 3.2rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+    background: linear-gradient(135deg, #4f46e5 0%, #8E7CC3 50%, #DCAFD0 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -386,7 +386,7 @@ body.dark-theme {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #4f46e5 0%, #8E7CC3 100%);
     color: white;
     border-color: transparent;
     box-shadow: 

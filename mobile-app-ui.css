@@ -39,7 +39,7 @@
 }
 
 .stat-card.tertiary {
-  border-top: 3px solid #f72585;
+  border-top: 3px solid #D9AFC6;
 }
 
 .stat-card.quaternary {
@@ -62,7 +62,7 @@
 }
 
 .stat-card.tertiary .stat-icon {
-  color: #f72585;
+  color: #D9AFC6;
 }
 
 .stat-card.quaternary .stat-icon {

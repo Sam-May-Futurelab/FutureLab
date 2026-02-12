@@ -3073,7 +3073,7 @@ div:has(> img[src*="mpfilms-mockup"]) {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, #4361ee, #3a0ca3);
+    background: linear-gradient(to bottom, #4361ee, #7B66B2);
 }
 
 .dark-theme ::-webkit-scrollbar-thumb:hover {

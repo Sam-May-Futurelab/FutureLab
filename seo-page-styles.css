@@ -24,7 +24,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #4361ee 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #4361ee 0%, #8E7CC3 100%);
     color: white;
     padding: 12px 24px;
     border-radius: 50px;
@@ -47,7 +47,7 @@
 }
 
 .success-title .highlight {
-    background: linear-gradient(90deg, #4361ee 0%, #7c3aed 100%);
+    background: linear-gradient(90deg, #4361ee 0%, #8E7CC3 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -105,7 +105,7 @@
     display: block;
     font-size: 3.5rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #4361ee 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #4361ee 0%, #8E7CC3 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -131,7 +131,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #4361ee 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #4361ee 0%, #8E7CC3 100%);
     color: white;
     padding: 14px 28px;
     border-radius: 12px;
@@ -198,7 +198,7 @@
     justify-content: center;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #4361ee 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #4361ee 0%, #8E7CC3 100%);
     color: white;
     border-radius: 50%;
     font-size: 1.5rem;

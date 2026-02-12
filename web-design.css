@@ -55,7 +55,7 @@
 }
 
 .gradient-text {
-    background: linear-gradient(45deg, #4361ee, #7209b7, #f72585);
+    background: linear-gradient(45deg, #4361ee, #8E7CC3, #D9AFC6);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -223,7 +223,7 @@
     width: 90px;
     height: 90px;
     margin: 0 auto 25px;
-    background: linear-gradient(135deg, #4361ee 0%, #7209b7 50%, #f72585 100%);
+    background: linear-gradient(135deg, #4361ee 0%, #8E7CC3 50%, #D9AFC6 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -238,7 +238,7 @@
 }
 
 .dark-theme .service-icon {
-    background: linear-gradient(135deg, #60a5fa 0%, #8b5cf6 50%, #ec4899 100%);
+    background: linear-gradient(135deg, #60a5fa 0%, #A592D6 50%, #DCAFD0 100%);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 8px 25px rgba(96, 165, 250, 0.4);
 }
@@ -251,7 +251,7 @@
 .service-card:hover .service-icon {
     transform: scale(1.15) rotate(8deg);
     box-shadow: 0 15px 40px rgba(67, 97, 238, 0.4);
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #A592D6 50%, #DCAFD0 100%);
 }
 
 .dark-theme .service-card:hover .service-icon {
@@ -907,7 +907,7 @@
 /* CTA Section Enhancement */
 .cta-section {
     padding: 120px 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background: linear-gradient(135deg, #B7BFE8 0%, #A592D6 50%, #D8C7E8 100%);
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -1611,7 +1611,7 @@
     left: -100%;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, var(--primary-color), #7209b7, #f72585);
+    background: linear-gradient(90deg, var(--primary-color), #8E7CC3, #D9AFC6);
     transition: left 0.4s ease;
 }
 
@@ -1631,7 +1631,7 @@
 .industry-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, var(--primary-color), #7209b7);
+    background: linear-gradient(135deg, var(--primary-color), #8E7CC3);
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -1681,7 +1681,7 @@
 }
 
 .industry-link:hover {
-    color: #7209b7;
+    color: #8E7CC3;
     transform: translateX(4px);
 }
 
@@ -1696,7 +1696,7 @@
 /* Testimonial Highlight Section */
 .testimonial-highlight {
     padding: 120px 0;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #7209b7 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #8E7CC3 100%);
     color: white;
     position: relative;
     overflow: hidden;
@@ -2022,7 +2022,7 @@
 
 .inline-link:hover {
     border-bottom-color: var(--primary-color);
-    color: #7209b7;
+    color: #8E7CC3;
 }
 
 .dark-theme .inline-link {
