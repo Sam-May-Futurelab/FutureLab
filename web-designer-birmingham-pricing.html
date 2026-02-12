@@ -43,32 +43,50 @@
     <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
 
     <script src="js/includeElements.js" defer></script>
+
+    <style>
+      .hero-band { padding: 120px 0 90px; background: linear-gradient(135deg,#0f172a 0%,#1e293b 100%); color: #fff; }
+      .content-shell { max-width: 1080px; margin: 0 auto; }
+      .grid-3 { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 18px; }
+      .card { background: var(--card-background); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px; box-shadow: var(--card-shadow); }
+      .step { border-left: 4px solid var(--primary-color); padding: 16px 18px; background: var(--card-background); border-radius: 10px; margin-bottom: 14px; }
+    </style>
 </head>
 <body class="header-toggle-adjusted">
     <div id="header-placeholder"></div>
 
     <main>
-        <section class="hero-section section-transition" style="padding: 120px 0 80px; background: linear-gradient(135deg,#0f172a 0%,#1e293b 100%); color: #fff;">
-            <div class="container">
-                <h1 style="font-size: 2.8rem; margin-bottom: 18px;">Web Designer Birmingham Pricing</h1>
-                <p style="max-width: 840px; opacity: 0.95; line-height: 1.7;">Use this page to plan realistic project scope and budget. Better pricing decisions come from clear priorities, not vague fixed quotes.</p>
+        <section class="hero-band section-transition">
+            <div class="container content-shell">
+                <h1 style="font-size: 2.9rem; margin-bottom: 16px;">Web Designer Birmingham Pricing</h1>
+                <p style="max-width: 860px; line-height: 1.7; opacity: 0.96;">Use this page to plan realistic project scope and budget. Better pricing decisions come from clear priorities, not vague fixed quotes.</p>
                 <div style="margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap;">
                     <a href="/contact" class="btn btn-primary">Request Pricing Review</a>
                     <a href="/locations/birmingham" class="btn btn-secondary">Birmingham Services</a>
+                    <a href="/portfolio" class="btn btn-secondary">View Portfolio</a>
                 </div>
             </div>
         </section>
 
-        <section class="section-transition">
-            <div class="container" style="max-width: 980px;">
-                <h2 class="section-title">Planning Framework</h2>
-                <p>Start by defining your non-negotiables: core pages, conversion goals, and integrations. Then separate phase one launch requirements from later enhancements.</p>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
-                    <div class="service-card" style="padding:24px;"><h3>Scope Clarity</h3><p>Clear scope prevents overruns and improves project velocity.</p></div>
-                    <div class="service-card" style="padding:24px;"><h3>Commercial Priorities</h3><p>Fund features tied to revenue and lead quality first.</p></div>
-                    <div class="service-card" style="padding:24px;"><h3>Phased Delivery</h3><p>Launch early, then iterate with real user data.</p></div>
+        <section class="section-transition" style="padding: 72px 0;">
+            <div class="container content-shell">
+                <h2 class="section-title">What Affects Price Most</h2>
+                <div class="grid-3">
+                    <article class="card"><h3>Scope Complexity</h3><p>Page count, content depth, integrations, and custom functionality.</p></article>
+                    <article class="card"><h3>Commercial Requirements</h3><p>Lead generation vs ecommerce journeys need different architecture.</p></article>
+                    <article class="card"><h3>Delivery Model</h3><p>Phased rollout usually reduces risk and improves budget efficiency.</p></article>
                 </div>
-                <p style="margin-top: 22px;">For a long-form version, read: <a href="/blog/web-designer-birmingham-pricing">Birmingham pricing guide</a>.</p>
+            </div>
+        </section>
+
+        <section class="section-transition" style="padding: 72px 0; background: var(--section-background);">
+            <div class="container content-shell">
+                <h2 class="section-title">How To Budget Better</h2>
+                <div class="step"><strong>1. Define business outcome first:</strong> leads, sales, bookings, or quote requests.</div>
+                <div class="step"><strong>2. Split must-have vs later features:</strong> launch essentials in phase one.</div>
+                <div class="step"><strong>3. Prioritise high-value pages:</strong> service pages, product pages, and conversion points.</div>
+                <div class="step"><strong>4. Reserve optimisation budget:</strong> post-launch iteration is where ROI compounds.</div>
+                <p style="margin-top: 20px;">Long-form breakdown: <a href="/blog/web-designer-birmingham-pricing">Birmingham pricing guide</a>. Related local page: <a href="/locations/jewellery-quarter-birmingham">Jewellery Quarter Birmingham</a>.</p>
             </div>
         </section>
     </main>
