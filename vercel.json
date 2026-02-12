@@ -4,6 +4,22 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "futurelab.solutions"
+        }
+      ],
+      "destination": "https://www.futurelab.solutions/$1",
+      "permanent": true
+    },
+    {
+      "source": "/blog/mpfilms-seo-case-study",
+      "destination": "/blog/mpfilms-case-study",
+      "permanent": true
+    },
+    {
       "source": "/showcase",
       "destination": "/portfolio",
       "permanent": true
@@ -82,6 +98,14 @@
       "destination": "/locations/brighton.html"
     },
     {
+      "source": "/locations/kelowna",
+      "destination": "/locations/kelowna.html"
+    },
+    {
+      "source": "/locations/jewellery-quarter-birmingham",
+      "destination": "/locations/jewellery-quarter-birmingham.html"
+    },
+    {
       "source": "/faq",
       "destination": "/faq.html"
     },
@@ -100,6 +124,18 @@
     {
       "source": "/seo-services",
       "destination": "/seo-services.html"
+    },
+    {
+      "source": "/shopify-website-design-leeds",
+      "destination": "/shopify-website-design-leeds.html"
+    },
+    {
+      "source": "/shopify-designer-manchester",
+      "destination": "/shopify-designer-manchester.html"
+    },
+    {
+      "source": "/web-designer-birmingham-pricing",
+      "destination": "/web-designer-birmingham-pricing.html"
     },
     {
       "source": "/industries",
@@ -150,10 +186,6 @@
       "destination": "/blog/why-your-website-feels-outdated-2025.html"
     },
     {
-      "source": "/blog/mpfilms-seo-case-study",
-      "destination": "/blog/mpfilms-case-study.html"
-    },
-    {
       "source": "/blog/web-design-trends-2025",
       "destination": "/blog/web-design-trends-2025.html"
     },
@@ -188,6 +220,18 @@
     {
       "source": "/blog/responsive-school-websites-2025",
       "destination": "/blog/responsive-school-websites-2025.html"
+    },
+    {
+      "source": "/blog/shopify-website-design-leeds",
+      "destination": "/blog/shopify-website-design-leeds.html"
+    },
+    {
+      "source": "/blog/shopify-designer-manchester",
+      "destination": "/blog/shopify-designer-manchester.html"
+    },
+    {
+      "source": "/blog/web-designer-birmingham-pricing",
+      "destination": "/blog/web-designer-birmingham-pricing.html"
     }
   ]
 }

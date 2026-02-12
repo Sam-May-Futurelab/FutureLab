@@ -2,222 +2,262 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Main Pages -->
   <url>
-    <loc>https://futurelab.solutions/</loc>
+    <loc>https://www.futurelab.solutions/</loc>
     <lastmod>2025-09-10</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/services</loc>
+    <loc>https://www.futurelab.solutions/services</loc>
     <lastmod>2025-09-10</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/web-design</loc>
+    <loc>https://www.futurelab.solutions/web-design</loc>
     <lastmod>2025-09-08</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/custom-web-design</loc>
+    <loc>https://www.futurelab.solutions/custom-web-design</loc>
     <lastmod>2025-09-08</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/portfolio</loc>
+    <loc>https://www.futurelab.solutions/portfolio</loc>
     <lastmod>2025-09-23</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/about</loc>
+    <loc>https://www.futurelab.solutions/about</loc>
     <lastmod>2025-09-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/ecommerce</loc>
+    <loc>https://www.futurelab.solutions/ecommerce</loc>
     <lastmod>2025-09-08</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/seo-services</loc>
+    <loc>https://www.futurelab.solutions/seo-services</loc>
     <lastmod>2025-09-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/landing-page-design</loc>
+    <loc>https://www.futurelab.solutions/shopify-website-design-leeds</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.futurelab.solutions/shopify-designer-manchester</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.futurelab.solutions/web-designer-birmingham-pricing</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.futurelab.solutions/landing-page-design</loc>
     <lastmod>2025-09-08</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/lab</loc>
+    <loc>https://www.futurelab.solutions/lab</loc>
     <lastmod>2025-09-23</lastmod>
     <priority>0.7</priority>
   </url>
   
   <!-- Locations Hub -->
   <url>
-    <loc>https://futurelab.solutions/locations</loc>
+    <loc>https://www.futurelab.solutions/locations</loc>
     <lastmod>2025-07-23</lastmod>
     <priority>0.9</priority>
   </url>
   
   <!-- Location-specific Landing Pages -->
   <url>
-    <loc>https://futurelab.solutions/locations/london</loc>
+    <loc>https://www.futurelab.solutions/locations/london</loc>
     <lastmod>2025-09-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/locations/manchester</loc>
+    <loc>https://www.futurelab.solutions/locations/manchester</loc>
     <lastmod>2025-09-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/locations/birmingham</loc>
+    <loc>https://www.futurelab.solutions/locations/birmingham</loc>
     <lastmod>2025-09-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/locations/leeds</loc>
+    <loc>https://www.futurelab.solutions/locations/leeds</loc>
     <lastmod>2025-07-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/locations/brighton</loc>
+    <loc>https://www.futurelab.solutions/locations/brighton</loc>
     <lastmod>2025-09-23</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.futurelab.solutions/locations/kelowna</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.futurelab.solutions/locations/jewellery-quarter-birmingham</loc>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://futurelab.solutions/contact</loc>
+    <loc>https://www.futurelab.solutions/contact</loc>
     <lastmod>2025-07-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/faq</loc>
+    <loc>https://www.futurelab.solutions/faq</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/hosting-guide</loc>
-    <lastmod>2025-06-05</lastmod>
+    <loc>https://www.futurelab.solutions/hosting-guide</loc>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/privacy-policy</loc>
+    <loc>https://www.futurelab.solutions/privacy-policy</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.5</priority>
   </url>
   
   <!-- Industry Pages -->
   <url>
-    <loc>https://futurelab.solutions/industries</loc>
+    <loc>https://www.futurelab.solutions/industries</loc>
     <lastmod>2025-09-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/industries/schools</loc>
+    <loc>https://www.futurelab.solutions/industries/schools</loc>
     <lastmod>2025-08-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/industries/beauty</loc>
+    <loc>https://www.futurelab.solutions/industries/beauty</loc>
     <lastmod>2025-08-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/industries/gyms</loc>
+    <loc>https://www.futurelab.solutions/industries/gyms</loc>
     <lastmod>2025-08-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/industries/healthcare</loc>
+    <loc>https://www.futurelab.solutions/industries/healthcare</loc>
     <lastmod>2025-08-27</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/industries/estate-agents</loc>
+    <loc>https://www.futurelab.solutions/industries/estate-agents</loc>
     <lastmod>2025-08-27</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/industries/restaurants</loc>
+    <loc>https://www.futurelab.solutions/industries/restaurants</loc>
     <lastmod>2025-08-27</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/industries/solicitors</loc>
+    <loc>https://www.futurelab.solutions/industries/solicitors</loc>
     <lastmod>2025-08-27</lastmod>
     <priority>0.7</priority>
   </url>
   
   <!-- Blog Pages -->
   <url>
-    <loc>https://futurelab.solutions/blog</loc>
+    <loc>https://www.futurelab.solutions/blog</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/hiring-a-web-designer-2025</loc>
+    <loc>https://www.futurelab.solutions/blog/hiring-a-web-designer-2025</loc>
     <lastmod>2025-09-23</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/web-design-trends-2025</loc>
+    <loc>https://www.futurelab.solutions/blog/web-design-trends-2025</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/landing-page-vs-full-website</loc>
+    <loc>https://www.futurelab.solutions/blog/landing-page-vs-full-website</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/fastest-landing-page-2025</loc>
+    <loc>https://www.futurelab.solutions/blog/fastest-landing-page-2025</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/custom-vs-templates-2025</loc>
+    <loc>https://www.futurelab.solutions/blog/custom-vs-templates-2025</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/shopify-conversion-fix</loc>
+    <loc>https://www.futurelab.solutions/blog/shopify-conversion-fix</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/truth-about-website-builders</loc>
+    <loc>https://www.futurelab.solutions/blog/truth-about-website-builders</loc>
     <lastmod>2025-09-22</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/why-your-website-feels-outdated-2025</loc>
+    <loc>https://www.futurelab.solutions/blog/why-your-website-feels-outdated-2025</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/why-paying-more-website-cheaper-long-run</loc>
+    <loc>https://www.futurelab.solutions/blog/why-paying-more-website-cheaper-long-run</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/elume-skincare-case-study</loc>
+    <loc>https://www.futurelab.solutions/blog/elume-skincare-case-study</loc>
     <lastmod>2025-09-22</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/responsive-school-websites-2025</loc>
+    <loc>https://www.futurelab.solutions/blog/responsive-school-websites-2025</loc>
     <lastmod>2025-06-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/mpfilms-seo-case-study</loc>
+    <loc>https://www.futurelab.solutions/blog/mpfilms-case-study</loc>
     <lastmod>2025-07-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://futurelab.solutions/blog/building-inkfluence-ai-case-study</loc>
+    <loc>https://www.futurelab.solutions/blog/building-inkfluence-ai-case-study</loc>
     <lastmod>2025-11-08</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.futurelab.solutions/blog/shopify-website-design-leeds</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.futurelab.solutions/blog/shopify-designer-manchester</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.futurelab.solutions/blog/web-designer-birmingham-pricing</loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.7</priority>
   </url>
 </urlset>
